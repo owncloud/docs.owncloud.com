@@ -8,7 +8,7 @@ to be set in antora.yml
 
 ocis_helpers:                example$ocis_helpers
 ocis_helpers_env_var_deltas: {ocis_helpers}/env_var_deltas/
-env_var_delta_name:          8.3.0-8.2.0
+env_var_delta_name:          8.0.0-8.1.0
 ////
 
 == Introduction
