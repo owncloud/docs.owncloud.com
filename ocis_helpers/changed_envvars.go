@@ -29,8 +29,22 @@ import (
 // !! this file MUST be adapted to the ocis version before running the process - its settings are unique to the ocis version !!
 const yamlDeltaConfig = "delta_config.yaml"
 
+// this is the file that maps envvar prefixes to service names, it is located next to the go files.
+// in contrast to the config file above it is not version specific and shared by all ocis versions
+const yamlServiceNames = "service_names.yaml"
+
 // the date format used in the generated table header
 const deltaDateFormat = "2006.01.02"
+
+// the prefix of envvars that are global and therefore not bound to a single service
+const globalEnvPrefix = "OCIS_"
+
+// the xref used for envvars that could not be resolved to a service.
+// the placeholders must be fixed manually in the generated file
+const serviceXrefPlaceholder = "xref:{s-path}/xxx.adoc[yyy]"
+
+// the xref used for global envvars
+const serviceXrefGlobal = "xref:deployment/services/env-vars-special-scope.adoc[Special Scope Envvars]"
 
 // DeltaConfig is the yaml source describing which versions are compared.
 // see the comments in the 'delta_config.yaml' file for the meaning of the keys
@@ -85,6 +99,21 @@ type AddedElsewhere struct {
 	introductionVersion string
 }
 
+// ServiceName is one entry of the 'service_names.yaml' file.
+// Path is the file name of the service page, Name is the link text of the xref created
+type ServiceName struct {
+	Path string `yaml:"path"`
+	Name string `yaml:"name"`
+}
+
+// serviceNames maps envvar prefixes to service names, read from the 'service_names.yaml' file.
+// it is loaded once when the task starts and used while rendering the tables
+var serviceNames map[string]ServiceName
+
+// serviceNotFound collects the envvars that could not be resolved to a service.
+// they keep the placeholders in the generated tables and are printed for manual fixing
+var serviceNotFound = []string{}
+
 // RenderEnvVarDeltas creates the added, deprecated and removed envvar tables
 // isDryrun is provided by the flag defined in 'main.go'
 func RenderEnvVarDeltas(isDryrun bool) {
@@ -98,6 +127,8 @@ func RenderEnvVarDeltas(isDryrun bool) {
 func doEnvVarDeltas(isDryrun bool) {
 
 	cfg := getDeltaConfig()
+
+	serviceNames = getServiceNames()
 
 	excludePattern := mergeExcludeLists(cfg.DefaultExcludePattern, cfg.ExtraExcludePattern)
 
@@ -143,6 +174,18 @@ func doEnvVarDeltas(isDryrun bool) {
 	r := createTable("Removed",    removedWith,    cfg.FromVersion, cfg.ToVersion, dateToday, false)
 	d := createTable("Deprecated", deprecatedWith, cfg.FromVersion, cfg.ToVersion, dateToday, true)
 
+	// envvars whose prefix is not listed in the service names file keep the placeholders.
+	// print them so they can either be fixed in the generated file or added to the mapping
+	if len(serviceNotFound) > 0 {
+		fmt.Printf(Yellow+"\nThe following envvars could not be resolved to a service, they keep the " +
+			"placeholders of %s. Consider adding their prefix to %s:\n\n" + Reset, serviceXrefPlaceholder, yamlServiceNames)
+
+		for _, key := range serviceNotFound {
+			fmt.Printf("%s\n", key)
+		}
+		fmt.Printf("\n")
+	}
+
 	if isDryrun {
 		fmt.Printf("Creation of tables succeeded not being written due to the dryrun flag set\n")
 		return
@@ -155,7 +198,7 @@ func doEnvVarDeltas(isDryrun bool) {
 
 	// print that we succeeded
 	fmt.Printf("\nSuccess, see files created in: %s\n", deltaWriteDir(cfg))
-	fmt.Printf("First: check and update the files manually to group entries for easier reading and to fix service names (xxx).\n")
+	fmt.Printf("First: check and update the files manually to group entries for easier reading and to fix service names (xxx and yyy).\n")
 	fmt.Printf("Second: you must run an Antora build. The files written are not tracked. Only a build makes them trackable.\n")
 }
 
@@ -185,6 +228,76 @@ func getDeltaConfig() DeltaConfig {
 	}
 
 	return cfg
+}
+
+// getServiceNames reads the envvar prefix to service name mapping.
+// note that this file is not version specific and located next to the go files
+func getServiceNames() map[string]ServiceName {
+
+	names := map[string]ServiceName{}
+
+	yfile, err := os.ReadFile(yamlServiceNames)
+	if err != nil {
+		log.Fatalf("Failed reading the service names file %s: %+v", yamlServiceNames, err)
+	}
+	err = yaml.Unmarshal(yfile, &names)
+	if err != nil {
+		log.Fatalf("Failed parsing the service names file %s: %+v", yamlServiceNames, err)
+	}
+
+	// an incomplete entry would create a broken xref, catch it here and not in the docs build
+	for prefix, name := range names {
+		if name.Path == "" || name.Name == "" {
+			log.Fatalf("The entry %s in %s must have both, a 'path' and a 'name' key", prefix, yamlServiceNames)
+		}
+	}
+
+	if Env.isVerbose == true {
+		fmt.Printf("Using %d envvar prefixes from %s\n\n", len(names), yamlServiceNames)
+	}
+
+	return names
+}
+
+// resolveService returns the adoc xref of the service an envvar belongs to.
+// global envvars are not bound to a single service and get the special scope page,
+// all others are resolved via the prefix mapping of the service names file.
+// if no prefix matches, the placeholders are kept for manual fixing
+func resolveService(key string) string {
+
+	if strings.HasPrefix(key, globalEnvPrefix) {
+		return serviceXrefGlobal
+	}
+
+	// the longest matching prefix wins, else a key such as 'STORAGE_USERS_...'
+	// could be resolved by a shorter prefix such as 'STORAGE_'
+	match := ""
+	for prefix := range serviceNames {
+		if strings.HasPrefix(key, prefix) && len(prefix) > len(match) {
+			match = prefix
+		}
+	}
+
+	if match == "" {
+		// collect for printing, note that a key can be part of more than one table
+		if !contains(serviceNotFound, key) {
+			serviceNotFound = append(serviceNotFound, key)
+		}
+		return serviceXrefPlaceholder
+	}
+
+	return fmt.Sprintf("xref:{s-path}/%s.adoc[%s]", serviceNames[match].Path, serviceNames[match].Name)
+}
+
+// contains reports if a string is already part of a list
+func contains(list []string, item string) bool {
+
+	for _, element := range list {
+		if element == item {
+			return true
+		}
+	}
+	return false
 }
 
 // mergeExcludeLists merges the two exclude lists and removes duplicates if any
@@ -303,7 +416,7 @@ func getAdded(fileOld *EnvVarList, fileNew *EnvVarList, excludePattern []string,
 		// a global envvar starting with OCIS_ is shared by multiple services and carries the
 		// introduction version of the service that adopted it last. it can therefore be flagged
 		// as added though it is already published with the base version, which makes it a no-add
-		if strings.HasPrefix(key, "OCIS_") {
+		if strings.HasPrefix(key, globalEnvPrefix) {
 			if _, ok := fileOld.values[key]; ok {
 				addedGlobalBefore = append(addedGlobalBefore, key)
 				continue
@@ -378,19 +491,16 @@ func createTable(typeText string, source *EnvVarList, fromVersion string, toVers
 	var b strings.Builder
 	b.WriteString(createAdocStart(typeText, fromVersion, toVersion, dateToday, columns, closing))
 
-	// note that any envvar starting with OCIS_ cant be assigned to a service automatically,
-	// the xref must be corrected in the output file manually.
-	// all OCIS_ envvars come first, all others follow
+	// note that all global envvars come first, all others follow.
+	// the xref of an envvar that can not be resolved to a service keeps the placeholders
+	// and must be corrected in the output file manually
 	for _, isGlobal := range []bool{true, false} {
 		for _, key := range source.keys {
-			if strings.HasPrefix(key, "OCIS_") != isGlobal {
+			if strings.HasPrefix(key, globalEnvPrefix) != isGlobal {
 				continue
 			}
 			value   := source.values[key]
-			service := "xref:{s-path}/xxx.adoc[xxx]"
-			if isGlobal {
-				service = "xref:deployment/services/env-vars-special-scope.adoc[Special Scope Envvars]"
-			}
+			service := resolveService(key)
 			if isDeprecated {
 				b.WriteString(addAdocLine2(service, key, value.Description, value.RemovalVersion, value.DeprecationInfo))
 			} else {

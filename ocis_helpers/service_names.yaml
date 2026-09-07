@@ -1,0 +1,143 @@
+# mapping of envvar prefixes to service names, used by the 'deltas' task of the ocis_helpers go program
+#
+# the generated tables reference the service an envvar belongs to with an adoc xref such as:
+#   xref:{s-path}/userlog.adoc[Userlog]
+# the 'path' key below is the file name of the service page (xxx), the 'name' key is the link text (yyy)
+#
+# how it is used:
+# - envvars starting with 'OCIS_' are global and always point to the special scope envvars page,
+#   they are not resolved here
+# - all other envvars are matched against the prefixes below, the longest matching prefix wins.
+#   this keeps 'STORAGE_USERS_' from being resolved by a shorter 'STORAGE_' prefix
+# - if no prefix matches, the 'xxx' and 'yyy' placeholders are kept in the generated table
+#   and must be fixed manually. unresolved envvars are printed when the task runs
+#
+# ADD or CHANGE entries when ocis adds or renames a service.
+# the prefix keys MUST be written with their trailing underscore.
+
+ACTIVITYLOG_:
+  path: activitylog
+  name: Activitylog
+ANTIVIRUS_:
+  path: antivirus
+  name: Antivirus
+APP_PROVIDER_:
+  path: app-provider
+  name: App-Provider
+APP_REGISTRY_:
+  path: app-registry
+  name: App-Registry
+AUDIT_:
+  path: audit
+  name: Audit
+AUTH_APP_:
+  path: auth-app
+  name: Auth-App
+AUTH_BASIC_:
+  path: auth-basic
+  name: Auth-Basic
+AUTH_BEARER_:
+  path: auth-bearer
+  name: Auth-Bearer
+AUTH_MACHINE_:
+  path: auth-machine
+  name: Auth-Machine
+AUTH_SERVICE_:
+  path: auth-service
+  name: Auth-Service
+CLIENTLOG_:
+  path: clientlog
+  name: Clientlog
+COLLABORATION_:
+  path: collaboration
+  name: Collaboration
+EVENTHISTORY_:
+  path: eventhistory
+  name: Eventhistory
+FRONTEND_:
+  path: frontend
+  name: Frontend
+GATEWAY_:
+  path: gateway
+  name: Gateway
+GRAPH_:
+  path: graph
+  name: Graph
+GROUPS_:
+  path: groups
+  name: Groups
+IDM_:
+  path: idm
+  name: IDM
+IDP_:
+  path: idp
+  name: IDP
+INVITATIONS_:
+  path: invitations
+  name: Invitations
+NATS_:
+  path: nats
+  name: NATS
+NOTIFICATIONS_:
+  path: notifications
+  name: Notifications
+OCDAV_:
+  path: ocdav
+  name: OCDAV
+OCM_:
+  path: ocm
+  name: OCM
+OCS_:
+  path: ocs
+  name: OCS
+POLICIES_:
+  path: policies
+  name: Policies
+POSTPROCESSING_:
+  path: postprocessing
+  name: Postprocessing
+PROXY_:
+  path: proxy
+  name: Proxy
+SEARCH_:
+  path: search
+  name: Search
+SETTINGS_:
+  path: settings
+  name: Settings
+SHARING_:
+  path: sharing
+  name: Sharing
+SSE_:
+  path: sse
+  name: SSE
+STORAGE_PUBLICLINK_:
+  path: storage-publiclink
+  name: Storage-Publiclink
+STORAGE_SHARES_:
+  path: storage-shares
+  name: Storage-Shares
+STORAGE_SYSTEM_:
+  path: storage-system
+  name: Storage-System
+STORAGE_USERS_:
+  path: storage-users
+  name: Storage-Users
+THUMBNAILS_:
+  path: thumbnails
+  name: Thumbnails
+USERLOG_:
+  path: userlog
+  name: Userlog
+USERS_:
+  path: users
+  name: Users
+WEB_:
+  path: web
+  name: Web
+WEBDAV_:
+  path: webdav
+  name: WebDAV
+WEBFINGER_:
+  path: webfinger
+  name: WebFinger
