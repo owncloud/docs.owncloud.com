@@ -4,22 +4,31 @@ This folder contains a set of helpers written in Go and Bash, which are used to 
 
 A copy task will copy all relevant data to a subfolder inside the modules directory which is build relevant for Antora.
 
-The subfolders in `services` (see [Folder Structure](#folder-structure)) are the source for this process. Some content in these folders need mandatory manual updating before the copy task can be issued. This is due to the fact that only a human can decide the outcome. Although many things are fully automated, these few steps cant.
+The subfolders in `services` (see [Folder Structure](#folder-structure)) are the source for this process. Some content in these folders need mandatory manual updating before the copy task can be issued. This is due to the fact that only a human can decide on the desired outcome. Although many things are fully automated, these few steps cant.
 
 ## Table of Contents
 
+   * [Table of Contents](#table-of-contents)
    * [Prerequisites](#prerequisites)
    * [Process Flow](#process-flow)
    * [Programs and Scripts](#programs-and-scripts)
+   * [Tasks](#tasks)
+      * [service](#service)
+      * [rogue](#rogue)
+      * [extended](#extended)
+      * [deltas](#deltas)
+      * [copy](#copy)
+      * [cleanup_s and cleanup_h](#cleanup_s-and-cleanup_h)
    * [Folder Structure](#folder-structure)
    * [Notes to the extended_vars.yaml File](#notes-to-the-extended_varsyaml-file)
       * [Tasks After any File Changes](#tasks-after-any-file-changes)
       * [Recovery](#recovery)
    * [Helper Usage](#helper-usage)
-      * [Branch Dependent Tasks](#branch-dependent-tasks)
-         * [In the Master Branch](#in-the-master-branch)
-         * [In a Version Branch](#in-a-version-branch)
+      * [Version Dependent Tasks](#version-dependent-tasks)
+         * [For the Docs Prerelease Version](#for-the-docs-prerelease-version)
+         * [For any Other Version](#for-any-other-version)
    * [Envvar Delta File Creation](#envvar-delta-file-creation)
+   * [Development](#development)
 
 ## Prerequisites
 
@@ -35,7 +44,7 @@ The steps to keep everything in sync are:
 
 * Regularly use the `service` and `rogue` task from the prerelease against ocis master.\
 Note that the prerelease is a regular version folder. The question if you have switched to the relevant stable version in ocis applies then to ocis/master.
-* Always use all helpers for a new ocis version
+* Always use all helpers for a new ocis version.
 * The copy task will copy the generated files related to a version to a defined location where Antora can process them.
 
 ## Programs and Scripts
@@ -52,6 +61,66 @@ This Bash script **checks for any non-SemVer usage** of environment variables re
 This Go program **generates all the envvar related files required** for the documentation. It is _highly recommended_ to run them one by one. The generated files are located in the `services` subfolder unless otherwise defined.
 
 The `deltas` task of this program generates the relevant **added, deprecated and removed** envvar adoc tables. To run this task, you must first change the versions to be compared in the `delta_config.yaml` file of the version processed to ensure the output is correct. A major prerequisite is, that each version to be compared must have an up-to-date `env_vars.yaml` file located in the `persistent_files` subfolder of that version and that all changes are already merged into the relevant ocis version branches.
+
+## Tasks
+
+**Files with output**
+
+1.  `service`:   generate service envvar tables
+2.  `rogue`:     create/update the extended_vars.yaml file
+3.  `extended`:  generate extended_configvars table
+4.  `deltas`:    generate the added, deprecated and removed envvar tables
+5.  `copy`:      copy the subfolders of /services/ to /modules/admin/examples/ocis_helpers/ except 'persistent_files'
+
+**Cleanup only**
+
+6.  `cleanup_s`: cleanup folders in /services/ except 'persistent_files'. run service, extended, deltas to recreate
+7.  `cleanup_h`: remove the folder /modules/admin/examples/ocis_helpers/. folder contents is build relevant for antora
+
+### service
+
+The `service` task reads all environment variables present in the code in the ocis repository's services folder. Therefore, it is crucial to switch to the relevant ocis branch first and parameterise the helper for the target version in question. See section [Helper Usage](#helper-usage) for more details.
+
+There are four outcomes of this task:
+
+* For each service an adoc (`<service_name>_configvars.adoc`) file that renders to a table containing each envvar used for the particular service.
+* For all global envvars (starting with `OCIS_`) a file named `global_configvars.adoc`.
+* For each service a yaml file (`<service-name>-config-example.yaml`) for deployments that use yaml configuration. Note that there is no extra file covering global envvars.
+* A file named `env_vars.yaml` that is a collection of envvars with additional information which is used to create delta files.
+
+### rogue
+
+The `rogue` task identifies all environment variables that are not defined in a service. These environment variables are queried on ocis startup, before any other actions or settings are made. The relevant identification method is the use of the Go function go.GetEnv. Due to the nature of this process, the result must be checked and fixed manually, because if the code location shifts, the process cannot identify its validity. Any changes to this file must be checked for validity. Therefore, it is crucial to switch to the respective ocis branch first and parameterise the helper for the corresponding target version. See section [Helper Usage](#helper-usage) for more details. There is a section [Notes to the extended_vars.yaml File](#notes-to-the-extended_varsyaml-file) with an in-depth description for how to manage changes.
+
+There is one outcome of this task:
+
+* The file named `extended_vars.yaml` collects all the rogue environment variables found, along with additional information, which is then used to create the `extended_configvars.adoc` file.
+
+### extended
+
+The `extended` taks generates from the `extended_vars.yaml` an adoc file.
+
+There is one outcome of this task:
+
+* A file named `extended_configvars.adoc` that represents all rogue envvars.
+
+### deltas
+
+The `deltas` task generates a set of output files representing the changes to the former version for each target version defined. This task requires the `service` task to have been run, and for all referenced `env_vars.yaml` files to be up to date. There is a section [Notes to the extended_vars.yaml File](#notes-to-the-extended_varsyaml-file) with an in-depth description for how to manage changes [Envvar Delta File Creation](#envvar-delta-file-creation).
+
+There are three outcomes of this task:
+
+* A file named `<version_from>-<version-to>-added.adoc` that represents the added envvars to this version.
+* A file named `<version_from>-<version-to>-deprecated.adoc` that represents the deprecated envvars in this version.
+* A file named `<version_from>-<version-to>-removed.adoc` that represents the removed envvars from this version.
+
+### copy
+
+The `copy` task moves all non-permanent results to their final destination for use with Antora. Please note that using the `copy` task alone ensures that the files are tracked and included in any docs build.
+
+### cleanup_s and cleanup_h
+
+These tasks cleanup (remove) any files that were created by the helpers in either the `services` (except persistent files) and the output folder. Note that the latter is relevant when developing, as Go template files are temporarily saved there.
 
 ## Folder Structure
 
@@ -239,6 +308,8 @@ The following tasks need to be issued:
 
 ## Envvar Delta File Creation
 
+The delta file creation relies on a file named `service_names.yaml` located in this folder. There you find a list of keys that represent the first part of a service dependent envvar such as `ACTIVITYLOG_` (note the trailing underscore) which could then match any envvar such as `ACTIVITYLOG_STORE_ENABLE_TLS`. This key is queried and if matched, the path and name values are used to pre-polulate the `xref:` in the delta file. `path` and `name` are used as follows: `xref:{s-path}/<path>.adoc[<name>]`. If the key cant be identified, placeholders are used and you are notified to fix it. This is usually **ONLY** necessary if a new service is introduced.
+
 To create the `added, deprecated and removed` environment variables adoc files for a version, the following prerequisites must be met and steps must be taken:
 
 * All versions compared must have an actual `env_vars.yaml` file present in the respective ocis docs version. If a file is out-of-date, you must run the `services` task for that version, for details see above.
@@ -254,10 +325,14 @@ To create the `added, deprecated and removed` environment variables adoc files f
   * Note that if placeholders are found that have not been catched with the bash script or if there are patch releases for introduction versions other than `0` (zero), you must fix them in the ocis branches (plural) first and recreate + merge the changed `env_vars.yaml` file before restarting.
 
 * Adapt the content of the output:
-  * Replace, if present, `xxx` with the appropriate service name.\
-    Consider that the string for `xref` needs to be all lower letters while the printed name starts with a capital letter.
+  * Check for any occurrences of `xxx` and `yyy` respectively you are notified on the command line.\
+    Consider that `xref` mandatory requires a resolvable path which will latest pop up on error when building the docs.
   * Group all envvars that belong to the same service and remove the xref directive  for all but the first. This makes reading much easier.
 
-* Before merging the changes, a docs build **must** be issued to ensure that all changes are picked up by the Antora build process.
+* Before merging the changes, run the copy task and **mandatory** do a docs build to ensure that all changes are correctly rendered.
 
-**Note that on any consecutive script run, any changes made are overwritten and you need to re-apply them!**
+**Note that on any consecutive script run, any manual changes made are overwritten. You need to re-apply them!**
+
+## Development
+
+When developing `ocis_helpers`, run `go build` to create a new executable file and merge it to this repo.

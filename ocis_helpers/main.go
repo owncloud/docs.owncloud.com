@@ -72,7 +72,7 @@ func main() {
 
 	// required: <version> <task>
 	if len(positionalArgs) < 2 {
-		fmt.Println("You need to provide the ocis version and the task as argument. Use help for more details.\n")
+		fmt.Println("You need to provide the ocis version and the task as argument. Use -h (help) for more details.\n")
 		os.Exit(0)
 	}
 
