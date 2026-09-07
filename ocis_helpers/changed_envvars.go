@@ -491,6 +491,9 @@ func createTable(typeText string, source *EnvVarList, fromVersion string, toVers
 	var b strings.Builder
 	b.WriteString(createAdocStart(typeText, fromVersion, toVersion, dateToday, columns, closing))
 
+	// the xref written for the line before, used to group consecutive lines of the same service
+	previous := ""
+
 	// note that all global envvars come first, all others follow.
 	// the xref of an envvar that can not be resolved to a service keeps the placeholders
 	// and must be corrected in the output file manually
@@ -501,6 +504,17 @@ func createTable(typeText string, source *EnvVarList, fromVersion string, toVers
 			}
 			value   := source.values[key]
 			service := resolveService(key)
+
+			// only the first line of a group carries the xref, the following lines get an empty
+			// service cell which keeps the leading pipe. this is what was done manually before.
+			// note that unresolved envvars are never grouped, their placeholders are identical
+			// but they may belong to different services and each needs a manual fix
+			if service == previous && service != serviceXrefPlaceholder {
+				service = ""
+			} else {
+				previous = service
+			}
+
 			if isDeprecated {
 				b.WriteString(addAdocLine2(service, key, value.Description, value.RemovalVersion, value.DeprecationInfo))
 			} else {
