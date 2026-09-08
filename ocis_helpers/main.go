@@ -44,7 +44,7 @@ func main() {
 
 	verboseP := flag.Bool("v", false, "Enable verbosity")
 	removeP  := flag.Bool("r", false, "Do not remove output directory when finished")
-	dryrunP  := flag.Bool("d", false, "Dryrun, generate but do not write files (task 'deltas' only)")
+	dryrunP  := flag.Bool("d", false, "Task 'deltas': dryrun, generate but do not write files. Task 'service': print debug info")
 	helpP    := flag.Bool("h", false, "Print help message")
 
 	flag.Usage = func() {
@@ -60,6 +60,10 @@ func main() {
 	isRemove  := !*removeP
 	isDryrun  := *dryrunP
 	isHelp    := *helpP
+
+	// the '-d' flag is task dependent. for the 'deltas' task it is a dryrun, for the
+	// 'service' task it enables debug output in the generated intermediate code
+	isDebug   := *dryrunP
 
 	// if flag is set, print help text and exit
 	if isHelp {
@@ -98,7 +102,7 @@ func main() {
 	output_dir   = version_dir + output_dir
 	examples_dir = version_dir + examples_dir
 
-	createEnvFile(isVerbose, isRemove)
+	createEnvFile(isVerbose, isRemove, isDebug)
 
 	// do tasks based on task entered
 	switch positionalArgs[1] {
@@ -130,8 +134,8 @@ func main() {
 }
 
 // create the .env file
-// isVerbose and isRemove are provided by flags defined above
-func createEnvFile(isVerbose bool, isRemove bool) {
+// isVerbose, isRemove and isDebug are provided by flags defined above
+func createEnvFile(isVerbose bool, isRemove bool, isDebug bool) {
 
 	// pre-create basic directories, subdirectories will be added on the fly
 	var err error
@@ -156,8 +160,8 @@ func createEnvFile(isVerbose bool, isRemove bool) {
 	// write functional vars to a file: .env
 	// required to be read by go and the templates
 	// the file will be overwritten if exists
-	envContent := fmt.Sprintf("IS_VERBOSE=%t\nIS_REMOVE=%t\nSERVICES_DIR=%s\nOUTPUT_DIR=%s\nOCIS_DIR=%s\nFOLDER_MOD=%s\nFILE_MOD=%s\n",
-		isVerbose, isRemove, services_dir, output_dir, ocis_dir, folder_mode, file_mode)
+	envContent := fmt.Sprintf("IS_VERBOSE=%t\nIS_REMOVE=%t\nIS_DEBUG=%t\nSERVICES_DIR=%s\nOUTPUT_DIR=%s\nOCIS_DIR=%s\nFOLDER_MOD=%s\nFILE_MOD=%s\n",
+		isVerbose, isRemove, isDebug, services_dir, output_dir, ocis_dir, folder_mode, file_mode)
 	err = os.WriteFile(".env", []byte(envContent), fm)
 	if err != nil {
 		log.Fatal(err)

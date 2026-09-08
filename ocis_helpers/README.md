@@ -88,6 +88,8 @@ There are four outcomes of this task:
 * For each service a yaml file (`<service-name>-config-example.yaml`) for deployments that use yaml configuration. Note that there is no extra file covering global envvars.
 * A file named `env_vars.yaml` that is a collection of envvars with additional information which is used to create delta files.
 
+Use the `-d` flag (debug) to additionally print all global envvars (starting with `OCIS_`) where the service envvars referencing them do not agree on the same `defaultValue`. For each of those global envvars, all different default values found are printed together with the service envvars using them. The flag does not change the content written.
+
 ### rogue
 
 The `rogue` task identifies all environment variables that are not defined in a service. These environment variables are queried on ocis startup, before any other actions or settings are made. The relevant identification method is the use of the Go function go.GetEnv. Due to the nature of this process, the result must be checked and fixed manually, because if the code location shifts, the process cannot identify its validity. Any changes to this file must be checked for validity. Therefore, it is crucial to switch to the respective ocis branch first and parameterise the helper for the corresponding target version. See section [Helper Usage](#helper-usage) for more details. There is a section [Notes to the extended_vars.yaml File](#notes-to-the-extended_varsyaml-file) with an in-depth description for how to manage changes.
@@ -107,6 +109,8 @@ There is one outcome of this task:
 ### deltas
 
 The `deltas` task generates a set of output files representing the changes to the former version for each target version defined. This task requires the `service` task to have been run, and for all referenced `env_vars.yaml` files to be up to date. There is a section [Notes to the extended_vars.yaml File](#notes-to-the-extended_varsyaml-file) with an in-depth description for how to manage changes [Envvar Delta File Creation](#envvar-delta-file-creation).
+
+Use the `-d` flag (debug) to check for introduction versions that are found additionally but are out of scope.
 
 There are three outcomes of this task:
 

@@ -5,6 +5,8 @@ import (
 	"gopkg.in/yaml.v2"
 	"html"
 	"reflect"
+	"sort"
+	"strconv"
 	"strings"
 	"log"
 	"os"
@@ -15,6 +17,9 @@ import (
 )
 
 // info: yamlServiceSource and persistent_files are defined in read_env_file.go
+
+// the introduction version of envvars that exist longer than versions got tracked
+const preVersion = "pre5.0"
 
 type ConfigField struct {
 	Name                string `yaml:"name"`
@@ -75,37 +80,72 @@ func doEnvarDelta() {
 						fmt.Printf("%v, duplicate key, merging\n", variant)
 					}
 
+					// 'OCIS_' prefixed envvars are global ones and can be defined by more than
+					// one service with differing content. for those, an existing value is not
+					// overwritten but the new one added, which keeps all variants visible.
+					// note that the name is excluded and gets overwritten as before.
+					isGlobal := strings.HasPrefix(variant, "OCIS_")
+
 					if strings.TrimSpace(configFields[variant].DefaultValue) != "" && configFields[variant].DefaultValue != field.DefaultValue {
-						configFields[variant].DefaultValue = field.DefaultValue
+						configFields[variant].DefaultValue = mergeValue(isGlobal, configFields[variant].DefaultValue, field.DefaultValue)
 					}
 					if strings.TrimSpace(configFields[variant].Description) != "" && configFields[variant].Description != field.Description {
-						configFields[variant].Description = field.Description
+						configFields[variant].Description = mergeValue(isGlobal, configFields[variant].Description, field.Description)
 					}
 					if strings.TrimSpace(configFields[variant].Type) != "" && configFields[variant].Type != field.Type {
-						configFields[variant].Type = field.Type
+						configFields[variant].Type = mergeValue(isGlobal, configFields[variant].Type, field.Type)
 					}
 					if strings.TrimSpace(configFields[variant].IntroductionVersion) != "" && configFields[variant].IntroductionVersion != field.IntroductionVersion {
-						configFields[variant].IntroductionVersion = field.IntroductionVersion
+						configFields[variant].IntroductionVersion = mergeValue(isGlobal, configFields[variant].IntroductionVersion, field.IntroductionVersion)
 					}
 					if strings.TrimSpace(configFields[variant].DeprecationVersion) != "" && configFields[variant].DeprecationVersion != field.DeprecationVersion {
-						configFields[variant].DeprecationVersion = field.DeprecationVersion
+						configFields[variant].DeprecationVersion = mergeValue(isGlobal, configFields[variant].DeprecationVersion, field.DeprecationVersion)
 					}
 					if strings.TrimSpace(configFields[variant].RemovalVersion) != "" && configFields[variant].RemovalVersion != field.RemovalVersion {
-						configFields[variant].RemovalVersion = field.RemovalVersion
+						configFields[variant].RemovalVersion = mergeValue(isGlobal, configFields[variant].RemovalVersion, field.RemovalVersion)
 					}
 					if strings.TrimSpace(configFields[variant].Name) != "" && configFields[variant].Name != field.Name {
 						configFields[variant].Name = field.Name
 					}
 					if strings.TrimSpace(configFields[variant].DeprecationInfo) != "" && configFields[variant].DeprecationInfo != field.DeprecationInfo {
 						// there might be multiple superseeding DeprecationInformations, we might want to keep track of those, that's why we are not overwriting the field
-						configFields[variant].DeprecationInfo = configFields[variant].DeprecationInfo + " | " + field.DeprecationInfo
+						configFields[variant].DeprecationInfo = addValue(configFields[variant].DeprecationInfo, field.DeprecationInfo)
 					}
 				}
 			}
 		}
 	}
 
-	result, err := yaml.Marshal(configFields)
+	// the deprecation info of a key can contain multiple entries, either added by the
+	// merge above or read from an existing file. drop duplicates from all of them.
+	for key, configField := range configFields {
+		if configField == nil {
+			continue
+		}
+		configField.DeprecationInfo = dedupValue(configField.DeprecationInfo)
+
+		// a global envvar can be introduced by more than one service and therefore can
+		// have more than one introduction version collected. only the lowest one counts.
+		if strings.HasPrefix(key, "OCIS_") {
+			configField.IntroductionVersion = lowestVersion(configField.IntroductionVersion)
+		}
+	}
+
+	// marshalling a map would use the yaml internal key sorter which does not sort
+	// strictly alphabetical because it treats non letters like the underscore special.
+	// to force a strict alphabetical key order, sort the keys and marshal a
+	// yaml.MapSlice which keeps the order given.
+	keys := make([]string, 0, len(configFields))
+	for key := range configFields {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	ordered := make(yaml.MapSlice, 0, len(keys))
+	for _, key := range keys {
+		ordered = append(ordered, yaml.MapItem{Key: key, Value: configFields[key]})
+	}
+
+	result, err := yaml.Marshal(ordered)
 	if err != nil {
 		log.Fatalf("Could not marshall variables: %v", err)
 	}
@@ -113,9 +153,193 @@ func doEnvarDelta() {
 	if err != nil {
 		log.Fatalf("could not write %s", fullYamlPath)
 	}
+
+	// the '-d' flag only prints additional information, it does not change what is written
+	if Env.isDebug {
+		printGlobalDefaultValues(configFields)
+	}
 	if err := os.Chdir(targetFolder); err != nil {
 		log.Fatal(err)
 	}
+}
+
+// mergeValue returns the value to use if a key is defined more than once.
+// for global ('OCIS_') envvars, the new value gets added to the existing one,
+// for all other envvars the existing value gets overwritten as before.
+func mergeValue(isGlobal bool, existing string, incoming string) string {
+
+	if !isGlobal {
+		return incoming
+	}
+	return addValue(existing, incoming)
+}
+
+// addValue adds a value to an existing one using ' | ' as separator.
+// empty values and values already present are not added.
+func addValue(existing string, incoming string) string {
+
+	if strings.TrimSpace(incoming) == "" {
+		return existing
+	}
+	return dedupValue(existing + " | " + incoming)
+}
+
+// dedupValue removes duplicate and empty entries from a ' | ' separated value.
+// the order of the remaining entries is the one of their first appearance.
+func dedupValue(value string) string {
+
+	parts := strings.Split(value, " | ")
+	seen := make(map[string]bool, len(parts))
+	unique := make([]string, 0, len(parts))
+
+	for _, part := range parts {
+		part = strings.TrimSpace(part)
+		if part == "" || seen[part] {
+			continue
+		}
+		seen[part] = true
+		unique = append(unique, part)
+	}
+	return strings.Join(unique, " | ")
+}
+
+// printGlobalDefaultValues prints the default values of all service envvars (keys not
+// starting with 'OCIS_') that carry a global envvar in their name but do not share the
+// same default value with the other envvars using that same global envvar.
+// this is a debug report enabled by the '-d' flag, it prints nothing else.
+func printGlobalDefaultValues(configFields map[string]*ConfigField) {
+
+	// collect the default values used per global envvar together with the keys using them
+	globals := make(map[string]map[string][]string)
+
+	for key, configField := range configFields {
+		if configField == nil || strings.HasPrefix(key, "OCIS_") {
+			continue
+		}
+		for _, variant := range strings.Split(configField.Name, ";") {
+			variant = strings.TrimSpace(variant)
+			if !strings.HasPrefix(variant, "OCIS_") {
+				continue
+			}
+			if globals[variant] == nil {
+				globals[variant] = make(map[string][]string)
+			}
+			globals[variant][configField.DefaultValue] = append(globals[variant][configField.DefaultValue], key)
+		}
+	}
+
+	// only global envvars with more than one default value are of interest
+	names := make([]string, 0, len(globals))
+	for name, values := range globals {
+		if len(values) > 1 {
+			names = append(names, name)
+		}
+	}
+	sort.Strings(names)
+
+	fmt.Printf(Yellow + "\nDebug: global envvars with differing default values in the envvars using them\n\n" + Reset)
+
+	if len(names) == 0 {
+		fmt.Printf("None found, all default values match\n")
+		return
+	}
+
+	for _, name := range names {
+		fmt.Printf("%s\n", name)
+
+		values := make([]string, 0, len(globals[name]))
+		for value := range globals[name] {
+			values = append(values, value)
+		}
+		sort.Strings(values)
+
+		for _, value := range values {
+			keys := globals[name][value]
+			sort.Strings(keys)
+			fmt.Printf("  %q\n", value)
+			fmt.Printf("    %s\n", strings.Join(keys, ", "))
+		}
+		fmt.Printf("\n")
+	}
+}
+
+// lowestVersion reduces a ' | ' separated list of versions to the lowest one.
+// preVersion wins over any other version if it is part of the list. if no entry
+// can be identified as a version, the value is returned unchanged.
+func lowestVersion(value string) string {
+
+	lowest := ""
+
+	for _, part := range strings.Split(value, " | ") {
+		part = strings.TrimSpace(part)
+		if part == preVersion {
+			return preVersion
+		}
+		if !isVersion(part) {
+			continue
+		}
+		if lowest == "" || compareVersions(part, lowest) < 0 {
+			lowest = part
+		}
+	}
+
+	if lowest == "" {
+		return value
+	}
+	return lowest
+}
+
+// isVersion checks if a value consists of dot separated numbers only
+func isVersion(value string) bool {
+
+	if value == "" {
+		return false
+	}
+	for _, part := range strings.Split(value, ".") {
+		if _, err := strconv.Atoi(part); err != nil {
+			return false
+		}
+	}
+	return true
+}
+
+// compareVersions compares two dot separated numeric versions and returns -1 if the
+// first one is lower, 1 if it is higher and 0 if both are equal. a missing part like
+// the patch level in '5.0' counts as 0 which makes '5.0' and '5.0.0' equal.
+func compareVersions(first string, second string) int {
+
+	partsFirst  := strings.Split(first, ".")
+	partsSecond := strings.Split(second, ".")
+
+	count := len(partsFirst)
+	if len(partsSecond) > count {
+		count = len(partsSecond)
+	}
+
+	for i := 0; i < count; i++ {
+		numberFirst  := versionPart(partsFirst, i)
+		numberSecond := versionPart(partsSecond, i)
+		if numberFirst < numberSecond {
+			return -1
+		}
+		if numberFirst > numberSecond {
+			return 1
+		}
+	}
+	return 0
+}
+
+// versionPart returns the number of a version part or 0 if the part does not exist
+func versionPart(parts []string, index int) int {
+
+	if index >= len(parts) {
+		return 0
+	}
+	number, err := strconv.Atoi(parts[index])
+	if err != nil {
+		return 0
+	}
+	return number
 }
 
 func GetAnnotatedVariables(s interface{}) []ConfigField {

@@ -15,6 +15,7 @@ import (
 type ESt struct {
     isVerbose        bool
     isRemove         bool
+    isDebug          bool
     services_dir     string
     output_dir       string
     ocis_dir         string
@@ -70,6 +71,11 @@ func ReadEnv() {
 			if strings.HasPrefix(line, "IS_REMOVE=") {
 				Env.isRemove = strings.TrimPrefix(line, "IS_REMOVE=") == "true"
 				_ = Env.isRemove
+				continue
+			}
+			if strings.HasPrefix(line, "IS_DEBUG=") {
+				Env.isDebug = strings.TrimPrefix(line, "IS_DEBUG=") == "true"
+				_ = Env.isDebug
 				continue
 			}
 			if strings.HasPrefix(line, "SERVICES_DIR=") {
