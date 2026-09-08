@@ -53,24 +53,40 @@ func doEnvarDelta() {
 	if err := os.MkdirAll(targetFolder, Env.folder_mode); err != nil {
 		log.Fatalf("Failed to create target folder: %s", err)
 	}
-	if err == nil {
-		err := yaml.Unmarshal(yfile, configFields)
-		if err != nil {
+
+	// the file collects the envvars of a version over all runs. if it is missing, like on
+	// the first run for a new version, it gets created from the code data collected below.
+	// note that any other read error must not be treated like a missing file
+	isNewFile := false
+
+	switch {
+	case err == nil:
+		if err := yaml.Unmarshal(yfile, configFields); err != nil {
 			log.Fatal(err)
 		}
-	} else {
-	    fmt.Printf("File does not exist, will be created: %s\n", fullYamlPath)
-    }
+	case os.IsNotExist(err):
+		isNewFile = true
+		fmt.Printf(Yellow + "Note: the file does not exist and will be created: %s\n" + Reset, fullYamlPath)
+	default:
+		log.Fatalf("Failed reading %s: %+v", fullYamlPath, err)
+	}
 
 	m := map[string]interface{}{
 		{{- range $key, $value := .}}
 			"{{$value}}": *pkg{{$key}}.FullDefaultConfig(),
 		{{- end }}
 	}
+
+	// the occurrences of a global envvar in the services, see addGlobalOccurrences below.
+	// note that they must be collected from the names of the code and not from the names
+	// of the file read, else already completed names would accumulate
+	occurrences := make(map[string][]string)
+
 	for _, conf := range m {
 		fields = GetAnnotatedVariables(conf)
 		for _, field := range fields {
 			variants := strings.Split(field.Name, ";")
+			collectOccurrences(occurrences, variants)
 			for _, variant := range variants {
 				if (configFields[variant] != nil && configFields[variant].Name == "") || configFields[variant] == nil {
 					configFields[variant] = &field
@@ -131,6 +147,8 @@ func doEnvarDelta() {
 		}
 	}
 
+	addGlobalOccurrences(configFields, occurrences)
+
 	// marshalling a map would use the yaml internal key sorter which does not sort
 	// strictly alphabetical because it treats non letters like the underscore special.
 	// to force a strict alphabetical key order, sort the keys and marshal a
@@ -154,9 +172,18 @@ func doEnvarDelta() {
 		log.Fatalf("could not write %s", fullYamlPath)
 	}
 
+	if isNewFile {
+		fmt.Printf(Yellow + "Note: the file has been created with %d envvars, it must be committed: %s\n" + Reset, len(configFields), fullYamlPath)
+	}
+
 	// the '-d' flag only prints additional information, it does not change what is written
 	if Env.isDebug {
-		printGlobalDefaultValues(configFields)
+		printGlobalFieldValues(configFields, "default values", func(configField *ConfigField) string {
+			return configField.DefaultValue
+		})
+		printGlobalFieldValues(configFields, "descriptions", func(configField *ConfigField) string {
+			return configField.Description
+		})
 	}
 	if err := os.Chdir(targetFolder); err != nil {
 		log.Fatal(err)
@@ -203,13 +230,72 @@ func dedupValue(value string) string {
 	return strings.Join(unique, " | ")
 }
 
-// printGlobalDefaultValues prints the default values of all service envvars (keys not
-// starting with 'OCIS_') that carry a global envvar in their name but do not share the
-// same default value with the other envvars using that same global envvar.
-// this is a debug report enabled by the '-d' flag, it prints nothing else.
-func printGlobalDefaultValues(configFields map[string]*ConfigField) {
+// collectOccurrences records for each global ('OCIS_') envvar of a name the other envvars
+// listed in that same name. a name lists the global envvar and the envvar of the service
+// using it, separated by ';', which makes the latter an occurrence of the global one
+func collectOccurrences(occurrences map[string][]string, variants []string) {
 
-	// collect the default values used per global envvar together with the keys using them
+	for _, variant := range variants {
+		variant = strings.TrimSpace(variant)
+		if !strings.HasPrefix(variant, "OCIS_") {
+			continue
+		}
+		for _, occurrence := range variants {
+			occurrence = strings.TrimSpace(occurrence)
+			if occurrence == "" || occurrence == variant {
+				continue
+			}
+			occurrences[variant] = append(occurrences[variant], occurrence)
+		}
+	}
+}
+
+// addGlobalOccurrences completes the name of all global ('OCIS_') envvars. a global envvar
+// can be used by more than one service but the name of its key only shows the occurrence
+// that has been added last. all occurrences collected get added to the name of the global
+// key, the global envvar itself stays in front.
+// note that a global envvar that is no longer in the code keeps the name of the file read
+func addGlobalOccurrences(configFields map[string]*ConfigField, occurrences map[string][]string) {
+
+	for key, configField := range configFields {
+		if configField == nil || !strings.HasPrefix(key, "OCIS_") {
+			continue
+		}
+		// a global envvar without any occurrence keeps its name as it is
+		if len(occurrences[key]) == 0 {
+			continue
+		}
+
+		configField.Name = key + ";" + strings.Join(sortUnique(occurrences[key]), ";")
+	}
+}
+
+// sortUnique returns the values sorted alphabetically with duplicates dropped
+func sortUnique(values []string) []string {
+
+	seen   := make(map[string]bool, len(values))
+	unique := make([]string, 0, len(values))
+
+	for _, value := range values {
+		if seen[value] {
+			continue
+		}
+		seen[value] = true
+		unique = append(unique, value)
+	}
+	sort.Strings(unique)
+
+	return unique
+}
+
+// printGlobalFieldValues prints the values of the field selected by 'value' of all service
+// envvars (keys not starting with 'OCIS_') that carry a global envvar in their name but do
+// not share the same field value with the other envvars using that same global envvar.
+// 'label' names the field in plural and is used for the report headings.
+// this is a debug report enabled by the '-d' flag, it prints nothing else.
+func printGlobalFieldValues(configFields map[string]*ConfigField, label string, value func(*ConfigField) string) {
+
+	// collect the field values used per global envvar together with the keys using them
 	globals := make(map[string]map[string][]string)
 
 	for key, configField := range configFields {
@@ -224,11 +310,11 @@ func printGlobalDefaultValues(configFields map[string]*ConfigField) {
 			if globals[variant] == nil {
 				globals[variant] = make(map[string][]string)
 			}
-			globals[variant][configField.DefaultValue] = append(globals[variant][configField.DefaultValue], key)
+			globals[variant][value(configField)] = append(globals[variant][value(configField)], key)
 		}
 	}
 
-	// only global envvars with more than one default value are of interest
+	// only global envvars with more than one field value are of interest
 	names := make([]string, 0, len(globals))
 	for name, values := range globals {
 		if len(values) > 1 {
@@ -237,10 +323,10 @@ func printGlobalDefaultValues(configFields map[string]*ConfigField) {
 	}
 	sort.Strings(names)
 
-	fmt.Printf(Yellow + "\nDebug: global envvars with differing default values in the envvars using them\n\n" + Reset)
+	fmt.Printf(Yellow + "\nDebug: global envvars with differing %s in the envvars using them\n\n" + Reset, label)
 
 	if len(names) == 0 {
-		fmt.Printf("None found, all default values match\n")
+		fmt.Printf("None found, all %s match\n", label)
 		return
 	}
 

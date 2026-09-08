@@ -88,7 +88,9 @@ There are four outcomes of this task:
 * For each service a yaml file (`<service-name>-config-example.yaml`) for deployments that use yaml configuration. Note that there is no extra file covering global envvars.
 * A file named `env_vars.yaml` that is a collection of envvars with additional information which is used to create delta files.
 
-Use the `-d` flag (debug) to additionally print all global envvars (starting with `OCIS_`) where the service envvars referencing them do not agree on the same `defaultValue`. For each of those global envvars, all different default values found are printed together with the service envvars using them. The flag does not change the content written.
+In file `env_vars.yaml`, for a global envvar (starting with `OCIS_`), the `name` key lists the global envvar followed by all service envvars using it, separated by `;`. The occurrences are collected from the ocis code, a global envvar that is no longer part of the code keeps the name it had.
+
+Use the `-d` flag (debug) to additionally print all global envvars (starting with `OCIS_`) where the service envvars referencing them do not agree on the same `defaultValue`. For each of those global envvars, all different default values found are printed together with the service envvars using them. The same report is printed a second time for the `description` key, listing all different descriptions found per global envvar. The flag does not change the content written.
 
 ### rogue
 
