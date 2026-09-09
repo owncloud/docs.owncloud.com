@@ -89,46 +89,41 @@ func doEnvarDelta() {
 			variants := strings.Split(field.Name, ";")
 			collectOccurrences(occurrences, variants)
 			for _, variant := range variants {
-				if (configFields[variant] != nil && configFields[variant].Name == "") || configFields[variant] == nil {
-					configFields[variant] = &field
-				} else {
-
-					if Env.isVerbose {
-						fmt.Printf("%v, duplicate key, merging\n", variant)
-					}
-
-					// 'OCIS_' prefixed envvars are global ones and can be defined by more than
-					// one service with differing content. for those, an existing value is not
-					// overwritten but the new one added, which keeps all variants visible.
-					// note that the name is excluded and gets overwritten as before.
-					isGlobal := strings.HasPrefix(variant, "OCIS_")
-
-					if strings.TrimSpace(configFields[variant].DefaultValue) != "" && configFields[variant].DefaultValue != field.DefaultValue {
-						configFields[variant].DefaultValue = mergeValue(isGlobal, configFields[variant].DefaultValue, field.DefaultValue)
-					}
-					if strings.TrimSpace(configFields[variant].Description) != "" && configFields[variant].Description != field.Description {
-						configFields[variant].Description = mergeValue(isGlobal, configFields[variant].Description, field.Description)
-					}
-					if strings.TrimSpace(configFields[variant].Type) != "" && configFields[variant].Type != field.Type {
-						configFields[variant].Type = mergeValue(isGlobal, configFields[variant].Type, field.Type)
-					}
-					if strings.TrimSpace(configFields[variant].IntroductionVersion) != "" && configFields[variant].IntroductionVersion != field.IntroductionVersion {
-						configFields[variant].IntroductionVersion = mergeValue(isGlobal, configFields[variant].IntroductionVersion, field.IntroductionVersion)
-					}
-					if strings.TrimSpace(configFields[variant].DeprecationVersion) != "" && configFields[variant].DeprecationVersion != field.DeprecationVersion {
-						configFields[variant].DeprecationVersion = mergeValue(isGlobal, configFields[variant].DeprecationVersion, field.DeprecationVersion)
-					}
-					if strings.TrimSpace(configFields[variant].RemovalVersion) != "" && configFields[variant].RemovalVersion != field.RemovalVersion {
-						configFields[variant].RemovalVersion = mergeValue(isGlobal, configFields[variant].RemovalVersion, field.RemovalVersion)
-					}
-					if strings.TrimSpace(configFields[variant].Name) != "" && configFields[variant].Name != field.Name {
-						configFields[variant].Name = field.Name
-					}
-					if strings.TrimSpace(configFields[variant].DeprecationInfo) != "" && configFields[variant].DeprecationInfo != field.DeprecationInfo {
-						// there might be multiple superseeding DeprecationInformations, we might want to keep track of those, that's why we are not overwriting the field
-						configFields[variant].DeprecationInfo = addValue(configFields[variant].DeprecationInfo, field.DeprecationInfo)
-					}
+				configField := configFields[variant]
+				if configField == nil || configField.Name == "" {
+					// every variant gets its own copy of the field. sharing one struct
+					// would make all variants of a name the same entry, and merging or
+					// completing the name of the global envvar would then also change
+					// the entry of the service envvars using it
+					ownField := field
+					configFields[variant] = &ownField
+					continue
 				}
+
+				if Env.isVerbose {
+					fmt.Printf("%v, duplicate key, merging\n", variant)
+				}
+
+				// 'OCIS_' prefixed envvars are global ones and can be defined by more than
+				// one service with differing content. for those, an existing value is not
+				// overwritten but the new one added, which keeps all variants visible.
+				// note that the name is excluded and gets overwritten as before.
+				isGlobal := strings.HasPrefix(variant, "OCIS_")
+
+				merge := func(existing string, incoming string) string {
+					return mergeValue(isGlobal, existing, incoming)
+				}
+
+				mergeField(&configField.DefaultValue,        field.DefaultValue,        merge)
+				mergeField(&configField.Description,         field.Description,         merge)
+				mergeField(&configField.Type,                field.Type,                merge)
+				mergeField(&configField.IntroductionVersion, field.IntroductionVersion, merge)
+				mergeField(&configField.DeprecationVersion,  field.DeprecationVersion,  merge)
+				mergeField(&configField.RemovalVersion,      field.RemovalVersion,      merge)
+				mergeField(&configField.Name,                field.Name,                overwrite)
+				// there might be multiple superseeding DeprecationInformations, we might want to
+				// keep track of those, that's why we are not overwriting the field
+				mergeField(&configField.DeprecationInfo,     field.DeprecationInfo,     addValue)
 			}
 		}
 	}
@@ -189,6 +184,23 @@ func doEnvarDelta() {
 	if err := os.Chdir(targetFolder); err != nil {
 		log.Fatal(err)
 	}
+}
+
+// mergeField merges the incoming value into the existing one using the strategy given.
+// nothing is merged if the existing value is empty or if both values are equal, which
+// keeps the value of the field untouched
+func mergeField(existing *string, incoming string, strategy func(existing string, incoming string) string) {
+
+	if strings.TrimSpace(*existing) == "" || *existing == incoming {
+		return
+	}
+	*existing = strategy(*existing, incoming)
+}
+
+// overwrite is the merge strategy for fields that do not keep their existing value
+func overwrite(_ string, incoming string) string {
+
+	return incoming
 }
 
 // mergeValue returns the value to use if a key is defined more than once.
