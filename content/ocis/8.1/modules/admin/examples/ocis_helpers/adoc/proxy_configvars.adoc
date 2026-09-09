@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-02-14-46-37]
+[#deprecation-note-2026-09-09-11-30-41]
 [caption=]
 .Deprecation notes for the proxy service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -986,7 +986,7 @@ This authentication level name indicates that multi-factor authentication was pe
 a|`OCIS_MFA_SESSION_DURATION` +
 
 a| [subs=-attributes]
-++7.3.0 ++
+++8.1.0 ++
 a| [subs=-attributes]
 ++int ++
 a| [subs=-attributes]

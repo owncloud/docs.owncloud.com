@@ -149,6 +149,7 @@ identity:
     instance_mapper_id_attribute: ""
     cross_instance_reference_template: ""
     instance_url_template: ""
+    instance_mapper_cache_ttl: 60000000000
 include_ocm_sharees: false
 events:
   endpoint: 127.0.0.1:9233

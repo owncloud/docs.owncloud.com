@@ -85,7 +85,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
-++ ++
+++The Micro Registry TLS root CA certificate ++
 
 a| `OCIS_BASE_DATA_PATH` +
 a| [subs=-attributes]
@@ -112,21 +112,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++Insecure TLS mode is only allowed in development environments with OCIS_INSECURE=true ++
     
-
-a| `OCIS_INSECURE` +
-a| [subs=-attributes]
-++ ++
-a| [subs=-attributes]
-++ ++
-a| [subs=-attributes]
-++ ++
-
-a| `OCIS_LOG_LEVEL` +
-a| [subs=-attributes]
-++ ++
-a| [subs=-attributes]
-++ ++
-a| [subs=-attributes]
-++ ++
+    
+    
     
 |===

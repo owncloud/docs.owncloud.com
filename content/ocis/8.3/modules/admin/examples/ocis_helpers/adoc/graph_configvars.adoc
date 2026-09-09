@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-04-10-38-59]
+[#deprecation-note-2026-09-09-11-27-22]
 [caption=]
 .Deprecation notes for the graph service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -1355,6 +1355,17 @@ a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
 Template for the instance URL. Requires OCIS_MULTI_INSTANCE_ENABLED.
+
+a|`OCIS_LDAP_INSTANCE_MAPPER_CACHE_TTL` +
+
+a| [subs=-attributes]
+++8.0.0 ++
+a| [subs=-attributes]
+++int ++
+a| [subs=-attributes]
+++60000000000 ++
+a| [subs=-attributes]
+Max TTL in seconds for the LDAP instance mapper cache. Requires OCIS_MULTI_INSTANCE_ENABLED.
 
 a|`OCIS_ENABLE_OCM` +
 `GRAPH_INCLUDE_OCM_SHAREES` +

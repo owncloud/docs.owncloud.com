@@ -1,12 +1,27 @@
 // # Removed Variables between oCIS 8.1.0 and oCIS 8.2.0
 // commenting the headline to make it better includable
 
-// table created per 2026.09.03
+// table created per 2026.09.09
 // the table should be recreated/updated on source () changes
 
 [width="100%",cols="~,~,~,~",options="header"]
 |===
 | Service | Variable | Description | Default
+
+| xref:deployment/services/env-vars-special-scope.adoc[Special Scope Envvars]
+| OCIS_LDAP_INSTANCE_MAPPER_CACHE_TTL
+| Max TTL in seconds for the LDAP instance mapper cache. Requires OCIS_MULTI_INSTANCE_ENABLED.
+| 60000000000
+
+| xref:{s-path}/graph.adoc[Graph]
+| GRAPH_MAX_IMAGE_FILE_SIZE
+| The maximum file size of an image which can be set as a space image. Must be less than or equal to 'THUMBNAILS_MAX_INPUT_IMAGE_FILE_SIZE' of the thumbnails service, otherwise images between the two values are accepted but cannot be rendered. Usable common abbreviations: [KB, KiB, MB, MiB, GB, GiB, TB, TiB, PB, PiB, EB, EiB], example: 2GB. Set to 0 to not limit the file size.
+| 50MB
+
+| xref:{s-path}/invitations.adoc[Invitations]
+| INVITATIONS_KEYCLOAK_EXECUTE_ACTIONS
+| A comma-separated list of Keycloak required actions sent to invited guests via the execute-actions email. Values are passed to Keycloak as-is. Defaults to 'UPDATE_PASSWORD,VERIFY_EMAIL'. See the Environment Variable Types description for more details.
+| [UPDATE_PASSWORD VERIFY_EMAIL]
 
 |===
 

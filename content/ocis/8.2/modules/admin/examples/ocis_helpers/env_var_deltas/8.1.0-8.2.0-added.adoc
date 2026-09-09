@@ -1,24 +1,14 @@
 // # Added Variables between oCIS 8.1.0 and oCIS 8.2.0
 // commenting the headline to make it better includable
 
-// table created per 2026.09.03
+// table created per 2026.09.09
 // the table should be recreated/updated on source () changes
 
 [width="100%",cols="~,~,~,~",options="header"]
 |===
 | Service | Variable | Description | Default
 
-| xref:deployment/services/env-vars-special-scope.adoc[Special Scope Envvars]
-| OCIS_ENABLE_PUBLIC_SHARING
-| Enables public link sharing. When disabled, creating new public links is rejected. Direct sharing with users and groups is not affected.
-| true
-
-| 
-| OCIS_ENABLE_USER_SHARING
-| Enables direct sharing with users and groups. When disabled, creating new user or group shares is rejected and searching for users to share with is disabled. Public link sharing is not affected.
-| true
-
-| xref:{s-path}/auth_basic.adoc[Auth Basic]
+| xref:{s-path}/auth-basic.adoc[Auth-Basic]
 | AUTH_BASIC_LDAP_POOL_CHECKOUT_TIMEOUT
 | Maximum time to wait for a pooled LDAP connection to become available once the pool is exhausted. Defaults to 30s when unset or <= 0. See the Environment Variable Types description for more details.
 | 30s
@@ -68,7 +58,7 @@
 | Base delay for exponential backoff between LDAP retries (e.g. '100ms'). Set to 0 to disable backoff.
 | 0s
 
-| x
+| 
 | GRAPH_LDAP_RETRY_MAX_COUNT
 | Maximum number of retries for failed LDAP operations. Reads retry on transient and network errors; writes retry only when the connection failed before the request was sent (e.g. a reused idle connection found closed), so the request provably never reached the server and cannot be double-applied. Default 1.
 | 1
@@ -78,7 +68,7 @@
 | Maximum delay cap for exponential backoff between LDAP retries (e.g. '5s'). 0 (default) uses the library default cap of 60s.
 | 0s
 
-| x
+| 
 | GRAPH_LDAP_UPDATE_LAST_SIGNIN_DATE
 | Update the 'oCLastSignInTimestamp' LDAP attribute of a user when the user signs in. The attribute is only persisted when 'OCIS_LDAP_SERVER_WRITE_ENABLED' is also enabled. Set this to 'false' to avoid an LDAP write on every sign-in, e.g. when the last sign-in timestamp is not needed or the LDAP write load should be reduced.
 | true
