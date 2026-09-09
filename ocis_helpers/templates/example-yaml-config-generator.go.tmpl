@@ -33,7 +33,7 @@ func doExampleYaml() {
 	    {{- range $key, $value := .}}
 		replacer.Replace("{{$value}}"): func() string {
 
-			if Env.isVerbose == true {
+			if Env.isVerbose {
 				fmt.Println("Generating example YAML config for {{ $value -}}")
 			}
 
@@ -50,7 +50,7 @@ func doExampleYaml() {
 		targetFolders := []string{
 			// TODO: comment in when it is clear how to commit this to the structure of the master|main branch
 			// filepath.Join("../../", pkg, "/config"),
-			Env.services_dir + yaml_files,
+			filepath.Join(Env.services_dir, yaml_files),
 		}
 		for _, targetFolder := range targetFolders {
 			os.MkdirAll(targetFolder, Env.folder_mode)

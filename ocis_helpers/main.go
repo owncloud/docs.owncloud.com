@@ -44,13 +44,13 @@ func main() {
 
 	verboseP := flag.Bool("v", false, "Enable verbosity")
 	removeP  := flag.Bool("r", false, "Do not remove output directory when finished")
-	dryrunP  := flag.Bool("d", false, "Task 'deltas': dryrun, generate but do not write files. Task 'service': print debug info")
+	dryrunP  := flag.Bool("d", false, "Task 'deltas': dryrun, generate but do not write files. Task 'services': print debug info")
 	helpP    := flag.Bool("h", false, "Print help message")
 
 	flag.Usage = func() {
 		// if an unknown flag has been provided
 		printUsage()
-		os.Exit(1)
+		exitCleanly(1)
 	}
 
 	// parse the flags
@@ -62,13 +62,13 @@ func main() {
 	isHelp    := *helpP
 
 	// the '-d' flag is task dependent. for the 'deltas' task it is a dryrun, for the
-	// 'service' task it enables debug output in the generated intermediate code
+	// 'services' task it enables debug output in the generated intermediate code
 	isDebug   := *dryrunP
 
 	// if flag is set, print help text and exit
 	if isHelp {
 		printUsage()
-		os.Exit(0)
+		exitCleanly(0)
 	}
 
 	// get positional argument list
@@ -77,15 +77,15 @@ func main() {
 	// required: <version> <task>
 	if len(positionalArgs) < 2 {
 		fmt.Println("You need to provide the ocis version and the task as argument. Use -h (help) for more details.\n")
-		os.Exit(0)
+		exitCleanly(0)
 	}
 
 	// check if the ocis repo has been cloned locally
 	// no colors, added in a later step
 	_, err = os.Stat(ocis_dir)
 	if err != nil {
-		fmt.Printf("The required ocis repo cant be found locally at: %s\n", ocis_dir)
-		os.Exit(1)
+		fmt.Printf("The required ocis repo can't be found locally at: %s\n", ocis_dir)
+		exitCleanly(1)
 	}
 
 	// check if the ocis version directory exists
@@ -95,7 +95,7 @@ func main() {
 	_, err = os.Stat(version_dir)
 	if err != nil {
 		fmt.Printf("The ocis version folder %s does not exist, exiting.\n", version_dir)
-		os.Exit(1)
+		exitCleanly(1)
 	}
 
 	services_dir = version_dir + services_dir
@@ -106,7 +106,7 @@ func main() {
 
 	// do tasks based on task entered
 	switch positionalArgs[1] {
-		case "service":
+		case "services":
 			haveYouSwitched()
 			prepareDirectories()
 			RenderServices()
@@ -127,7 +127,7 @@ func main() {
 		default:
 			fmt.Fprintf(os.Stderr, "Unknown task: %s\n\n", positionalArgs[1])
 			printUsage()
-			os.Exit(1)
+			exitCleanly(1)
 	}
 
 	removeEnvFile()
@@ -145,7 +145,7 @@ func createEnvFile(isVerbose bool, isRemove bool, isDebug bool) {
 	x := uint64(0)
 	x, err = strconv.ParseUint(folder_mode, 8, 32)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 	fm := os.FileMode(x)
 
@@ -153,7 +153,7 @@ func createEnvFile(isVerbose bool, isRemove bool, isDebug bool) {
 	y := uint64(0)
 	y, err = strconv.ParseUint(file_mode, 8, 32)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 	_ = y
 
@@ -164,7 +164,7 @@ func createEnvFile(isVerbose bool, isRemove bool, isDebug bool) {
 		isVerbose, isRemove, isDebug, services_dir, output_dir, ocis_dir, folder_mode, file_mode)
 	err = os.WriteFile(".env", []byte(envContent), fm)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 
 	// read the written and provide the variables as in other go files for consistent usage
@@ -179,13 +179,13 @@ func prepareDirectories() {
 	// create output folder if not exists
 	err = os.MkdirAll(output_dir, Env.folder_mode)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 
 	// create services folder if not exists
 	err = os.MkdirAll(services_dir, Env.folder_mode)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 }
 
@@ -200,7 +200,7 @@ func CopyToExamples() {
 
 	entries, err := os.ReadDir(services_dir)
 	if err != nil {
-		log.Fatalf("Failed reading %s: %+v", services_dir, err)
+		fatalf("Failed reading %s: %+v", services_dir, err)
 	}
 
 	for _, entry := range entries {
@@ -210,7 +210,7 @@ func CopyToExamples() {
 		}
 
 		// the persistent folder is the source of the generated content and must not be copied
-		if entry.Name() == strings.TrimSuffix(persistent_files, "/") {
+		if entry.Name() == persistent_files {
 			continue
 		}
 
@@ -220,7 +220,7 @@ func CopyToExamples() {
 		// remove a former copy first, else files that are no longer generated would stay
 		err = os.RemoveAll(target)
 		if err != nil {
-			log.Fatalf("Failed removing the former copy %s: %+v", target, err)
+			fatalf("Failed removing the former copy %s: %+v", target, err)
 		}
 
 		fmt.Printf("  %-18s %3d files copied\n", entry.Name()+"/", copyDir(source, target))
@@ -252,7 +252,7 @@ func copyDir(source string, target string) int {
 		return CopyFile(path, destination)
 	})
 	if err != nil {
-		log.Fatalf("Failed copying %s to %s: %+v", source, target, err)
+		fatalf("Failed copying %s to %s: %+v", source, target, err)
 	}
 
 	return count
@@ -261,38 +261,16 @@ func copyDir(source string, target string) int {
 
 func cleanupServiceDir() {
 
-	var err error
-	var folder string
-
 	fmt.Printf(Magenta + "Remove the content of non persistent subfolders in %s \n", services_dir + Reset)
 
-    // adoc
-    folder = services_dir + adoc_files + "*"
-    err = removeGlob(folder)
-    if err != nil {
-        log.Fatalf("Error removing files: %+v", err)
-    }
-
-    // extended
-    folder = services_dir + extened_files + "*"
-    err = removeGlob(folder)
-    if err != nil {
-        log.Fatalf("Error removing files: %+v", err)
-    }
-
-    // yaml
-    folder = services_dir + yaml_files + "*"
-    err = removeGlob(folder)
-    if err != nil {
-        log.Fatalf("Error removing files: %+v", err)
-    }
-
-    // delta files
-    folder = services_dir + delta_files + "*"
-    err = removeGlob(folder)
-    if err != nil {
-        log.Fatalf("Error removing files: %+v", err)
-    }
+	// note that 'persistent_files' is intentionally not listed here, it holds the sources
+	// of the generated content and must survive a cleanup
+	for _, folder := range []string{adoc_files, extended_files, yaml_files, delta_files} {
+		err := removeGlob(filepath.Join(services_dir, folder, "*"))
+		if err != nil {
+			fatalf("Error removing files in %s: %+v", folder, err)
+		}
+	}
 }
 
 // cleanupHelperDir removes the folder the 'copy' task writes to, including the folder itself.
@@ -313,7 +291,7 @@ func cleanupHelperDir() {
 
 	err = os.RemoveAll(examples_dir)
 	if err != nil {
-		log.Fatalf("Error removing the folder: %+v", err)
+		fatalf("Error removing the folder: %+v", err)
 	}
 }
 
@@ -358,7 +336,7 @@ func RemoveOutputDir() {
 	}
 }
 
-// remove the .env file if exists which is on the same lavel of main.go 
+// remove the .env file if exists which is on the same level of main.go
 func removeEnvFile() {
 
 	var err error
@@ -370,6 +348,34 @@ func removeEnvFile() {
 			fmt.Println(err)
 		}
 	}
+}
+
+// note that go has no atexit hook, and both os.Exit and log.Fatal (which calls os.Exit)
+// terminate the process without running deferred functions. a 'defer removeEnvFile()'
+// would therefore not help. every exit path must instead go through one of the three
+// helpers below, else the .env file written by createEnvFile is left behind on failure.
+// note that the helpers must not be used by the generated intermediate code, it runs as
+// its own process while the .env file of the parent must stay in place
+
+// fatal removes the .env file, then behaves like log.Fatal
+func fatal(args ...any) {
+
+	removeEnvFile()
+	log.Fatal(args...)
+}
+
+// fatalf removes the .env file, then behaves like log.Fatalf
+func fatalf(format string, args ...any) {
+
+	removeEnvFile()
+	log.Fatalf(format, args...)
+}
+
+// exitCleanly removes the .env file, then terminates with the given code
+func exitCleanly(code int) {
+
+	removeEnvFile()
+	os.Exit(code)
 }
 
 func CopyFile(src, dst string) error {
@@ -397,7 +403,7 @@ func CopyFile(src, dst string) error {
 	// set the correct permissions
 	err = os.Chmod(dst, Env.file_mode)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 
 	// Flush file metadata to disk
@@ -418,12 +424,12 @@ func printUsage() {
 	fmt.Printf("\nThe version is mandatory and must match the directory of content/ocis/<version>\n")
 
 	fmt.Printf("\nAvailable tasks:\n")
-	fmt.Printf("  service:   generate service envvar tables\n")
+	fmt.Printf("  services:  generate service envvar tables\n")
 	fmt.Printf("  rogue:     create/update the extended_vars.yaml file\n")
 	fmt.Printf("  extended:  generate extended_configvars table\n")
 	fmt.Printf("  deltas:    generate the added, deprecated and removed envvar tables\n")
 	fmt.Printf("  copy:      copy the subfolders of %s to %s except 'persistent_files'\n", services_dir, examples_dir)
-	fmt.Printf("  cleanup_s: cleanup folders in %s except 'persistent_files'. run service, extended, deltas to recreate\n", services_dir)
+	fmt.Printf("  cleanup_s: cleanup folders in %s except 'persistent_files'. run services, extended, deltas to recreate\n", services_dir)
 	fmt.Printf("  cleanup_h: remove the folder %s. folder contents is build relevant for antora\n\n", examples_dir)
 }
 
@@ -434,7 +440,7 @@ func haveYouSwitched() {
 	if askForConfirmation(question) {
 		return
 	} else {
-		os.Exit(0)
+		exitCleanly(0)
 	}
 }
 
@@ -449,7 +455,7 @@ func askForConfirmation(s string) bool {
 		response, err := reader.ReadString('\n')
 		fmt.Printf("\n")
 		if err != nil {
-			log.Fatal(err)
+			fatal(err)
 		}
 
 		response = strings.ToLower(strings.TrimSpace(response))

@@ -3,7 +3,7 @@ package main
 // this file generates adoc files for added, deprecated and removed envvars based on
 // the 'env_vars.yaml' files that must exist in each referenced version of the 'delta_config.yaml'.
 // it is CRUCIAL that versions compared are actual - do required updates first!
-// updates are made automatically to the 'env_vars.yaml' file for the respective ocis version when running the 'service' task
+// updates are made automatically to the 'env_vars.yaml' file for the respective ocis version when running the 'services' task
 //
 // the versions to compare and the exclude patterns read from the 'delta_config.yaml' file of the ocis version being processed.
 //
@@ -12,7 +12,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"sort"
@@ -132,7 +131,7 @@ func doEnvVarDeltas(isDryrun bool) {
 
 	excludePattern := mergeExcludeLists(cfg.DefaultExcludePattern, cfg.ExtraExcludePattern)
 
-	if Env.isVerbose == true {
+	if Env.isVerbose {
 		fmt.Printf("Excluding the following introduction versions:\n  %s\n\n", strings.Join(excludePattern, ", "))
 	}
 
@@ -144,7 +143,7 @@ func doEnvVarDeltas(isDryrun bool) {
 
 	// global envvars that are flagged as added but are already published with the base version.
 	// they are dropped from the added table, printing them is for information only
-	if len(addedGlobalBefore) > 0 && Env.isVerbose == true {
+	if len(addedGlobalBefore) > 0 && Env.isVerbose {
 		fmt.Printf("The following global envvars are flagged as added with %s but are already present in %s, " +
 			"they are excluded from the added table:\n\n", cfg.ToVersion, cfg.VersionOld)
 
@@ -213,18 +212,18 @@ func getDeltaConfig() DeltaConfig {
 
 	yfile, err := os.ReadFile(fullYamlPath)
 	if err != nil {
-		log.Fatalf("Failed reading the config file %s: %+v", fullYamlPath, err)
+		fatalf("Failed reading the config file %s: %+v", fullYamlPath, err)
 	}
 	err = yaml.Unmarshal(yfile, &cfg)
 	if err != nil {
-		log.Fatalf("Failed parsing the config file %s: %+v", fullYamlPath, err)
+		fatalf("Failed parsing the config file %s: %+v", fullYamlPath, err)
 	}
 
 	// the config is read from the version given on the command line,
 	// therefore the version it writes to must be that very version
 	// else we would silently write the tables into the folder of another version
 	if cfg.VersionNew != ocis_version {
-		log.Fatalf("The 'versionNew' key (%s) in %s does not match the version given on the command line (%s)", cfg.VersionNew, fullYamlPath, ocis_version)
+		fatalf("The 'versionNew' key (%s) in %s does not match the version given on the command line (%s)", cfg.VersionNew, fullYamlPath, ocis_version)
 	}
 
 	return cfg
@@ -238,21 +237,21 @@ func getServiceNames() map[string]ServiceName {
 
 	yfile, err := os.ReadFile(yamlServiceNames)
 	if err != nil {
-		log.Fatalf("Failed reading the service names file %s: %+v", yamlServiceNames, err)
+		fatalf("Failed reading the service names file %s: %+v", yamlServiceNames, err)
 	}
 	err = yaml.Unmarshal(yfile, &names)
 	if err != nil {
-		log.Fatalf("Failed parsing the service names file %s: %+v", yamlServiceNames, err)
+		fatalf("Failed parsing the service names file %s: %+v", yamlServiceNames, err)
 	}
 
 	// an incomplete entry would create a broken xref, catch it here and not in the docs build
 	for prefix, name := range names {
 		if name.Path == "" || name.Name == "" {
-			log.Fatalf("The entry %s in %s must have both, a 'path' and a 'name' key", prefix, yamlServiceNames)
+			fatalf("The entry %s in %s must have both, a 'path' and a 'name' key", prefix, yamlServiceNames)
 		}
 	}
 
-	if Env.isVerbose == true {
+	if Env.isVerbose {
 		fmt.Printf("Using %d envvar prefixes from %s\n\n", len(names), yamlServiceNames)
 	}
 
@@ -328,12 +327,12 @@ func getSources(versionOld string, versionNew string) (*EnvVarList, *EnvVarList)
 
 	fileOld, err := loadEnvVars(dirOld)
 	if err != nil {
-		log.Fatalf("Failed reading %s: %+v", dirOld, err)
+		fatalf("Failed reading %s: %+v", dirOld, err)
 	}
 
 	fileNew, err := loadEnvVars(dirNew)
 	if err != nil {
-		log.Fatalf("Failed reading %s: %+v", dirNew, err)
+		fatalf("Failed reading %s: %+v", dirNew, err)
 	}
 
 	return fileOld, fileNew
@@ -586,13 +585,13 @@ func writeOutput(cfg DeltaConfig, content string, typeText string) {
 	// create target folder if not exists
 	err = os.MkdirAll(targetFolder, Env.folder_mode)
 	if err != nil {
-		log.Fatalf("Failed creating the %s folder: %+v", targetFolder, err)
+		fatalf("Failed creating the %s folder: %+v", targetFolder, err)
 	}
 
 	fullAdocPath := filepath.Join(targetFolder, cfg.NameComponent+"-"+typeText+".adoc")
 
 	err = os.WriteFile(fullAdocPath, []byte(content), Env.file_mode)
 	if err != nil {
-		log.Fatalf("Failed creating %s file: %+v", typeText, err)
+		fatalf("Failed creating %s file: %+v", typeText, err)
 	}
 }

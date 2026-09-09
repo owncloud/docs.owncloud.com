@@ -4,7 +4,7 @@ variables:
   foundincode: true
   name: CS3_GATEWAY
   type: ""
-  default_value: ""
+  default_value: ignored intentionally
   description: ""
   do_ignore: true
 - rawname: CS3_MACHINE_AUTH_API_KEY
@@ -13,7 +13,7 @@ variables:
   name: CS3_MACHINE_AUTH_API_KEY
   type: ""
   default_value: ""
-  description: ""
+  description: ignored intentionally
   do_ignore: true
 - rawname: _registryRegisterIntervalEnv
   path: ../../ocis/ocis-pkg/registry/expiry.go:19
@@ -21,7 +21,7 @@ variables:
   name: EXPERIMENTAL_REGISTER_INTERVAL
   type: ""
   default_value: ""
-  description: ""
+  description: ignored intentionally
   do_ignore: true
 - rawname: _registryRegisterTTLEnv
   path: ../../ocis/ocis-pkg/registry/expiry.go:28
@@ -29,7 +29,7 @@ variables:
   name: EXPERIMENTAL_REGISTER_TTL
   type: ""
   default_value: ""
-  description: ""
+  description: ignored intentionally
   do_ignore: true
 - rawname: _serverMaxConnectionAgeEnv
   path: ../../ocis/ocis-pkg/service/grpc/keepalive.go:19
@@ -123,7 +123,7 @@ variables:
   name: MICRO_REGISTRY_TLS_ROOT_CA_CERTIFICATE
   type: string
   default_value: ""
-  description: ""
+  description: The Micro Registry TLS root CA certificate
   do_ignore: false
 - rawname: OCIS_BASE_DATA_PATH
   path: ../../ocis/ocis-pkg/config/defaults/paths.go:23
@@ -141,7 +141,7 @@ variables:
   foundincode: true
   name: OCIS_BASE_DATA_PATH
   type: ""
-  default_value: ""
+  default_value: dupe of OCIS_BASE_DATA_PATH
   description: ""
   do_ignore: true
 - rawname: OCIS_CONFIG_DIR

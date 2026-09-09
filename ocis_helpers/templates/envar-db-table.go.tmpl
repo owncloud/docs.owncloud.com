@@ -10,6 +10,7 @@ import (
 	"strings"
 	"log"
 	"os"
+	"path/filepath"
 
 	{{- range $key, $value :=.}}
 	pkg{{$key}} "{{$value}}"
@@ -43,8 +44,8 @@ func main() {
 
 func doEnvarDelta() {
 
-    targetFolder := Env.services_dir + persistent_files
-	fullYamlPath := targetFolder + yamlServiceSource
+    targetFolder := filepath.Join(Env.services_dir, persistent_files)
+	fullYamlPath := filepath.Join(targetFolder, yamlServiceSource)
 	var fields []ConfigField
 	configFields := make(map[string]*ConfigField)
 	fmt.Printf("Try reading existing variable definitions from %s\n", fullYamlPath)
@@ -92,7 +93,7 @@ func doEnvarDelta() {
 					configFields[variant] = &field
 				} else {
 
-					if Env.isVerbose == true {
+					if Env.isVerbose {
 						fmt.Printf("%v, duplicate key, merging\n", variant)
 					}
 

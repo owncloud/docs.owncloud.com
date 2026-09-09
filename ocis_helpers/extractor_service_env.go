@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
 	"path"
@@ -39,7 +38,7 @@ func doTemplates() {
 
 	paths, err := filepath.Glob(Env.ocis_dir + "services/*/pkg/config/defaults/defaultconfig.go")
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 	replacer := strings.NewReplacer(
 		ocis_dir, "github.com/owncloud/ocis/v2/",
@@ -62,7 +61,7 @@ func generateIntermediateCode(templatePath string, intermediateCodePath string, 
 
 	content, err := os.ReadFile(templatePath)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 
 	fmt.Println("Generating intermediate go code for " + intermediateCodePath + " using template " + templatePath)
@@ -70,19 +69,19 @@ func generateIntermediateCode(templatePath string, intermediateCodePath string, 
 
 	err = os.MkdirAll(path.Dir(intermediateCodePath), Env.folder_mode)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 	runner, err := os.Create(intermediateCodePath)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 	err = os.Chmod(intermediateCodePath, Env.file_mode)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 	err = tpl.Execute(runner, paths)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 }
 
@@ -103,16 +102,16 @@ func runIntermediateCode(intermediateCodePath string) {
 	envFileDst := path.Join(envFileDir, "read_env_file.go")
 	envFileSrc, err := os.ReadFile("read_env_file.go")
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 	err = os.WriteFile(envFileDst, envFileSrc, Env.file_mode)
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
 	}
 
 	out, err := exec.Command("go", "run", intermediateCodePath, envFileDst).CombinedOutput()
 	if err != nil {
-		log.Fatal(string(out), err)
+		fatal(string(out), err)
 	}
 	fmt.Println(string(out))
 }

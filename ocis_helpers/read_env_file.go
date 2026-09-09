@@ -39,11 +39,13 @@ const White   = "\033[97m"
 
 
 // provide common paths and file names
-const persistent_files    = "persistent_files/"
-const extened_files       = "extended/"
-const adoc_files          = "adoc/"
-const yaml_files          = "yaml/"
-const delta_files         = "env_var_deltas/"
+// note that these are single path elements without a trailing slash,
+// they are meant to be assembled using filepath.Join
+const persistent_files    = "persistent_files"
+const extended_files      = "extended"
+const adoc_files          = "adoc"
+const yaml_files          = "yaml"
+const delta_files         = "env_var_deltas"
 
 const yamlServiceSource   = "env_vars.yaml"
 const yamlExtendedSource  = "extended_vars.yaml"
@@ -54,7 +56,7 @@ const adoc_deprecation    = "_deprecation.adoc"
 const adoc_global         = "global_configvars.adoc"
 const yaml_example        = "-config-example.yaml"
 
-// Read the .env file and polulate variables
+// Read the .env file and populate variables
 func ReadEnv() {
 
 	// get informations from envvar file to populate variables

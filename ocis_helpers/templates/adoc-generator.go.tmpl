@@ -97,7 +97,7 @@ func doAdocGeneration() {
 	{{- end }}
 	}
 
-	targetFolder := Env.services_dir + adoc_files
+	targetFolder := filepath.Join(Env.services_dir, adoc_files)
 	if err := os.MkdirAll(targetFolder, Env.folder_mode); err != nil {
 		log.Fatalf("Failed to create target folder: %s", err)
 	}
@@ -136,7 +136,7 @@ func doAdocGeneration() {
 		if len(fields) > 0 || len(deprecations) > 0 {
 
 			// only print which service is processed if verbosity is set
-			if Env.isVerbose == true {
+			if Env.isVerbose {
 				fmt.Printf("... %s\n", pkg)
 			}
 

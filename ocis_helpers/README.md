@@ -13,7 +13,7 @@ The subfolders in `services` (see [Folder Structure](#folder-structure)) are the
    * [Process Flow](#process-flow)
    * [Programs and Scripts](#programs-and-scripts)
    * [Tasks](#tasks)
-      * [service](#service)
+      * [services](#services)
       * [rogue](#rogue)
       * [extended](#extended)
       * [deltas](#deltas)
@@ -42,7 +42,7 @@ When creating the ocis admin docs for a version, Antora requires several files t
 
 The steps to keep everything in sync are:
 
-* Regularly use the `service` and `rogue` task from the prerelease against ocis master.\
+* Regularly use the `services` and `rogue` task from the prerelease against ocis master.\
 Note that the prerelease is a regular version folder. The question if you have switched to the relevant stable version in ocis applies then to ocis/master.
 * Always use all helpers for a new ocis version.
 * The copy task will copy the generated files related to a version to a defined location where Antora can process them.
@@ -66,7 +66,7 @@ The `deltas` task of this program generates the relevant **added, deprecated and
 
 **Files with output**
 
-1.  `service`:   generate service envvar tables
+1.  `services`:  generate service envvar tables
 2.  `rogue`:     create/update the extended_vars.yaml file
 3.  `extended`:  generate extended_configvars table
 4.  `deltas`:    generate the added, deprecated and removed envvar tables
@@ -74,12 +74,12 @@ The `deltas` task of this program generates the relevant **added, deprecated and
 
 **Cleanup only**
 
-6.  `cleanup_s`: cleanup folders in /services/ except 'persistent_files'. run service, extended, deltas to recreate
+6.  `cleanup_s`: cleanup folders in /services/ except 'persistent_files'. run services, extended, deltas to recreate
 7.  `cleanup_h`: remove the folder /modules/admin/examples/ocis_helpers/. folder contents is build relevant for antora
 
-### service
+### services
 
-The `service` task reads all environment variables present in the code in the ocis repository's services folder. Therefore, it is crucial to switch to the relevant ocis branch first and parameterise the helper for the target version in question. See section [Helper Usage](#helper-usage) for more details.
+The `services` task reads all environment variables present in the code in the ocis repository's services folder. Therefore, it is crucial to switch to the relevant ocis branch first and parameterise the helper for the target version in question. See section [Helper Usage](#helper-usage) for more details.
 
 There are four outcomes of this task:
 
@@ -110,7 +110,7 @@ There is one outcome of this task:
 
 ### deltas
 
-The `deltas` task generates a set of output files representing the changes to the former version for each target version defined. This task requires the `service` task to have been run, and for all referenced `env_vars.yaml` files to be up to date. There is a section [Notes to the extended_vars.yaml File](#notes-to-the-extended_varsyaml-file) with an in-depth description for how to manage changes [Envvar Delta File Creation](#envvar-delta-file-creation).
+The `deltas` task generates a set of output files representing the changes to the former version for each target version defined. This task requires the `services` task to have been run, and for all referenced `env_vars.yaml` files to be up to date. There is a section [Notes to the extended_vars.yaml File](#notes-to-the-extended_varsyaml-file) with an in-depth description for how to manage changes [Envvar Delta File Creation](#envvar-delta-file-creation).
 
 Use the `-d` flag (debug) to check for introduction versions that are found additionally but are out of scope.
 
@@ -171,7 +171,7 @@ The `copy` task will copy the contents of (2) to (3) except the `persistent_file
 
 ## Notes to the `extended_vars.yaml` File
 
-The `extended_vars.yaml` file is updated when issuing `ocis_helpers rogue`.
+The `extended_vars.yaml` file is updated when issuing `ocis_helpers <version> rogue`.
 
 This file is very sensitive, so you need to make sure you know what you're doing when you change its contents. Do not experiment. A backup of this file has been created. If anything goes wrong, either simply discard the changes or delete the modified file and run the relevant helper again. It will then be recreated from the backup. Ontop, the changes from the execution will be applied.
 
@@ -228,7 +228,7 @@ If the result is `false`, check for a configured block with the same `rawname` w
 
 Once all changes have been completed, the following tasks needs to be carried out:
 
-* Run `ocis_helpers extended` to generate the adoc files for extended environment variables. Check the result.
+* Run `ocis_helpers <version> extended` to generate the adoc files for extended environment variables. Check the result.
 * Copy the contents of the updated `extended_vars.yaml` file to `ocis_helpers/extended_vars.yaml.do_not_delete`\
 This will make life easier when the file is accidentally corrupted or deleted for that version, as it will allow you to recover it.
 
@@ -252,10 +252,22 @@ Examples:
 
 **First switch to the relevant branches in both repos. The versions must match!**
 
-As there may be changes to Go dependencies during development or between versions, updating the Go dependencies may be necessary. When running `ocis_helpers <task>`, you will be notified by the following message: `go: updates to go.mod needed; to update it`. Run `go mod tidy` to update the dependencies for this version. These changes are tracked and must be committed and merged for that version. This is one of the reasons why versions must match.
+As there may be changes to Go dependencies during development or between versions, updating the Go dependencies may be necessary. When running `ocis_helpers <version> <task>`, you will be notified by the following message: `go: updates to go.mod needed; to update it`. Run `go mod tidy` to update the dependencies for this version. These changes are tracked and must be committed and merged for that version. This is one of the reasons why versions must match.
 
 * In `ocis/master`, dependency changes may happen from time to time.
 * In `ocis/stable-<version>`, dependency changes can happen when there are backports from master for whatever reason. Usually, there will be no dependency change for this version post creating the branch, but this is not guaranteed.
+
+**IMPORTANT**: Do **not** delete `tools.go` and always check the result of `go mod tidy`.\
+`go mod tidy` only keeps dependencies that are imported by files of this module. The ocis packages, however, are imported by the intermediate go code which is generated into the `output` folder that lies outside of this module. Without `tools.go`, which lists those imports for `go mod tidy` to see, the requirement gets dropped and every task using the intermediate code fails with:
+
+```
+module github.com/owncloud/ocis/v2 provides package
+github.com/owncloud/ocis/v2/services/<service>/pkg/config/defaults and is replaced
+but not required; to add it: go get github.com/owncloud/ocis/v2
+```
+
+* After running `go mod tidy`, `go.mod` must still contain a `require github.com/owncloud/ocis/v2 <version>` line. If it does not, the tidy run has stripped it, see above.
+* If the ocis version processed **adds a new service**, add the `.../pkg/config/defaults` package of that service to the import list in `tools.go`. Else `go mod tidy` may drop dependencies that only the new service needs.
 
 ### Version Dependent Tasks
 
@@ -271,7 +283,7 @@ A docs ocis prerelease is a folder that is named like a regular version but is m
 
 The following tasks need to be issued:
 
-* Regulary run `ocis_helpers <version> services`, especially when there are changes to environment variables in the ocis repo.
+* Regularly run `ocis_helpers <version> services`, especially when there are changes to environment variables in the ocis repo.
   * This will create all service dependent adoc and yaml files for environment variables. Note that the adoc files may still contain a placeholder for the introduction version.
 
 * **Before** a new `stable-x.y` is created:
@@ -287,7 +299,7 @@ The following tasks need to be issued:
 
 * Please note that any environment variables that have been added, deprecated or removed are not part of the master branch. If data is shown in the documentation, it probably refers to the most recent stable version branch.
 
-* Run `ocis_helpers <version> copy` to copy all generated data to tis final destination.
+* Run `ocis_helpers <version> copy` to copy all generated data to its final destination.
 
 * Before merging the changes, a docs build **must** be issued to ensure that all changes are picked up by the Antora build process. Do any fixes if an error occurs.
 
@@ -306,7 +318,7 @@ The following tasks need to be issued:
     * The process requires that all `env_vars.yaml` files compared are up-to-date.
     * To generate delta files, the process reads the `env_vars.yaml` file of both versions compared from the local `content/ocis/<version>/services` folders.
 
-* Run `ocis_helpers <version> copy` to copy all generated data to tis final destination.
+* Run `ocis_helpers <version> copy` to copy all generated data to its final destination.
 
 * Before merging the changes, a docs build **must** be issued to ensure that all changes are picked up by the Antora build process.
 
