@@ -41,3 +41,7 @@ asciidoc:
 
     # used in depl-examples
     download-gh-directory-url: 'https://download-directory.github.io'
+
+    # the url to download ocis
+    # note that this is inactive but required in the migration section for upgrading old binaries which do not longer exist. 
+    ocis-downloadpage-url: 'https://download.owncloud.com/ocis/ocis'
