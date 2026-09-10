@@ -15,7 +15,7 @@ Important: The xxx_deprecation.adoc does not exist for extended or global envvar
 tag::special_envvars[]
 
 // compute the correct tab text
-include::partial$multi-location/tab-text.adoc[]
+include::partial$multi-location/compose-version.adoc[]
 
 // this directive is usually not necessary and its need likely an antora bug. because there is no text after the include
 // and the tabs, we need to simulate this with empty. using it we prevent a warning that the attribute is missing...
@@ -23,7 +23,7 @@ include::partial$multi-location/tab-text.adoc[]
 
 [tabs]
 ====
-{tab_text}::
+{env_tab_text}::
 +
 --
 [caption=]
@@ -62,22 +62,22 @@ end::special_envvars[]
 tag::envvars-yaml[]
 
 // compute the correct tab text
-include::partial$multi-location/tab-text.adoc[]
+include::partial$multi-location/compose-version.adoc[]
 
 === Environment Variables
 
 The `{service_name}` service is configured via the following environment variables. Read the xref:deployment/services/envvar-types-description.adoc[Environment Variable Types] documentation for important details. Column `IV` shows with which release the environment variable has been introduced.
 
 // load the deprecation activation file. this will overwrite the above.
-include::{ocis_services_raw_url}{service_url_component}{ocis_services_final_path}adoc/{service_name}_deprecation.adoc[]
+include::example${ocis_helpers_adoc}{service_name}_deprecation.adoc[]
 
 [tabs]
 ====
-{tab_text}::
+{env_tab_text}::
 +
 --
 // if deprecation activation is true, it will also show the deprecation content.
-include::{ocis_services_raw_url}{service_url_component}{ocis_services_final_path}adoc/{service_name}_configvars.adoc[]
+include::example${ocis_helpers_adoc}{service_name}_configvars.adoc[]
 --
 ====
 
@@ -88,12 +88,12 @@ include::{ocis_services_raw_url}{service_url_component}{ocis_services_final_path
 
 [tabs]
 ====
-{tab_text}::
+{env_tab_text}::
 +
 --
 [source,yaml]
 ----
-include::{ocis_services_raw_url}{service_url_component}{ocis_services_final_path}{service_name}-config-example.yaml[]
+include::example${ocis_helpers_yaml}{service_name}-config-example.yaml[]
 ----
 --
 ====
@@ -101,16 +101,15 @@ include::{ocis_services_raw_url}{service_url_component}{ocis_services_final_path
 end::envvars-yaml[]
 
 
+// TEXT VERSION 2 only print global envvars (no yaml available)
 
-// TEXT VERSION 2 only print envvars
-
-tag::envvars-only[]
+tag::global-only[]
 
 // default to not show deprecations
 :show-deprecation: false
 
 // compute the correct tab text
-include::partial$multi-location/tab-text.adoc[]
+include::partial$multi-location/compose-version.adoc[]
 
 The `{service_name}` variables are defined in the following way. Read the xref:deployment/services/envvar-types-description.adoc[Environment Variable Types] documentation for important details. Column `IV` shows with which release the environment variable has been introduced.
 
@@ -120,11 +119,39 @@ The `{service_name}` variables are defined in the following way. Read the xref:d
 
 [tabs]
 ====
-{tab_text}::
+{env_tab_text}::
 +
 --
-include::{ocis_services_raw_url}{service_url_component}{ocis_services_final_path}adoc/{service_name}_configvars.adoc[]
+include::example${ocis_helpers_adoc}{service_name}_configvars.adoc[]
 --
 ====
 
-end::envvars-only[]
+end::global-only[]
+
+
+// TEXT VERSION 3 only print extended envvars (no yaml available)
+
+tag::extended-only[]
+
+// default to not show deprecations
+:show-deprecation: false
+
+// compute the correct tab text
+include::partial$multi-location/compose-version.adoc[]
+
+The `{service_name}` variables are defined in the following way. Read the xref:deployment/services/envvar-types-description.adoc[Environment Variable Types] documentation for important details. Column `IV` shows with which release the environment variable has been introduced.
+
+// do not load any deprecation activations. use the default set via ':show-deprecation: false' above
+// this prevents showing any deprecations which is necessary for global envvars which currently do not have
+// any deprecations configured.
+
+[tabs]
+====
+{env_tab_text}::
++
+--
+include::example${ocis_helpers_extended}{service_name}_configvars.adoc[]
+--
+====
+
+end::extended-only[]

@@ -164,12 +164,12 @@ The policies service contains a set of preconfigured example policies. See the d
 
 [tabs]
 ====
-{service_tab_text}::
+{tab_text}::
 +
 --
 {compose_url}{compose_version}{compose_final_path}[Rego policies deployment example directory,window=_blank]
 
-Using git branch name: `{compose_version}`, to point to the latest stable version that also includes patches
+Using git branch name: `{compose_version}`, to point to the latest stable version that also includes patches.
 --
 ====
 

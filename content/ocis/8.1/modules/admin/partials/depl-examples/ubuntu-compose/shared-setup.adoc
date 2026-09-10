@@ -329,7 +329,7 @@ Add a valid response eMail address for Letsencrypt, see the note below.
 Set the CAServer to staging, see the note below.
 
 * `OCIS_DOCKER_IMAGE` +
-Check that the correct image type is selected ({version-type}).
+Check that the correct image type is selected.
 
 * `OCIS_DOMAIN`, `COLLABORA_DOMAIN` and/or `ONLYOFFICE_DOMAIN` +
 Set the domain names as defined in xref:domain-names[Domain Names].
@@ -649,14 +649,10 @@ docker volume rm {ocis_wopi}_ocis-config {ocis_wopi}_ocis-data
 
 === Updating
 
-// for testing only
-//:version-type: rolling
-//:version-type: production
-
 Infinite Scale::
 +
 --
-ifeval::["{version-type}" == "rolling"]
+ifdef::page-component-version-is-prerelease[]
 For Infinite Scale rolling releases, the following steps are essential to avoid breaking the setup. This is because rolling releases depend on all updates being done in sequence.
 
 When new versions of Infinite Scale are available, you *may* skip any version between the one you are currently running and the latest available rolling release for internal update reasons. All versions must be downloaded and launched at once. For more details, see https://owncloud.dev/ocis/release_roadmap/#updating-and-overlap[Updating and Overlap] in the developer documentation.
@@ -682,7 +678,7 @@ Note that we recommend manually checking to see if the deployment source has cha
 
 endif::[]
 
-ifeval::["{version-type}" != "rolling"]
+ifndef::page-component-version-is-prerelease[]
 
 Follow these steps to update between production releases:
 
