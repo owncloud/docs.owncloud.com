@@ -113,6 +113,10 @@ var serviceNames map[string]ServiceName
 // they keep the placeholders in the generated tables and are printed for manual fixing
 var serviceNotFound = []string{}
 
+// descriptionCut collects the envvars whose description has been cut at an unescaped pipe.
+// they are printed so the source can be checked, see cutAtUnescapedPipe below
+var descriptionCut = []string{}
+
 // RenderEnvVarDeltas creates the added, deprecated and removed envvar tables
 // isDryrun is provided by the flag defined in 'main.go'
 func RenderEnvVarDeltas(isDryrun bool) {
@@ -180,6 +184,18 @@ func doEnvVarDeltas(isDryrun bool) {
 			"placeholders of %s. Consider adding their prefix to %s:\n\n" + Reset, serviceXrefPlaceholder, yamlServiceNames)
 
 		for _, key := range serviceNotFound {
+			fmt.Printf("%s\n", key)
+		}
+		fmt.Printf("\n")
+	}
+
+	// a description containing an unescaped pipe has been cut, print the envvars affected
+	// so the source can be checked and the shortened text reviewed in the generated file
+	if len(descriptionCut) > 0 {
+		fmt.Printf(Yellow+"\nThe description of the following envvars contained an unescaped pipe, " +
+			"it has been cut before its first appearance:\n\n" + Reset)
+
+		for _, key := range descriptionCut {
 			fmt.Printf("%s\n", key)
 		}
 		fmt.Printf("\n")
@@ -286,6 +302,34 @@ func resolveService(key string) string {
 	}
 
 	return fmt.Sprintf("xref:{s-path}/%s.adoc[%s]", serviceNames[match].Path, serviceNames[match].Name)
+}
+
+// cutAtUnescapedPipe cuts a description before the first unescaped pipe.
+// a table line is made of four (five for deprecated) cells separated by a pipe. an unescaped
+// pipe in the description would therefore be read by adoc as the start of a new cell and
+// shift all following cells, which breaks the table layout.
+// note that global ('OCIS_') envvars can be described differently by each service using them.
+// those descriptions are collected with ' | ' as separator when the source file is written,
+// see 'addValue' in 'templates/envar-db-table.go.tmpl'. keeping the first one is sufficient
+// here, the full list stays available in the service tables.
+// an escaped pipe is printed literally by adoc and can stay
+func cutAtUnescapedPipe(key string, description string) string {
+
+	for index := 0; index < len(description); index++ {
+		if description[index] != '|' {
+			continue
+		}
+		if index > 0 && description[index-1] == '\\' {
+			continue
+		}
+		// collect for printing, note that a key can be part of more than one table
+		if !contains(descriptionCut, key) {
+			descriptionCut = append(descriptionCut, key)
+		}
+		return strings.TrimSpace(description[:index])
+	}
+
+	return description
 }
 
 // contains reports if a string is already part of a list
@@ -504,6 +548,9 @@ func createTable(typeText string, source *EnvVarList, fromVersion string, toVers
 			value   := source.values[key]
 			service := resolveService(key)
 
+			// a pipe in the description would create an extra cell and break the table
+			description := cutAtUnescapedPipe(key, value.Description)
+
 			// only the first line of a group carries the xref, the following lines get an empty
 			// service cell which keeps the leading pipe. this is what was done manually before.
 			// note that unresolved envvars are never grouped, their placeholders are identical
@@ -515,9 +562,9 @@ func createTable(typeText string, source *EnvVarList, fromVersion string, toVers
 			}
 
 			if isDeprecated {
-				b.WriteString(addAdocLine2(service, key, value.Description, value.RemovalVersion, value.DeprecationInfo))
+				b.WriteString(addAdocLine2(service, key, description, value.RemovalVersion, value.DeprecationInfo))
 			} else {
-				b.WriteString(addAdocLine1(service, key, value.Description, value.DefaultValue))
+				b.WriteString(addAdocLine1(service, key, description, value.DefaultValue))
 			}
 		}
 	}
