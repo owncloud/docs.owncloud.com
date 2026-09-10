@@ -1,7 +1,7 @@
 // # Added Variables between oCIS 8.2.0 and oCIS 8.3.0
 // commenting the headline to make it better includable
 
-// table created per 2026.09.09
+// table created per 2026.09.10
 // the table should be recreated/updated on source () changes
 
 [width="100%",cols="~,~,~,~",options="header"]
@@ -140,17 +140,17 @@
 
 | xref:{s-path}/proxy.adoc[Proxy]
 | PROXY_OIDC_USERINFO_CACHE_ENABLE_TLS
-| Activate TLS for the connection to the cache store. Only applies when store type 'nats-js-kv' is configured. | Activate TLS for the connection to the signing key store. Only applies when store type 'nats-js-kv' is configured.
+| Activate TLS for the connection to the cache store. Only applies when store type 'nats-js-kv' is configured.
 | false
 
 | 
 | PROXY_OIDC_USERINFO_CACHE_TLS_INSECURE
-| Disable TLS certificate verification for the cache store connection. Only applies when store type 'nats-js-kv' is configured. | Disable TLS certificate verification for the signing key store connection. Only applies when store type 'nats-js-kv' is configured.
+| Disable TLS certificate verification for the cache store connection. Only applies when store type 'nats-js-kv' is configured.
 | false
 
 | 
 | PROXY_OIDC_USERINFO_CACHE_TLS_ROOT_CA_CERTIFICATE
-| Path to the PEM-encoded root CA certificate for the cache store TLS connection. Only applies when store type 'nats-js-kv' is configured. | Path to the PEM-encoded root CA certificate for the signing key store TLS connection. Only applies when store type 'nats-js-kv' is configured.
+| Path to the PEM-encoded root CA certificate for the cache store TLS connection. Only applies when store type 'nats-js-kv' is configured.
 | 
 
 | 
