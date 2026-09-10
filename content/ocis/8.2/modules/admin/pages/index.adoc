@@ -71,4 +71,4 @@ Configuration of Infinite Scale might be quite different to what you are used to
 
 == End-User License Agreement (EULA)
 
-ownCloud provides an EULA to clarify, among various topics, who can use this software and which conditions apply to the groups of users defined. See the actual {compose_raw_url}{compose_version}/assets/End-User-License-Agreement-for-ownCloud-Infinite-Scale.pdf[EULA] for details.
+ownCloud provides an EULA to clarify, among various topics, who can use this software and which conditions apply to the groups of users defined. See the actual {compose_raw_url}{ocis_git_version}/assets/End-User-License-Agreement-for-ownCloud-Infinite-Scale.pdf[EULA] for details.

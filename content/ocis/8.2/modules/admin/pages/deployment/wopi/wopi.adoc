@@ -73,7 +73,7 @@ image::deployment/wopi/wopi-overview.svg[WOPI Overview Diagram,width=500]
 +
 [tabs]
 ====
-{service_tab_text}::
+{tab_text}::
 +
 --
 {compose_url}{compose_version}{compose_final_path}/{ocis_wopi}[Docker compose `ocis_full` deployment example directory,window=_blank]

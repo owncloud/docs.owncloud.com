@@ -23,7 +23,7 @@ IMPORTANT: By choosing https://www.hetzner.com[Hetzner] for our cloud deployment
 
 NOTE: With the minimum configuration available on Hetzner, you can start with about €4/month for a cloud driven Infinite Scale deployment. Note that prices are subject to changes and only intended for informational purposes.
 
-NOTE: This guide references the latest {version-type} version of Infinite Scale.
+NOTE: This guide references the latest stable version of Infinite Scale.
 
 NOTE: With this setup, each deployment only contains one instance of Infinite Scale.
 

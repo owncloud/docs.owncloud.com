@@ -73,6 +73,12 @@ antora:
     - ./antora-extensions/comp-version.js
     - ./antora-extensions/latest-alias.js
     - ./antora-extensions/next-alias.js
+    # Antora derives page-component-version-is-latest but has no prerelease
+    # counterpart; this adds page-component-version-is-prerelease, set on every
+    # page of a version marked `prerelease` in its antora.yml (ocis 8.3,
+    # desktop 7.2, android 4.8 today), so content can branch on "this is the dev
+    # line" without hard-coding a version number.
+    - ./antora-extensions/prerelease-attribute.js
     - require: ./antora-extensions/load-global-site-attributes.js
       attributefile: ./global-attributes.yml
       enabled: true

@@ -630,7 +630,7 @@ This is the local path the where Infinite Scale stores all data except the confi
 This is the local path where the Infinite Scale configuration is stored. When listing the content, you must see the file `ocis.yaml`. See the important information when using xref:docker-volumes[Docker Volumes].
 
 * `<ocis-version>` +
-The Infinite Scale version used like `latest` or `{ocis-actual-version}` or ... .
+The Infinite Scale version used like `latest` or `{page-component-latest-version}` or ... .
 +
 --
 [source,bash]

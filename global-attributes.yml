@@ -48,16 +48,13 @@
     std-port-mysql: '3306'
     std-port-redis: '6379'
 #   ocis
-    # branch versions, also used to assemble branch names in ocis
-    latest-ocis-version: '8.2' #
+    # branch versions mainly used outside ocis except versions up to including 8.0, can be removed after removing 8.0
+    latest-ocis-version: '8.2'
     previous-ocis-version: '8.1'
-    # Versions mainly for printing like in docs-main release info and in docs-ocis to define the latest production version.
-    # Versions in the ocis docs need to be defined in the branch specific docs-ocis/antora.yaml file.
-    # To do so, change the values in the branch of docs-ocis/antora.yml like service_xxx and compose_xxx.
+    # versions for printing in component main, release info to define the latest/former production version.
     ocis-actual-version: '8.2.0'
     ocis-former-version: '8.1.0'
-    ocis-compiled: '2026-08-10 00:00:00 +0000 UTC'
-    ocis-downloadpage-url: 'https://download.owncloud.com/ocis/ocis'
+
 #   webui (versionless component in the monorepo; no @version qualifier)
 #   desktop
     latest-desktop-version: '7.1'
