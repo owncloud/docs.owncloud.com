@@ -250,7 +250,14 @@ NOTE: The client that downloads the example is not the server that you upload to
 
 NOTE: The client from which you download the example via a browser and upload it using `scp` must have access to the server and have the `scp` application installed.
 
-To download and extract the necessary deployment example footnote:[Derived from the {compose_url}{compose_version}{compose_final_path}/{ocis_wopi}/[{ocis_wopi}, window=_blank] developer example], *open a browser* and enter the following URL. Note that this link also contains patches for release: `{ocis-actual-version}`.
+:note_text:
+ifdef::page-component-version-is-prerelease[]
+:note_text: There is no download for the ocis development version for stability reasons. The latest stable release {page-component-latest-version} is used instead.
+endif::[]
+
+{note_text}
+
+To download and extract the necessary deployment example footnote:[Derived from the {compose_url}{compose_version}{compose_final_path}/{ocis_wopi}/[{ocis_wopi}, window=_blank] developer example], *open a browser* and enter the following URL. Note that this link also contains patches, if any, for the stable release branch: `{compose_version}`.
 
 //[source,url,subs="attributes+,+macros"]
 //----
