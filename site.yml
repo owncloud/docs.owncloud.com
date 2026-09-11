@@ -19,9 +19,17 @@ content:
   sources:
   - url: .
     start_paths:
+    # for any components (such as ocis) where versions to render are defined manually,
+    # you must define e.g. `content/ocis/8.3` and not `content/ocis/8.3/*`
+    # otherwise this globs one level too deep, into modules/, and Antora then aborts
+    # with "antora.yml not found".
+    # note that any version NOT named is not rendered and could safely be deleted if outdated.
+    # note that sometimes outdated versions may not render at all because of attribute changes.
     - content/main
     - content/server/*
-    - content/ocis/*
+    - content/ocis/8.3
+    - content/ocis/8.2
+    - content/ocis/8.1
     - content/webui
     - content/desktop/*
     - content/ios/*
@@ -42,7 +50,7 @@ urls:
   # each component's prerelease version, falling back to the latest release.
 
 runtime:
-  # local content only -- nothing to fetch
+  # local content only, no other git repos to fetch
   fetch: false
   cache_dir: ./.cache
 
