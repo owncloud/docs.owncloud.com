@@ -42,13 +42,8 @@ Some theme keys are mandatory, like the `common.shareRoles` settings. Such manda
 
 == Configuring a Theme
 
-:configuring_add_on_text:
-ifdef::page-component-version-is-prerelease[]
-:configuring_add_on_text: from the latest stable version.
-endif::[]
-
-.Sourced from https://github.com/owncloud/ocis/blob/{compose_version}{web_assets_path}theme.json[GitHub, _window=blank] {configuring_add_on_text}
+.Sourced from https://github.com/owncloud/ocis/blob/{ocis_git_version}{web_assets_path}theme.json[GitHub, _window=blank].
 [source,json]
 ----
-include::{ocis_services_raw_url}{compose_version}{web_assets_path}theme.json[]
+include::{ocis_services_raw_url}{ocis_git_version}{web_assets_path}theme.json[]
 ----
