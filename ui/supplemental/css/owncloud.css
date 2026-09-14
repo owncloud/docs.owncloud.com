@@ -18,6 +18,14 @@
   --navbar-background: var(--oc-navy);
   --link-color: var(--oc-link);
   --link-color-hover: var(--oc-link-hover);
+  /* block/table caption colour -- stock default UI uses a neutral grey */
+  --color-title: var(--oc-navy);
+
+  /* Typefaces (see the @font-face block below). The stock default UI hardcodes
+     `Roboto` / `Roboto Mono` in its selectors with no custom property, so these
+     exist for our own rules and for --pf-font to read. */
+  --body-font-family: "DM Sans", sans-serif;
+  --monospace-font-family: "Roboto Mono", monospace;
 
   /* Pagefind Component UI theming — the modal/trigger web components reset
      inherited styles (all: initial) and read only their own --pf-* custom
@@ -31,6 +39,125 @@
   --pf-border-radius: 0.15rem;
   --pf-hover: #f0f0f0;
   --pf-mark: var(--oc-teal);
+}
+
+/* ---------------------------------------------------------------------------
+   Typefaces: DM Sans for text, Roboto Mono for code.
+
+   The .woff2 files in ui/supplemental/font/ are the latin subsets taken verbatim
+   from @fontsource/dm-sans and @fontsource/roboto-mono (v5.3.0, SIL OFL-1.1 --
+   see OFL-dm-sans.txt / OFL-roboto-mono.txt next to them). They are vendored
+   rather than pulled in as npm packages so no new dependency or build step is
+   needed; refresh them by hand from the same Fontsource version if bumping.
+
+   Only the latin subset ships. Stock also carries cyrillic Roboto faces; the
+   documentation is English, and any non-latin glyph simply falls back to the
+   system sans-serif per character. `font-display: swap` matches Fontsource's own
+   stylesheets. No .woff fallback -- every browser Antora 3 targets has woff2.
+
+   THE 600 => BOLD MAPPING IS DELIBERATE. The stock UI declares Roboto *Medium*
+   (500) under `font-weight: 600` and then asks for 600 in ~19 places (headings
+   h3/h4, block titles, captions, `b`/`strong`/`th`, nav current page, ...), so
+   everything nominally bold rendered as Medium. The retired docs-ui bundle set
+   --body-font-weight-bold to 700 and shipped a real 700 face, so all of those
+   were properly bold. Pointing both 600 and 700 at the Bold file reproduces that
+   in one place instead of overriding all 19 selectors -- and it is exactly the
+   mechanism the stock UI itself uses.
+   --------------------------------------------------------------------------- */
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(../font/dm-sans-latin-400-normal.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "DM Sans";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src: url(../font/dm-sans-latin-400-italic.woff2) format("woff2");
+}
+
+/* 600 and 700 both resolve to Bold -- see the note above */
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600 700;
+  src: url(../font/dm-sans-latin-700-normal.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "DM Sans";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 600 700;
+  src: url(../font/dm-sans-latin-700-italic.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(../font/roboto-mono-latin-400-normal.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600 700;
+  src: url(../font/roboto-mono-latin-700-normal.woff2) format("woff2");
+}
+
+/* Retarget the four stock selectors that name a family. Each ties with the stock
+   rule on specificity and wins on load order (owncloud.css comes after
+   site.css); everything else inherits from `body`. The stock Roboto @font-face
+   declarations stay in site.css but go unreferenced, so those files are never
+   fetched. */
+body {
+  font-family: var(--body-font-family);
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--monospace-font-family);
+}
+
+.doc .source-toolbox,
+.doc .conum[data-value] {
+  font-family: var(--body-font-family);
+}
+
+/* Site-wide font scale, ported from the retired docs-ui bundle
+   (docs-ui/src/css/owncloud-vars.css, --body-font-size / --body-font-size--desktop).
+   ownCloud renders one step larger than the stock default UI: 17/18px becomes
+   18.4/19.2px. The stock UI hardcodes these in `html` with no custom property to
+   hook into, so the rules are restated here; owncloud.css loads after site.css
+   (see partials/head-styles.hbs), so an equal-specificity `html` selector wins.
+
+   Everything else follows automatically: both UIs use the same rem multipliers
+   (an 18-unit rem base), so raising the root em rescales body text, tables,
+   headings and the rem-based layout widths together -- e.g. the env var table
+   goes from 15px back to 16px.
+
+   Scoped to `screen` on purpose: the old UI left the print size alone, and an
+   unscoped `html` rule here would beat the stock `@media print` override
+   further up the cascade. */
+@media screen {
+  html {
+    font-size: 1.1em; /* stock: 1.0625em */
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  html {
+    font-size: 1.2em; /* stock: 1.125em */
+  }
 }
 
 /* ownCloud navbar is brand navy */
@@ -75,6 +202,86 @@
   .navbar-brand .navbar-logo .navbar-title {
     display: none;
   }
+}
+
+/* Section headings, ported from the retired docs-ui bundle
+   (docs-ui/src/css/owncloud.css). docs-ui set --heading-font-color to the brand
+   navy and gave every heading a 2rem top margin; the stock default UI hardcodes
+   a near-black #191919 and half the top margin, so e.g. the "Environment
+   Variables" heading above the service env var tabsets rendered dark grey and
+   sat too close to the preceding block.
+
+   `hyphens: none` keeps headings off the `hyphens: auto` set further down. */
+.doc h1,
+.doc h2,
+.doc h3,
+.doc h4,
+.doc h5,
+.doc h6 {
+  color: var(--oc-navy); /* --heading-font-color; stock: #191919 */
+  hyphens: none;
+  margin: 2rem 0 0; /* stock: 1rem 0 0 */
+}
+
+/* Tables in the doc body, ported from the retired docs-ui bundle
+   (docs-ui/src/css/owncloud.css). The stock default UI renders AsciiDoc tables
+   as a full 1px grid because Asciidoctor emits `frame-all grid-all`; ownCloud
+   instead shows horizontal row rules only, with a light grey header band. This
+   matters most for the wide environment-variable tables under
+   deployment/services/s-list/.
+
+   These rules rely on owncloud.css loading after site.css (see
+   partials/head-styles.hbs) -- most of them tie with a stock rule on
+   specificity and win on source order only, exactly as in the old bundle. */
+
+/* drop the grid/frame borders the stock UI draws for frame-all/grid-all;
+   the row rules below replace them */
+.doc table.tableblock,
+.doc table.tableblock > * > tr > * {
+  border: unset;
+}
+
+/* header row: grey band, no visible rule against the band itself */
+.doc table.tableblock th {
+  border-bottom: 2.5px solid #f7f8f7; /* no var; literal in docs-ui too */
+  background: #f7f8f7; /* no var; literal in docs-ui too */
+}
+
+/* body cells: horizontal rules only */
+.doc table.tableblock td {
+  border-top: 1px solid #ddd; /* no var; literal in docs-ui too */
+  border-bottom: 1px solid #ddd; /* no var; literal in docs-ui too */
+}
+
+/* stock sets `word-wrap: anywhere`, which breaks long env var names
+   mid-token and starves the Name column of width */
+.doc td.tableblock > .content {
+  word-wrap: unset;
+}
+
+/* hyphenate instead, so long Description cells still wrap */
+.doc p,
+.doc .tableblock,
+.doc .content {
+  hyphens: auto;
+}
+
+.doc .tableblock p {
+  font-size: inherit;
+}
+
+/* smaller, tighter inline code chips -- the Name column is entirely code */
+.doc p code,
+.doc thead code,
+.doc .colist > table code {
+  font-size: 0.9em;
+  border-radius: 0.2rem;
+  padding: 0.075rem 0.25rem 0.125rem;
+}
+
+/* stock colours the caption neutral grey; ownCloud uses the title colour */
+.doc table.tableblock caption {
+  color: var(--color-title);
 }
 
 /* Branded footer (partials/footer.hbs), mirroring doc.owncloud.com.
