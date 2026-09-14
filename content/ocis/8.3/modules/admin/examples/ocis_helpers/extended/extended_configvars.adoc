@@ -77,7 +77,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
-++'true' or 'false', defaults to false. Requires MICRO_REGISTRY_ENABLE_TLS to be true ++
+++'true' or 'false', defaults to false. Requires MICRO_REGISTRY_ENABLE_TLS to be true. Do not enable this in production because it disables authentication of the NATS server. Use it only for testing with self-signed certificates. ++
 
 a| `MICRO_REGISTRY_TLS_ROOT_CA_CERTIFICATE` +
 a| [subs=-attributes]

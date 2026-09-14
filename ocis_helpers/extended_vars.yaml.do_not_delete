@@ -115,7 +115,8 @@ variables:
   type: string
   default_value: ""
   description: '''true'' or ''false'', defaults to false. Requires MICRO_REGISTRY_ENABLE_TLS
-    to be true'
+    to be true. Do not enable this in production because it disables authentication
+    of the NATS server. Use it only for testing with self-signed certificates.'
   do_ignore: false
 - rawname: _registryTLSRootCAEnv
   path: ../../ocis/ocis-pkg/natsjsregistry/registry.go:257
