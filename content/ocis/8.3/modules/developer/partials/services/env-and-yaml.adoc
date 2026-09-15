@@ -1,0 +1,51 @@
+////
+The attribute 'service_name' will be handed over by the calling page.
+
+The file is a stripped down version of the admin docs partial equivalent and links
+to the admin documentation for the shared explanatory pages.
+
+The envvar tables and yaml examples are the very same sources the admin docs use.
+They live locally in the admin module ('admin:example$') and are not duplicated here.
+////
+
+
+tag::envvars-yaml[]
+
+// compute the correct tab text
+include::admin:partial$multi-location/compose-version.adoc[]
+
+=== Environment Variables
+
+The `{service_name}` service is configured via the following environment variables. Read the xref:admin:deployment/services/envvar-types-description.adoc[Environment Variable Types, window=_blank] in the admin documentation for important details. Column `IV` shows with which release the environment variable has been introduced.
+
+// load the deprecation activation file. this will overwrite the above.
+include::admin:example${ocis_helpers_adoc}{service_name}_deprecation.adoc[]
+
+[tabs]
+====
+{env_tab_text}::
++
+--
+// if deprecation activation is true, it will also show the deprecation content.
+include::admin:example${ocis_helpers_adoc}{service_name}_configvars.adoc[]
+--
+====
+
+=== YAML Example
+
+* Note the file shown below must be renamed and placed in the correct folder according to the admin documentations xref:admin:deployment/general/general-info.adoc#configuration-file-naming[Configuration File Naming, window=_blank] conventions to be effective.
+* See the xref:admin:deployment/services/env-var-note.adoc[Notes for Environment Variables, window=_blank] in the admin documentation if you want to use environment variables in the yaml file.
+
+[tabs]
+====
+{env_tab_text}::
++
+--
+[source,yaml]
+----
+include::admin:example${ocis_helpers_yaml}{service_name}-config-example.yaml[]
+----
+--
+====
+
+end::envvars-yaml[]
