@@ -284,6 +284,32 @@ pre {
   color: var(--color-title);
 }
 
+/* Keep the right-hand "Contents" sidebar against the right window edge.
+ *
+ * At >= 1024px the stock UI lays `.body` out as a flex row of
+ * nav-container (15rem, fixed) | .doc (flex: auto, max-width: 46rem) |
+ * aside.toc.sidebar (flex: 0 0 12rem). Below ~1478px the ToC tracks the window
+ * because `.doc` is still growing; at that width `.doc` hits its 46rem cap, the
+ * row stops consuming space and -- flex items being packed at `flex-start` --
+ * all further width piles up unused to the right of the ToC. On a 2545px
+ * viewport that left the ToC frozen ~1067px short of the right edge.
+ *
+ * `margin-left: auto` on the last flex item absorbs that free space instead, so
+ * the ToC keeps moving right past the cap. Below the cap the free space is 0,
+ * so the auto margin resolves to 0 and narrow layouts are untouched. The
+ * resulting gutter is the ToC's own `.toc-menu` margin-right (0.75rem) at every
+ * width, i.e. exactly the spacing the stock UI already produced below the cap.
+ *
+ * Article measure is deliberately left at 46rem: widening it would stretch body
+ * text past a readable line length on large monitors. This also gives the
+ * `.tabset > .content` overflow hack in css/tabs.css more clearance, never
+ * less. */
+@media screen and (min-width: 1024px) {
+  aside.toc.sidebar {
+    margin-left: auto;
+  }
+}
+
 /* Branded footer (partials/footer.hbs), mirroring doc.owncloud.com.
    Navy surface with three link columns + centered logo and copyright.
    Selectors are qualified as `footer.footer` to match the stock UI's own
