@@ -54,7 +54,16 @@
   margin-top: 0;
 }
 
+/* `margin-top` is repeated here on purpose. The canonical `.tabs li + li` rule
+ * above (0,1,2) is outspecified by the stock Antora default UI's
+ * `.doc .ulist li+li { margin-top: .5rem }` (0,2,2), so on its own it never
+ * takes effect: every chip but the first kept a 0.5rem top margin and the strip
+ * rendered with the first chip sitting ~9.6px above the others (only visible on
+ * tabsets with more than one tab -- the single-tab service pages never showed
+ * it). This selector ties that specificity and, as tabs.css loads after
+ * site.css (see partials/head-styles.hbs), wins on source order. */
 .tabs.ulist li + li {
+  margin-top: 0;
   margin-left: 0.25em;
 }
 
