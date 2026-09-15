@@ -14,6 +14,13 @@ asciidoc:
     # https://github.com/owncloud/ocis-charts/tree/master/charts/ocis/docs
     s-path: 'deployment/services/s-list'
 
+    # same as s-path but for the developer documentation
+    dev-s-path: 'services/s-list'
+
+    # only used in the developer docs via partials/services/compute-links.adoc
+    # path component to the service folder in the ocis repo, used to link the services README
+    dev_ocis_services_path: '/services/'
+
     # the name of the sub directory that defines the sources folder used in the compose deployment examples
     ocis_wopi: 'ocis_full'
 
