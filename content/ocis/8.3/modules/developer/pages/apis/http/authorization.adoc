@@ -16,11 +16,21 @@ For detailed information on Infinite Scale's support for OpenID Connect (OIDC), 
 
 While selecting an ownCloud client for authentication, take note of specific limitations such as the `Redirect URI`:
 
-| Source | Redirect URI |
-|------|--------|
-|Android|oc://android.owncloud.com|
-|iOS|oc://ios.owncloud.com|
-|Desktop|http://127.0.0.1 <br> http://localhost |
+[width="50%", cols="25%,25%", options="header"]
+|===
+| Source
+| Redirect URI
+
+|Android
+|oc://android.owncloud.com
+
+|iOS
+|oc://ios.owncloud.com
+|Desktop
+a|http://127.0.0.1 +
+http://localhost
+
+|===
 
 In this example, the desktop app's `client_id` and `client_secret` are being used.
 
@@ -71,11 +81,11 @@ Response looks like this:
 [source,json]
 ----
 {
-"access_token": "eyJhbGciOid...",
-"token_type": "Bearer",
-"id_token": "eyJhbGciOi...",
-"refresh_token": "eyJhbGciOiJ...",
-"expires_in": 300
+    "access_token": "eyJhbGciOid...",
+    "token_type": "Bearer",
+    "id_token": "eyJhbGciOi...",
+    "refresh_token": "eyJhbGciOiJ...",
+    "expires_in": 300
 }
 ----
 --
@@ -99,25 +109,23 @@ Response looks like this:
 [source,json]
 ----
 {
-"access_token": "eyJhbGciOi...",
-"token_type": "Bearer",
-"expires_in": 300
+    "access_token": "eyJhbGciOi...",
+    "token_type": "Bearer",
+    "expires_in": 300
 }
 ----
 --
 
 == Implicit Code Flow
 
-When using the implicit flow, tokens are provided in a URI fragment of the redirect URL.
-Valid values for the `response_type` request parameter are:
+When using the implicit flow, tokens are provided in a URI fragment of the redirect URL. Valid values for the `response_type` request parameter are:
 
 * token
 * id_token token
 
 [WARNING]
 ====
-If you are using the implicit flow, `nonce` parameter is required in the initial `/authorize` request.
-`nonce=pL3UkpAQPZ8bTMGYOmxHY/dQABin8yrqipZ7iN0PY18=`
+If you are using the implicit flow, `nonce` parameter is required in the initial `/authorize` request. `nonce=pL3UkpAQPZ8bTMGYOmxHY/dQABin8yrqipZ7iN0PY18=`
 ====
 
 Bash command to generate cryptographically random value:
@@ -130,6 +138,7 @@ openssl rand -base64 32
 [TIP]
 ====
 The user should be directed to a URL to authenticate and give their consent (bypassing consent is against the standard):
+
 [source,bash]
 ----
 https://ocis.test/signin/v1/identifier/_/authorize?client_id=client_id&scope=openid+profile+email+offline_access&response_type=id_token+token&redirect_uri=http://path-to-redirect-uri&nonce=pL3UkpAQPZ8bTMGYOmxHY/dQABin8yrqipZ7iN0PY18=
@@ -144,6 +153,7 @@ http://path-to-redirect-uri#access_token=eyJhbGciOiJQUzI...&expires_in=300&id_to
 ----
 
 For the next step, extract the access_token from the URL.
+
 [source,bash]
 ----
 access_token = 'eyJhbGciOiJQ...'

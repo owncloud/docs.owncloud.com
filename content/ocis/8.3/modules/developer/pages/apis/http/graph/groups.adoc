@@ -17,7 +17,7 @@ The Groups API is implementing a subset of the functionality of the link:https:/
 
 Our implementation currently supports two Attributes for a Group:
 
-[width="100%", cols="25%,75", options="header"]
+[width="100%", cols="25%,75%", options="header"]
 |===
 | Attribute
 | Description
@@ -40,7 +40,8 @@ Example:
 
 [source,bash]
 ----
-curl -k 'https://localhost:9200/graph/v1.0/groups' -u user:password
+curl -k 'https://localhost:9200/graph/v1.0/groups' \
+     -u user:password
 ----
 
 Response:
@@ -70,7 +71,8 @@ Example:
 
 [source,bash]
 ----
-curl -k 'https://localhost:9200/graph/v1.0/groups?$expand=members' -u user:password
+curl -k 'https://localhost:9200/graph/v1.0/groups?$expand=members' \
+     -u user:password
 ----
 
 Response:
@@ -119,7 +121,8 @@ Example:
 
 [source,bash]
 ----
-curl -k 'https://localhost:9200/graph/v1.0/groups/7a20f238-8a22-4458-902d-47674c317e5f' -u user:password
+curl -k 'https://localhost:9200/graph/v1.0/groups/7a20f238-8a22-4458-902d-47674c317e5f' \
+     -u user:password
 ----
 
 Response:
@@ -138,7 +141,8 @@ Example:
 
 [source,bash]
 ----
-curl -k 'https://localhost:9200/graph/v1.0/groups/7a20f238-8a22-4458-902d-47674c317e5f?$expand=members' -u user:password
+curl -k 'https://localhost:9200/graph/v1.0/groups/7a20f238-8a22-4458-902d-47674c317e5f?$expand=members' \
+     -u user:password
 ----
 
 Response:
@@ -169,7 +173,8 @@ Example:
 
 [source,bash]
 ----
-curl -k 'https://localhost:9200/graph/v1.0/groups/7a20f238-8a22-4458-902d-47674c317e5f/members' -u user:password
+curl -k 'https://localhost:9200/graph/v1.0/groups/7a20f238-8a22-4458-902d-47674c317e5f/members' \
+     -u user:password
 ----
 
 Response:
@@ -227,7 +232,8 @@ Example:
 
 [source,bash]
 ----
-curl -k --request DELETE 'https://localhost:9200/graph/v1.0/groups/7a20f238-8a22-4458-902d-47674c317e5f' -u user:password
+curl -k --request DELETE 'https://localhost:9200/graph/v1.0/groups/7a20f238-8a22-4458-902d-47674c317e5f' \
+     -u user:password
 ----
 
 When successful the API returns no response body and the HTTP status code 204 (No Content)
@@ -249,7 +255,8 @@ The request body contains a single attribute "`@odata.id`" referencing the new m
 curl -k --header "Content-Type: application/json" \
         --request POST  --data \
       '{ "@odata.id": "https://localhost:9200/graph/v1.0/users/4c510ada-c86b-4815-8820-42cdf82c3d51" }' \
-      'https://localhost:9200/graph/v1.0/groups/7a20f238-8a22-4458-902d-47674c317e5f/members/$ref' -u user:password
+      'https://localhost:9200/graph/v1.0/groups/7a20f238-8a22-4458-902d-47674c317e5f/members/$ref' \
+      -u user:password
 ----
 
 When successful the API returns no response body and the HTTP status code 204 (No Content)
