@@ -2,18 +2,39 @@ name: Lint PR title
 
 on:
   pull_request:
-    # `reopened` is required: without it, closing and reopening a PR leaves the
-    # check absent rather than carrying it over. `synchronize` is deliberately
-    # omitted -- a push cannot change the title, so it can only re-run a lint
-    # whose outcome is already known.
-    types: [opened, edited, reopened]
+    # A check-run belongs to the head sha it ran against and is never carried
+    # forward, while required status checks are evaluated per sha. So the two
+    # non-obvious types here are not about re-judging a title -- a push cannot
+    # change one -- but about guaranteeing that some event fires against whatever
+    # head the PR ends up with. Neither is redundant with the other:
+    #
+    #   * `synchronize` (a push). Without it the pushed head carries NO `lint`
+    #     check-run, which GitHub reads as perpetually pending. #116 is the case
+    #     that matters: lint ran when Dependabot opened it, Dependabot then
+    #     rebased, and the head that merged had no lint at all. Re-running the
+    #     workflow would not have recovered it -- a re-run replays the original
+    #     event and reports back to the original sha.
+    #   * `reopened`. A push while the PR is closed emits no `pull_request` event
+    #     at all, so this is the only event that reports against the head the PR
+    #     comes back with.
+    #
+    # A missing check is harmless while this context is advisory -- as of this
+    # commit `build` is the only required check on `main` -- and a permanent merge
+    # block once `lint` joins the docs.owncloud.com-status-checks ruleset in
+    # owncloud/admin, which is the follow-up this change unblocks.
+    types: [opened, edited, reopened, synchronize]
 
 permissions:
   pull-requests: read
 
-# Scoped per ref, as in ci.yml. Two quick title edits would otherwise race, and
-# a superseded failing run finishing last would leave a red check on a title
-# that is already valid.
+# Scoped per ref, as in ci.yml -- for a pull_request event that is
+# refs/pull/<n>/merge, so the group is per PR. Two quick title edits, or an edit
+# racing a push, would otherwise overlap. Note what this does and does not buy:
+# cancellation is asynchronous, so the superseded run still lands, as
+# `cancelled`, and only GitHub resolving duplicate check-run names to the newest
+# keeps the surviving verdict the current one (head 3a91054c carries exactly that
+# cancelled/success pair). If a stale `cancelled` ever did win, re-running it is
+# enough -- its original sha is still head, unlike the #116 case above.
 concurrency:
   group: lint-pr-title-${{ github.ref }}
   cancel-in-progress: true
