@@ -12,6 +12,31 @@
  * 0, which let the following block sit flush against the panel border. */
 .tabset {
   margin-bottom: 1.25em;
+
+  /* The tabset -- not the panel -- is the box that sizes itself to its content
+   * (see `.tabset > .content` below for why anything shrink-wraps at all).
+   * `fit-content` resolves to the widest of the tab strip and the panel,
+   * capped at the doc column but free to grow past it when the panel's content
+   * cannot shrink any further (a wide table). The panel is then a plain block
+   * filling that width, so:
+   *
+   * - a short panel ("This indicates that the Resource has been created
+   *   successfully.") is widened to the right edge of the last chip instead of
+   *   ending mid-strip, which looked like the frame had been cut off;
+   * - a panel wider than the strip is unaffected -- it still sets the width and
+   *   the strip is simply shorter than the frame, which renders correctly.
+   *
+   * The three declarations that follow used to sit on `.tabset > .content` and
+   * have to move up with the shrink-wrapping: `margin-right` because on the
+   * panel it would now eat 50px of the tabset width and re-open the very gap
+   * this fixes, `position`/`z-index` because the box that overlaps the
+   * right-hand ToC when it grows is now this one. */
+  width: -moz-fit-content; /* Firefox < 94 */
+  width: -webkit-fit-content; /* Safari < 12.1 */
+  width: fit-content;
+  margin-right: 50px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Lengths here are `em`, not `rem`, as in docs-ui: they scale with the chip's
@@ -21,7 +46,13 @@
   display: flex;
   flex-wrap: wrap;
   list-style: none;
-  margin: 0 -0.25em 0 0;
+  /* The canonical stylesheet pulls the strip 0.25em to the right here to cancel
+   * the trailing margin its own chips carry; docs-ui's chips carry none (see
+   * `.tabs.ulist li` below), so that compensation had nothing to compensate.
+   * It matters now: as the strip is what the `fit-content` tabset measures
+   * itself against, a negative right margin would leave the panel 0.25em short
+   * of the last chip. */
+  margin: 0;
   padding: 0;
 }
 
@@ -92,28 +123,26 @@
 
 /* The panel box that carries the border below the tab strip.
  *
- * The five declarations after `padding` are ownCloud adaptations restored from
- * the retired docs-ui bundle (docs-ui/src/css/tabs.css); without them the
+ * The sizing behaviour here is an ownCloud adaptation restored from the retired
+ * docs-ui bundle (docs-ui/src/css/tabs.css); with the plain stock rules the
  * border box keeps the width of the doc column while a wide table inside it
  * renders at its own, larger intrinsic width -- so the right border line runs
  * straight down through the table rows instead of enclosing them. The service
  * environment-variable tables under deployment/services/s-list/ are all wide
  * enough to hit this.
  *
- * - display: inline-block  lets the box grow *and* shrink to fit its content,
- *                          so the border closes around a wide table
- * - margin-right           keeps that border clear of the viewport edge
- * - position + z-index     a widened tabset would otherwise slide underneath
- *                          the right-hand ToC (see partials/main.hbs)
- * - background             the raised box must be opaque where it overlaps
+ * docs-ui did it with `display: inline-block` on this box, which shrink-wraps in
+ * both directions and so also pulled the frame *in* on panels narrower than the
+ * tab strip. The shrink-wrapping now happens one level up, on `.tabset`, and
+ * this box is left as a plain block that fills it -- wide content still pushes
+ * the frame out, short content no longer pulls it in.
+ *
+ * `background` stays here: the raised box has to be opaque where it overlaps the
+ * ToC.
  */
 .tabset > .content {
   border: 1px solid #808080; /* --color-gray-50; docs-ui wrote this as `gray` */
   padding: 1.25em;
-  display: inline-block;
-  margin-right: 50px;
-  position: relative;
-  z-index: 1;
   background: #fff; /* --body-background => --color-white */
 }
 
