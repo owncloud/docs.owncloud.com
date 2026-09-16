@@ -101,7 +101,7 @@ https://owncloud.dev/libre-graph-api/#/drives.root/CreateDriveItem
 GET https://ocis.url/graph/{version}/{me/}drives/?{query-parameters}
 ----
 
-[width="100%", cols="25%,75", options="header"]
+[width="100%", cols="25%,75%", options="header"]
 |===
 | Attribute
 | Description
@@ -109,7 +109,7 @@ GET https://ocis.url/graph/{version}/{me/}drives/?{query-parameters}
 | \{version}
 | The version of the LibreGraph API used by the client.
 
-| \{/me}
+| {/me}
 | The `me` component of the part is optional. If used, you only see spaces where the acting user is a regular member of.
 
 | \{query-parameters}
@@ -155,7 +155,7 @@ To limit the quota of a space you need to set the `quota.total` value. The API r
 }
 ----
 
-[width="100%", cols="25%,75", options="header"]
+[width="100%", cols="25%,75%", options="header"]
 |===
 | Attribute
 | Description
@@ -181,12 +181,8 @@ Request::
 [source,bash]
 ----
 curl -L -k -X PATCH 'https://localhost:9200/graph/v1.0/drives/storage-users-1$535aa42d-a3c7-4329-9eba-5ef48fcaa3ff' \
--H 'Content-Type: application/json' \
---data-raw '{
-    "quota": {
-        "total": 5368709120
-    }
-}'
+     -H 'Content-Type: application/json' \
+     --data-raw '{"quota": { "total": 5368709120}}'
 ----
 --
 
@@ -253,11 +249,7 @@ Request::
 ----
 curl -L -k -X PATCH 'https://localhost:9200/graph/v1.0/drives/storage-users-1$535aa42d-a3c7-4329-9eba-5ef48fcaa3ff' \
      -H 'Content-Type: application/json' \
-     --data-raw '{ \
-       "name": "Mars", \
-       "description": "Mission to mars", \
-       "driveAlias": "project/mission-to-mars" \
-     }'
+     --data-raw '{"name": "Mars", "description": "Mission to mars", "driveAlias": "project/mission-to-mars"}'
 ----
 --
 
@@ -396,9 +388,9 @@ Request::
 [source,bash]
 ----
 curl -L -X PATCH 'https://localhost:9200/graph/v1.0/drives/storage-users-1$535aa42d-a3c7-4329-9eba-5ef48fcaa3ff/' \
--H 'Restore: T' \
--H 'Content-Type: text/plain' \
---data-raw '{}'
+     -H 'Restore: T' \
+     -H 'Content-Type: text/plain' \
+     --data-raw '{}'
 ----
 
 NOTE: This request needs an empty body (--data-raw '{}') to fulfil the standard libregraph specification even when the body is not needed.
@@ -468,7 +460,7 @@ Request::
 [source,bash]
 ----
 curl -L -X DELETE 'https://localhost:9200/graph/v1.0/drives/storage-users-1$535aa42d-a3c7-4329-9eba-5ef48fcaa3ff' \
--H 'Purge: T'
+     -H 'Purge: T'
 ----
 
 WARNING: This request will delete a space and all its content permanently. This operation cannot be reverted.

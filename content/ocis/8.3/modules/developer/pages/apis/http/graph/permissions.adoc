@@ -2,7 +2,6 @@
 :toc: right
 :toclevels: 3
 
-
 == Permissions API
 
 The Permissions API is implementing a subset of the functionality of the link:https://learn.microsoft.com/en-us/graph/api/resources/permission?view=graph-rest-1.0[MS Graph Permission resource].
@@ -151,7 +150,7 @@ The JSON representation of a Drive, as handled by the Spaces API, looks like thi
 
 https://owncloud.dev/libre-graph-api/#/drives.permissions/CreateLink
 
-### Create a user/group share `POST /drives/\drive-id}/items/\{item-id}/invite`
+### Create a user/group share `POST /drives/\{drive-id}/items/\{item-id}/invite`
 
 https://owncloud.dev/libre-graph-api/#/drives.permissions/Invite
 

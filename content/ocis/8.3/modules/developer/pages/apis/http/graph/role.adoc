@@ -2,7 +2,6 @@
 :toc: right
 :toclevels: 3
 
-
 == Role API
 
 The Roles API is implementing a subset of the functionality of the link:https://learn.microsoft.com/en-us/graph/api/resources/rolemanagement?view=graph-rest-1.0[MS Graph Role Management].
