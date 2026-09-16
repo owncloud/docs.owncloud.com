@@ -154,3 +154,41 @@
 .tab-pane > :first-child {
   margin-top: 0;
 }
+
+/* Keep the tab strip on one line, so switching tabs does not re-wrap it.
+ *
+ * Only the active pane is in flow (`display: none` above), so the `fit-content`
+ * width of `.tabset` is recomputed from *that* pane on every switch. On a tabset
+ * whose strip is wider than the doc column -- the six `201 … 409` chips of the
+ * WebDAV response sections are ~1130px against a ~790px column -- the strip
+ * therefore only fits on one line while a wide pane happens to be open, and the
+ * last chip drops to a second row the moment a narrower pane is selected. The
+ * chips also jump back up again on the way back, which is the part that reads as
+ * a glitch rather than as a layout.
+ *
+ * Two declarations turn the un-wrapped strip into a floor for the box instead of
+ * a consequence of the pane: `flex-wrap: nowrap` makes the strip's min-content
+ * width the sum of its chips, `white-space: nowrap` keeps a chip's own label out
+ * of that calculation (a chip is `height: 2em`, so a label breaking at its spaces
+ * would overflow it anyway). `min-width: min-content` on the tabset then holds
+ * the box at no less than that sum, whichever pane is open. A pane wider than
+ * the strip still sets the width, as before.
+ *
+ * Bounded to the desktop layout (the breakpoint the stock UI switches the nav and
+ * ToC at): below it the column is too narrow to give a strip like that a single
+ * line without the page scrolling sideways, so there wrapping is the better
+ * outcome and the chips keep the stock behaviour.
+ */
+@media screen and (min-width: 1024px) {
+  .tabset {
+    min-width: min-content;
+  }
+
+  .tabs ul {
+    flex-wrap: nowrap;
+  }
+
+  .tabs li {
+    white-space: nowrap;
+  }
+}
