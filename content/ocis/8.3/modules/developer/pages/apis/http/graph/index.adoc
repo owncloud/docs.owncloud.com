@@ -9,17 +9,17 @@ The link:https://github.com/owncloud/libre-graph-api[API specification] is avail
 
 [source,bash]
 ----
-{HTTP method} https://ocis.url/graph/\{version}/{resource}?{query-parameters}
+{HTTP method} https://ocis.url/graph/{version}/{resource}?{query-parameters}
 ----
 
 The request component consists of:
 
-[width="100%", cols="25%,75", options="header"]
+[width="100%", cols="25%,75%", options="header"]
 |===
 | Component
 | Description
 
-| \{HTTP method}
+| {HTTP method}
 | The HTTP method which is used in the request.
 
 | \{version}
@@ -34,7 +34,7 @@ The request component consists of:
 
 === HTTP methods
 
-[width="100%", cols="25%,75", options="header"]
+[width="100%", cols="25%,75%", options="header"]
 |===
 | Method
 | Description
@@ -89,7 +89,7 @@ To authenticate with a Bearer token or OpenID Connect access token replace the `
 
 == Resources
 
-* xref:apis/http/graph/spacec.adoc[Spaces]
+* xref:apis/http/graph/spaces.adoc[Spaces]
 * xref:apis/http/graph/users.adoc[Users]
 * xref:apis/http/graph/groups.adoc[Groups]
 * xref:apis/http/graph/permissions.adoc[Permissions]
