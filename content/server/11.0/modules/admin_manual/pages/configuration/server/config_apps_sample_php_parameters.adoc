@@ -395,6 +395,36 @@ allowed-user-backends::
 Limit the users which are allowed to log in to a specific user backend - e.g. LDAP
 (`'allowed-user-backends' ⇒ ['LDAP']`)
 
+audience::
+The value your IdP puts into the access token's `aud` (audience) claim. Once set, an access
+token is accepted only if this names the resource ownCloud is being addressed as. Takes a single
+non-empty string or a list of them, and *replaces* `client-id` as the expected value rather
+than adding to it. The default is `client-id`, which is what most IdPs send, so set this
+only if your IdP names the resource server instead. Microsoft ADFS does: it prefixes the
+identifier of the application the token was issued for with `microsoft:identityserver:`,
+unless that identifier is already a URL, in which case it is sent verbatim. Read the
+identifier with `Get-AdfsWebApiApplication` for an OpenID Connect application group
+registration, or with `Get-AdfsRelyingPartyTrust` for a legacy WS-Federation or SAML
+relying party trust. It is often configured to the same GUID as the `client-id`, which is
+why the prefixed value frequently repeats it - but it is a *resource* identifier, not the
+client, and the two are free to differ. Whatever your IdP sends must be reproduced here
+exactly, including case: the comparison is strict, so a difference in casing, or a numeric
+`aud` against a string here, will not match.
++
+Setting this key makes `aud` authoritative, which has three consequences worth planning for.
+A token issued to a *different* client of the same IdP is accepted whenever its `aud`
+matches, because the `client_id` of RFC 7662 is no longer consulted - so choose a value that
+only ownCloud can be issued for, and do not reuse a tenant-wide resource identifier here.
+Do not set the key at all if your token introspection response omits `aud`, which RFC 7662
+permits, because every opaque token would then be rejected. And with
+`exchange-token-mode-before-introspection`, the first usable entry of a list is also what the
+token exchange requests from the IdP, so list the resource ownCloud should be given first.
++
+Anything that cannot be an audience - a number, a boolean, an empty string, an empty list -
+is discarded. If nothing usable is left, every access token is rejected and a warning naming
+the offending value is written to the log. Requires the app release carrying the fix for
+https://github.com/owncloud/openidconnect/issues/373[openidconnect issue 373].
+
 auth-params::
 Additional parameters, which are sent to the IdP during the auth requests
 
