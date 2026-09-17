@@ -6,8 +6,3 @@
 {{!-- Companion behavior for the AsciiDoc tabs extension (asciidoc-extensions/tabs.js):
       removes the is-loading fallback and wires tab switching. --}}
 <script src="{{{uiRootPath}}}/js/tabs.js"></script>
-{{!-- Click-to-zoom for images. `defer` on both (not `async`) because the init
-      script needs the global the vendored library defines, and deferred external
-      scripts run in document order. --}}
-<script defer src="{{{uiRootPath}}}/js/vendor/medium-zoom.min.js"></script>
-<script defer src="{{{uiRootPath}}}/js/medium-zoom-init.js"></script>
