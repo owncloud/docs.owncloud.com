@@ -1,0 +1,5 @@
+= Tests
+:toc: right
+:toclevels: 3
+
+Guides on running different kinds of tests in ownCloud Web.

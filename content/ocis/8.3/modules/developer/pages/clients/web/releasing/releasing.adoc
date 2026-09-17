@@ -1,0 +1,132 @@
+= Releasing
+:toc: right
+:toclevels: 3
+
+== Releasing ownCloud Web
+
+ownCloud Web can be hosted standalone for a dedicated oCIS backend or bundled as part of oCIS.
+
+=== Versioning
+
+We follow the link:https://semver.org/[Semantic Versioning] scheme. Therefore, each change is of one of the possible types: `Bugfix, Change, Enhancement, Security`.
+
+The highest type before a new release determines the version update number, so if it's only `Bugfix` and `Security` changes the next release will be a `PATCH` version bump, if there's at least one `Enhancement` within the changes this leads to a `MINOR` version bump, while `Change` type changes make for a new `MAJOR` release version.
+
+=== Release Guide
+
+==== Releasing a New Major Version
+
+. Checkout the latest `stable-$major` branch +
+This branch will be used as the base for the new major version branch. +
+Replace `$major` with the *last* released major version.
+
+. Create a new branch `stable-$major`. +
+Replace `$major` with the *new* major version.
+
+. Push the newly created `stable-$major` branch
+. Create and checkout a new branch `chore/bump-version-$major.$minor.$patch` using the branch from previous step as base +
+Replace `$major`, `$minor` and `$patch` with the new version.
+
+. Cherry pick all required changes from `master` into the current branch
+. Create a new sub-folder in the `/changelog/` folder using the release version and current date `mkdir $major.$minor.$patch_$YYYY-MM-DD` +
+Replace `$major`, `$minor` and `$patch` with the new version and `$YYYY-MM-DD` with the current date in the format `YYYY-MM-DD`.
+
+. Move all changelog items from the `/changelog/unreleased/` folder into the `$major.$minor.$patch_$YYYY-MM-DD` folder created in the previous step
+. Run `make l10n-pull` to pull the translations +
+This command will pull the latest translations from Transifex into the current branch and saves them in the `/packages/*/l10n/` folders.
+
+. Run `make l10n-write` to write the translations +
+This command will use translations pulled in the previous step and writes them to the `/packages/*/l10n/translations.json` files.
+
+. Run `./dev/scripts/bump_versions.sh $major.$minor.$patch`. +
+This script will bump the `package.json` files in all relevant packages and the sonar cloud project version +
+Replace `$major`, `$minor` and `$patch` with the new version.
+
+. Commit and push your changes.
+. Create a PR with tag `[full-ci]` in the title at the beginning to merge the `chore/bump-version-$major.$minor.$patch` branch into the new `stable-$major` branch
+. After merging, checkout the new `stable-$major` branch again
+. Run `./dev/scripts/create_and_push_tags.sh` +
+This script will create and push tags for the main app as well as all packages that need to be released
+
+. The GitHub release will be created automatically together with the release artifacts
+
+==== Releasing a New Minor or Patch Version
+
+. Checkout the latest `stable-$major` branch +
+This branch will be used as the base for the bump version branch. +
+Replace the `$major` with the last released major version.
+
+. Create a new branch `chore/bump-version-$major.$minor.$patch` +
+Replace `$major`, `$minor` and `$patch` with the new version.
+
+. Cherry pick all required changes from `master` into the current branch
+. Create a new sub-folder in the `/changelog/` folder using the release version and current date `mkdir $major.$minor.$patch_$YYYY-MM-DD` +
+Replace `$major`, `$minor` and `$patch` with the new version and `$YYYY-MM-DD` with the current date in the format `YYYY-MM-DD`.
+
+. Move all changelog items from the `/changelog/unreleased/` folder into the `$major.$minor.$patch_$YYYY-MM-DD` folder created in previous step
+. Run `make l10n-pull` to pull the translations +
+This command will pull the latest translations from Transifex into the current branch and saves them in the `/packages/*/l10n/` folders.
+
+. Run `make l10n-write` to write the translations +
+This command will use translations pulled in previous step and writes them to the `/packages/*/l10n/translations.json` files.
+
+. Run `./dev/scripts/bump_versions.sh $major.$minor.$patch`. +
+This script will bump the `package.json` files in all relevant packages and the sonar cloud project version +
+Replace the `$major`, `$minor` and `$patch` with the new version.
+
+. Commit and push your changes.
+. Create a PR with tag `[full-ci]` in the title at the beginning to merge the `chore/bump-version-$major.$minor.$patch` branch into the latest `stable-$major` branch
+. After merging, checkout the latest `stable-$major` branch again
+. Run `./dev/scripts/create_and_push_tags.sh` +
+This script will create and push tags for the main app as well as all packages that need to be released
+
+. The GitHub release will be created automatically together with the release artifacts
+
+==== Backporting Bug/Security Fixes Into Older Versions
+
+. Checkout the target `stable-$major` branch +
+This branch will be used as the base for the new minor version branch. +
+Replace `$major` with the target released major version.
+
+. Create a new branch `stable-$major.$minor`. +
+Replace the `$major` and `$minor` with the new version.
+
+. Push the newly created `stable-$major.$minor` branch
+. Create a new branch `chore/bump-version-$major.$minor.$patch` using the branch from previous step as base +
+Replace the `$major`, `$minor` and `$patch` with the new version.
+
+. Cherry pick all required changes from `master` into the current branch
+. Create a new sub-folder in the `/changelog/` folder using the release version and current date `mkdir $major.$minor.$patch_$YYYY-MM-DD` +
+Replace the `$major`, `$minor` and `$patch` with the new version and `$YYYY-MM-DD` with the current date in the format `YYYY-MM-DD`.
+
+. Move all changelog items from the `/changelog/unreleased/` folder into the `$major.$minor.$patch_$YYYY-MM-DD` folder created in previous step
+. Run `make l10n-pull` to pull the translations +
+This command will pull the latest translations from Transifex into the current branch and saves them in the `/packages/*/l10n/` folders.
+
+. Run `make l10n-write` to write the translations +
+This command will use translations pulled in previous step and writes them to the `/packages/*/l10n/translations.json` files.
+
+. Run `./dev/scripts/bump_versions.sh $major.$minor.$patch`. +
+This script will bump the `package.json` files in all relevant packages and the sonar cloud project version +
+Replace `$major`, `$minor` and `$patch` with the new version.
+
+. Commit and push your changes.
+. Create a PR with tag `[full-ci]` in the title at the beginning to merge the `chore/bump-version-$major.$minor.$patch` branch into the new `stable-$major.$minor` branch
+. After merging, checkout the new `stable-$major.$minor` branch again
+. Run `./dev/scripts/create_and_push_tags.sh` +
+This script will create and push tags for the main app as well as all packages that need to be released
+
+. The GitHub release will be created automatically together with the release artifacts
+
+=== Update Web in oCIS
+
+. In the link:https://github.com/owncloud/ocis[oCIS repository], checkout the `master` branch
+. Create a new branch `chore/bump-web-to-$major.$minor.$patch` +
+Replace `$major`, `$minor` and `$patch` with the released Web version.
+
+. In `.drone.env`, update `WEB_COMMITID` to the commit id of the Web release tag
+. In `.drone.env`, update `WEB_BRANCH` to the Web release stable branch
+. In `services/web/Makefile`, update `WEB_ASSETS_VERSION` to the Web release version
+. Add a new `enhancement` changelog item into the `/changelog/unreleased/` folder with the changelog from the Web release and link to the GitHub release
+. Commit and push your changes
+. Create a PR with tag `[full-ci]` in the title at the beginning to merge the `chore/bump-web-to-$major.$minor.$patch` branch into the master branch

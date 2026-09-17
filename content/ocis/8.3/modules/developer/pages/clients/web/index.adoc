@@ -1,0 +1,6 @@
+= ownCloud Web
+:toc: right
+:toclevels: 3
+
+This is the next generation ownCloud frontend.
+If you're new here, head over to the the xref:clients/web/getting-started.adoc[getting started guide] for a quick introduction.
