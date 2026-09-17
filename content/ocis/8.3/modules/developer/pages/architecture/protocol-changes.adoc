@@ -38,8 +38,9 @@ sequenceDiagram
 
 The ocDAV service is responsible for translating ownCloud flavoured WebDAV into CS3 API calls.
 
-_General view_
-
+General view::
++
+--
 A PROPFIND finds its way to a storage provider like this:
 
 [mermaid]
@@ -61,9 +62,11 @@ sequenceDiagram
 ----
 
 While the above is a simplification to get an understanding of what needs to go where, there are several places where sharding can happen.
+--
 
-_Proxy can do user based routing_
-
+Proxy can do user based routing::
++
+--
 The ocis proxy authenticates requests and can forward requests to different backends, depending on the logged-in user or cookies. For example multiple ocdav services can be configured to shard users based on username or affiliation.
 
 [mermaid]
@@ -89,9 +92,11 @@ sequenceDiagram
         ocDAV2-->>-Client: 207 Multistatus
     end
 ----
+--
 
-_Gateway can do path or storage provider id based routing_
-
+Gateway can do path or storage provider id based routing::
++
+--
 The reva gateway acts as a facade to multiple storage providers that can be configured with the storage registry:
 
 [mermaid]
@@ -121,11 +126,13 @@ sequenceDiagram
     end
         Gateway-->>-ocDAV: []ResourceInfo
 ----
+--
 
 === Old /dav/files/\{username} Endpoint With Username and a Path Relative to the Users Home
 
-_PROPFIND request against old webdav endpoints_
-
+PROPFIND request against old webdav endpoints::
++
+--
 To route a PROPFIND request against the old webdav endpoints like `/dav/files/username`, ocdav first has to build a CS3 namespace prefix, e.g. `/users/{{.Id.OpaqueId}}` to the users home.
 
 [mermaid]
@@ -155,9 +162,11 @@ sequenceDiagram
         ocDAV-->>-Client: 207 Multistatus
     end
 ----
+--
 
-_Handling legacy global namespace webdav endpoints_
-
+Handling legacy global namespace webdav endpoints::
++
+--
 The reason ocis uses a path based lookup instead of looking up the current users home using the user id and a space type filter is, because there are deployments that use a global namespace at the legacy `/webdav` endpoint. To support these use cases, the gateway allows looking up spaces using their mount path.
 
 [mermaid]
@@ -197,3 +206,4 @@ sequenceDiagram
         Gateway-->>-ocDAV: []ResourceInfo
         ocDAV-->>-Client: 207 Multistatus
 ----
+--
