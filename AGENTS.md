@@ -21,7 +21,8 @@ This is the consolidated documentation **monorepo**. It supersedes the previous
 - `ui/supplemental/` -- supplemental files layered onto the stock Antora default UI
 - `global-attributes.yml` -- site-wide AsciiDoc attributes
 - `sync/` -- the retired upstream import tooling (`manifest.yml`, `patches/`); kept for provenance
-- `test/` -- Node test suite
+- `extension-tests/` -- Node test suite
+- `scripts/` -- one-off build helpers (e.g. `sync-vendor-assets.js`, wired as `preantora`/`preantora-local`)
 - `package.json` -- npm scripts
 
 ## Development Conventions

@@ -14,7 +14,7 @@ const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
 
-const { latestByComponent } = require('./helpers/latest-versions')
+const { latestByComponent } = require('./latest-versions')
 
 const ROOT = path.join(__dirname, '..')
 const PUBLIC = path.join(ROOT, 'public')

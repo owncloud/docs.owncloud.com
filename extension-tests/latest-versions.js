@@ -15,7 +15,7 @@
 const fs = require('node:fs')
 const path = require('node:path')
 
-const CONTENT = path.join(__dirname, '..', '..', 'content')
+const CONTENT = path.join(__dirname, '..', 'content')
 
 // Numeric, segment-wise ascending compare ('10.16' > '10.9', not the string order).
 function compareVersions (a, b) {
