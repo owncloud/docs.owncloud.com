@@ -18,6 +18,13 @@ const fs = require('node:fs')
 const path = require('node:path')
 
 const ROOT = path.join(__dirname, '..')
+const VENDOR_DIR = path.join(ROOT, 'ui/supplemental/js/vendor')
+
+// Wiped and repopulated on every run (this directory only ever holds files this
+// script manages -- see the .gitignore entry), so dropping an entry from
+// VENDOR_FILES actually removes the stale file instead of leaving it on disk
+// for any local checkout or reused CI workspace that copied it in previously.
+fs.rmSync(VENDOR_DIR, { recursive: true, force: true })
 
 for (const { package: pkg, src, dest } of VENDOR_FILES) {
   const from = path.join(ROOT, 'node_modules', pkg, src)

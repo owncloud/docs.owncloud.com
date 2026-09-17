@@ -3,8 +3,19 @@
  * overlay and the zoom transition, but that stylesheet sets no stacking order.
  * The stock Antora default UI goes up to z-index 4 (navbar, toolbar), so without
  * this the navbar would sit on top of the zoomed image and its backdrop.
+ *
+ * `body >` on the overlay bumps our specificity above the library's own
+ * `.medium-zoom-overlay` rule, so we stay correct even if a future release adds
+ * a z-index there (it injects its <style> after this stylesheet, so a plain
+ * class-vs-class tie would otherwise go to source order, i.e. to them).
+ *
+ * `--opened` (not the bare `medium-zoom-image` class) targets only the zoomed
+ * clone medium-zoom appends to <body>: the bare class stays on every bound
+ * image for as long as it's attached, so using it here would promote every
+ * doc image on the page to z-index 1000 the moment anything gives one
+ * `position: relative/absolute/sticky` (a caption overlay, a figure badge).
  */
-.medium-zoom-overlay,
-img.medium-zoom-image {
+body > .medium-zoom-overlay,
+img.medium-zoom-image--opened {
   z-index: 1000;
 }
