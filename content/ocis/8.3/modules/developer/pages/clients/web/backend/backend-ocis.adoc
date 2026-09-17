@@ -1,0 +1,37 @@
+= Setup With oCIS
+:toc: right
+:toclevels: 3
+
+== Setting up Web
+
+* Clone the link:https://github.com/owncloud/ocis/[repository].
+* Initally install all dependencies by running `pnpm install`.
+* Copy `./web/config/config.json.sample-ocis` to `./web/config/config.json` and adjust values if required.
+
+== Running Web
+
+* Start bundling web with a watcher by running `pnpm build:w`
+
+== Setting up oCIS
+
+* Setup oCIS by following the xref:ocis/getting-started/index.adoc/[setup instructions]
+* Start oCIS with local links to your bundled web frontend and config by running the following command, adjust the paths as necessary:
++
+[source,bash]
+----
+WEB_ASSET_CORE_PATH=../../web/dist \
+WEB_UI_CONFIG_FILE=../../web/dist/config.json \
+OCIS_INSECURE=true \
+IDM_CREATE_DEMO_USERS=true \
+./bin/ocis server
+----
+
+== Start oCIS
+
+* Open `\https://localhost:9200` and accept the certificate.
+* When signing in, use one of the xref:ocis/getting-started//demo-users.adoc[available demo users].
+* Whenever code changes are made, you need to manually reload the browser page (no hot reload).
+
+== Running Tests
+
+For testing, please refer to the xref:clients/web/testing/index.adoc[testing docs].

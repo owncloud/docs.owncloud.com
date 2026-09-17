@@ -1,0 +1,5 @@
+= Releasing
+:toc: right
+:toclevels: 3
+
+This section serves as a guide for releasing ownCloud Web and managing important deprecations for a release.

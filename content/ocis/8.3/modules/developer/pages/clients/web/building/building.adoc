@@ -1,0 +1,12 @@
+= Building From Source
+:toc: right
+:toclevels: 3
+
+== Building ownCloud Web
+
+* Run `pnpm install` to install dependencies
+* Run `pnpm build` to build Web and all apps included in the `packages` folder
+
+=== Updating Dependencies
+
+* *Do not* update dependencies by yourself but use the provided ones by the repo. When rebasing your local clone, you can always run `pnpm install` to be in sync with the defined dependencies.
