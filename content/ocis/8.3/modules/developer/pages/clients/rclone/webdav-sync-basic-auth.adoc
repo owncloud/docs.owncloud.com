@@ -11,13 +11,13 @@ Basic Authentication is disabled by default in oCIS because of security consider
 Please consider to use xref:webdav-sync-oidc.adoc[Rclone with OpenID Connect] instead.
 ====
 
-
 For the usage of a WebDAV remote with Rclone see also the link:https://rclone.org/webdav/[Rclone documentation]
 
 == Configure the WebDAV remote
 
 First of all we need to set up our credentials and the WebDAV remote for Rclone. In this example we do this by setting environment variables. You might also set up a named remote or use command line options to achieve the same.
 
+[source,bash]
 ----
 export RCLONE_WEBDAV_VENDOR=owncloud
 export RCLONE_WEBDAV_URL=https://ocis.owncloud.test/remote.php/webdav/
@@ -30,12 +30,12 @@ export RCLONE_WEBDAV_PASS=$(rclone obscure relativity)
 Please note that `RCLONE_WEBDAV_PASS` is not set to the actual password, but to the value returned by `rclone obscure <password>`.
 ====
 
-
 We now can use Rclone to sync the local folder `/tmp/test` to `/test` in your oCIS home folder.
 
 
 === Sync to the WebDAV remote
 
+[source,bash]
 ----
 rclone sync :local:/tmp :webdav:/test
 ----

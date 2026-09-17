@@ -13,7 +13,4 @@ Rclone has powerful cloud equivalents to the unix commands rsync, cp, mv, mount,
 Users call rclone "The Swiss army knife of cloud storage", and "Technology indistinguishable from magic".
 ====
 
-
 Source: link:https://rclone.org/[Rclone project website]
-
-== Table of Contents
