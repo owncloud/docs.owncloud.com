@@ -4,6 +4,10 @@ public/
 _import/
 docs/superpowers/
 
+# synced from node_modules/medium-zoom by scripts/sync-vendor-assets.js
+# (see the preantora/preantora-local npm scripts)
+ui/supplemental/js/vendor/
+
 # macOS and IDEs
 .DS_Store
 .vscode/
