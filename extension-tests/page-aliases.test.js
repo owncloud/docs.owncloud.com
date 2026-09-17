@@ -80,6 +80,12 @@ test('the relocated ocis security page keeps its old URL alive', (t) => {
   const broken = []
   for (const { file } of aliased) {
     const version = file.split('/')[2]
+    // site.yml names rendered ocis versions explicitly (not a `content/ocis/*`
+    // glob) and its own comment says an unlisted version folder "could safely be
+    // deleted if outdated" -- content/ocis/8.0 is exactly that: on disk, never
+    // rendered. Skip versions this build didn't publish at all instead of
+    // flagging them as a broken alias.
+    if (!fs.existsSync(path.join(PUBLIC, 'ocis', version))) continue
     const stub = path.join(PUBLIC, 'ocis', version, 'security', 'security.html')
     if (!fs.existsSync(stub)) {
       broken.push(`ocis/${version}/security/security.html is missing`)
