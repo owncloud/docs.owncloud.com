@@ -39,7 +39,7 @@ Infinite Scale is highly dependent on the efficient usage of meta data which are
 
 Metadata is stored in extended attributes (as also supported by decompsed FS) which poses the benefit that metadata is always directly attached to the actual resources. As a result, care has to be taken that extended attributes are considered when working with the file tree however, e.g. when creating or restoring backups.
 
-Note: The maximum number and size of extended attributes are limited depending on the filesystem and block size. See <<gpfs_specifics,GPFS Specifics>> for more details on GPFS file systems.
+NOTE: The maximum number and size of extended attributes are limited depending on the filesystem and block size. See xref:#gpfs-specifics[GPFS Specifics] for more details on GPFS file systems.
 
 All indexing and caching of metadata is implemented in higher system levels than the storage driver, and thus are not different to the components used with other storage drivers like the decomposed FS.
 
@@ -122,7 +122,7 @@ In the current state of the Posix FS Storage Driver, versioning is not supported
 
 If the underlying file system handles deleted files in a trash bin that allows restoring of previously removed files, this functionality could directly be used by Infinite Scale.
 
-If not available it will follow the link:https://specifications.freedesktop.org/trash-spec/trashspec-latest.html[the Free Desktop Trash specificaton].
+If not available it will follow the link:https://specifications.freedesktop.org/trash/latest/[Free Desktop Trash specificaton, window=_blank].
 
 == Limitations
 
@@ -157,6 +157,7 @@ To use the Posix FS Storage Driver, the following prerequisites have to be fulfi
 
 This is an example configuration with environment variables that configures Infinite Scale to use Posix FS Storage Driver for all spaces it works with, ie. Personal and Project Spaces:
 
+[source,bash]
 ----
 export STORAGE_USERS_DRIVER="posix"
 export STORAGE_USERS_POSIX_ROOT="/home/kf/tmp/posix-storage"
@@ -186,6 +187,7 @@ The Posix FS Storage Driver supports two different watchers for detecting change
 
 The `gpfsfileauditlogging` watcher tails a GPFS file audit log and parses the JSON events to detect relevant changes.
 
+[source,bash]
 ----
 export STORAGE_USERS_POSIX_WATCH_TYPE="gpfsfileauditlogging"
 export STORAGE_USERS_POSIX_WATCH_PATH="/path/to/current/audit/log"
@@ -195,6 +197,7 @@ export STORAGE_USERS_POSIX_WATCH_PATH="/path/to/current/audit/log"
 
 The `gpfswatchfolder` watcher connects to a kafka cluster which is being filled with filesystem events by the GPFS watchfolder service.
 
+[source,bash]
 ----
 export STORAGE_USERS_POSIX_WATCH_TYPE="gpfswatchfolder"
 export STORAGE_USERS_POSIX_WATCH_PATH="fs1_audit"                               # the kafka topic to watch

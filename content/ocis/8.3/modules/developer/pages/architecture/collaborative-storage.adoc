@@ -38,9 +38,7 @@ When a file is changed by a process outside of oCIS, this needs to be monitored 
 
 The collaborative storage driver needs a way to achieve that. The easiest way for an POSIX based collaborative storage is inotify, that needs to be set up recursively on a file tree to record changes. Additional it is a challenge to destinguish between changes that were done from external activity and the ones that oCIS creates by its own file operations.
 
-For GPFS, there is a subsystem called delivering that:
-
-https://www.ibm.com/docs/en/storage-scale/5.1.9?topic=reference-clustered-watch-folder]
+For GPFS, there is a subsystem called delivering that, see link:https://www.ibm.com/docs/en/storage-scale/5.1.9?topic=reference-clustered-watch-folder[Clustered watch folder] for more details.
 
 === ETag Propagation
 
@@ -60,9 +58,7 @@ Metadata are data "snippets" that are as tightly attached to files as ever possi
 
 Each space has it's own quota, thus a storage driver implementation needs to consider that.
 
-For GPFS for example, there is support for quota handling in the file system.
-
-https://www.ibm.com/docs/en/gpfs/4.1.0.4?topic=interfaces-gpfs-quotactl-subroutine
+For GPFS for example, there is support for quota handling in the file system, see link:https://www.ibm.com/docs/en/storage-scale/5.1.9?topic=interfaces-gpfs-quotactl-subroutine[gpfs_quotactl() subroutine] for more details.
 
 Other systems store quota data in the metadata storage and implement propagation of used quota similar to the ETag propagation.
 
@@ -97,7 +93,3 @@ When a user deletes a file in oCIS it is moved to a so called trashbin that allo
 == Versions
 
 When an existing file is changed, the former file state is to be preserved with data and metadata by oCIS. Some file system types provide this functionality via snapshots on partition or even file level. Other do not and have to implement that via a hidden directory keeping old file versions.
-
-
-
-
