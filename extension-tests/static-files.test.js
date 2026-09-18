@@ -14,7 +14,7 @@ const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
 
-const { latestByComponent } = require('./helpers/latest-versions')
+const { latestByComponent } = require('./latest-versions')
 
 const ROOT = path.join(__dirname, '..')
 const PUBLIC = path.join(ROOT, 'public')
@@ -212,4 +212,22 @@ test('root static files are not published under the UI output dir', (t) => {
   }
   // ui.yml is consumed by the UI loader; it must never be published itself.
   assert.ok(!fs.existsSync(path.join(PUBLIC, 'assets', 'ui.yml')), 'ui.yml leaked into the build output')
+})
+
+test('the medium-zoom vendor bundle synced from node_modules is published', (t) => {
+  if (!fs.existsSync(path.join(PUBLIC, 'index.html'))) {
+    t.skip('public/ not built (run `npm run antora` to enable)')
+    return
+  }
+  // ui/supplemental/js/vendor/ is gitignored and repopulated from node_modules by
+  // scripts/sync-vendor-assets.js (wired as preantora/preantora-local). Every
+  // page still references js/vendor/medium-zoom.min.js regardless, so a build
+  // that skips that step (e.g. `npx antora` directly) publishes green with a
+  // 404'ing <script> and dead image zoom -- this guard fails loudly instead.
+  for (const name of ['medium-zoom.min.js', 'LICENSE-medium-zoom.txt']) {
+    assert.ok(
+      fs.existsSync(path.join(PUBLIC, 'assets/js/vendor', name)),
+      `assets/js/vendor/${name} is missing -- did the build run through \`npm run antora\` (not \`npx antora\` directly), so preantora's sync-vendor-assets.js had a chance to run?`
+    )
+  }
 })
