@@ -33,8 +33,10 @@ antora-extensions/       comp-version, latest/next-alias, sitemap-cleanup, globa
 asciidoc-extensions/     tabs, remote-include
 global-attributes.yml    site-wide AsciiDoc attributes (local)
 ui/supplemental/         branding + Pagefind modal search on the stock UI
+ui/supplemental/js/vendor/ gitignored; synced from node_modules by scripts/sync-vendor-assets.js
 content/<product>/<ver>/ each version is a folder with its own antora.yml
 sync/                    retired upstream-mirror tooling, kept as provenance
+scripts/                 build-time helpers (npm `pre*` hooks), e.g. sync-vendor-assets.js
 .github/workflows/ci.yml build → pagefind → deploy to GitHub Pages
 ```
 
