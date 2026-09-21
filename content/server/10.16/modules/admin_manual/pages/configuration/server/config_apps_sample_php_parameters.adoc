@@ -402,10 +402,20 @@ Limit the users which are allowed to login to a specific user backend - e.g. LDA
 
 audience::
 The value your IdP puts into the access token's `aud` (audience) claim. Once set, an access
-token is accepted only if this names the resource ownCloud is being addressed as. Takes a single
-non-empty string or a list of them, and *replaces* `client-id` as the expected value rather
-than adding to it. The default is `client-id`, which is what most IdPs send, so set this
-only if your IdP names the resource server instead. Microsoft ADFS does: it prefixes the
+token is accepted only if this names the resource ownCloud is being addressed as, and no other
+claim is used to identify ownCloud. Takes a single non-empty string or a list of them, and *replaces* `client-id`
+as the expected value rather than adding to it.
++
+You do not have to set it. Without the key, an access token is accepted when its `aud` carries
+the `client-id`, and also when the claim naming the client the token was issued to carries it -
+`azp`, `appid` or `client_id`. That second half is what keeps identity providers working that
+put the *resource server* in `aud`, which is what RFC 9068 section 3 defines it as; see
+xref:configuration/user/oidc/oidc.adoc#access-token-audience[Access Token Audience] for what
+each supported IdP sends and when setting this key is worthwhile. What neither form of the
+check can tell apart is *which client* asked for a token that names ownCloud in `aud` - that is
+the resource-server model, and it is why the paragraph below matters.
++
+Microsoft ADFS is one of the providers that names the resource: it prefixes the
 identifier of the application the token was issued for with `microsoft:identityserver:`,
 unless that identifier is already a URL, in which case it is sent verbatim. Read the
 identifier with `Get-AdfsWebApiApplication` for an OpenID Connect application group
@@ -418,17 +428,46 @@ exactly, including case: the comparison is strict, so a difference in casing, or
 +
 Setting this key makes `aud` authoritative, which has three consequences worth planning for.
 A token issued to a *different* client of the same IdP is accepted whenever its `aud`
-matches, because the `client_id` of RFC 7662 is no longer consulted - so choose a value that
-only ownCloud can be issued for, and do not reuse a tenant-wide resource identifier here.
+matches, because neither the `client_id` of RFC 7662 nor the other client-naming claims are
+consulted any more - so choose a value that only ownCloud can be issued for, and do not reuse
+a tenant-wide resource identifier here.
 Do not set the key at all if your token introspection response omits `aud`, which RFC 7662
 permits, because every opaque token would then be rejected. And with
 `exchange-token-mode-before-introspection`, the first usable entry of a list is also what the
 token exchange requests from the IdP, so list the resource ownCloud should be given first.
 +
+What it buys you is a binding to the *resource*: without it, a token that ownCloud's own client
+obtained for some other resource of the same IdP - an RFC 8707 `resource` parameter, or RFC 8693
+token exchange - is accepted here. Set it if your IdP issues tokens to ownCloud's client for more
+than one resource.
++
+It also keeps ID tokens out, as long as the value differs from the `client-id`: an ID token's
+`aud` is the `client-id`, so it stops being an accepted audience.
++
+What it cannot do is keep another *client's* tokens out. Any token whose `aud` names ownCloud is
+accepted whichever client requested it, with or without this key, and a client of the same IdP can
+often be granted exactly that - an audience mapper of its own, or a `resource` parameter naming
+ownCloud. Which clients may be issued tokens for ownCloud is a decision to make in the IdP.
++
+Independently of the audience, a token that declares itself *not* to be an access token is
+refused with `Token is not an access token`: `typ` of `Refresh` or `Offline` (Keycloak),
+`token_use` of `refresh` (AWS Cognito). ID tokens carry no such marker, and an ID token's `aud`
+*is* the `client-id` by definition, so one presented as a bearer token is accepted while the
+expected audience is the `client-id`. Setting this key to anything else - which is what the
+providers that name a resource require - rejects ID tokens as a side effect, because then the
+`client-id` is no longer an accepted audience.
++
 Anything that cannot be an audience - a number, a boolean, an empty string, an empty list -
 is discarded. If nothing usable is left, every access token is rejected and a warning naming
-the offending value is written to the log. Requires the app release carrying the fix for
-https://github.com/owncloud/openidconnect/issues/373[openidconnect issue 373].
+the offending value is written to the log.
++
+Available starting app version 2.3.5, which is in preparation and is also the release that
+introduces the audience check on this server line - every released 2.3.x version, up to and
+including 2.3.4, does not check the audience at all. Both halves therefore arrive together, so
+upgrading to 2.3.5 cannot lock an IdP out and needs no configuration change for the providers
+listed under xref:configuration/user/oidc/oidc.adoc#access-token-audience[Access Token Audience].
+On ownCloud 11 the check shipped one release before the override: openidconnect 2.4.1 checks the
+audience, 2.4.2 adds the override.
 
 auth-params::
 Additional parameters which are sent to the IdP during the auth requests

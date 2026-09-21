@@ -131,6 +131,41 @@ Use these links to see the corresponding configuration section for:
 ],
 ----
 
+[NOTE]
+====
+Which token version your app registration issues decides what ends up in the access token's
+`aud` (audience) claim. It is not part of the screens above, but the `requestedAccessTokenVersion`
+property in menu:Manage[Manifest]:
+
+* `null` or `1` - the default - issues v1.0 tokens, whose `aud` is the *Application ID URI* you
+  set under menu:Expose an API[], `api://YOUR-APPLICATION-ID-SCOPE-URI` below.
+* `2` issues v2.0 tokens, whose `aud` is the application's *client id*.
+
+Both work without further configuration on this server line: openidconnect 2.3.4 and earlier do
+not check the audience at all, and 2.3.5 - in preparation - accepts the claim naming the client as
+well, `appid` for v1.0 tokens and `azp` for v2.0. To have the audience enforced instead, add the
+matching value:
+
+[source,php]
+----
+'openid-connect' => [
+    // ...
+    // v1.0 tokens (the default): the Application ID URI exactly as set under
+    // "Expose an API" - note this is the App ID URI itself, without the /owncloud scope
+    'audience' => 'api://YOUR-APPLICATION-ID-SCOPE-URI',
+    // v2.0 tokens: the client id
+    // 'audience' => 'YOUR-CLIENT-ID',
+],
+----
+
+Take the value from menu:Expose an API[Application ID URI] verbatim: setting `audience` also
+switches off the claim that names the client - `appid` in v1.0 tokens, `azp` in v2.0 - so a value
+that does not match exactly rejects every access token. Decode one access token and read its `ver` claim to see which version your tenant issues.
+See
+xref:configuration/user/oidc/oidc.adoc#access-token-audience[Access Token Audience] for the
+details and for the openidconnect versions this applies to.
+====
+
 If you want to let ownCloud create users which are not present during a OIDC authentication, replace +
 `'auto-provision' => ['enabled' => false],` with:
 
