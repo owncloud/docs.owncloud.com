@@ -8,6 +8,11 @@ docs/superpowers/
 # (see the preantora/preantora-local npm scripts)
 ui/supplemental/js/vendor/
 
+# scratch checkouts made by the config-docs-in-sync workflow, and by anyone
+# reproducing it locally: the converter and one core clone per server version
+.config-to-docs/
+.core-*/
+
 # macOS and IDEs
 .DS_Store
 .vscode/
