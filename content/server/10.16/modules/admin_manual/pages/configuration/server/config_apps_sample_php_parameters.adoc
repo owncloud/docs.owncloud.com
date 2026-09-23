@@ -447,7 +447,7 @@ Where the provider puts no type claim in the payload, as Entra ID and ADFS do no
 still satisfies the default expectation, since an ID token's `aud` is the `client-id` by
 definition: it is accepted for as long as the `client-id` is an accepted audience, and setting
 this key to anything else is then what rejects it, as a side effect rather than as this key's
-purpose. Where neither applies, treat ID tokens as credentials.
+purpose. Where setting it is not an option, treat ID tokens as credentials.
 +
 Do not set the key at all if your token introspection response omits `aud`, which RFC 7662
 permits, because every opaque token would then be rejected. And with
