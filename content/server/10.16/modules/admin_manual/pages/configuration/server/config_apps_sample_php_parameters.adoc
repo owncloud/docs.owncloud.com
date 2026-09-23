@@ -430,11 +430,20 @@ strict, so a difference in casing, or a numeric `aud` against a string here, wil
 +
 Setting it binds tokens to the *resource*: one that ownCloud's own client obtained for a
 different resource of the same provider - through an RFC 8707 `resource` parameter or an RFC 8693
-token exchange - stops being accepted. So do ID tokens, but only where the configured value
-differs from the `client-id`, since an ID token's `aud` is the `client-id` by definition. What it
-does not bind is the *client*: any token whose `aud` names ownCloud is accepted whichever client
-requested it. So choose a value only ownCloud can be issued a token for, do not reuse a
-tenant-wide resource identifier here, and control in the provider which clients may ask for it.
+token exchange - stops being accepted. What it does not bind is the *client*: any token whose
+`aud` names ownCloud is accepted whichever client requested it. So choose a value only ownCloud
+can be issued a token for, do not reuse a tenant-wide resource identifier here, and control in
+the provider which clients may ask for it.
++
+ID tokens are a separate matter, and this key is not on its own what decides them. Starting with
+app version 2.3.5 a token that labels its own type has to label itself an access token, so where
+the provider puts the ID token's type in the payload - `typ` of `ID` on Keycloak, `token_use` of
+`id` on AWS Cognito - the token is refused whatever this key says, including not set at all.
+Where the provider puts no type claim in the payload, as Entra ID and ADFS do not, or labels it
+only as the generic `jwt`, an ID token still satisfies the default expectation, since an ID
+token's `aud` is the `client-id` by definition: it is accepted for as long as the `client-id` is
+an accepted audience, and setting this key to anything else is then what rejects it, as a side
+effect rather than as this key's purpose.
 +
 Do not set the key at all if your token introspection response omits `aud`, which RFC 7662
 permits, because every opaque token would then be rejected. And with
