@@ -406,9 +406,11 @@ nothing usable is left every access token is rejected, so a typo here fails clos
 Available starting app version 2.4.2. Without the key, 2.4.2 accepts an access token whose `aud`
 carries the `client-id`, and also one whose `azp`, `appid` or `client_id` claim does - which is
 what keeps providers working that put the *resource server* into `aud`, as RFC 9068 section 3
-defines it. App version 2.4.1 has neither this key nor that fallback: there the `client-id` had
-to appear in `aud`, so a provider naming the resource instead could not authenticate at all with
-JWT access tokens. 2.4.1 does not check the audience of an opaque token verified through an
+defines it. Of those three claims only the most authoritative one the token actually carries is
+consulted, in that order, so a token that reaches this fallback with an `azp` naming a different
+client is refused even where a `client_id` names ownCloud. App version 2.4.1 has neither this key
+nor that fallback: there the `client-id` had to appear in `aud`, so a provider naming the resource
+instead could not authenticate at all with JWT access tokens. 2.4.1 does not check the audience of an opaque token verified through an
 introspection endpoint; 2.4.2 checks both. Which provider sends what, and what can be done on
 2.4.1, is documented at
 https://doc.owncloud.com/server/11.0/admin_manual/configuration/user/oidc/oidc.html#access-token-audience
@@ -438,7 +440,7 @@ Where the provider puts no type claim in the payload, as Entra ID and ADFS do no
 still satisfies the default expectation, since an ID token's `aud` is the `client-id` by
 definition: it is accepted for as long as the `client-id` is an accepted audience, and setting
 this key to anything else is then what rejects it, as a side effect rather than as this key's
-purpose.
+purpose. Where neither applies, treat ID tokens as credentials.
 +
 Do not set the key at all if your token introspection response omits `aud`, which RFC 7662
 permits, because every opaque token would then be rejected. And with
