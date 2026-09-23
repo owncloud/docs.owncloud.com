@@ -149,13 +149,18 @@ openidconnect **2.3.5**, which is in preparation:
   response's `client_id` counts the same way.
 
 Both halves therefore arrive together here, which is why the upgrade needs no configuration change
-for any provider whose shape is known - see the table. Four shapes it does lock out. Three of them
-cannot be rescued with `audience`: an introspection response carrying neither `aud` nor
-`client_id`, which RFC 7662 permits; an access token labelled with a `typ` or `token_use` value
-that is not on the allowlist below; and a JWT access token with no usable `exp` claim, refused with
-`Access token has no expiry`. The fourth - a token whose most authoritative client claim names
-something other than the `client-id`, even where a lower-precedence one names it - is rescuable,
-because setting `audience` turns the client claims off altogether and `aud` alone decides. An access token's `aud` identifies the
+for any provider whose shape is known - see the table. Four shapes it does lock out, and
+`audience` is not the way out of any of them. Three are beyond its reach entirely: an
+introspection response carrying neither `aud` nor `client_id`, which RFC 7662 permits; an
+access token labelled with a `typ` or `token_use` value that is not on the allowlist below;
+and a JWT access token with no usable `exp` claim, refused with `Access token has no
+expiry`. The fourth - a token whose most authoritative client claim names something other
+than the `client-id`, even where a lower-precedence one names it - would change with
+`audience`, because setting it turns the client claims off and leaves `aud` to decide. Do
+not use it for that: there is nothing to set for a provider that sends no `aud` at all, and
+where there is, the value that makes such a token pass is one that other clients of the
+same provider can be issued for - which is the cross-client acceptance the check exists to
+stop. An access token's `aud` identifies the
 *resource server* the token was minted for (RFC 9068 section 3), not the client that asked for it,
 so many providers never put the ownCloud `client-id` there; accepting the client-naming claim is
 what keeps those working.

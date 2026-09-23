@@ -125,6 +125,11 @@ tokens that ownCloud verifies through a token introspection endpoint, the audien
 at all there - 2.4.2 is the release that starts checking it on that path too, and it accepts the
 introspection response's `client_id` in the same way.
 
+2.4.2 also refuses a JWT access token that carries no usable `exp` claim, with `Access token has
+no expiry` - RFC 9068 section 2.2 requires one, and without it the expiry is never checked at
+all. Neither `audience` nor anything else rescues that, and nor does it rescue the type allowlist
+further down. An introspection response may still omit `exp`, which RFC 7662 section 2.2 permits.
+
 That difference matters because an access token's `aud` identifies the *resource server* the token
 was minted for (RFC 9068 section 3), not the client that asked for it. Plenty of providers
 therefore never put the ownCloud `client-id` there, and on 2.4.1 those cannot authenticate at all:
