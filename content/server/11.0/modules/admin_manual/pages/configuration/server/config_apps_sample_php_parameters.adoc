@@ -434,11 +434,11 @@ ID tokens are a separate matter, and this key is not on its own what decides the
 app version 2.4.2 a token that labels its own type has to label itself an access token, so where
 the provider puts the ID token's type in the payload - `typ` of `ID` on Keycloak, `token_use` of
 `id` on AWS Cognito - the token is refused whatever this key says, including not set at all.
-Where the provider puts no type claim in the payload, as Entra ID and ADFS do not, or labels it
-only as the generic `jwt`, an ID token still satisfies the default expectation, since an ID
-token's `aud` is the `client-id` by definition: it is accepted for as long as the `client-id` is
-an accepted audience, and setting this key to anything else is then what rejects it, as a side
-effect rather than as this key's purpose.
+Where the provider puts no type claim in the payload, as Entra ID and ADFS do not, an ID token
+still satisfies the default expectation, since an ID token's `aud` is the `client-id` by
+definition: it is accepted for as long as the `client-id` is an accepted audience, and setting
+this key to anything else is then what rejects it, as a side effect rather than as this key's
+purpose.
 +
 Do not set the key at all if your token introspection response omits `aud`, which RFC 7662
 permits, because every opaque token would then be rejected. And with
