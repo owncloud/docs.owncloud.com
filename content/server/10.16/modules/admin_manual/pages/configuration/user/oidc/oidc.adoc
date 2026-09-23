@@ -140,12 +140,16 @@ openidconnect **2.3.5**, which is in preparation:
 * every released version up to and including **2.3.4** does not check the audience at all;
 * **2.3.5** accepts a token whose `aud` (audience) claim carries the configured `client-id`, or
   whose `azp`, `appid` or `client_id` claim does, and adds the `audience` parameter for declaring
-  what your provider really puts in `aud`. It checks both JWT access tokens and opaque ones
-  verified through a token introspection endpoint, where the response's `client_id` counts the
-  same way.
+  what your provider really puts in `aud`. Only the most authoritative of those three claims that
+  the token actually carries is consulted, in that order, so a token whose `azp` names a different
+  client is refused even when it also carries a `client_id` naming ownCloud. It checks both JWT
+  access tokens and opaque ones verified through a token introspection endpoint, where the
+  response's `client_id` counts the same way.
 
 Both halves therefore arrive together here, which is why the upgrade needs no configuration change
-for any provider whose shape is known - see the table. An access token's `aud` identifies the
+for any provider whose shape is known - see the table. The one shape it can lock out is an
+introspection response carrying neither `aud` nor `client_id`, which RFC 7662 permits and which no
+`audience` value can rescue. An access token's `aud` identifies the
 *resource server* the token was minted for (RFC 9068 section 3), not the client that asked for it,
 so many providers never put the ownCloud `client-id` there; accepting the client-naming claim is
 what keeps those working.
@@ -223,8 +227,9 @@ The value reported as `token "aud"` is what your provider sends, and therefore e
 belongs in `audience` if you decide to set it.
 
 From 2.3.5, a token accepted on its client-naming claim while carrying an audience you *could*
-have configured - Azure AD v1.0 tokens, ADFS, OneLogin - is recorded once per verified token with
-the same advice:
+have configured - Azure AD v1.0 tokens, ADFS, OneLogin - is recorded at level `info`, once per
+request, with the same advice. ownCloud's default `loglevel` is `2` (warning), so raise it to `1`
+to see it at all:
 
 ----
 Access token "aud" does not name this relying party, accepted because "appid" matches the
@@ -232,21 +237,28 @@ configured client-id. To have the audience enforced, set the openid-connect "aud
 key to ...
 ----
 
-That warning is expected for those providers and does not indicate a broken setup; setting
+That line is expected for those providers and does not indicate a broken setup; setting
 `audience` is what ends it. It is not written when the token carries no audience at all, as with
 Keycloak, because then there is nothing to put in the key - such a token is still accepted on its
 `azp` claim, unless `audience` is configured, in which case it is rejected and logged as a
 mismatch like any other.
 
-Independently of the audience, and from 2.3.5, a token that declares itself *not* to be an access
-token is refused with `Token is not an access token`: `typ` of `Refresh` or `Offline` (Keycloak),
-`token_use` of `refresh` (AWS Cognito).
+Independently of the audience, and from 2.3.5, a token that labels its own type has to label
+itself an access token, or it is refused with `Token is not an access token`. The accepted labels
+are `typ` of `Bearer` (Keycloak) or `at+jwt` (RFC 9068 section 2.1), `token_use` of `access` (AWS
+Cognito), and the bare JOSE media type `jwt`, which says nothing about the type. That is an
+allowlist rather than a list of refresh markers, so it covers refresh and offline tokens
+(Keycloak's `typ` of `Refresh` and `Offline`, Cognito's `token_use` of `refresh`) together with
+back-channel logout, registration and ID tokens on every provider that labels them.
 
-ID tokens carry no such marker, and an ID token's `aud` *is* the `client-id` by definition, so one
-presented as a bearer token is accepted for as long as the `client-id` is an accepted audience.
-Setting `audience` to anything else - which is exactly what ADFS, Azure AD v1.0 tokens and
-OneLogin need - rejects ID tokens as a side effect. Where that is not an option, treat ID tokens
-as credentials.
+ID tokens are therefore two cases rather than one. Where your provider labels the type - Keycloak
+sends `typ` of `ID`, Cognito `token_use` of `id` - an ID token presented as a bearer token is
+refused whatever `audience` is set to, including not set at all. Where it puts no type claim in the
+payload, as Azure AD and ADFS do not, or labels the type only as `jwt`, an ID token still satisfies
+the default expectation, because an ID token's `aud` *is* the `client-id` by definition: it is
+accepted for as long as the `client-id` is an accepted audience, and setting `audience` to anything
+else - which is exactly what ADFS, Azure AD v1.0 tokens and OneLogin need - is then what rejects it,
+as a side effect. Where that is not an option, treat ID tokens as credentials.
 
 === When to Set the audience Parameter
 
