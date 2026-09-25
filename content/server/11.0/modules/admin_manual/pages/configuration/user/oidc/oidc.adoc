@@ -104,6 +104,207 @@ This variable sets the following rule in the embedded `.htaccess` file on contai
 
 . Once service discovery is available as described above, the ownCloud clients will attempt to connect via OpenID Connect.
 
+[#access-token-audience]
+== Access Token Audience
+
+An access token is accepted only if it names ownCloud, and which claims count for that depends on
+the app version:
+
+* openidconnect **2.4.1**, the current release on this server line, requires the configured
+  `client-id` to appear in the token's `aud` (audience) claim. Nothing else identifies ownCloud.
+* openidconnect **2.4.2**, in preparation, additionally accepts a token whose `azp`, `appid` or
+  `client_id` claim carries the `client-id`, and adds the `audience` parameter for declaring what
+  your provider really puts in `aud`. `aud` is still compared first and a match there ends the
+  check; the three client claims are the fallback for when it does not match, and only the most
+  authoritative one the token actually carries is consulted, in that order. So a token that
+  reaches the fallback with an `azp` naming a different client is refused even when it also
+  carries a `client_id` naming ownCloud.
+
+On 2.4.1 the check reaches only access tokens that are JWTs. If your provider issues opaque access
+tokens that ownCloud verifies through a token introspection endpoint, the audience is not checked
+at all there - 2.4.2 is the release that starts checking it on that path too, and it accepts the
+introspection response's `client_id` in the same way.
+
+2.4.2 also refuses a JWT access token that carries no usable `exp` claim, with `Access token has
+no expiry` - RFC 9068 section 2.2 requires one, and without it the expiry is never checked at
+all. Neither `audience` nor anything else rescues that, and nor does it rescue the type allowlist
+further down. An introspection response may still omit `exp`, which RFC 7662 section 2.2 permits.
+
+That difference matters because an access token's `aud` identifies the *resource server* the token
+was minted for (RFC 9068 section 3), not the client that asked for it. Plenty of providers
+therefore never put the ownCloud `client-id` there, and on 2.4.1 those cannot authenticate at all:
+the login itself succeeds, and the next request logs the user out again.
+
+[IMPORTANT]
+====
+If you are seeing exactly that - login works, the first click logs you out - with Keycloak, ADFS,
+Azure AD issuing v1.0 tokens, or OneLogin with API authorization, this is why. The `On 2.4.1` column below gives the options that
+exist today; openidconnect 2.4.2 removes the need for every one of them.
+====
+
+[width="100%",cols="17%,30%,27%,26%",options="header"]
+|===
+| Identity provider
+| What lands in the access token's `aud`
+| On openidconnect 2.4.1
+| On openidconnect 2.4.2
+
+| Keycloak ^1^
+| Nothing - there is no `aud` claim unless an audience mapper is configured for the client. `azp`
+carries the client id.
+| **Add the audience mapper** described below. Without it no access token is accepted.
+| Works as it is. Without a mapper `audience` cannot be used - with no `aud` claim, no value can
+match; with the mapper added it can be set to the client id.
+
+| Microsoft Azure AD / Entra ID, v1.0 tokens ^2^
+| The Application ID URI, for example `api://<client-id>`. There is no `azp`; the client is named
+by `appid`. This is the default, see the
+xref:configuration/user/oidc/ms-azure-setup.adoc[Azure setup page].
+| Switch the app registration to v2.0 tokens (`requestedAccessTokenVersion: 2` in the manifest),
+which puts the client id into `aud`.
+| Works as it is. Set `audience` to the Application ID URI to bind tokens to ownCloud's API.
+
+| Microsoft Azure AD / Entra ID, v2.0 tokens ^2^
+| The resource application's client id, which is ownCloud's own `client-id` in the setup described
+here. `azp` carries it as well.
+| Works as it is.
+| Works as it is. `audience` may be set to the `client-id`.
+
+| Microsoft ADFS ^2^
+| The relying party identifier, rendered as `microsoft:identityserver:<identifier>` unless the
+identifier is already a URL. `appid` carries the client.
+| No remedy - ADFS cannot be made to put the client id into `aud`. 2.4.2 is the fix.
+| Works as it is. Set `audience` to that exact value, including case, to bind tokens to ownCloud.
+
+| Kopano Konnect ^3^
+| The client id.
+| Works as it is.
+| Works as it is.
+
+| OneLogin, with API authorization ^2^
+| The configured API audience URI or URIs, never the client id. `azp` carries the application id.
+| No remedy through ownCloud; either stop using API authorization for this app or wait for 2.4.2.
+| Works as it is. Set `audience` to the API audience URI to bind tokens to that API.
+
+| PingIdentity PingFederate, cidaas
+| Depends on how the access token is configured in the product - not verified by ownCloud.
+| If the access tokens are JWTs, decode one: it works when `aud` carries the `client-id`, and
+cannot when it does not. Opaque tokens verified through introspection are not checked on 2.4.1 and
+work either way.
+| Works as it is if a claim names ownCloud as the client; otherwise set `audience` to what `aud`
+holds.
+|===
+
+(1) Verified against Keycloak 26.0 with a confidential client and no audience mapper. +
+(2) From the provider's own documentation and from tokens reported by administrators. +
+(3) From the Konnect sources, which pass the client id as the access token audience.
+
+=== What the Log Says
+
+A rejected audience is logged with both values:
+
+----
+Token audience does not match the expected audience: token "aud" is "...", expected one of ["..."]
+----
+
+The value reported as `token "aud"` is what your provider sends, and therefore exactly what
+belongs in `audience` if you decide to set it - unless the line below precedes it:
+
+----
+Token was issued to another client: "azp" is "...", this relying party is "..." ...
+----
+
+From 2.4.2 that line says the rejection was decided by a client-naming claim rather than by the
+audience, so `audience` is not what needs changing: the token genuinely belongs to another client
+of the same provider. It is followed by the audience mismatch above, which in that case names an
+`aud` that was never the problem.
+
+From 2.4.2, a token accepted on its client-naming claim while carrying an audience you *could*
+have configured - Azure AD v1.0 tokens, ADFS, OneLogin - is recorded at level `info`, once per
+request, with the same advice. ownCloud's default `loglevel` is `2` (warning), so set it to `1`
+(info) to see it at all:
+
+----
+Access token "aud" does not name this relying party, accepted because "appid" matches the
+configured client-id. To have the audience enforced, set the openid-connect "audience" config
+key to ...
+----
+
+That line is expected for those providers and does not indicate a broken setup; setting
+`audience` is what ends it. It is not written when the token carries no audience at all, as with
+Keycloak, because then there is nothing to put in the key - such a token is still accepted on its
+`azp` claim, unless `audience` is configured, in which case it is rejected and logged as a
+mismatch like any other.
+
+Independently of the audience, and from 2.4.2, a token that labels its own type has to label
+itself an access token, or it is refused with `Token is not an access token`. Both the `typ` and
+the `token_use` payload claims count as that label, and *each* one the token carries has to be an
+accepted value - the accepted values, compared case-insensitively, being `Bearer`, `at+jwt`
+(RFC 9068 section 2.1), `access` and `access_token`. A token carrying `typ: JWT` alongside
+`token_use: access` is therefore refused on the `typ`. That is an allowlist rather than a list of refresh markers, so it
+covers refresh and offline tokens (Keycloak's `typ` of `Refresh` and `Offline`, Cognito's
+`token_use` of `refresh`) together with back-channel logout, registration and ID tokens on every
+provider that labels them. The generic JOSE media type `jwt` is refused too, although it says
+nothing about the type: a provider that stamps it into the payload stamps it on every token it
+signs, so accepting it would switch this check off for precisely the provider it would be meant to
+accommodate.
+
+ID tokens are therefore two cases rather than one. Where your provider labels the type - Keycloak
+sends `typ` of `ID`, Cognito `token_use` of `id` - an ID token presented as a bearer token is
+refused whatever `audience` is set to, including not set at all. Where it puts no type claim in the
+payload, as Azure AD and ADFS do not, an ID token still satisfies the default expectation,
+because an ID token's `aud` *is* the `client-id` by definition: it is
+accepted for as long as the `client-id` is an accepted audience, and setting `audience` to anything
+else - which is exactly what ADFS, Azure AD v1.0 tokens and OneLogin need - is then what rejects it,
+as a side effect. Where that is not an option, treat ID tokens as credentials.
+
+=== When to Set the audience Parameter
+
+None of the providers above needs it once you run 2.4.2, with the exception noted in the last
+table row. What it adds is a binding to the
+*resource*: with it set, a token that ownCloud's own client obtained for some *other* resource of
+the same provider - through an RFC 8707 `resource` parameter, or RFC 8693 token exchange - no
+longer authenticates here. Set it if your provider issues tokens to ownCloud's client for more
+than one resource.
+
+What it cannot do is keep *another* client's tokens out. Any token whose `aud` names ownCloud is
+accepted, whichever client requested it, and a client of the same provider can often be granted
+exactly that - an audience mapper of its own, or a `resource` parameter naming ownCloud. That is
+the resource-server model, it is the same before and after setting `audience`, and the only place
+to control it is the provider: decide there which clients may be issued tokens for ownCloud.
+
+See
+xref:configuration/server/config_apps_sample_php_parameters.adoc#app-openid-connect-oidc[the parameter reference]
+for the exact semantics of the key.
+
+[#making-keycloak-send-an-audience]
+=== Making Keycloak Send an Audience
+
+Keycloak leaves `aud` out of the access token unless the client has an audience mapper. Adding one
+makes Keycloak send the client id, which satisfies 2.4.1 - on that version this is not optional,
+it is what makes a Keycloak setup work at all.
+
+In the Keycloak admin console, go to menu:Clients[your ownCloud client > Client scopes] and open
+the dedicated scope named `<client-id>-dedicated`, then
+menu:Add mapper[By configuration > Audience] and set *Included Client Audience* to your ownCloud
+client, leaving *Add to access token* on.
+
+The same through `kcadm.sh`, with `CLIENT_UUID` the internal id from
+`kcadm.sh get clients -r <realm> -q clientId=<client-id> --fields id`:
+
+[source,bash]
+----
+kcadm.sh create clients/CLIENT_UUID/protocol-mappers/models -r <realm> \
+  -s name=oc-audience \
+  -s protocol=openid-connect \
+  -s protocolMapper=oidc-audience-mapper \
+  -s 'config."included.client.audience"=<client-id>' \
+  -s 'config."access.token.claim"=true'
+----
+
+Afterwards the access token carries `"aud": "<client-id>"`, and `audience` may be set to the same
+value to have it enforced.
+
 == General Example Setup
 
 All IdPs have their own setup, but often share common ways of configuring things. Although not identical, the xref:example-setup-using-kopano-konnect[Kopano Konnect] example may be a good starting point for the specific configuration of your setup. As Microsoft with Azure AD is different, it has its own example section.
