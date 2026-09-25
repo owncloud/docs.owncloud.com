@@ -121,11 +121,11 @@ is truly version-independent belongs in a shared partial or a
 Delete the folder:
 
 ```sh
-rm -r content/server/10.15
+rm -r content/server/10.16
 ```
 
 That is the whole content change — `site.yml` needs no edit, because it globs.
-Three bits of bookkeeping remain:
+Four bits of bookkeeping remain:
 
 1. Update the hand-maintained `latest-*` / `previous-*` / `current-*` attributes
    in `global-attributes.yml` if the removed version appeared in them. The
@@ -133,13 +133,18 @@ Three bits of bookkeeping remain:
    derives its target from the newest non-prerelease version, `next-alias.js` from
    the `prerelease` flag).
 2. **Server only:** drop the segment from `PUBLISHED_VERSIONS` in
-   `ui/supplemental/js/go-redirect.js`; `test/go-redirect.test.js` fails the build
-   if that list drifts from the published `public/server/*` trees. Only real
-   version numbers are maintained there — `latest` and `next` are permanent
-   entries, because they are generated redirect trees rather than versions. Legacy
-   `go.php?to=` links for the removed version then fall back to `latest`, which is
-   the intended safety net.
-3. Accept that the version's URLs now 404 — nothing redirects a retired version
+   `ui/supplemental/js/go-redirect.js` **and** from the version loop in
+   `extension-tests/go-redirect.test.js` — two independent hand-maintained lists,
+   and the suite fails on either one alone. It also fails if `PUBLISHED_VERSIONS`
+   drifts from the published `public/server/*` trees. Only real version numbers
+   are maintained there — `latest` and `next` are permanent entries, because they
+   are generated redirect trees rather than versions. Legacy `go.php?to=` links
+   for the removed version then fall back to `latest`, which is the intended
+   safety net.
+3. Drop the version's row from `sync/manifest.yml` and from the table below. Both
+   record which upstream branch each folder came from, so a row for a folder that
+   no longer exists is misleading rather than historical.
+4. Accept that the version's URLs now 404 — nothing redirects a retired version
    tree. Drop a version only when its inbound links are acceptable casualties, or
    add redirects deliberately.
 
@@ -148,7 +153,7 @@ Three bits of bookkeeping remain:
 | Product | Versions (folder) | Notes |
 |---------|-------------------|-------|
 | main | — | ROOT landing component (versionless) |
-| server | 11.0, 10.16, 10.15 | no 11.0 branch upstream yet; master is the 11.0 line and is `latest` |
+| server | 11.0, 10.16 | no 11.0 branch upstream yet; master is the 11.0 line and is `latest` |
 | ocis | 8.3 (dev), 8.2, 8.1, 8.0, 7.3 | master→8.3 (prerelease); 8.2 branch is `latest` |
 | webui | — | single rolling component (versionless) |
 | desktop | 7.2 (dev), 7.1, 6.0, 5.3 | master→7.2 (prerelease); 7.1 branch is `latest` |
