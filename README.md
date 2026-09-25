@@ -31,6 +31,7 @@ site.yml                 Antora playbook (local content only)
 package.json             antora + asciidoctor + pagefind toolchain
 antora-extensions/       comp-version, latest/next-alias, sitemap-cleanup, global-attributes loader
 asciidoc-extensions/     tabs, remote-include
+extension-tests/         node --test suite (`npm test`); build first, several tests skip without public/
 global-attributes.yml    site-wide AsciiDoc attributes (local)
 ui/supplemental/         branding + Pagefind modal search on the stock UI
 ui/supplemental/js/vendor/ gitignored; synced from node_modules by scripts/sync-vendor-assets.js
@@ -121,7 +122,7 @@ is truly version-independent belongs in a shared partial or a
 Delete the folder:
 
 ```sh
-rm -r content/server/<version>
+rm -r content/server/VERSION
 ```
 
 That is the whole content change — `site.yml` needs no edit, because it globs.
@@ -170,8 +171,13 @@ Four bits of bookkeeping remain:
 > `latest-*`/`previous-*` attributes in `global-attributes.yml`, and bump the
 > version segments of the affected links in `ui/supplemental/llms.txt` (those URLs
 > are pinned deliberately, because `/latest/` is a `noindex` redirect stub).
-> `extension-tests/static-files.test.js` fails the build while any of the three
-> disagree.
+> `extension-tests/static-files.test.js` cross-checks the `latest-*-version`
+> attributes against the content tree and `llms.txt`, and fails the build while
+> those three disagree. It checks **only** `latest-*-version`: nothing in the suite
+> verifies `previous-*-version`, `current-server-version` or
+> `latest-server-download-version`, so a stale one of those renders site-wide with
+> a green build. (`previous-android-version` equalling `latest-android-version`
+> today suggests this has already happened once.)
 >
 > Dropping `prerelease` also moves `/<product>/next/` on to the newly opened dev
 > line by itself — `next-alias.js` reads the flag, so there is nothing to bump.
