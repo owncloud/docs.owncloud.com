@@ -48,7 +48,6 @@ repos:
   - name: docs-server
     url: https://github.com/owncloud/docs-server.git
     mappings:
-      - { branch: '10.15', dest: content/server/10.15 }
       - { branch: '10.16', dest: content/server/10.16 }
       # no 11.0 release branch upstream yet -- master still is the 11.0 line
       - { branch: master,  dest: content/server/11.0 }

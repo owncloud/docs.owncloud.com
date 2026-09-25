@@ -31,6 +31,7 @@ site.yml                 Antora playbook (local content only)
 package.json             antora + asciidoctor + pagefind toolchain
 antora-extensions/       comp-version, latest/next-alias, sitemap-cleanup, global-attributes loader
 asciidoc-extensions/     tabs, remote-include
+extension-tests/         node --test suite (`npm test`); build first, several tests skip without public/
 global-attributes.yml    site-wide AsciiDoc attributes (local)
 ui/supplemental/         branding + Pagefind modal search on the stock UI
 ui/supplemental/js/vendor/ gitignored; synced from node_modules by scripts/sync-vendor-assets.js
@@ -121,11 +122,11 @@ is truly version-independent belongs in a shared partial or a
 Delete the folder:
 
 ```sh
-rm -r content/server/10.15
+rm -r content/server/VERSION
 ```
 
 That is the whole content change — `site.yml` needs no edit, because it globs.
-Three bits of bookkeeping remain:
+Four bits of bookkeeping remain:
 
 1. Update the hand-maintained `latest-*` / `previous-*` / `current-*` attributes
    in `global-attributes.yml` if the removed version appeared in them. The
@@ -133,13 +134,18 @@ Three bits of bookkeeping remain:
    derives its target from the newest non-prerelease version, `next-alias.js` from
    the `prerelease` flag).
 2. **Server only:** drop the segment from `PUBLISHED_VERSIONS` in
-   `ui/supplemental/js/go-redirect.js`; `test/go-redirect.test.js` fails the build
-   if that list drifts from the published `public/server/*` trees. Only real
-   version numbers are maintained there — `latest` and `next` are permanent
-   entries, because they are generated redirect trees rather than versions. Legacy
-   `go.php?to=` links for the removed version then fall back to `latest`, which is
-   the intended safety net.
-3. Accept that the version's URLs now 404 — nothing redirects a retired version
+   `ui/supplemental/js/go-redirect.js` **and** from the version loop in
+   `extension-tests/go-redirect.test.js` — two independent hand-maintained lists,
+   and the suite fails on either one alone. It also fails if `PUBLISHED_VERSIONS`
+   drifts from the published `public/server/*` trees. Only real version numbers
+   are maintained there — `latest` and `next` are permanent entries, because they
+   are generated redirect trees rather than versions. Legacy `go.php?to=` links
+   for the removed version then fall back to `latest`, which is the intended
+   safety net.
+3. Drop the version's row from `sync/manifest.yml` and from the table below. Both
+   record which upstream branch each folder came from, so a row for a folder that
+   no longer exists is misleading rather than historical.
+4. Accept that the version's URLs now 404 — nothing redirects a retired version
    tree. Drop a version only when its inbound links are acceptable casualties, or
    add redirects deliberately.
 
@@ -148,7 +154,7 @@ Three bits of bookkeeping remain:
 | Product | Versions (folder) | Notes |
 |---------|-------------------|-------|
 | main | — | ROOT landing component (versionless) |
-| server | 11.0, 10.16, 10.15 | no 11.0 branch upstream yet; master is the 11.0 line and is `latest` |
+| server | 11.0, 10.16 | no 11.0 branch upstream yet; master is the 11.0 line and is `latest` |
 | ocis | 8.3 (dev), 8.2, 8.1, 8.0, 7.3 | master→8.3 (prerelease); 8.2 branch is `latest` |
 | webui | — | single rolling component (versionless) |
 | desktop | 7.2 (dev), 7.1, 6.0, 5.3 | master→7.2 (prerelease); 7.1 branch is `latest` |
@@ -165,7 +171,13 @@ Three bits of bookkeeping remain:
 > `latest-*`/`previous-*` attributes in `global-attributes.yml`, and bump the
 > version segments of the affected links in `ui/supplemental/llms.txt` (those URLs
 > are pinned deliberately, because `/latest/` is a `noindex` redirect stub).
-> `test/static-files.test.js` fails the build while any of the three disagree.
+> `extension-tests/static-files.test.js` cross-checks the `latest-*-version`
+> attributes against the content tree and `llms.txt`, and fails the build while
+> those three disagree. It checks **only** `latest-*-version`: nothing in the suite
+> verifies `previous-*-version`, `current-server-version` or
+> `latest-server-download-version`, so a stale one of those renders site-wide with
+> a green build. (`previous-android-version` equalling `latest-android-version`
+> today suggests this has already happened once.)
 >
 > Dropping `prerelease` also moves `/<product>/next/` on to the newly opened dev
 > line by itself — `next-alias.js` reads the flag, so there is nothing to bump.
@@ -173,9 +185,12 @@ Three bits of bookkeeping remain:
 > Then open the next dev line by copying the released folder to its new number and
 > re-adding the two keys. **Server only:** that copy publishes a new
 > `public/server/<version>/` tree, so add the segment to `PUBLISHED_VERSIONS` in
-> `ui/supplemental/js/go-redirect.js` in the same commit — `test/go-redirect.test.js`
-> fails while that list and the published trees disagree, in both directions (the
-> mirror of step 2 under [Dropping a version](#dropping-a-version)).
+> `ui/supplemental/js/go-redirect.js` in the same commit —
+> `extension-tests/go-redirect.test.js` fails while that list and the published
+> trees disagree, in either direction (the mirror of step 2 under
+> [Dropping a version](#dropping-a-version)). Add it to the version loop in that
+> test file as well: unlike a removal, an *addition* the loop does not cover fails
+> nothing, so the new segment would silently never be exercised.
 >
 > The branch references in the Notes column above are **historical**: they record
 > which upstream `owncloud/docs-*` branch each folder was last imported from

@@ -1,3 +1,0 @@
-= Introduction to ownCloud Classic
-
-Welcome to the ownCloud Classic documentation. These documents provide an xref:admin_manual:index.adoc[admin guide] with information for installation, configuration and administrative tasks as well as documentation for xref:developer_manual:index.adoc[developers]. An xref:classic_ui:index.adoc[ownCloud User Manual] for the server is provided in the web documentation.

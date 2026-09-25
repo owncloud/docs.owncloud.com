@@ -40,7 +40,7 @@ test('a user key redirects into the classic_ui module', () => {
 test('a published version segment is preserved for per-version fidelity', () => {
   // `latest` and `next` are served redirect trees, so they are preserved too: the
   // stub the go.php link lands on carries the reader on to the real version.
-  for (const v of ['10.15', '10.16', '11.0', 'latest', 'next']) {
+  for (const v of ['10.16', '11.0', 'latest', 'next']) {
     const p = `/owncloud-docs-monorepo/server/${v}/`
     assert.equal(
       resolveGoPhp(p + 'go.php', '?to=admin-sharing'),
