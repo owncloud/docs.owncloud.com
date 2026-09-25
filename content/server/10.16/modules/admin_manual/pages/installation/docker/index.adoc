@@ -8,7 +8,7 @@
 // the image version documented on this branch. this is intentionally a literal
 // and not an attribute, because the global -version attributes track the latest
 // release of the product and not this branch.
-:docker-image-version: 10.16.4
+:docker-image-version: 10.16.5
 
 == Introduction
 

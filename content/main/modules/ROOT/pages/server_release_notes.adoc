@@ -17,6 +17,12 @@ next@docs::server_release_notes.adoc, next@docs_main::server_release_notes.adoc
 toc::[]
 
 
+== Changes in 11.0.1
+
+Dear ownCloud administrator, find below the changes and known issues in ownCloud Classic 11.0.1 that need your attention. You can also read the {oc-changelog-url}[full ownCloud Classic changelog] for further details on what has changed.
+
+IMPORTANT: This is a security release. Upgrading is strongly recommended for all installations.
+
 == Changes in 11.0.0
 
 Dear ownCloud administrator, find below the changes and known issues in ownCloud Classic 11.0.0 that need your attention. You can also read the {oc-changelog-url}[full ownCloud Classic changelog] for further details on what has changed.
@@ -87,6 +93,12 @@ Files whose names end in extensions such as `.jpg`, `.png`, `.svg` or `.json` co
 * Do not crash on malformed translations: https://github.com/owncloud/core/issues/41720[#41720]
 * Reject non-numeric avatar crop coordinates and fix the avatar cropper: https://github.com/owncloud/core/issues/41723[#41723]
 * Add missing space to mail footer signature delimiter: https://github.com/owncloud/core/issues/41364[#41364]
+
+== Changes in 10.16.5
+
+Dear ownCloud administrator, find below the changes and known issues in ownCloud Classic 10.16.5 that need your attention. You can also read the {oc-changelog-url}[full ownCloud Classic changelog] for further details on what has changed.
+
+IMPORTANT: This is a security release. Upgrading is strongly recommended for all installations.
 
 == Changes in 10.16.4
 

@@ -28,7 +28,7 @@
     previous-docs-version: 'next'
 #   server
     latest-server-version: '11.0'
-    latest-server-download-version: '11.0.0'
+    latest-server-download-version: '11.0.1'
     previous-server-version: '10.16'
     current-server-version: '11.0'
     oc-changelog-url: 'https://owncloud.com/changelog/server/'
