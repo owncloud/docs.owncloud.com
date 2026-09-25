@@ -121,7 +121,7 @@ is truly version-independent belongs in a shared partial or a
 Delete the folder:
 
 ```sh
-rm -r content/server/10.16
+rm -r content/server/<version>
 ```
 
 That is the whole content change — `site.yml` needs no edit, because it globs.
@@ -170,7 +170,8 @@ Four bits of bookkeeping remain:
 > `latest-*`/`previous-*` attributes in `global-attributes.yml`, and bump the
 > version segments of the affected links in `ui/supplemental/llms.txt` (those URLs
 > are pinned deliberately, because `/latest/` is a `noindex` redirect stub).
-> `test/static-files.test.js` fails the build while any of the three disagree.
+> `extension-tests/static-files.test.js` fails the build while any of the three
+> disagree.
 >
 > Dropping `prerelease` also moves `/<product>/next/` on to the newly opened dev
 > line by itself — `next-alias.js` reads the flag, so there is nothing to bump.
@@ -178,9 +179,12 @@ Four bits of bookkeeping remain:
 > Then open the next dev line by copying the released folder to its new number and
 > re-adding the two keys. **Server only:** that copy publishes a new
 > `public/server/<version>/` tree, so add the segment to `PUBLISHED_VERSIONS` in
-> `ui/supplemental/js/go-redirect.js` in the same commit — `test/go-redirect.test.js`
-> fails while that list and the published trees disagree, in both directions (the
-> mirror of step 2 under [Dropping a version](#dropping-a-version)).
+> `ui/supplemental/js/go-redirect.js` in the same commit —
+> `extension-tests/go-redirect.test.js` fails while that list and the published
+> trees disagree, in either direction (the mirror of step 2 under
+> [Dropping a version](#dropping-a-version)). Add it to the version loop in that
+> test file as well: unlike a removal, an *addition* the loop does not cover fails
+> nothing, so the new segment would silently never be exercised.
 >
 > The branch references in the Notes column above are **historical**: they record
 > which upstream `owncloud/docs-*` branch each folder was last imported from
