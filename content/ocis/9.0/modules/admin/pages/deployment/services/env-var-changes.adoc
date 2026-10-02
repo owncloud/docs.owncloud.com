@@ -1,0 +1,38 @@
+# Changed Environment Variables in Versions
+:toc: right
+:description: This page contains tables with added and removed environment variables between Infinite Scale version {env_var_delta_old} and {env_var_delta_new}
+:page-aliases: ROOT:deployment/services/env-var-changes.adoc
+
+////
+to be set in antora.yml
+
+ocis_helpers:                example$ocis_helpers
+ocis_helpers_env_var_deltas: {ocis_helpers}/env_var_deltas/
+env_var_delta_old: '8.2.0'
+env_var_delta_new: '9.0.0'
+////
+
+== Introduction
+
+{description}
+
+== Added and Removed Environment Variables
+
+[tabs]
+====
+Added::
++
+--
+include::example${ocis_helpers_env_var_deltas}{env_var_delta_old}-{env_var_delta_new}-added.adoc[]
+--
+Removed::
++
+--
+include::example${ocis_helpers_env_var_deltas}{env_var_delta_old}-{env_var_delta_new}-removed.adoc[]
+--
+Deprecated::
++
+--
+include::example${ocis_helpers_env_var_deltas}{env_var_delta_old}-{env_var_delta_new}-deprecated.adoc[]
+--
+====
