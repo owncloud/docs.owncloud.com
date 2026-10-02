@@ -1,0 +1,210 @@
+= Spaces Provider
+:toc: right
+:toclevels: 3
+
+[WARNING]
+====
+The current implementation in oCIS might not yet fully reflect this concept. Feel free to add links to ADRs, PRs and Issues in short warning boxes like this.
+====
+
+== Spaces Provider
+
+A _storage provider_ manages xref:ocis/storage/terminology.adoc#_resources[_resources_] identified by a xref:ocis/storage/terminology.adoc#_references[_reference_]
+by accessing a xref:ocis/storage/terminology.adoc#_storage_systems[_storage system_] with a xref:ocis/storage/storagedrivers.adoc[_storage driver_].
+
+image::ocis/storage/spacesprovider.drawio.svg[,width=300]
+
+== Frontend
+
+The oCIS frontend service starts all services that handle incoming HTTP requests:
+- _ocdav_ for ownCloud flavoured WebDAV
+- _ocs_ for sharing, user provisioning, capabilities and other OCS API endpoints
+- _datagateway_ for up and downloads
+- TODO: _ocm_
+
+image::ocis/storage/frontend.drawio.svg[,width=300]
+
+=== WebDAV
+
+The ocdav service not only handles all WebDAV requests under `(remote.php/)(web)dav` but also some other legacy endpoints like `status.php`:
+
+[cols="3,1,2,2,2,3",options="header"]
+|===
+| Endpoint
+| Service
+| CS3 API
+| CS3 Namespace
+| Description
+| TODO
+
+6+| _ownCloud 10 / current ocis setup:_
+
+| `status.php`
+| ocdav
+| -
+| -
+| currently static
+| should return compiled version and dynamic values
+
+| `(remote.php/)webdav`
+| ocdav
+| storageprovider
+| `/home`
+| the old webdav endpoint
+|
+
+| `(remote.php/)dav/files/<username>`
+| ocdav
+| storageprovider
+| `/home`
+| the new webdav endpoint
+|
+
+| `(remote.php/)dav/meta/<fileid>/v`
+| ocdav
+| storageprovider
+| id based
+| versions
+|
+
+| `(remote.php/)dav/trash-bin/<username>`
+| ocdav
+| recycle
+| -
+| trash
+| should aggregate the trash of xref:ocis/storage/terminology.adoc#_storage_spaces[_storage spaces_] the user has access to
+
+| `(remote.php/)dav/public-files/<token>`
+| ocdav
+| storageprovider
+| `/public/<token>`
+| public links
+|
+
+| `(remote.php/)dav/avatars/<username>`
+| ocdav
+| -
+| -
+| avatars, hardcoded
+| look up from user provider and cache
+
+6+| _CernBox setup:_
+
+| `(remote.php/)webdav`
+| ocdav
+| storageprovider
+| `/`
+|
+|
+
+6+| _Note: existing folder sync pairs in legacy clients will break when moving the user home down in the path hierarchy_
+
+| `(remote.php/)webdav/home`
+| ocdav
+| storageprovider
+| `/home`
+|
+|
+
+| `(remote.php/)webdav/users`
+| ocdav
+| storageprovider
+| `/users`
+|
+|
+
+| `(remote.php/)dav/files/<username>`
+| ocdav
+| storageprovider
+| `/users/<user_layout>`
+|
+|
+
+6+| _Spaces concept also needs a new endpoint:_
+
+| `(remote.php/)dav/spaces/<spaceid>/<relative_path>`
+| ocdav
+| storageregistry & storageprovider
+| bypass path based namespace and directly talk to the responsible storage provider using a relative path
+| link:https://github.com/owncloud/ocis/pull/1827[spaces concept] needs to point to storage xref:ocis/storage/spaces.adoc[_spaces_]
+| allow accessing spaces, listing is done by the graph api
+|===
+
+The correct endpoint for a users home storage xref:ocis/storage/spaces.adoc[_space_] in oc10 is `remote.php/dav/files/<username>`. In oc10 all requests at this endpoint use a path based reference that is relative to the users home. In oCIS this can be configured and defaults to `/home` as well. Other API endpoints like ocs and the web UI still expect this to be the users home.
+
+In oc10 we originally had `remote.php/webdav` which would render the current users home xref:ocis/storage/terminology.adoc#_storage_spaces[_storage space_]. The early versions (pre OC7) would jail all received shares into a `remote.php/webdav/shares` subfolder. The semantics for syncing such a folder are link:https://github.com/owncloud/core/issues/5349[not trivially predictable], which is why we made shares link:https://github.com/owncloud/core/pull/8026[freely mountable] anywhere in the users home.
+
+The current reva implementation jails shares into a `remote.php/webdav/Shares` folder for performance reasons. Obviously, this brings back the link:https://github.com/owncloud/product/issues/7[special semantics for syncing]. In the future we will follow link:https://github.com/owncloud/product/issues/302[a different solution] and jail the received shares into a dedicated `/shares` space, on the same level as `/home` and `/spaces`. We will add a dedicated link:https://github.com/owncloud/ocis/pull/1827[API to list all _storage spaces_] a user has access to and where they are mounted in the users _namespace_.
+
+[WARNING]
+====
+TODO rewrite this hint with `/dav/spaces`
+Existing folder sync pairs in legacy clients will break when moving the user home down in the path hierarchy like CernBox did.
+For legacy clients the `remote.php/webdav` endpoint will no longer list the users home directly, but instead present the different types of storage spaces:
+- `remote.php/webdav/home`: the users home is pushed down into a new `home` xref:ocis/storage/terminology.adoc#_storage_spaces[_storage space_]
+- `remote.php/webdav/shares`: all mounted shares will be moved to a new `shares` xref:ocis/storage/terminology.adoc#_storage_spaces[_storage space_]
+- `remote.php/webdav/spaces`: other xref:ocis/storage/terminology.adoc#_storage_spaces[_storage spaces_] the user has access to, e.g. group or project drives
+====
+
+=== Sharing
+
+The xref:server:developer_manual:core/apis/ocs-share-api.adoc[OCS Share API] endpoint `/ocs/v1.php/apps/files_sharing/api/v1/shares` returns shares, which have their own share id and reference files using a path relative to the users home. They API also lists the numeric storage id as well as the string type `storage_id` (which is confusing ... but yeah) which would allow constructing combined references with a `storage space id` and a `path` relative to the root of that xref:ocis/storage/terminology.adoc#_storage_spaces[_storage space_]. The web UI however assumes that it can take the path from the `file_target` and append it to the users home to access it.
+
+[Note]
+====
+The API xref:server:developer_manual:core/apis/ocs-share-api.adoc#example-request-response-payloads-4[already returns the storage id] (and numeric id) in addition to the file id:
+
+[source,plaintext]
+----
+    <storage_id>home::auser</storage_id>
+    <storage>993</storage>
+    <item_source>3994486</item_source>
+    <file_source>3994486</file_source>
+    <file_parent>3994485</file_parent>
+    <file_target>/Shared/Paris.jpg</file_target>
+----
+
+xref:server:developer_manual:core/apis/ocs-share-api.adoc#function-arguments[Creating shares only takes the _path_ as the argument] so creating and navigating shares only needs the path. When you update or delete a share it takes the `share id` not the `file id`.
+====
+
+The OCS service makes a stat request to the storage provider to get a link:https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.ResourceInfo[ResourceInfo] object. It contains both, a link:https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.ResourceId[`ResourceId`] _and_ an absolute path. If the _resource_ exists a request is sent to the gateway. Depending on the type of share the link:https://cs3org.github.io/cs3apis/#cs3.sharing.collaboration.v1beta1.CollaborationAPI[Collaboration API], the link:https://cs3org.github.io/cs3apis/#cs3.sharing.link.v1beta1.LinkAPI[Link API] or the link:https://cs3org.github.io/cs3apis/#cs3.sharing.ocm.v1beta1.OcmAPI[Open Cloud Mesh API] endpoints are used.
+
+[cols="1,3,2,2,4",options="header"]
+|===
+| API
+| Request
+| Resource identified by
+| Grant type
+| Further arguments
+
+| Collaboration
+| link:https://cs3org.github.io/cs3apis/#cs3.sharing.collaboration.v1beta1.CreateShareRequest[CreateShareRequest]
+| link:https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.ResourceInfo[ResourceInfo]
+| link:https://cs3org.github.io/cs3apis/#cs3.sharing.collaboration.v1beta1.ShareGrant[ShareGrant]
+| -
+
+| Link
+| link:https://cs3org.github.io/cs3apis/#cs3.sharing.link.v1beta1.CreatePublicShareRequest[CreatePublicShareRequest]
+| link:https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.ResourceInfo[ResourceInfo]
+| Link link:https://cs3org.github.io/cs3apis/#cs3.sharing.link.v1beta1.Grant[Grant]
+| We send the public link `name` in the `ArbitraryMetadata` of the `ResourceInfo`
+
+| Open Cloud Mesh
+| link:https://cs3org.github.io/cs3apis/#cs3.sharing.ocm.v1beta1.CreateOCMShareRequest[CreateOCMShareRequest]
+| link:https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.ResourceId[ResourceId]
+| OCM link:https://cs3org.github.io/cs3apis/#cs3.sharing.ocm.v1beta1.ShareGrant[ShareGrant]
+| OCM link:https://cs3org.github.io/cs3apis/#cs3.ocm.provider.v1beta1.ProviderInfo[ProviderInfo]
+|===
+
+
+[Note]
+====
+The user and public share provider implementations identify the file using the link:https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.ResourceId[`ResourceId`]. The link:https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.ResourceInfo[`ResourceInfo`] is passed so the share provider can also store who the owner of the resource is. The _path_ is not part of the other API calls, e.g. when listing shares.
+The OCM API takes an id based reference on the CS3 api, even if the OCM HTTP endpoint takes a path argument. _@jfd: Why? Does it not need the owner? It only stores the owner of the share, which is always the currently logged-in user, when creating a share. Afterwards only the owner can update a share ... so collaborative management of shares is not possible. At least for OCM shares._
+====
+
+== REVA Storage Registry
+
+The reva _storage registry_ manages the xref:ocis/storage/namespaces.adoc#_cs3_global_namespaces[_CS3 global namespace_]: It is used by the reva _gateway_ to look up `address` and `port` of the xref:ocis/storage/terminology.adoc#_storage_providers[_storage provider_] that should handle a xref:ocis/storage/terminology.adoc#_references[_reference_].
+
+image::ocis/storage/storageregistry.drawio.svg[,width=300]
