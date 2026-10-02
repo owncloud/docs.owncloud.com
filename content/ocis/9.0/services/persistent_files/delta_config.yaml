@@ -7,16 +7,16 @@
 # these are the version folder names
 # branches are written the following: 'x.y' such as '8.1'
 versionOld: "8.2"
-versionNew: "8.3"
+versionNew: "9.0"
 
 # CHANGE according your needs (for printing, toVersion also to identify all other findings that should be excluded)
 fromVersion: "8.2.0"
-toVersion:   "8.3.0"
+toVersion:   "9.0.0"
 
 # CHANGE according your needs (for file names to be created)
 # this will create files such as 8.0.0-8.1.0-added, 8.0.0-8.1.0-removed etc.
 # this must match which versions you compare.
-nameComponent: "8.2.0-8.3.0"
+nameComponent: "8.2.0-9.0.0"
 
 # ADD elements of version that have already been published so they get EXCLUDED from gathering.
 # from version 7 onwards we dont use patch versions anymore - they must be set to 0.

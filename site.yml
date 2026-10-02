@@ -20,14 +20,14 @@ content:
   - url: .
     start_paths:
     # for any components (such as ocis) where versions to render are defined manually,
-    # you must define e.g. `content/ocis/8.3` and not `content/ocis/8.3/*`
+    # you must define e.g. `content/ocis/9.0` and not `content/ocis/9.0/*`
     # otherwise this globs one level too deep, into modules/, and Antora then aborts
     # with "antora.yml not found".
     # note that any version NOT named is not rendered and could safely be deleted if outdated.
     # note that sometimes outdated versions may not render at all because of attribute changes.
     - content/main
     - content/server/*
-    - content/ocis/8.3
+    - content/ocis/9.0
     - content/ocis/8.2
     - content/ocis/8.1
     - content/webui

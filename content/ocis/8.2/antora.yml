@@ -22,9 +22,11 @@ asciidoc:
     ocis_helpers_yaml: '{ocis_helpers}/yaml/'
 
     # this is the first part of the name for envvars between major versions that will be added or removed
-    # example for full name: 7.0.0-7.1.0-added.adoc or 7.0.0-7.1.0-removed.adoc
+    # example for full name: (old-new.adoc) 8.1.0-8.2.0-added.adoc or 8.1.0-8.2.0-removed.adoc
     # note that the name must be exactly how it is defined in the ocis repo to access the source files!
-    env_var_delta_name: '8.1.0-8.2.0'
+    # used in e.g. env-var-changes.adoc
+    env_var_delta_old: '8.1.0'
+    env_var_delta_new: '8.2.0'
 
     # set attributes defining path components which will be assembled in the document
     compose_url: 'https://github.com/owncloud/ocis/tree/'
