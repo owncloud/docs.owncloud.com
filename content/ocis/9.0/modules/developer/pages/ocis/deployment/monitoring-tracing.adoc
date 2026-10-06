@@ -2,18 +2,17 @@
 :toc: right
 :toclevels: 3
 
-
 Monitoring and tracing gives developers and admin insights into a complex system, in this case oCIS.
 
-If you are a developer and want to trace during developing you should have a look at xref:../development/tracing.adoc[example server setup].
+If you are a developer and want to trace during developing you should have a look at xref:ocis/development/tracing.adoc[example server setup].
 
 This documentation describes how to set up a long-running monitoring & tracing infrastructure for one or multiple oCIS servers or deployments. After reading this guide, you also should know everything needed to integrate oCIS into your existing monitoring and tracing infrastructure.
 
-= Overview about the proposed solution
+= Overview About the Proposed Solution
 
 image::ocis/monitoring_tracing_overview.drawio.svg[]
 
-== Monitoring & tracing clients
+== Monitoring & Tracing Clients
 
 We assume that you already have oCIS deployed on one or multiple servers by using our deployment examples (see rectangle on the left). On these servers our monitoring & tracing clients, namely Telegraf and Jaeger agent, need to be added.
 
@@ -23,7 +22,7 @@ Jaeger agent is being configured as target for traces in oCIS. It then will rece
 
 For more information and how to deploy it, see link:https://github.com/owncloud-devops/monitoring-tracing-client[monitoring & tracing client].
 
-== Monitoring & tracing server
+== Monitoring & Tracing Server
 
 A live version of the monitoring and tracing server for our demo instances is available here: link:https://grafana.infra.owncloud.works[Grafana], link:https://prometheus.infra.owncloud.works[Prometheus] and link:https://jaeger.infra.owncloud.works[Jaeger Query].
 

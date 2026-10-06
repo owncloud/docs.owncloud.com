@@ -2,7 +2,6 @@
 :toc: right
 :toclevels: 3
 
-
 == Deployments Scenarios and Examples
 
 This section handles deployments and operations for admins and people who are interested in how versatile oCIS is. If you want to just try oCIS you may also follow xref:../getting-started.adoc[Getting started].
@@ -11,15 +10,12 @@ This section handles deployments and operations for admins and people who are in
 
 oCIS deployments are super simple, yet there are many configurations possible for advanced setups.
 
-- xref:basic-remote-setup.adoc[Basic oCIS setup] - configure domain, certificates and port
-- xref:ocis_keycloak.adoc[oCIS setup with Keycloak as identity provider]
-- xref:ocis_full.adoc[Flexible oCIS setup with WebOffice and Search capabilities]
-- xref:oc10_ocis_parallel.adoc[Parallel deployment of oC10 and oCIS]
-- xref:ocis_hello.adoc[oCIS with the Hello extension example]
-
+* xref:ocis/deployment/basic-remote-setup.adoc[Basic oCIS setup] - configure domain, certificates and port
+* xref:ocis/deployment/ocis_keycloak.adoc[oCIS setup with Keycloak as identity provider]
+* xref:ocis/deployment/ocis_full.adoc[Flexible oCIS setup with WebOffice and Search capabilities]
 
 == Secure an oCIS Instance
 
-oCIS no longer has any default secrets in versions later than oCIS 1.20.0. Therefore you're no longer able to start oCIS without generating / setting all needed secrets.
+oCIS has no default secrets. Therefore starting oCIS generates all needed secrets.
 
 The recommended way is to use `ocis init` for that. It will generate a secure config file for you.

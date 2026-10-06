@@ -18,14 +18,17 @@ link:https://github.com/owncloud/ocis/tree/master/deployments/examples/ocis_ldap
 
 * Linux server with docker and docker-compose installed
 
-* four domains set up and pointing to your server
-** ocis.\* for serving oCIS
-** ldap .\* for serving the LDAP management UI
-** traefik.\* for serving the Traefik dashboard
+* These domains set up and pointing to your server:
+** `ocis.*` +
+for serving oCIS
+** `ldap .*` +
+for serving the LDAP management UI
+** `traefik.*` +
+for serving the Traefik dashboard
 
-See also xref:preparing_server.adoc[example server setup]
+See also xref:ocis/deployment/preparing_server.adoc[example server setup]
 
-=== Install this example
+=== Install This Example
 
 * Clone oCIS repository +
   `git clone https://github.com/owncloud/ocis.git`
@@ -33,46 +36,45 @@ See also xref:preparing_server.adoc[example server setup]
 * Go to the deployment example +
   `cd ocis/deployment/examples/ocis_ldap`
 
-* Open the `.env` file in a text editor.
+* Open the `.env` file in a text editor. +
+The file by default looks like this:
 +
 --
-The file by default looks like this:
-
 [source,bash]
 ----
-  # If you're on a internet facing server please comment out following line.
-  # It skips certificate validation for various parts of oCIS and is needed if you use self signed certificates.
-  INSECURE=true
+# If you're on a internet facing server please comment out following line.
+# It skips certificate validation for various parts of oCIS and is needed if you use self signed certificates.
+INSECURE=true
 
-  ### Traefik settings ###
-  # Serve Traefik dashboard. Defaults to "false".
-  TRAEFIK_DASHBOARD=
-  # Domain of Traefik, where you can find the dashboard. Defaults to "traefik.owncloud.test"
-  TRAEFIK_DOMAIN=
-  # Basic authentication for the dashboard. Defaults to user "admin" and password "admin"
-  TRAEFIK_BASIC_AUTH_USERS=
-  # Email address for obtaining LetsEncrypt certificates, needs only be changed if this is a public facing server
-  TRAEFIK_ACME_MAIL=
+### Traefik settings ###
+# Serve Traefik dashboard. Defaults to "false".
+TRAEFIK_DASHBOARD=
+# Domain of Traefik, where you can find the dashboard. Defaults to "traefik.owncloud.test"
+TRAEFIK_DOMAIN=
+# Basic authentication for the dashboard. Defaults to user "admin" and password "admin"
+TRAEFIK_BASIC_AUTH_USERS=
+# Email address for obtaining LetsEncrypt certificates, needs only be changed if this is a public facing server
+TRAEFIK_ACME_MAIL=
 
-  ### oCIS settings ###
-  # oCIS version. Defaults to "latest"
-  OCIS_DOCKER_TAG=
-  # Domain of oCIS, where you can find the frontend. Defaults to "ocis.owncloud.test"
-  OCIS_DOMAIN=
-  # JWT secret which is used for the storage provider. Must be changed in order to have a secure oCIS. Defaults to "Pive-Fumkiu4"
-  OCIS_JWT_SECRET=
-  # JWT secret which is used for uploads to create transfer tokens. Must be changed in order to have a secure oCIS. Defaults to "replace-me-with-a-transfer-secret"
-  STORAGE_TRANSFER_SECRET=
-  # Machine auth api key secret. Must be changed in order to have a secure oCIS. Defaults to "change-me-please"
-  OCIS_MACHINE_AUTH_API_KEY=
+### oCIS settings ###
+# oCIS version. Defaults to "latest"
+OCIS_DOCKER_TAG=
+# Domain of oCIS, where you can find the frontend. Defaults to "ocis.owncloud.test"
+OCIS_DOMAIN=
+# JWT secret which is used for the storage provider. Must be changed in order to have a secure oCIS. Defaults to "Pive-Fumkiu4"
+OCIS_JWT_SECRET=
+# JWT secret which is used for uploads to create transfer tokens. Must be changed in order to have a secure oCIS. Defaults to "replace-me-with-a-transfer-secret"
+STORAGE_TRANSFER_SECRET=
+# Machine auth api key secret. Must be changed in order to have a secure oCIS. Defaults to "change-me-please"
+OCIS_MACHINE_AUTH_API_KEY=
 
-  ### LDAP server settings ###
-  # Password of LDAP user "cn=admin,dc=owncloud,dc=com". Defaults to "admin"
-  LDAP_ADMIN_PASSWORD=
+### LDAP server settings ###
+# Password of LDAP user "cn=admin,dc=owncloud,dc=com". Defaults to "admin"
+LDAP_ADMIN_PASSWORD=
 
-  ### LDAP manager settings ###
-  # Domain of LDAP manager. Defaults to "ldap.owncloud.test"
-  LDAP_MANAGER_DOMAIN=
+### LDAP manager settings ###
+# Domain of LDAP manager. Defaults to "ldap.owncloud.test"
+LDAP_MANAGER_DOMAIN=
 ----
 
 You are installing oCIS on a server and Traefik will obtain valid certificates for you so please remove `INSECURE=true` or set it to `false`.
@@ -95,22 +97,23 @@ Grant the oCIS Admin role to the admin user from your LDAP in `OCIS_ADMIN_USER_I
 
 TIP: In the .ldif file in this example, the admin user id is base64 encoded. You need to decode it to make it work.
 
-  Now you have configured everything and can save the file.
+Now you have configured everything and can save the file.
 --
 
 * Start the docker stack +
-  `docker-compose up -d`
+`docker-compose up -d`
 
 * You now can visit oCIS and Traefik dashboard on your configured domains. You may need to wait some minutes until all services are fully ready, so make sure that you try to reload the pages from time to time.
 
-== Local setup
+== Local Setup
 
 For a more simple local ocis setup see xref:ocis/development/getting-started.adoc[Getting started]
 
 This docker stack can also be run locally. One downside is that Traefik can not obtain valid SSL certificates and therefore will create self-signed ones. This means that your browser will show scary warnings. Another downside is that you can not point DNS entries to your localhost. So you have to add static host entries to your computer.
 
-On Linux and macOS you can add them to your `/etc/hosts` file and on Windows to `C:\Windows\System32\Drivers\etc\hosts` file like this:
+On Linux and macOS you can add them to your `/etc/hosts` file such as:
 
+[source,hosts]
 ----
 127.0.0.1 cloud.owncloud.test
 127.0.0.1 keycloak.owncloud.test
@@ -120,6 +123,9 @@ On Linux and macOS you can add them to your `/etc/hosts` file and on Windows to 
 
 After that you're ready to start the application stack:
 
+[source,bash]
+----
 `docker-compose up -d`
+----
 
-Open https://ocis.owncloud.test in your browser and accept the invalid certificate warning. You now can login to oCIS with the default users, which also can be found here: xref:ocis/development/getting-started.adoc#login-to-ocis-web.adoc[Getting started]. You may need to wait some minutes until all services are fully ready, so make sure that you try to reload the pages from time to time.
+Open \https://ocis.owncloud.test in your browser and accept the invalid certificate warning. You now can login to oCIS with the default users, which also can be found here: xref:ocis/development/getting-started.adoc#login-to-ocis-web.adoc[Getting started]. You may need to wait some minutes until all services are fully ready, so make sure that you try to reload the pages from time to time.

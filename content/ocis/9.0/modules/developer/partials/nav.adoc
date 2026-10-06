@@ -81,19 +81,14 @@
 *** xref:developer:ocis/identity-provider/ldap-active-directory.adoc[LDAP / Active Directory]
 
 ** xref:developer:ocis/deployment/index.adoc[Deployment (Developer)]
-*** xref:developer:ocis/deployment/ocis_hello.adoc[Hello World]
 *** xref:developer:ocis/deployment/ocis_full.adoc[Full Setup]
 *** xref:developer:ocis/deployment/ocis_ldap.adoc[With LDAP]
 *** xref:developer:ocis/deployment/ocis_keycloak.adoc[With Keycloak]
-*** xref:developer:ocis/deployment/oc10_ocis_parallel.adoc[OC10 Parallel]
 *** xref:developer:ocis/deployment/kubernetes.adoc[Kubernetes]
-*** xref:developer:ocis/deployment/systemd.adoc[Systemd]
 *** xref:developer:ocis/deployment/continuous_deployment.adoc[Continuous Deployment]
 *** xref:developer:ocis/deployment/basic-remote-setup.adoc[Basic Remote Setup]
-*** xref:developer:ocis/deployment/bridge.adoc[Bridge]
 *** xref:developer:ocis/deployment/preparing_server.adoc[Preparing the Server]
 *** xref:developer:ocis/deployment/monitoring-tracing.adoc[Monitoring and Tracing]
-*** xref:developer:ocis/deployment/ubernauten.adoc[Ubernauten Example]
 
 ** xref:developer:ocis/releasing_guide/index.adoc[Releasing Guide]
 *** xref:developer:ocis/releasing_guide/releasing_guide.adoc[Process]
@@ -101,7 +96,6 @@
 
 ** xref:developer:ocis/config.adoc[Configuration]
 ** xref:developer:ocis/metrics.adoc[Metrics]
-** xref:developer:ocis/migration.adoc[Migration]
 ** xref:developer:ocis/backup.adoc[Backup]
 ** xref:developer:ocis/release_notes.adoc[Release Notes]
 ** xref:developer:ocis/release_roadmap.adoc[Release Roadmap]

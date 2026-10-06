@@ -7,11 +7,11 @@
 
 In order to simplify deployments and development the configuration model from oCIS aims to be simple yet flexible.
 
-== Overview of the approach
+== Overview of the Approach
 
 image::ocis/ocis-config-redesign.drawio.svg[]
 
-== In-depth configuration
+== In-Depth Configuration
 
 Since we include a set of predefined extensions within the single binary, configuring an extension can be done in a variety of ways. Since we work with complex types, having as many cli per config value scales poorly, so we limited the options to config files and environment variables.
 
@@ -19,9 +19,9 @@ The hierarchy is clear enough, leaving us with:
 
 _(each element above overwrites its precedent)_
 
-1. env variables
-2. extension config
-3. ocis config
+. env variables
+. extension config
+. ocis config
 
 This is manifested in the previous diagram. We can then speak about "configuration file arithmetics", where resulting config transformations happen through a series of steps. An administrator must be aware of these sources, since mis-managing them can be a source of confusion, having undesired transformations on config files believed not to be applied.
 
@@ -33,20 +33,21 @@ Let's explore the various flows with examples and workflows.
 
 Let's explore with examples this approach.
 
-==== Expected loading locations
+==== Expected Loading Locations
 
-- docker images: `/etc/ocis/`
-- binary releases: `$HOME/.ocis/config/`
+* docker images: `/etc/ocis/`
+* binary releases: `$HOME/.ocis/config/`
 
 followed by the `<extension name>.yaml`, e.g. `proxy.yaml` for the extension configuration. You also can put an `ocis.yaml` config file to the expected loading location to use a single config file.
 
 You can set another directory as config path in the environment variable `OCIS_CONFIG_DIR`. It will then pick the same file names, but from the folder you configured.
 
-==== Only config files
+==== Only Config Files
 
 The following config files are present in the default loading locations:
 
 _ocis.yaml_
+
 [source,yaml]
 ----
 proxy:
@@ -63,6 +64,7 @@ log:
 ----
 
 _proxy.yaml_
+
 [source,yaml]
 ----
 http:
@@ -82,7 +84,7 @@ log:
   level: info
 ----
 
-==== Using ENV variables
+==== Using ENV Variables
 
 The logging configuration if defined in the main ocis.yaml is inherited by all extensions. It can be, however, overwritten by a single extension file if desired. The same example can be used to demonstrate environment values overwrites. With the same set of config files now we have the following command `PROXY_HTTP_ADDR=localhost:5555 ocis server`, now the resulting config looks like:
 
@@ -97,7 +99,7 @@ log:
   level: info
 ----
 
-==== Substitute ENV variables in configuration files
+==== Substitute ENV Variables in Configuration Files
 
 Environment variables can be used in the configurations files and will be replaced by oCIS when loading these.
 Default values can be specified after a `|` character - see below.
@@ -130,6 +132,7 @@ All the points from the priority section hold true. An unsupervised extension ca
 When running in supervised mode (`ocis server`) it is beneficial to have common values for logging, so that the log output is correctly formatted, or everything is piped to the same file without duplicating config keys and values all over the place. This is possible using the global `log` config key:
 
 _ocis.yaml_
+
 [source,yaml]
 ----
 log:
@@ -142,6 +145,7 @@ log:
 There is, however, the option for extensions to overwrite this global values by declaring their own logging directives:
 
 _ocis.yaml_
+
 [source,yaml]
 ----
 log:
@@ -157,8 +161,7 @@ One can go as far as to make the case of an extension overwriting its shared log
 When overwriting a globally shared logging values, one _MUST_ specify all values.
 ====
 
-
-=== Log config keys
+=== Log Config Keys
 
 [source,yaml]
 ----
@@ -169,6 +172,6 @@ log:
   file: [ path/to/log/file ] # MUST not be used with pretty = true
 ----
 
-== Default config values (in yaml)
+== Default Config Values (in YAML)
 
 TBD. Needs to be generated and merged with the env mappings.
