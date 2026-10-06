@@ -49,13 +49,13 @@ This example is using OnlyOffice as the office suite.
 
 * *oCIS:* ocis.ocis-onlyoffice.rolling.owncloud.works
 
-== oCIS and ownCloud Web with both most recent development versions
+== oCIS and ownCloud Web with Both Most Recent Development Versions
 
 Credentials:
 
 * *oCIS:* see xref:ocis/development/getting-startedadoc#login-to-owncloud-web.[default demo users]
 
-=== Master branches
+=== Master Branches
 
 * *oCIS:* ocis.ocis-web.master.owncloud.works
 
@@ -75,9 +75,9 @@ Credentials:
 * *Keycloak admin access:* keycloak.ocis-keycloak.rolling.owncloud.works
 * *Keycloak account management:* keycloak.ocis-keycloak.rolling.owncloud.works/realms/oCIS/account/#/
 
-== oCIS with S3 storage backend (MinIO)
+== oCIS with S3 Storage Backend (MinIO)
 
-This deployment is based on our modular xref:ocis/deployment/ocis_full.adoc[ocis_full Example], see the <<ocis_with_web_office,oCIS with Web Office>> description for the feature set. In addition to that, we deployed a MinIO S3 storage backend. oCIS stores the data in the S3 server and the metadata on the local disk by using the `s3ng` storage driver.
+This deployment is based on our modular xref:ocis/deployment/ocis_full.adoc[ocis_full Example], see the xref:#ocis_with_web_office[oCIS with Web Office] description for the feature set. In addition to that, we deployed a MinIO S3 storage backend. oCIS stores the data in the S3 server and the metadata on the local disk by using the `s3ng` storage driver.
 
 The MinIO server provides a powerful Web UI for browser-based access to the storage which makes it possible to manage the data stored in the S3 server and understand how different policies and configurations affect the data.
 
@@ -95,7 +95,7 @@ Credentials:
 * *MinIO:* minio.ocis-s3.rolling.owncloud.works
 * *Mail:* mail.ocis-s3.rolling.owncloud.works
 
-== oCIS with LDAP for users and groups
+== oCIS with LDAP for Users and Groups
 
 Credentials:
 

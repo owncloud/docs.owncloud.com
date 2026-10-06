@@ -1,16 +1,6 @@
+= Migrate Data using rclone
 :toc: right
 :toclevels: 3
-
-
-'''
-title: "Migrate Data using rclone"
-date: 2020-06-12T14:35:00+01:00
-weight: 10
-geekdocRepo: https://github.com/owncloud/ocis
-geekdocEditPath: edit/master/docs/ocis/guides
-geekdocFilePath: migrate-data-rclone.md
-geekdocCollapseSection: true
-'''
 
 People keep asking on how to migrate data from other cloud storage to Infinite Scale.
 
@@ -40,11 +30,12 @@ For the next step, you need the user credentials on both the source- and the des
 
 == Configure rclone Remotes
 
-To be able to address the clouds in rclone, you need to configure so called _remotes_. It is nothing else than a shortcut for the combination of
-- which kind of cloud are you talking to
-- the URL
-- the username
-- the password, if one is set
+To be able to address the clouds in rclone, you need to configure so called _remotes_. It is nothing else than a shortcut for the combination of:
+
+* which kind of cloud are you talking to
+* the URL
+* the username
+* the password, if one is set
 
 You need to add a configuration for both the source cloud (Nextcloud) and the target (Infinite Scale). As both talk WebDAV, the link:https://rclone.org/webdav/[rclone manual page] is accurate to follow.
 
@@ -54,7 +45,7 @@ Once that is finished, the command `rclone config show` should give output simil
 
 [source,bash]
 ----
-[:~/] ± rclone config show
+rclone config show
 
 [NCoC]
 type = webdav
@@ -69,7 +60,6 @@ url = https://infinitescale.works/remote.php/webdav
 vendor = owncloud
 user = wilma
 pass = cdsfasrefdsadaGkxTXjksfpqQFI5nQawqs
-
 ----
 
 Now, for example the directories on the Nextcloud root can be checked with `rclone lsd NCoC:/`.
@@ -77,13 +67,17 @@ Now, for example the directories on the Nextcloud root can be checked with `rclo
 == Copy Data
 
 To migrate the data, rclone provides the command `copy`. It transfers data from one remote to the other. Use the following command example to transfer the entire cloud data from Nextcloud to Infinite Scale:
+
+[source,bash]
 ----
 rclone  copy NCoC:/ ocis:/ --no-check-certificate -P
 ----
-The --no-check-certificate can and should be skipped if your clouds have proper certificates. The `-P` however, provides you with interesting statistics about the copy progress.
-Once you are finished, this might be the result:
+
+The `--no-check-certificate` can and should be skipped if your clouds have proper certificates. The `-P` however, provides you with interesting statistics about the copy progress. Once you are finished, this might be the result:
+
+[source,bash]
 ----
-[:~/] $ rclone copy NCoC:/ ocis:/ --no-check-certificate -P
+rclone copy NCoC:/ ocis:/ --no-check-certificate -P
 Transferred:        1.228 GiB / 1.228 GiB, 100%, 10.170 MiB/s, ETA 0s
 Transferred:          411 / 411, 100%
 Elapsed time:      2m19.3s
@@ -96,14 +90,11 @@ Note that while testing this, occasionally the Nextcloud was returning a `404 no
 All done! Now you have your data on Infinite Scale.
 
 Obviously this method has a few downsides, such as:
-- This migration requires a little of "quiet time" for migrating data.
-- It is a user by user method where provisioning of users has to be done manually.
-- Only data is migrated, and there is probably a data size limit in real life using this way.
-- Private- and public shares are not migrated
-- The trashbin, versions, comments and favorites are not migrated
+
+* This migration requires a little of "quiet time" for migrating data.
+* It is a user by user method where provisioning of users has to be done manually.
+* Only data is migrated, and there is probably a data size limit in real life using this way.
+* Private- and public shares are not migrated
+* The trashbin, versions, comments and favorites are not migrated
 
 These are shortcomings but this is a good first step to start investigating. The other parts will be sorted as we move along.
-
-'''
-To improve this guide, you are welcome to file an issue or even send a pull request. See the link:https://owncloud.dev/ocis/development/build-docs/[getting started guide] how easy it is to build the documentation.
-

@@ -2,15 +2,14 @@
 :toc: right
 :toclevels: 3
 
-
 == Prerequisites
 
 - Local docker installation (e.g. Docker for Desktop)
-- Check xref:ocis-and-containers.adoc[oCIS and Containers]
+- Check xref:ocis/guides/ocis-and-containers.adoc[oCIS and Containers]
 
-== Start oCIS with docker compose
+== Start oCIS with Docker Compose
 
-=== Create the project
+=== Create the Project
 
 Use the following skeleton as a docker-compose.yml:
 
@@ -50,7 +49,6 @@ Create directories if not exists:
 mkdir -p $(pwd)/ocis-config \
 mkdir -p $(pwd)/ocis-data
 ----
-
 
 Set the user for the directories to be the same as the user inside the container:
 
@@ -150,14 +148,15 @@ thumbnails:
     cs3_allow_insecure: false
 ----
 
-// SHORTCODE: {{< hint type=tip title="Admin password" >}}
-_Password initialisation_\
+[TIP]
+====
+_Password initialisation_: +
 During the run of `./ocis init`, the password for the `admin` user has been set to a random string.
 
 You can override that later by setting `IDM_ADMIN_PASSWORD=secret`. The ENV variable setting always overrides the config file.
-// SHORTCODE: {{< /hint >}}
+====
 
-=== Mount the config file
+=== Mount the Config File
 
 Add the config file as a bind mount.
 
@@ -168,7 +167,7 @@ Add the config file as a bind mount.
       - "./ocis.yaml:/etc/ocis/ocis.yaml"
 ----
 
-=== Apply the changes
+=== Apply the Changes
 
 [source,bash]
 ----
@@ -184,7 +183,7 @@ NAME                 COMMAND                  SERVICE             STATUS        
 simple-ocis-ocis-1   "/usr/bin/ocis server"   ocis                running             9200/tcp
 ----
 
-=== Open the port 9200 to the outside
+=== Open the Port 9200 to the Outside
 
 [source,yaml]
 ----
@@ -196,18 +195,19 @@ Add a port mapping to your docker compose file and run `docker compose up -d` ag
 
 Congratulations! You have successfully set up a simple Infinite Scale locally.
 
-// SHORTCODE: {{< hint type=tip title="Docker Compose Helps you" >}}
-_docker compose up_\
+[TIP]
+====
+_docker compose up_ +
 You do not need to shut down your service to apply changes from the docker-compose.yml file. Running `docker compose up -d` again is enough. Docker compose always tries to bring all services to the desired state.
 
-_docker compose ps_\
+_docker compose ps_ +
 This gives you a status of the services of the project.
 
-_docker compose exec \<service name\> \<command\>_\
+_docker compose exec \<service name\> \<command\>_ +
 This command is handy to run specific commands inside your service. Try `docker compose exec ocis ocis version`.
-// SHORTCODE: {{< /hint >}}
+====
 
-=== Persist data, restart and logging
+=== Persist Data, Restart and Logging
 
 The key to a successful container setup is the persistence of the application data to make the data survive a re-boot. Docker normally uses link:https://docs.docker.com/storage/volumes/[volumes] for this purpose. A volume can either be a "named volume" which are completely managed by docker and have many advantages (see the linked docker documentation), or "bind mounts" which are using the directory structure and OS of the host system. In our example we already use a bind mount for the config file. We will now add a named volume for the oCIS data directory.
 
@@ -265,7 +265,7 @@ Now you have an oCIS which will survive reboots, restart automatically and has l
 
 Access the logs via `docker compose logs -f` and do some actions in the frontend to see the effect. Create data by uploading files and adding more users. Then run `docker compose down` to shut oCIS down. Start it again `docker compose up -d`, log in again and check that your data has survived the reboot.
 
-=== Pin the oCIS version
+=== Pin the oCIS Version
 
 Last but not least, it is never a good idea to use the `latest` docker tag. Pin your container image to a released version.
 
@@ -280,11 +280,10 @@ Last but not least, it is never a good idea to use the `latest` docker tag. Pin 
     # see also https://docs.docker.com/engine/reference/commandline/images/#list-image-digests
 ----
 
-== Wrapping up
+== Wrapping Up
 
 If you have completed this guide, your docker-compose.yml should look like the following example:
 
-// SHORTCODE: {{< expand "Solution" "..." >}}
 [source,yaml]
 ----
 version: "3.7"
@@ -341,4 +340,3 @@ services:
 volumes:
   ocis-data:
 ----
-// SHORTCODE: {{< /expand >}}
