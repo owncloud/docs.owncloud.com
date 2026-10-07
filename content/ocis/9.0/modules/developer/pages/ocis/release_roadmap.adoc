@@ -4,102 +4,91 @@
 
 This page is designed to provide clarity and transparency regarding the scheduling, nature, and support of our releases, ensuring you have all the information you need to stay updated and manage your deployments effectively. Find here an overview of our plans for future enhancements and features: link:https://owncloud.com/roadmap[owncloud.com/roadmap]
 
-////
 == Release Types
 
-THIS AND THE FOLLOWING SECTIONS NEED CONTENT UPDATES
+ownCloud Infinite Scale is released in two different release types: _Production_ and _Rolling_. Each of them is targeted to a specific use case and audience group:
 
-ownCloud Infinite Scale is released in three different release types: _Production_, _Rolling_ and _Daily_. Each of them is targeted to a specific use case and audience group:
+[NOTE]
+====
+link:https://hub.docker.com/r/owncloud/ocis[Production]
 
-// SHORTCODE: {{< hint type=tip title=Production >}}
-- Stable and tested release, suitable for critical data.
-- Slow cycle, but most stable with slow feature additions.
-- Patch releases are provided for critical- and security-bugs as defined by ownCloud support regulations.
-// SHORTCODE: {{< /hint >}}
+* Stable and fully tested release using automated and manual tests, suitable for critical data.
+* Slow cycle, but most stable with slow feature additions.
+* Patch releases are provided for critical- and security-bugs as defined by ownCloud support regulations.
+====
 
-// SHORTCODE: {{< hint title=Rolling icon=gdoc_check >}}
-- Chances are high that some manual testing has happened, yet not structured.
-- Features are mostly completed. An upgrade path from the previous rolling release is provided and tested. Great release to use with non critical data.
-- Critical bugs are guaranteed to be fixed with the next rolling release.
-// SHORTCODE: {{< /hint >}}
+[NOTE]
+====
+link:https://hub.docker.com/r/owncloud/ocis-rolling[Rolling]
 
-// SHORTCODE: {{< hint type=important title=Daily >}}
-- Mainly for test use cases. As the releases are done completely unattended, only the automatic test suite has tested the release. Manual testing was only applied by chance.
-- Based on ownClouds strong test suite the daily releases are pretty stable, but the risk of unfinished changes is high.
-- For example, if a feature requires three commits, and only one was committed, the daily is cut anyway.{{< /columns >}}
-// SHORTCODE: {{< /hint >}}
+* Automated tests always run. Some manual testing may has happened, yet not structured.
+* Based on oCIS master, a Docker image is created once a day.
+* Features, if added, may not have been fully completed. Upgrading is on own risk and documented upgrade paths such as with production releases are yet not fully tested or provided. Great release to use with non critical data.
+* Critical bugs are guaranteed to be fixed with the next rolling release.
+====
 
-[cols="2,4,3,2",options="header"]
+[cols="2,4,3",options="header"]
 |===
 | Type
 | Production
 | Rolling
-| Daily
 
 | Frequency
 | About every 6 month
-| Every 3 weeks
 | Daily
 
 | Audience
 | Everyone
-| Early adopters
-| Developers
+| Early adopters and Developers
 
 | Risk
 | Low (known) risk
-| Low-medium risk
 | High (unknown) risk
 
 | Support
 | Commercially supported
 | Company support on special agreement with ownCloud
-| Community support
 
 | Documentation
 | Official
-| Moving documentation
 | Moving documentation, engineering output
 
 | Updates
 | Patch releases based on last stable
-| Rolling every three weeks
-| None
+| Daily
 
 | Update path
 | Incremental: from previous production to new production, from last rolling before a production release
-| from previous rolling to new rolling
-| Clean slate
+| From previous rolling to new rolling
 
 | Downgrade
-| No
 | No
 | No
 
 | Service-level agreement (SLA)
 | Yes
 | No
-| No
 
 | Overlapping support
 | Yes
-| No
 | No
 |===
 
 == Documentation
 
-* _Production_ will come with released documentation that is specific for the release. It will remain valid throughout the whole livetime of the release. If patches require documentation changes, addendums will be delivered.
+* *Production* +
+Will come with released documentation that is specific for the release. It will remain valid throughout the whole livetime of the release. If patches require documentation changes, addendums will be delivered.
 
-* _Daily_ and _Rolling_ have access to the documentation as it moves forward in the development process along with the product which will be available on ownClouds web site. There wont be specific releases. Changelog entries, PR comments and similar engineering output can complement the information.
+* *Rolling* +
+Will have access to the documentation as it moves forward in the development process along with the product which will be available on ownClouds web site. There wont be specific releases. Changelog entries, PR comments and similar engineering output can complement the information.
 
 == Updating and Overlap
 
-* _Production_ provides a guaranteed upgrade path from the last Production release, as well as from the previous Rolling release before the new Production. For that, support from ownCloud is required. Upgrades between two Production releases are only supported to tested patch releases provided by ownCloud. In an upgrade process, all released patch releases have to be installed in the correct sequence.
+* *Production* +
+Provides a guaranteed upgrade path from the last Production release, as well as from the previous Rolling release before the new Production. For that, support from ownCloud is required. Upgrades between two Production releases are only supported to tested patch releases provided by ownCloud. In an upgrade process, all released patch releases have to be installed in the correct sequence.
 
-* _Rolling_ is guaranteed to upgrade from the last rolling release or from the previous daily before the new Rolling release. If a critical bug is found in a rolling release, it is guaranteed to be fixed in the next Rolling. There are no backports to the Rolling. In critical cases, an upgrade to a daily release in between has to be done at own risk.
-
-* _Daily_ does not come with any guaranteed update path. Chances are good that updates will go smooth, but that might have hickups in cases where the upgrade code is not finalized in time.
+* *Rolling* +
+Does not come with any guaranteed update path. Chances are good that updates will go smooth, but that might have hickups in cases where the upgrade code is not finalized in time.
 
 Only production gives a reasonable overlap time between releases, for example if version 9 was released, version 8 will still receive a patch release for critical bugs for a reasonable time frame. That time frame will be announced separately and will be aligned with customer needs.
 
@@ -107,13 +96,11 @@ Only production gives a reasonable overlap time between releases, for example if
 
 ownCloud only offers commercial support for _Production_. Rolling might be considered for customer installations in the sales process but always requires an individual agreement between all parties.
 
-_Daily_ and _Rolling_ are supported on best effort provided by community and ownCloud staff. There is _no SLA_ and no guarantee for attention.
+_Rolling_ is supported on best effort provided by community and ownCloud staff. There is _no SLA_ and no guarantee for attention.
 
 As ownCloud understands that the effort taken to report a problem is significant and results benefit all users in the community and ownCloud customers, there are resources available to respectfully work on community issues.
 
 Please consider the link:https://github.com/owncloud/ocis/blob/master/CONTRIBUTING.md[Contribution guidelines] for this.
-
-////
 
 == Versioning Scheme
 

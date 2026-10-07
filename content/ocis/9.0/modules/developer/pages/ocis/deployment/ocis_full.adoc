@@ -39,9 +39,7 @@ The Infinite Scale Team and product management are providing a default setup for
 
 === Important Note
 
-If you deviate from the configuration setup and let the `collaboration` service run in its own container, you MUST
-ensure the ocis configuration is shared as shown in the example deployment. This is because secrets generated
-must be accessible for all services.
+If you deviate from the configuration setup and let the `collaboration` service run in its own container, you MUST ensure the ocis configuration is shared as shown in the example deployment. This is because secrets generated must be accessible for all services.
 
 == Server Deployment
 
@@ -330,6 +328,7 @@ TRAEFIK_DOMAIN=
 # Defaults to user "admin" and password "admin" (written as: "admin:admin").
 TRAEFIK_BASIC_AUTH_USERS=
 ----
+
 === Cloud Importer
 
 Cloud importer can provide an Upload Interface to your oCIS instance. It is a separate service that can be enabled in the `.env` file.

@@ -7,7 +7,7 @@
 
 We have an oCIS demo instance running on link:https://ocis.owncloud.com[ocis.owncloud.com] where you can get a first impression of it.
 
-We also have some more variations of oCIS running and xref:../deployment/continuous_deployment.adoc[continuously deployed] to reflect different scenarios in that oCIS might be used.
+We also have some more variations of oCIS running and xref:ocis/deployment/continuous_deployment.adoc[continuously deployed] to reflect different scenarios in that oCIS might be used.
 
 == Run oCIS
 
@@ -16,12 +16,11 @@ We are distributing oCIS as binaries and Docker images.
 [WARNING]
 ====
 The examples in this document assume that oCIS is accessed from the same host as it is running on (`localhost`). If you would like
-to access oCIS remotely please refer to the xref:../deployment/basic-remote-setup.adoc[Basic Remote Setup] section. Especially
+to access oCIS remotely please refer to the xref:ocis/deployment/basic-remote-setup.adoc[Basic Remote Setup] section. Especially
 to the notes about setting the `PROXY_HTTP_ADDR` and `OCIS_URL` environment variables.
 ====
 
-
-You can find more deployment examples in the xref:../deployment.adoc[deployment section].
+You can find more deployment examples in the xref:ocis/deployment/index.adoc[deployment overview] documentaion.
 
 === Binaries
 
@@ -53,12 +52,10 @@ The default primary storage location is `~/.ocis` or `/var/lib/ocis` depending o
 When you're using oCIS with self-signed certificates, you need to answer the question for certificate checking with "yes" or set the environment variable `OCIS_INSECURE=true`, in order to make oCIS work.
 ====
 
-
 [WARNING]
 ====
 oCIS by default relies on Multicast DNS (mDNS), usually via avahi-daemon. If your system has a firewall, make sure mDNS is allowed in your active zone.
 ====
-
 
 [WARNING]
 ====
@@ -68,7 +65,6 @@ oCIS by default relies on Multicast DNS (mDNS), usually via avahi-daemon. If you
 The start command `./ocis server` starts a runtime which runs all oCIS services in one process. On MacOS we have very low limits for open files. oCIS needs more than the default 256. Please raise the limit to 1024 by typing `ulimit -n 1024` within the same cli session where you start ocis from.
 ====
 
-
 === Docker
 
 Docker images for oCIS are available on link:https://hub.docker.com/r/owncloud/ocis[Docker Hub].
@@ -77,7 +73,7 @@ The `latest` tag always reflects the current master branch.
 
 [source,console]
 ----
-docker pull owncloud/ocis
+docker pull owncloud/ocis-rolling
 docker run --rm -it -v ocis-config:/etc/ocis owncloud/ocis init
 docker run --rm -p 9200:9200 -v ocis-config:/etc/ocis -v ocis-data:/var/lib/ocis -e IDM_CREATE_DEMO_USERS=true owncloud/ocis
 ----
@@ -87,12 +83,10 @@ docker run --rm -p 9200:9200 -v ocis-config:/etc/ocis -v ocis-data:/var/lib/ocis
 When you're using oCIS with self-signed certificates, you need to set the environment variable `OCIS_INSECURE=true`, in order to make oCIS work.
 ====
 
-
 [NOTE]
 ====
 When you're creating the xref:./demo-users.adoc[demo users] by setting `IDM_CREATE_DEMO_USERS=true`, you need to be sure that this instance is not used in production because the passwords are public.
 ====
-
 
 [WARNING]
 ====
@@ -101,36 +95,47 @@ We are using named volumes for the oCIS configuration and oCIS data in the above
 You cannot use bind mounts on MacOS, since extended attributes are not supported (link:https://github.com/owncloud/ocis/issues/182[owncloud/ocis#182], link:https://github.com/moby/moby/issues/1070[moby/moby#1070]).
 ====
 
-
 == Usage
 
 === Login to ownCloud Web
 
-Open link:https://localhost:9200[https://localhost:9200] and xref:./demo-users.adoc[login using one of the demo accounts].
+Open \https://localhost:9200 and xref:ocis/getting-started/demo-users.adoc[login using one of the demo accounts].
 
 === Basic Management Commands
 
-The oCIS single binary contains multiple extensions and the `ocis` command helps you to manage them. You already used `ocis server` to run all available extensions in the xref:#run-ocis.adoc[Run oCIS] section. We now will show you some more management commands, which you may also explore by typing `ocis --help` or going to the xref:../config.adoc[docs].
+The oCIS single binary contains multiple extensions and the `ocis` command helps you to manage them. You already used `ocis server` to run all available extensions in the xref:#run-ocis.adoc[Run oCIS] section. We now will show you some more management commands, which you may also explore by typing `ocis --help` or going to the xref:ocis/config.adoc[docs].
 
 To initialize the oCIS configuration:
 
+[source,bash]
+----
 ocis init
-// SHORTCODE: {{< / highlight >}}
+----
 
 To start oCIS server:
 
+[source,bash]
+----
 ocis server
-// SHORTCODE: {{< / highlight >}}
+----
 
 The list command prints all running oCIS services.
+
+[source,bash]
+----
 ocis list
-// SHORTCODE: {{< / highlight >}}
+----
 
 The version command prints the version of your installed oCIS.
+
+[source,bash]
+----
 ocis --version
-// SHORTCODE: {{< / highlight >}}
+----
 
 The health command is used to execute a health check, if the exit code equals zero the service should be up and running, if the exit code is greater than zero the service is not in a healthy state. Generally this command is used within our Docker containers, it could also be used within Kubernetes.
 
+[source,bash]
+----
 ocis health --help
-// SHORTCODE: {{< / highlight >}}
+----
