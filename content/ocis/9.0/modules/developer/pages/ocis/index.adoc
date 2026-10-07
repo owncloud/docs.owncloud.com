@@ -2,12 +2,14 @@
 :toc: right
 :toclevels: 3
 
-image::media/is.png[,width=70%]
+image::media/is.png[,width=300]
 
 == ownCloud Infinite Scale
-Welcome to oCIS, the modern file-sync and share platform, which is based on our knowledge and experience with the PHP based link:https://owncloud.com/#server[ownCloud server].
+
+Welcome to oCIS, the modern file-sync and share platform, which is based on our knowledge and experience with the PHP based link:https://owncloud.com/product[ownCloud server].
 
 === The Idea of Federated Storage
+
 To create a truly federated storage architecture oCIS breaks down the old ownCloud 10 user specific namespace, which is assembled on the server side, and makes the individual parts accessible to clients as storage spaces and storage space registries.
 
 The diagram below shows the core concepts that are the foundation for the new architecture:
@@ -54,7 +56,7 @@ A lot of embedded services in oCIS are built upon the link:https://reva.link/[RE
 
 === Protocol Driven Development
 
-Interacting with oCIS involves a multitude af APIs. The server and all clients rely on link:https://openid.net/connect/[OpenID Connect] for authentication. The xref:services/s-list/idp.adoc[embedded LibreGraph Connect] can be replaced with any other OpenID Connect Identity Provider. Clients use the link:http://webdav.org/[WebDAV] based link:https://github.com/cernbox/smashbox/blob/master/protocol/protocol.md[oc sync protocol] to manage files and folders, link:https://doc.owncloud.com/server/developer_manual/core/apis/ocs-share-api.html[ocs to manage shares] and link:https://tus.io/protocols/resumable-upload.html[TUS] to upload files in a resumable way. On the server side link:https://reva.link/[REVA] is the reference implementation of the link:https://github.com/cs3org/cs3apis[CS3 apis] which is defined using link:https://developers.google.com/protocol-buffers/[protobuf]. By embedding link:https://github.com/libregraph/idm[libregraph/idm], oCIS provides a link:https://tools.ietf.org/html/rfc2849[LDAP] interface to make accounts, including guests available to firewalls and other systems. In the future, we are looking into the link:https://docs.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0[Microsoft Graph API], which is based on link:http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html[odata], as a well-defined REST/JSON dialect for the existing endpoints.
+Interacting with oCIS involves a multitude af APIs. The server and all clients rely on link:https://openid.net/connect/[OpenID Connect] for authentication. The xref:{dev-s-path}/idp.adoc[embedded LibreGraph Connect] can be replaced with any other OpenID Connect Identity Provider. Clients use the link:http://webdav.org/[WebDAV] based link:https://github.com/cernbox/smashbox/blob/master/protocol/protocol.md[oc sync protocol] to manage files and folders, link:https://doc.owncloud.com/server/developer_manual/core/apis/ocs-share-api.html[ocs to manage shares] and link:https://tus.io/protocols/resumable-upload.html[TUS] to upload files in a resumable way. On the server side link:https://reva.link/[REVA] is the reference implementation of the link:https://github.com/cs3org/cs3apis[CS3 apis] which is defined using link:https://developers.google.com/protocol-buffers/[protobuf]. By embedding link:https://github.com/libregraph/idm[libregraph/idm], oCIS provides a link:https://tools.ietf.org/html/rfc2849[LDAP] interface to make accounts, including guests available to firewalls and other systems. In the future, we are looking into the link:https://docs.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0[Microsoft Graph API], which is based on link:http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html[odata], as a well-defined REST/JSON dialect for the existing endpoints.
 
 === Acceptance Test Suite
 

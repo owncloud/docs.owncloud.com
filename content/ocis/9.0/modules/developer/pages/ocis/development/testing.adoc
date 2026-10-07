@@ -2,13 +2,12 @@
 :toc: right
 :toclevels: 3
 
-
 To run tests in the test suite you have two options. You may go the easy way and just run the test suite in docker. But for some tasks you could also need to install the test suite natively, which requires a little more setup since PHP and some dependencies need to be installed.
+
 [NOTE]
 ====
 To run the tests PHP version ">= 8.2.0" is required.
 ====
-
 
 Both ways to run tests with the test suites are described here.
 
@@ -23,8 +22,8 @@ make -C tests/acceptance/docker help
 
 Basically we have two sources for feature tests and test suites:
 
-- link:https://github.com/owncloud/ocis/tree/master/tests/acceptance/features[oCIS feature test and test suites]
-- link:https://github.com/owncloud/ocis/tree/master/tests/acceptance/features[tests and test suites transferred from ownCloud core, they have prefix coreApi]
+* link:https://github.com/owncloud/ocis/tree/master/tests/acceptance/features[oCIS feature test and test suites]
+* link:https://github.com/owncloud/ocis/tree/master/tests/acceptance/features[tests and test suites transferred from ownCloud core, they have prefix coreApi]
 
 At the moment, both can be applied to oCIS since the api of oCIS is designed to be compatible with ownCloud.
 
@@ -32,8 +31,8 @@ As a storage backend, we offer oCIS native storage, also called `ocis`. This sto
 
 You can invoke two types of test suite runs:
 
-- run a full test suite, which consists of multiple feature tests
-- run a single feature or single scenario in a feature
+* run a full test suite, which consists of multiple feature tests
+* run a single feature or single scenario in a feature
 
 === Run Full Test Suite
 
@@ -73,7 +72,6 @@ make -C tests/acceptance/docker test-ocis-feature-ocis-storage
 But some test suites that are tagged with `@env-config` require the oCIS server to be run with ociswrapper. So, running those tests require `WITH_WRAPPER=true` (default setting).
 ====
 
-
 [NOTE]
 ====
 To run the tests that require an email server (tests tagged with `@email`), you need to provide `START_EMAIL=true` while running the tests.
@@ -85,9 +83,7 @@ OCIS_ADD_RUN_SERVICES=notifications \
 BEHAT_FEATURE='tests/acceptance/features/apiNotification/notification.feature' \
 make -C tests/acceptance/docker test-ocis-feature-ocis-storage
 ----
-
 ====
-
 
 [NOTE]
 ====
@@ -99,9 +95,7 @@ START_TIKA=true \
 BEHAT_FEATURE='tests/acceptance/features/apiSearchContent/contentSearch.feature' \
 make -C tests/acceptance/docker test-ocis-feature-ocis-storage
 ----
-
 ====
-
 
 [NOTE]
 ====
@@ -116,9 +110,7 @@ POSTPROCESSING_STEPS=virusscan \
 BEHAT_FEATURE='tests/acceptance/features/apiAntivirus/antivirus.feature' \
 make -C tests/acceptance/docker test-ocis-feature-ocis-storage
 ----
-
 ====
-
 
 ==== Tests Transferred From ownCloud Core (prefix `coreApi`)
 
@@ -150,7 +142,6 @@ And to run a single scenario in a feature, you can do:
 ====
 A specific scenario from a feature can be run by adding `:<line-number>` at the end of the feature file path. For example, to run the scenario at line 26 of the feature file `apiGraphUser/createUser.feature`, simply add the line number like this: `apiGraphUser/createUser.feature:26`. Note that the line numbers mentioned in the examples might not always point to a scenario, so always check the line numbers before running the test.
 ====
-
 
 [source,bash]
 ----
@@ -189,7 +180,6 @@ make -C tests/acceptance/docker test-core-feature-ocis-storage
 The test suites transferred from ownCloud core have `coreApi` prefixed
 ====
 
-
 === oCIS Image to Be Tested (Skip Local Image Build)
 
 By default, the tests will be run against the docker image built from your current working state of the oCIS repository. For some purposes it might also be handy to use an oCIS image from Docker Hub. Therefore, you can provide the optional flag `OCIS_IMAGE_TAG=...` which must contain an available docker tag of the link:https://hub.docker.com/r/owncloud/ocis[owncloud/ocis registry on Docker Hub] (e.g. 'latest').
@@ -214,7 +204,6 @@ make -C tests/acceptance/docker show-test-logs
 The log output is opened in `less`. You can navigate up and down with your cursors. By pressing "F" you can follow the latest line of the output.
 ====
 
-
 === Cleanup
 
 During testing we start a redis and oCIS docker container. These will not be stopped automatically. You can stop them with:
@@ -228,7 +217,7 @@ make -C tests/acceptance/docker clean
 
 === Run oCIS
 
-Create an up-to-date oCIS binary by xref:build.adoc[building oCIS]
+Create an up-to-date oCIS binary by xref:ocis/development/build.adoc[building oCIS].
 
 To start oCIS:
 
@@ -253,81 +242,50 @@ TEST_SERVER_URL=https://localhost:9200 \
 
 Useful environment variables:
 
-`TEST_SERVER_URL`: oCIS server url. Please, adjust the server url according to your setup.
+* `TEST_SERVER_URL`: +
+oCIS server url. Please, adjust the server url according to your setup.
 
-`BEHAT_FEATURE`: to run a single feature
+* `BEHAT_FEATURE`: +
+To run a single feature
 
 [NOTE]
 ====
 A specific scenario from a feature can be run by adding `:<line-number>` at the end of the feature file path. For example, to run the scenario at line 26 of the feature file `apiGraphUser/createUser.feature`, simply add the line number like this: `apiGraphUser/createUser.feature:26`. Note that the line numbers mentioned in the examples might not always point to a scenario, so always check the line numbers before running the test.
 ====
 
-
-[quote]
-____
-Example:
-____
-
->
-[quote]
-____
+.Example:
+[source,bash]
+----
 BEHAT_FEATURE=tests/acceptance/features/apiGraphUser/createUser.feature
-____
 
->
-[quote]
-____
 Or
-____
 
->
-[quote]
-____
 BEHAT_FEATURE=tests/acceptance/features/apiGraphUser/createUser.feature:13
-____
-
+----
 
 `BEHAT_SUITE`: to run a single suite
 
-[quote]
-____
-Example:
-____
-
->
-[quote]
-____
+.Example:
+[source,bash]
+----
 BEHAT_SUITE=apiGraph
-____
-
+----
 
 `STORAGE_DRIVER`: to run tests with a different user storage driver. Available options are `ocis` (default), `owncloudsql` and `s3ng`
 
-[quote]
-____
-Example:
-____
-
->
-[quote]
-____
+.Example:
+[source,bash]
+----
 STORAGE_DRIVER=owncloudsql
-____
-
+----
 
 `STOP_ON_FAILURE`: to stop running tests after the first failure
 
-[quote]
-____
-Example:
-____
-
->
-[quote]
-____
+.Example:
+[source,bash]
+----
 STOP_ON_FAILURE=true
-____
-
+----
 
 === Use Existing Tests for BDD
 
@@ -339,24 +297,22 @@ expected failures. If there are any differences then the CI pipeline fails.
 
 The tests are not currently run in CI with the OWNCLOUD or EOS storage drivers, so there are no expected-failures files for those.
 
-If you want to work on a specific issue
+If you want to work on a specific issue:
 
-1. locally run each of the tests marked with that issue in the expected failures file.
+. Locally run each of the tests marked with that issue in the expected failures file, e.g.: +
+[source,bash]
+----
+make test-acceptance-api \
+TEST_SERVER_URL=https://localhost:9200 \
+STORAGE_DRIVER=OCIS \
+BEHAT_FEATURE='tests/acceptance/features/coreApiVersions/fileVersions.feature:141'
+----
 
-   E.g.:
-
-   ```bash
-   make test-acceptance-api \
-   TEST_SERVER_URL=https://localhost:9200 \
-   STORAGE_DRIVER=OCIS \
-   BEHAT_FEATURE='tests/acceptance/features/coreApiVersions/fileVersions.feature:141'
-   ```
-
-2. the tests will fail, try to understand how and why they are failing
-3. fix the code
-4. go back to 1. and repeat till the tests are passing.
-5. remove those tests from the expected failures file
-6. make a PR that has the fixed code, and the relevant lines removed from the expected failures file.
+. The tests will fail, try to understand how and why they are failing
+. Fix the code
+. Go back to 1. and repeat till the tests are passing.
+. Remove those tests from the expected failures file
+. Make a PR that has the fixed code, and the relevant lines removed from the expected failures file.
 
 == Running Tests With And Without `remote.php`
 
@@ -406,9 +362,9 @@ make test-acceptance-api
 
 While writing tests for a new oCIS ENV configuration, please make sure to follow these guidelines:
 
-1. Tag the test suite (or test scenarios) with `@env-config`
-2. Use `OcisConfigHelper.php` for helper functions - provides functions to reconfigure the running oCIS instance.
-3. Recommended: add the new step implementations in `OcisConfigContext.php`
+. Tag the test suite (or test scenarios) with `@env-config`
+. Use `OcisConfigHelper.php` for helper functions - provides functions to reconfigure the running oCIS instance.
+. Recommended: add the new step implementations in `OcisConfigContext.php`
 
 == Running Test Suite With Email Service (@email)
 
@@ -425,7 +381,7 @@ docker run -d --restart unless-stopped --name=mailpit -p 8025:8025 -p 1025:1025 
 
 === Run oCIS
 
-Documentation for environment variables is available link:https://owncloud.dev/services/notifications/#environment-variables[here]
+Documentation for environment variables is available xref:{dev-s-path}/notifications/index.adoc[here]
 
 [source,bash]
 ----
@@ -471,7 +427,7 @@ docker run -d -p 127.0.0.1:9998:9998 apache/tika
 
 === Run oCIS
 
-Documentation related to the content based search and tika extractor can be found link:https://doc.owncloud.com/ocis/next/deployment/services/s-list/search.html#content-extraction[here]
+Documentation related to the content based search and tika extractor can be found xref:admin:{s-path}/search.adoc#content-extraction[here].
 
 [source,bash]
 ----
@@ -501,7 +457,7 @@ make test-acceptance-api
 
 == Running Test Suite With Antivirus Service (@antivirus)
 
-Test suites that are tagged with `@antivirus` require antivirus service. The available antivirus and the configuration related to them can be found link:https://doc.owncloud.com/ocis/next/deployment/services/s-list/antivirus.html[here]. This documentation is only going to use `clamAv` as antivirus.
+Test suites that are tagged with `@antivirus` require antivirus service. The available antivirus and the configuration related to them can be found xref:admin:{s-path}/antivirus.adoc[here]. This documentation is only going to use `clamAv` as antivirus.
 
 === Setup clamAV
 
@@ -527,7 +483,6 @@ sudo service clamav-daemon status
 ====
 The commands are ubuntu specific and may differ according to your system. You can find information related to installation of clamAV in their official documentation link:https://docs.clamav.net/manual/Installing/Packages.html[here].
 ====
-
 
 ===== Mac OS User
 
@@ -586,7 +541,6 @@ For antivirus running localy on Mac OS, use `ANTIVIRUS_CLAMAV_SOCKET= "/tmp/clam
 For antivirus running with docker, use `ANTIVIRUS_CLAMAV_SOCKET= "tcp://host.docker.internal:3310"`
 ====
 
-
 ==== Run the Acceptance Test
 
 Run the acceptance test with the following command:
@@ -600,7 +554,7 @@ make test-acceptance-api
 
 == Running Test Suite With Federated Sharing (@ocm)
 
-Test suites that are tagged with `@ocm` require running two different ocis instances. More detailed information and configuration related to it can be found link:https://doc.owncloud.com/ocis/5.0/deployment/services/s-list/ocm.html[here].
+Test suites that are tagged with `@ocm` require running two different ocis instances. More detailed information and configuration related to it can be found xref:adoc:{s-path}/ocm.adoc[here].
 
 === Setup First oCIS Instance
 
@@ -649,10 +603,13 @@ The second oCIS instance should be available at: <https://localhost:10200/>
 [NOTE]
 ====
 To enable ocm in the web interface, you need to set the following envs:
-`OCIS_ENABLE_OCM="true"`
-`OCIS_ADD_RUN_SERVICES="ocm"`
-====
 
+[source,bash]
+----
+OCIS_ENABLE_OCM="true"
+OCIS_ADD_RUN_SERVICES="ocm"
+----
+====
 
 ==== Run the Acceptance Test
 
@@ -694,21 +651,21 @@ Refer to the xref:../../../tests/config/k8s/README.adoc[Running API Tests in Kub
 
 To find out what oCIS code is covered by the API tests, first create a debug build of oCIS.
 
-[source,shell]
+[source,bash]
 ----
 make -c ocis build-debug
 ----
 
 oCIS should be served by the debug binary.
 
-[source,shell]
+[source,bash]
 ----
 ocis/bin/ocis-debug server
 ----
 
 Then define a folder to store the coverage report.
 
-[source,shell]
+[source,bash]
 ----
 export GOCOVERDIR=coveragedatafiles
 ----
@@ -717,12 +674,14 @@ Running the tests will generate the coverage report inside the `coveragedatafile
 
 To view the report in human readable form, enter the following command or refer to the official link:https://go.dev/doc/build-cover#working[documentation] for more formats.
 
+[source,bash]
 ----
 go tool covdata textfmt -i=coveragedatafiles -o=cov.txt
 ----
 
 You can also view the report in a web UI using the following command.
 
+[source,bash]
 ----
 go tool cover -html=cov.txt
 ----
