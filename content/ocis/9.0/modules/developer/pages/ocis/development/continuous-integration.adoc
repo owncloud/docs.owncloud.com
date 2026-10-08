@@ -11,7 +11,7 @@ The pipeline is defined in link:https://github.com/bazelbuild/starlark[Starlark]
 
 Upon running the pipeline, your branch gets merged to the master branch. This ensures that we always test your changeset if as it was applied to the master of oCIS. Please note that this does not apply to the pipeline definition (`.drone.star`).
 
-== Things done in CI
+== Things Done in CI
 
 - static code analysis
 - linting
@@ -21,7 +21,7 @@ Upon running the pipeline, your branch gets merged to the master branch. This en
 - build and release binaries
 - build and release documentation
 
-== Flags in commit message and PR title
+== Flags in Commit Message and PR Title
 
 You may add flags to your commit message or PR title in order to speed up pipeline runs and take load from the CI runners.
 
@@ -29,7 +29,7 @@ You may add flags to your commit message or PR title in order to speed up pipeli
 
 - `[full-ci]`: deactivates the fail early mechanism and runs all available test (as default only smoke tests are run)
 
-=== Knowledge base
+=== Knowledge Base
 
 - My pipeline fails because some CI related files or commands are missing.
 

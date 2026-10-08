@@ -7,11 +7,11 @@ As a single binary for easy deployment running `ocis server` just forks itself t
 
 Ultimately, we want to be able to stop a single service using e.g. `ocis kill web` so that you can start the service you want to debug in debug mode. We need to link:https://github.com/owncloud/ocis/issues/77[change the way we fork processes] though, otherwise the runtime will automatically restart a service if killed.
 
-=== Start ocis
+=== Start oCIS
 
 For debugging there are two workflows that work well, depending on your preferences.
 
-==== Use the debug binary and attach to the process as needed
+==== Use the Debug Binary and Attach to the Process as Needed
 
 Run the debug binary with `OCIS_LOG_LEVEL=debug bin/ocis-debug server` and then find the service you want to debug using:
 
@@ -61,7 +61,7 @@ Then you can set a breakpoint in the service you need and attach to the process 
 }
 ----
 
-==== Start all Services Independently to Replace one of Them With a Debug Process
+==== Start All Services Independently to Replace One of Them with a Debug Process
 
 . You can use this `./ocis.sh` script to start all services independently, so they don't get restarted by the runtime when you kill them:
 +
@@ -133,7 +133,7 @@ kill 17628
 
 . Start the service you are interested in debug mode. When using make to build the binary there is already a `bin/ocis-debug` binary for you. When running an IDE tell it which service to start by providing the corresponding sub command, e.g. `bin\ocis-debug reva-frontend`.
 
-=== Debugging the ocis in a Docker Container
+=== Debugging the oCIS in a Docker Container
 
 Remote debugging is the debug mode commonly used to work with a debugger and target running on a remote machine or a container for example a wopi stack `deployments/examples/ocis_full/docker-compose.yml`. Docker compose lets us define a compose application model through multiple compose files. When doing so, compose follows certain rules to merge compose files. See link:https://docs.docker.com/compose/compose-file/13-merge/[Merge and override] in the Compose Specification. Based on this rules, we added the extra files `deployments/examples/ocis_full/debug-ocis.yml`, `deployments/examples/ocis_full/debug-collaboration-collabora.yml`, `deployments/examples/ocis_full/debug-collaboration-onlyoffice.yml` that overwrites the `command` attribute and extends the `ports` attribute.
 Below we describe the steps how to build the image, run the docker-compose and connect via remote debugger.
@@ -203,7 +203,7 @@ docker compose -f docker-compose.yml -f ocis.yml -f collabora.yml -f debug-ocis.
 
 * For the Jetbrains Goland add the configuration following the docs link:https://www.jetbrains.com/help/go/go-remote.html[https://www.jetbrains.com/help/go/go-remote.html]
 
-=== Gather error messages
+=== Gather Error Messages
 
 We recommend you collect all related information in a single file or in a GitHub issue. Let us start with an error that pops up in the Web UI:
 

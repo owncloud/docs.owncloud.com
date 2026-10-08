@@ -23,21 +23,21 @@ From the users perspective, the interface to search is just a single form field 
 
 == Considered Options
 
-* <<keyword_query_language,KQL - Keyword Query Language>>
-* <<simplified_query,Simple Query>>
-* <<lucene_query_language,Lucene Query Language>>
-* <<solr_query_language,Solr Query Language>>
-* <<elasticsearch_query_language,Elasticsearch Query Language>>
+* xref:#keyword_query_language[KQL - Keyword Query Language]
+* xref:#simplified_query[Simple Query]
+* xref:#lucene_query_language[Lucene Query Language]
+* xref:#solr_query_language[Solr Query Language]
+* xref:#elasticsearch_query_language[Elasticsearch Query Language]
 
 == Decision Outcome
 
-Chosen option: <<keyword_query_language,KQL - Keyword Query Language>>, because it enables advanced search across all platforms.
+Chosen option: xref:#keyword_query_language[KQL - Keyword Query Language], because it enables advanced search across all platforms.
 
 === Positive Consequences
 
 * We can use the same query language in all clients
 
-=== Negative consequences
+=== Negative Consequences
 
 * We need to build and maintain a backend connector
 
@@ -96,8 +96,8 @@ Elasticsearch provides a full Query DSL (Domain Specific Language) based on JSON
 
 == Links
 
-* xref:0018-file-search-api.adoc[Search API]
-* xref:0019-file-search-index.adoc[Search Indexing]
+* xref:ocis/adr/0018-file-search-api.adoc[Search API]
+* xref:ocis/adr/0019-file-search-index.adoc[Search Indexing]
 * link:https://learn.microsoft.com/en-us/sharepoint/dev/general-development/keyword-query-language-kql-syntax-reference[KQL]
 * link:https://lucene.apache.org/[Apache Lucene]
 * link:https://solr.apache.org/[Apache Solr]

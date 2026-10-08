@@ -12,38 +12,42 @@ In an environment where shipping a single binary makes it easier for the end use
 
 == Decision Drivers
 
-- Start oCIS microservices with a single command (`ocis server`).
-- Clear separation of concerns between services.
-- Control the lifecycle of the running services.
-- Services can be distributed across multiple machines and still be controllable somehow.
+* Start oCIS microservices with a single command (`ocis server`).
+* Clear separation of concerns between services.
+* Control the lifecycle of the running services.
+* Services can be distributed across multiple machines and still be controllable somehow.
 
 == Considered Options
 
-1.The use of frameworks such as:
-  - asim/go-micro
-  - go-kit/kit
-2. Build and synchronize all services in-house.
-3. A hybrid solution between framework and in-house.
+. The use of frameworks such as:
+** asim/go-micro
+** go-kit/kit
+
+. Build and synchronize all services in-house.
+. A hybrid solution between framework and in-house.
 
 == Options
 
 === go-kit/kit
 
 Pros
-- Large community behind
-- The creator is a maintainer of Go, so the code quality is quite high.
+
+* Large community behind
+* The creator is a maintainer of Go, so the code quality is quite high.
 
 Cons
-- Too verbose. Ultimately too slow to make progress.
-- Implementing a service would require defining interfaces and a lot of boilerplate.
+
+* Too verbose. Ultimately too slow to make progress.
+* Implementing a service would require defining interfaces and a lot of boilerplate.
 
 === asim/go-micro
 
 Pros
-- Implementation based in swappable interfaces.
-- Multiple implementations, either in-memory or through external services
-- Production ready
-- Good compromise between high and low level code.
+
+* Implementation based in swappable interfaces.
+* Multiple implementations, either in-memory or through external services
+* Production ready
+* Good compromise between high and low level code.
 
 == Decision Outcome
 
@@ -51,7 +55,7 @@ Number 3: A hybrid solution between framework and in-house.
 
 === Design
 
-image::ocis/runtime.drawio.svg[]
+image::ocis/adr/runtime.drawio.svg[]
 
 First of, every ocis service IS a go-micro service, and because go-micro makes use of urfave/cli, a service can be conveniently wrapped inside a subcommand. Writing a supervisor is then a choice. We do use a supervisor to ensure long-running processes and embrace the "let it crash" mentality. The piece we use for this end is called link:https://github.com/thejerf/suture[Suture].
 

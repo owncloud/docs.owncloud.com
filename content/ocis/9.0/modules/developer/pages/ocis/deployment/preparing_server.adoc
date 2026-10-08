@@ -4,9 +4,7 @@
 
 == Example for Hetzner Cloud
 
-* create server on Hetzner Cloud. Set labels "owner" and "for". Example for hcloud cli:
-+
---
+* create server on Hetzner Cloud. Set labels "owner" and "for". Example for hcloud cli: +
 [source,bash]
 ----
 hcloud server create --type cx21 --image ubuntu-20.04 --ssh-key admin --name ocis-server --label owner=admin --label for=testing
@@ -16,51 +14,44 @@ hcloud server create --type cx21 --image ubuntu-20.04 --ssh-key admin --name oci
 
 * Access server via ssh as root
 
-* Create a new user
-+
+* Create a new user +
 [source,bash]
 ----
 adduser --disabled-password --gecos "" admin`
 ----
 
-* Add user to sudo group
-+
+* Add user to sudo group +
 [source,bash]
 ----
 usermod -aG sudo admin
 ----
 
-* Install docker
-+
+* Install docker +
 [source,bash]
 ----
 apt update
 apt install docker.io
 ----
 
-* Add user to docker group
-+
+* Add user to docker group +
 [source,bash]
 ----
 usermod -aG docker admin
 ----
 
-* Install docker-compose via
-+
+* Install docker-compose via +
 [source,bash]
 ----
 curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 ----
 
-* Make docker-compose executable
-+
+* Make docker-compose executable +
 [source,bash]
 ----
 chmod +x /usr/local/bin/docker-compose
 ----
 
-* Add users pub key to 
-+
+* Add users pub key to +
 [source,bash]
 ----
 mkdir /home/admin/.ssh
@@ -68,8 +59,7 @@ echo "<pubkey>" >> /home/admin/.ssh/authorized_keys
 chown admin:admin -R /home/admin/.ssh
 ----
 
-* Secure ssh daemon by editing `/etc/ssh/sshd_config`
-+
+* Secure ssh daemon by editing `/etc/ssh/sshd_config` +
 [source,ssh]
 ----
 PermitRootLogin no
@@ -78,8 +68,7 @@ PasswordAuthentication no
 UsePAM no
 ----
 
-* Restart sshd server to apply settings
-+
+* Restart sshd server to apply settings +
 [source,bash]
 ----
 systemctl restart sshd

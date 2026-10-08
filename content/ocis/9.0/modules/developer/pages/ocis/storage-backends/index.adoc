@@ -1,4 +1,4 @@
-= Storage backends
+= Storage Backends
 :toc: right
 :toclevels: 3
 

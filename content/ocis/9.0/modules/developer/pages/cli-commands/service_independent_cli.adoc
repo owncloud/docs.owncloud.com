@@ -7,30 +7,30 @@ This document describes ocis CLI commands that are _service independent_.
 
 For _service dependent_ CLI commands, see the following services:
 
-* xref:../services/auth-app/.adoc[Auth-App]
-* xref:../services/graph/.adoc[Graph]
-* xref:../services/postprocessing/.adoc[Postprocessing]
-* xref:../services/storage-users/.adoc[Storage-Users]
+* xref:{dev-s-path}/auth-app/index.adoc[Auth-App]
+* xref:{dev-s-path}/graph/index.adoc[Graph]
+* xref:{dev-s-path}/postprocessing/index.adoc[Postprocessing]
+* xref:{dev-s-path}/storage-users/index.adoc[Storage-Users]
 
 == Common Parameters
 
 The ocis package offers a variety of CLI commands for monitoring or repairing ocis installations. Most of these commands have common parameters such as:
 
-* `--help` (or `-h`)\
+* `--help` (or `-h`) +
   Use to print all available options.
 
-* `--basePath` (or `-p`)\
-  Needs to point to a storage provider, paths can vary depending on your ocis installation. Example paths are:
-  ```bash
-  .ocis/storage/users          # bare metal installation
-  /var/tmp/ocis/storage/users  # docker installation
-  ...
-  ```
+* `--basePath` (or `-p`) +
+  Needs to point to a storage provider, paths can vary depending on your ocis installation. Example paths are: +
+[source,plaintext]
+----
+/var/tmp/ocis/storage/users  # docker installation
+...
+----
 
-* `--dry-run`\
+* `--dry-run` +
   This parameter, when available, defaults to `true` and must explicitly set to `false`.
 
-* `--verbose` (or `-v`)\
+* `--verbose` (or `-v`) +
   Get a more verbose output.
 
 == List of CLI Commands
@@ -46,24 +46,30 @@ ocis backup consistency -p /base/path/storage/users
 
 This will check the consistency of the storage and output a list of inconsistencies. Inconsistencies can be:
 
-* _Orphaned Blobs_\
+* _Orphaned Blobs_ +
 A blob in the blobstore that is not referenced by any file metadata.
-* _Missing Blobs_\
+
+* _Missing Blobs_ +
 A blob referenced by file metadata that is not present in the blobstore.
-* _Missing Nodes_\
+
+* _Missing Nodes_ +
 A node that is referenced by a symlink but doesn't exist.
-* _Missing Link_\
+
+* _Missing Link_ +
 A node that is not referenced by any symlink but should be.
-* _Missing Files_\
+
+* _Missing Files_ +
 A node that is missing essential files (such as the `.mpk` metadata file).
-* _Missing/Malformed Metadata_\
+
+* _Missing/Malformed Metadata_ +
 A node that doesn't have any (or malformed) metadata.
 
 This command provides additional options:
 
-* `-b` / `--blobstore`\
+* `-b` / `--blobstore` +
 Allows specifying the blobstore to use. Defaults to `ocis`. Empty blobs will not be checked. Can also be switched to `s3ng`, but needs addtional envvar configuration (see the `storage-users` service for more details).
-* `--fail`\
+
+* `--fail` +
 Exits with non-zero exit code if inconsistencies are found. Useful for automation.
 
 === Cleanup Orphaned Grants
@@ -72,10 +78,10 @@ Detect and optionally delete storage grants that have no corresponding share-man
 
 Sharing in ocis relies on two truths. The share manager and the grants. When a share is created, ocis will 
 
-1. Create a grant for the specific file or folder.\
+. Create a grant for the specific file or folder. +
 This grant is _checked when access to the file is requested_.
 
-2. Create an entry in the `created.json`/`received.json` files of the specific user.\
+. Create an entry in the `created.json`/`received.json` files of the specific user. +
 These files are _checked whenever shares are listed_.
 
 The process for creating a share is as follows: first, ocis creates the grant, and then adds the share entry. The reverse order is followed when deleting a share. This means that if the second step fails, the grant will still be present. This can be visually confirmed in the webUI. The webUI details of the "share" section will show an error fetching information for orphan grants.
@@ -94,13 +100,16 @@ ocis shares clean-orphaned-grants \
 ----
 
 Notes:
-- `--dry-run`\
+* `--dry-run` +
 Defaults to `true` (no deletions). Set to `false` to remove orphaned grants.
-- `--space-id`\
+
+* `--space-id` +
 Limit the scan to a specific storage space (opaque ID).
-- `--force`\
+
+* `--force` +
 Force removal of suspected orphans even when listing shares fails.
-- Public links are not touched.
+
+* Public links are not touched.
 
 === Cleanup Orphaned Shares
 
@@ -122,28 +131,89 @@ ocis graph list-unified-roles --output-format md
 
 The output of this command includes the following information for each role:
 
-* `Name`\
-  The human readable name of the role.
-* `UID`\
-  The unique identifier of the role.
-* `Enabled`\
-  Whether the role is enabled or not.
-* `Description`\
-  A short description of the role.
+* `Name` +
+The human readable name of the role.
+
+* `UID` +
+The unique identifier of the role.
+
+* `Enabled` +
+Whether the role is enabled or not.
+
+* `Description` +
+A short description of the role.
+
 * `Condition`
 * `Allowed Resource Actions`
 
 _Example output (shortned)_
 
-| #  |              LABEL               |                 UID                  | ENABLED  |                                     DESCRIPTION                                      |                         CONDITION                         |         ALLOWED RESOURCE ACTIONS         |
-|:--:|:--------------------------------:|:------------------------------------:|:--------:|:------------------------------------------------------------------------------------:|:---------------------------------------------------------:|:----------------------------------------:|
-| 1  |              Viewer              | b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5 | enabled  |                                  View and download.                                  |                   exists @Resource.File                   |     libre.graph/driveItem/path/read      |
-|    |                                  |                                      |          |                                                                                      |                  exists @Resource.Folder                  |     libre.graph/driveItem/quota/read     |
-|    |                                  |                                      |          |                                                                                      |  exists @Resource.File && @Subject.UserType=="Federated"  |    libre.graph/driveItem/content/read    |
-|    |                                  |                                      |          |                                                                                      | exists @Resource.Folder && @Subject.UserType=="Federated" |   libre.graph/driveItem/children/read    |
-|    |                                  |                                      |          |                                                                                      |                                                           |    libre.graph/driveItem/deleted/read    |
-|    |                                  |                                      |          |                                                                                      |                                                           |     libre.graph/driveItem/basic/read     |
-| 2  |         ViewerListGrants         | d5041006-ebb3-4b4a-b6a4-7c180ecfb17d | disabled |                     View, download and show all invite
+[cols="1,2,3,1,3,3,3",options="header"]
+|===
+| #
+| Label
+| UID
+| Enabled
+| Description
+| Condition
+| Allowed Resource Actions
+
+| 1
+| Viewer
+| b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5
+| enabled
+| View and download.
+| exists @Resource.File
+| libre.graph/driveItem/path/read
+
+|
+|
+|
+|
+|
+| exists @Resource.Folder
+| libre.graph/driveItem/quota/read
+
+|
+|
+|
+|
+|
+| exists @Resource.File && @Subject.UserType=="Federated"
+| libre.graph/driveItem/content/read
+
+|
+|
+|
+|
+|
+| exists @Resource.Folder && @Subject.UserType=="Federated"
+| libre.graph/driveItem/children/read
+
+|
+|
+|
+|
+|
+|
+| libre.graph/driveItem/deleted/read
+
+|
+|
+|
+|
+|
+|
+| libre.graph/driveItem/basic/read
+
+| 2
+| ViewerListGrants
+| d5041006-ebb3-4b4a-b6a4-7c180ecfb17d
+| disabled
+| View, download and show all invite
+|
+|
+|===
 
 === Move Stuck Uploads
 
@@ -156,11 +226,11 @@ ocis shares move-stuck-upload-blobs [--dry-run=false] -p /base/path/storage/user
 
 This command provides additional options:
 
-* `--dry-run` (default: `true`)\
-Only print found files stuck in transition.\
+* `--dry-run` (default: `true`) +
+Only print found files stuck in transition. +
 Note: This is a safety measure. You must specify `--dry-run=false` for the command to be effective.
 
-* `--filename` value (default: "received.json")\
+* `--filename` value (default: "received.json") +
 File to move from `uploads/` to share manager metadata `blobs/`
 
 === Revisions CLI
@@ -180,13 +250,16 @@ It takes the `--resource-id` (or `--r`) parameter which specify the scope of the
 
 This command provides additional options:
 
-* `--dry-run` (default: `true`)\
+* `--dry-run` (default: `true`) +
 Do not remove any revisions but print the revisions that would be removed.
-* `-b` / `--blobstore`\
+
+* `-b` / `--blobstore` +
 Allows specifying the blobstore to use. Defaults to `ocis`. Can be switched to `s3ng` but needs addtional envvar configuration (see the `storage-users` service for more details).
-* `-v` / `--verbose`\
+
+* `-v` / `--verbose` +
 Prints additional information about the revisions that are removed.
-* `--glob-mechanism` (default: `glob`\
+
+* `--glob-mechanism` (default: `glob`z) +
 (advanced) Allows specifying the mechanism to use for globbing. Can be `glob`, `list` or `workers`. In most cases the default `glob` does not need to be changed. If large spaces need to be purged, `list` or `workers` can be used to improve performance at the cost of higher cpu and ram usage. `list` will spawn 10 threads that list folder contents in parallel. `workers` will use a special globbing mechanism and multiple threads to achieve the best performance for the highest cost.
 
 === Service Health
@@ -200,19 +273,21 @@ ocis <service-name> health
 
 _Examples_
 
-* The `collaboration` service has been started but not configured and is therefore not in a healthy state:
-  ```bash
-  ocis collaboration health
+* The `collaboration` service has been started but not configured and is therefore not in a healthy state: +
+[source,bash]
+----
+ocis collaboration health
   
-  The WOPI secret has not been set properly in your config for collaboration. Make sure your /root/.ocis/config config contains the proper values (e.g. by using 'ocis init --diff' and applying the patch or setting a value manually in the config/corresponding environment variable).
-  ```
+The WOPI secret has not been set properly in your config for collaboration. Make sure your /root/.ocis/config config contains the proper values (e.g. by using 'ocis init --diff' and applying the patch or setting a value manually in the config/corresponding environment variable).
+----
 
-* The `antivirus` service has not been started, the health check responds accordingly:
-  ```bash
+* The `antivirus` service has not been started, the health check responds accordingly: +
+[source,bash]
+----
   ocis antivirus health
   
   {"level":"fatal","service":"antivirus","error":"Get \"http://127.0.0.1:9277/healthz\": dial tcp 127.0.0.1:9277: connect: connection refused","time":"2024-10-28T17:47:54+01:00","message":"Failed to request health check"}
-  ```
+----
 
 === Trash CLI
 
@@ -225,5 +300,5 @@ ocis trash purge-empty-dirs -p /base/path/storage/users
 
 This command provides additional options:
 
-* `--dry-run` (default: `true`)\
+* `--dry-run` (default: `true`) +
 Do not remove any empty folders but print the empty folders that would be removed.

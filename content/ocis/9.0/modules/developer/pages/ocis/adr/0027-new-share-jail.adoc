@@ -19,7 +19,7 @@ Since a resource can be shared to the same user in multiple ways (a group share 
 
 We need to build the `oc:fileid` from a more stable pattern.
 
-=== Shareid
+=== Share ID
 
 The WebDAV PROPFIND response also contains a `oc:shareid` which currently is derived from the path when the spaceid matches the share jail. The jsoncs3 implementation of the share manager currently is the only one using the `\{shared-resource-providerid}:\{shared-resource-spaceid}:\{shareid}` pattern, where `\{shareid}` is a uuid that is generated when creating the share. 
 
@@ -32,10 +32,10 @@ Again, the problem is that a resource can be shared multiple times.
 
 == Considered Options
 
-* <<share_based_id,Share based id>>
-* <<resource_based_id,Resource based id>>
-* <<permission_based_id,Permission based id>>
-* <<use_graph_for_file_metadata,Use graph for file metadata>>
+* xref:#share_based_id[Share based id]
+* xref:#resource_based_id[Resource based id]
+* xref:#permission_based_id[Permission based id]
+* xref:#use_graph_for_file_metadata[Use graph for file metadata]
 
 == Decision Outcome
 
@@ -55,40 +55,40 @@ Resource based id: it correctly reflects the semantic meaning of a mount point, 
 
 == Pros and Cons of the Options <!-- optional -->
 
-=== Share based ID
+=== Share Based ID
 
 Follow the pattern `\{shareproviderid}$\{sharespaceid}!\{sharemountid}`, where `\{sharemountid}` is `\{shared-resource-providerid}:\{shared-resource-spaceid}:\{shareid}`.
 Combined patter `\{shareproviderid}$\{sharespaceid}!\{shared-resource-providerid}:\{shared-resource-spaceid}:\{shareid}`.
 `\{shareproviderid}` and `\{sharespaceid}`are both hardcodet to `a0ca6a90-a365-4782-871e-d44447bbc668` to route all id based requests for mountpoints to the share jail space.
 
-\+ Good, the `\{shared-resource-providerid}` and `\{shared-resource-spaceid}` are used to shard the shares per space. +
-\- Bad, `oc:fileid` changes if the oldest received share to a resource is revoked.
+* + Good, the `\{shared-resource-providerid}` and `\{shared-resource-spaceid}` are used to shard the shares per space.
+* - Bad, `oc:fileid` changes if the oldest received share to a resource is revoked.
 
-=== Resource based ID
+=== Resource Based ID
 
 Follow the pattern `\{shareproviderid}$\{sharespaceid}!\{shared-resource-providerid}:\{shared-resource-spaceid}:\{shared-resource-opaqueid}`.
 Hardcode `756e6cdf-5630-4b66-9380-55a85188e0f6` as a new `\{sharespaceid}` to allow clients to detect the new share jail and change it at their own pace.
 
-\+ Good, stable `oc:fileid` that remains the same, regardless of permission changes. +
-\+ Good, clients can detect the new share jail and deal with it on their terms.
+* + Good, stable `oc:fileid` that remains the same, regardless of permission changes.
+* + Good, clients can detect the new share jail and deal with it on their terms.
 
-=== Permission based id
+=== Permission Based ID
 Follow the pattern `\{shareproviderid}$\{sharespaceid}!\{shared-resource-providerid}:\{shared-resource-spaceid}:\{shared-resource-opaqueid}:\{permission-id}`.
 
-\- Bad, same instability as the share id +
-\- Bad, we don't even have a permission id. We could construct one from the grantee, but this leads nowhere.
+* - Bad, same instability as the share id
+* - Bad, we don't even have a permission id. We could construct one from the grantee, but this leads nowhere.
 
 
-=== Use graph for File Metadata
+=== Use Graph for File Metadata
 
 Instead of using WebDAV to correlate files with shares fully embrace libregraph to manage file metadata. 
 Follow the pattern `\{shareproviderid}$\{sharespaceid}!\{shared-resource-providerid}:\{shared-resource-spaceid}:\{shared-resource-opaqueid}`.
 WebDAV can be stripped of any ownCloud specific properties and will only be used for file up and download.
 
-\- Bad, more effort +
-\+ Good, clean way of representing mountpoints and the shared resource in one `driveItem` that can include the resource based id. +
-\+ Good, pagination, sorting and filtering cleanly specified +
-\+ Good, WebDAV can be stripped down. +
-\+ Good, Clients could get rid of WebDAV client and XML libs as all endpoints use JSON (all OCS endpoins return JSON when appending a `format=json` query parameter)
+* - Bad, more effort
+* + Good, clean way of representing mountpoints and the shared resource in one `driveItem` that can include the resource based id.
+* + Good, pagination, sorting and filtering cleanly specified
+* + Good, WebDAV can be stripped down.
+* + Good, Clients could get rid of WebDAV client and XML libs as all endpoints use JSON (all OCS endpoins return JSON when appending a `format=json` query parameter)
 
 == Links <!-- optional -->

@@ -12,7 +12,7 @@ link:https://github.com/owncloud/ocis/tree/master/deployments/examples/ocis_keyc
 
 The docker stack consists 4 containers. One of them is Traefik, a proxy which is terminating ssl and forwards the requests to oCIS in the internal docker network. It is also responsible for redirecting requests on the OIDC discovery endpoints (e.g. `.well-known/openid-configuration`) to the correct destination in Keycloak.
 
-Keycloak add two containers: Keycloak itself and a PostgreSQL as database. Keycloak will be configured as oCIS' IDP instead of the internal IDP xref:{dev-s-path}/idp.adoc[LibreGraph Connect]
+Keycloak add two containers: Keycloak itself and a PostgreSQL as database. Keycloak will be configured as oCIS' IDP instead of the internal IDP xref:{dev-s-path}/idp/index.adoc[LibreGraph Connect].
 
 The other container is oCIS itself, running all services in one container. In this example oCIS uses the xref:ocis/storage/storagedrivers.adoc[oCIS storage driver]
 
@@ -27,7 +27,7 @@ The other container is oCIS itself, running all services in one container. In th
 ** `keycloak.*` for serving Keycloak
 ** `traefik.*` for serving the Traefik dashboard
 
-See also xref:ocis/preparing_server.adoc[example server setup]
+See also xref:ocis/deployment/preparing_server.adoc[example server setup]
 
 === Install oCIS and Traefik
 

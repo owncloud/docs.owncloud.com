@@ -52,7 +52,7 @@ Contains basic Infinite Scale configuration created by `ocis init`(Note: The loc
 
 * *ocis.yaml* +
 BACKUP RECOMMENDED. Holds Infinite Scale configuration data. The contents can vary depending on your environment variables. In general, most of this file can be recreated again by running `ocis init`. This will recreate secrets and certificates. However, if not backed up completely, some fields MUST be copied over from the old config manually to regain data access after a restore:
-
++
 [cols="3,3,3,2",options="header"]
 |===
 | Field Name
@@ -110,7 +110,7 @@ BACKUP RECOMMENDED. Holds Infinite Scale configuration data. The contents can va
 
 Note: This folder will not appear if you use an external idm. Refer to your idms documentation for backup details in this case.
 
-Contains the data for the internal Infinite Scale identity management. See the xref:../services/idm/index.adoc[IDM README] for more details.
+Contains the data for the internal Infinite Scale identity management. See the xref:{dev-s-path}/idm/index.adoc[IDM README] for more details.
 
 [source,bash]
 ----
@@ -137,7 +137,7 @@ BACKUP OPTIONAL. This is the certificate key for the idm. Use `IDM_LDAPS_KEY` to
 
 Note: This folder will not appear if you use an external idp. Refer to your idp's documentation for backup details in this case.
 
-Contains the data for the internal Infinite Scale identity provider. See the xref:../services/idp/index.adoc[IDP README] for more details.
+Contains the data for the internal Infinite Scale identity provider. See the xref:{dev-s-path}/idp/index.adoc[IDP README] for more details.
 
 [source,bash]
 ----
@@ -164,7 +164,7 @@ BACKUP OPTIONAL. It holds configuration for oidc clients (web, desktop, ios, and
 
 Note: This folder will not appear if you use an external nats installation. In that case, data has to secured in alignment with the external installation.
 
-Contains nats data for streams and stores. See the xref:../services/nats/index.adoc[NATS README] for more details.
+Contains nats data for streams and stores. See the xref:{dev-s-path}/nats/index.adoc[NATS README] for more details.
 
 [source,bash]
 ----
@@ -179,7 +179,7 @@ BACKUP RECOMMENDED. This folder contains nats data about streams and key-value s
 
 === `proxy`
 
-Contains proxy service data. See the xref:../services/proxy/index.adoc[PROXY README] for more details.
+Contains proxy service data. See the xref:{dev-s-path}/proxy/index.adoc[PROXY README] for more details.
 
 [source,bash]
 ----
@@ -199,7 +199,7 @@ BACKUP OPTIONAL. This is the certificate key for the http services. Use `PROXY_T
 
 === `search`
 
-Contains the search index. See the xref:../services/search/index.adoc[SEARCH README] for more details.
+Contains the search index. See the xref:{dev-s-path}/search/index.adoc[SEARCH README] for more details.
 
 [source,bash]
 ----
@@ -215,7 +215,7 @@ BACKUP RECOMMENDED/OPTIONAL. This contains the search index. Can be specified vi
 
 === `storage`
 
-Contains Infinite Scale meta (and blob) data, depending on the blobstore. See the xref:../services/storage-users/index.adoc[STORAGE-USERS README] for more details.
+Contains Infinite Scale meta (and blob) data, depending on the blobstore. See the xref:{dev-s-path}/storage-users/index.adoc[STORAGE-USERS README] for more details.
 
 [source,bash]
 ----
@@ -239,7 +239,7 @@ BACKUP REQUIRED. Contains user data. Path can be specified via `STORAGE_USERS_OC
 
 === `thumbnails`
 
-Contains thumbnails data. See the xref:../services/thumbnails/index.adoc[THUMBNAILS README] for more details.
+Contains thumbnails data. See the xref:{dev-s-path}/services/thumbnails/index.adoc[THUMBNAILS README] for more details.
 
 [source,bash]
 ----
@@ -253,7 +253,7 @@ OPTIONAL/RECOMMENDED. This folder contains prerendered thumbnails. Can be specif
 
 === `web`
 
-Contains web assets such as custom logos, themes etc. See the xref:../services/web/index.adoc[WEB README] for more details.
+Contains web assets such as custom logos, themes etc. See the xref:{dev-s-path}/services/web/index.adoc[WEB README] for more details.
 
 [source,bash]
 ----

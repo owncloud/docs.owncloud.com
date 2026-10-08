@@ -8,9 +8,9 @@ If you are a developer and want to trace during developing you should have a loo
 
 This documentation describes how to set up a long-running monitoring & tracing infrastructure for one or multiple oCIS servers or deployments. After reading this guide, you also should know everything needed to integrate oCIS into your existing monitoring and tracing infrastructure.
 
-= Overview About the Proposed Solution
+== Overview About the Proposed Solution
 
-image::ocis/monitoring_tracing_overview.drawio.svg[]
+image::ocis/deployment/monitoring_tracing_overview.drawio.svg[]
 
 == Monitoring & Tracing Clients
 
