@@ -16,7 +16,6 @@ ____
 Note: The term "spaces" is used here in the context of "a space where files can be saved", similar to a directory. It is not to be confused with space in the sense of free file space for example.
 ____
 
-
 The purpose of this new API is to give clients a very simple way to query the dynamic list of spaces, that the user has access to. Clients can provide a better user experience with that.
 
 This API is supposed to be queried often, to give clients a condensed view of the available spaces for a user, but also their eTags and cTags. Hence the clients do not have to perform a PROPFIND for every space separately.
@@ -49,7 +48,7 @@ Most important, the API returns the WebDAV endpoint for each space. With that, c
 
 See link:https://docs.microsoft.com/en-us/graph/api/resources/onedrive?view=graph-rest-1.0[Drive item in Microsoft Graph API] for an overview of `drive` and `driveItem` resources. The concrete list of drives / spaces a user has access to can be obtained on multiple endpoints.
 
-=== Get "Home folder"
+=== Get "Home Folder"
 
 Retrieve information about the home space of a user. Note: The user has access to more spaces. This call only returns the home space to provide API parity with the Graph API.
 
@@ -160,7 +159,6 @@ The URL to make this space visible in the browser.
 ____
 Note: To indicate that only the metadata of a resource has changed, the eTag has changed, but the cTag not.
 ____
-
 
 === Positive Consequences
 

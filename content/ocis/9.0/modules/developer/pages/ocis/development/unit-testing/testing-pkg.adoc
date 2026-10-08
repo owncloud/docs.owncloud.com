@@ -2,7 +2,7 @@
 :toc: right
 :toclevels: 3
 
-== Using the standard library
+== Using the Standard Library
 
 To write a unit test for your package, create a file with the `_test.go` suffix. For example, if you have a package `foo` with a file `foo.go`, you can create a file `foo_test.go` in the same directory. The test file should have the same package name as the package being tested. By doing this, you can access all exported and unexported identifiers of the package. It is a good practice to keep the test file in the same package as the code being tested.
 
@@ -47,7 +47,7 @@ func TestDivide3(t *testing.T) {
 
 To run the test, use the `go test` command in the directory where the test file is located.
 
-=== Use a helper package for assertions
+=== Use a Helper Package for Assertions
 
 You could make the test more readable by using testify. The `assert` package provides a lot of helper functions to make the test more readable.
 

@@ -31,12 +31,12 @@ The desktop and mobile client platforms were suffering from poor support from th
 
 == Considered Options
 
-* <<new_ocs_api_version,New OCS Api Version>>
-* <<sharing_via_libregraph,Sharing via LibreGraph>>
+* xref:#new_ocs_api_version[New OCS Api Version]
+* xref:#sharing_via_libregraph[Sharing via LibreGraph]
 
 == Decision Outcome
 
-Chosen option: "<<sharing_via_libregraph,LibreGraph>>"
+Chosen option: xref:#sharing_via_libregraph[LibreGraph]
 
 === Positive Consequences:
 
@@ -54,7 +54,7 @@ Chosen option: "<<sharing_via_libregraph,LibreGraph>>"
 
 == Pros and Cons of the Options
 
-=== New OCS Api Version
+=== New OCS API Version
 
 To overcome the limitations of the OCS 2.0 API we could create a new major version with the spaces concept in mind. This would give us the opportunity to create a new openApi Spec.
 

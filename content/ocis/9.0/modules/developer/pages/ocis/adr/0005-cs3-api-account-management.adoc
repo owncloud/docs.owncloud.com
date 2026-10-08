@@ -1,4 +1,4 @@
-= 5. Account Management through CS3 API
+= 5. Account Management Through CS3 API
 :toc: right
 :toclevels: 3
 
@@ -30,8 +30,9 @@ Chosen option: "Add account management to the CS3 API". Making the API declare a
 === Positive Consequences
 
 * More resilient API.
-  * Because account management is considered a "first class citizen" changes are forced to go through a more exhaustive revision process.
-* Removing Accounts from search users<sup>1</sup>.
+** Because account management is considered a "first class citizen" changes are forced to go through a more exhaustive revision process.
+
+* Removing Accounts from search users^1^.
 * Replace the provisioning API in favor of the new Reva Admin node.
 
 (1) the current vendor implementation of searching a user (i.e: when sharing a resource) relies directly on the accounts service, since this is the only source of truth. Searching a user looks like:
@@ -112,11 +113,12 @@ And instead rely on the already existing Reva users provider.
 
 == Pros and Cons of the Options
 
-=== Account management delegated to vendors
+=== Account Management Delegated to Vendors
 
 * Good, because it allows for fast iterations.
 * Bad, because account management happens outside of the Reva process. This can potentially end up in invalid account creation / deletion / updates.
-  * An example with the existing Accounts service is that any client can fire CRUD accounts requests to the Accounts service as long as the client knows where the server is running and provides with an Authorization header (only required by the proxy). This request totally bypasses Reva middlewares and therefore any security measures that should be enforced by the entire system.
+** An example with the existing Accounts service is that any client can fire CRUD accounts requests to the Accounts service as long as the client knows where the server is running and provides with an Authorization header (only required by the proxy). This request totally bypasses Reva middlewares and therefore any security measures that should be enforced by the entire system.
+
 * Bad, because leaves teams the task of designing and implementing a way of dealing with account management. Ideally one schema should be provided / suggested.
 
 Creating an account using the first option looks currently is implemented in vendors as:
@@ -152,15 +154,16 @@ Creating an account using the first option looks currently is implemented in ven
 
 As explained before, during this flow no Reva middlewares are run. Creating an account will only use the embedded accounts js file alongside a minted jwt token (by the oCIS proxy) to communicate with the accounts service.
 
-=== Add account management to the CS3 API
+=== Add Account Management to the CS3 API
 
 * Good, because it solidifies what the CS3 API can or cannot do, and account management should be handled at the API level since ultimately accounts would contain a mix of required CS3 and vendor-specific attributes.
 * Good, because it centralizes account management and constrains it within the Reva boundaries.
 * Good, because there is a clear separation of concerns on what is accounts management logic.
 * Good, because we already designed link:https://github.com/owncloud/ocis/blob/master/accounts/pkg/proto/v0/accounts.proto#L42-L85[a similar API for the accounts service] the only difference being we (vendors) link:https://github.com/owncloud/ocis/blob/master/accounts/pkg/proto/v0/accounts.proto#L252-L408[define their own messages].
-  * The API would fully include CRUD methods
+** The API would fully include CRUD methods
+
 * Bad, because development cycles are larger.
-  * an example flow will be: `update api > run prototool > publish language specific packages > update dependencies to fetch latest version of the package > utilize the new changes`.
+** an example flow will be: `update api > run prototool > publish language specific packages > update dependencies to fetch latest version of the package > utilize the new changes`.
 
 The new account management workflow will result in:
 ----

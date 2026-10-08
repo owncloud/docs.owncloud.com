@@ -13,30 +13,30 @@ Once the `stable-x.y` branch has been created but work has been merged into mast
 
 [WARNING]
 ====
-* Any change applied to `stable-7.2` must be made _before_ the tag for this release is created to be part of which is mandatory for any code change.
+* Any change applied to `stable-8.2` must be made _before_ the tag for this release is created to be part of which is mandatory for any code change.
 * There is one exception. Changes applied for documentation purposes are accessed via the branch name by the doc process and not via the tag and therefore accessible to the documentation processes.
 ====
 
 
 Though any changes should ideally be targeted to the correct branch from the beginning, this may sometimes be impossible, especially for the following folder locations:
 
-- `docs` and
-- `deployments/examples/ocis_full`
+* `docs` and
+* `deployments/examples/ocis_full`
 
 === Documentation
 
 Changes to documentation must be present in the respective stable branch because the documentation process accesses the data for further processing. Follow these steps to apply all doc related changes from master to the stable branch _after_ the tag has been created:
 
 ----
-https://owncloud.dev/ocis/releasing_guide/
+https://doc.owncloud.com/ocis/latest/developer/ocis/releasing_guide.html
 
 * [ ] Check all relevant commits made to the master branch that are not in stable\
-`git log  stable-7.2..master -- docs/`
+`git log  stable-8.2..master -- docs/`
 * [ ] Double check all changes if they apply to stable\
-`git diff  stable-7.2..master -- docs/`
-* [ ] Create a new feature branch based on `stable-7.2`
+`git diff  stable-8.2..master -- docs/`
+* [ ] Create a new feature branch based on `stable-8.2`
 * [ ] Cherry pick missing commits
-* [ ] Create PR with leading `[docs-only]` against `stable-7.2`
+* [ ] Create PR with leading `[docs-only]` against `stable-8.2`
 * [ ] Get PR approved **requires 2 approvals** and merge it
 * [ ] Delete feature branch
 ----
@@ -56,15 +56,15 @@ Update the `ocis_full` deployment example as required in master which includes t
 Follow these steps to apply all `ocis_full` deployment example related changes from master to the stable branch:
 
 ----
-https://owncloud.dev/ocis/releasing_guide/
+https://doc.owncloud.com/ocis/latest/developer/ocis/releasing_guide.html
 
 * [ ] Check all relevant commits made to the master branch that are not in stable\
-`git log  stable-7.2..master -- deployments/examples/ocis_full/`
+`git log  stable-8.2..master -- deployments/examples/ocis_full/`
 * [ ] Double check all changes if they apply to stable\
-`git diff  stable-7.2..master -- deployments/examples/ocis_full/`
-* [ ] Create a new feature branch based on `stable-7.2`
+`git diff  stable-8.2..master -- deployments/examples/ocis_full/`
+* [ ] Create a new feature branch based on `stable-8.2`
 * [ ] Cherry pick missing commits
-* [ ] Create PR with leading `[docs-only]` against `stable-7.2`
+* [ ] Create PR with leading `[docs-only]` against `stable-8.2`
 * [ ] Get PR approved **requires 2 approvals** and merge it
 * [ ] Delete feature branch
 ----

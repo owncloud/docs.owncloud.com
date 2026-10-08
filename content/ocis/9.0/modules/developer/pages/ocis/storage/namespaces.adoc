@@ -50,7 +50,7 @@ In the global CS3 namespaces we plan to move `/home/Shares`, which currently lis
 
 In contrast to the global namespace of CS3, ownCloud always presented a user specific namespace on all endpoints. It will always list the users private files under `/`. Shares can be mounted at an arbitrary location in the users private spaces. See the xref:ocis/storage/spacesprovider.adoc#webdav[webdav] and xref:ocis/storage/spacesprovider.adoc#sharing[ocs] sections for more details end examples.
 
-With the spaces concept we are planning to introduce a global namespace to the ownCloud webdav endpoints. This will push the users private space down in the hierarchy: it will move from `/webdav` to `/webdav/home` or `/webdav/users/<username>`. The related xref:ocis/migration.adoc[migration stages] are subject to change.
+With the spaces concept we are planning to introduce a global namespace to the ownCloud webdav endpoints. This will push the users private space down in the hierarchy: it will move from `/webdav` to `/webdav/home` or `/webdav/users/<username>`.
 
 == CS3 Global Namespaces
 

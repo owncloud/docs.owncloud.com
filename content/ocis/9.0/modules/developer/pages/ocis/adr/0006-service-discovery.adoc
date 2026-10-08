@@ -38,16 +38,17 @@ Chosen option: "Dynamic service registration". There were some drawbacks regardi
 
 == Pros and Cons of the Options
 
-=== Hardcoded tuples of hostname + port
+=== Hardcoded Tuples of Hostname + Port
 
 * Good, because firewalls are easier to configure since IP are static.
 * Good, because the mental model required is easier to grasp as IP addresses can be easily bundled.
 * Bad, because it requires thorough planning of ports.
 
-=== Dynamic service registration
+=== Dynamic Service Registration
 
 * Good, because it abstracts the use of service lookup away to registry logic from the admin or developer.
 * Good, because it allows for, through interfaces, registry injection
-  * This means we can have a service registry that we extensively use in oCIS and inject its functionality onto Reva.
+** This means we can have a service registry that we extensively use in oCIS and inject its functionality onto Reva.
+
 * Bad, because it's yet another abstraction.
 * Bad, because firewalls are harder to configure with dynamic IPs.f

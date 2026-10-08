@@ -40,32 +40,32 @@ Chosen option: _???_
 
 == Pros and Cons of the Options <!-- optional -->
 
-=== one index per space
+=== One Index per Space
 
 Instead of using a single index (current implementation) or a distributed search index like elasticsearch the search service should aggregate queries from dedicated indexes per space. The api to a space index provider should be able to take multiple space ids in the request, similar to how a storage provider can handle multiple spaces. When treating spaces and the corresponding search index to belong together we can also treat them as a single unit for backup and restore. In federated deployments we can send the search queries to all search providers / spaces that the user has access to.
 
 How a search provider is implemented then depends on the requirements. For a single node deployment bleve might be fine, for a kubernetes deployment a dedicated service might be the better fit.
 
-=== elasticsearch
+=== Elasticsearch
 
 * Good, commercial support available at https://www.elastic.co/de/pricing
 * Good, industry standard
 * Bad, nobody seems to like it
 * Bad, not embeddable (Java)
 
-=== dgraph
+=== Dgraph
 
 * Good, commercial support available at https://dgraph.io/pricing
 * Good, embeddable? (go) - TODO verify
 
-=== manticore
+=== Manticore
 * Good, commercial support available at https://manticoresearch.com/services/
 * Bad, not embeddable (C++)
 
-=== meilisearch
+=== Meilisearch
 * Good, commercial support available at https://www.meilisearch.com/pricing
 * Bad, not embeddable (Rust)
 
 == Links <!-- optional -->
 
-* supersedes xref:0019-file-search-index.adoc[ADR-0019 File Search Index]
+* supersedes xref:ocis/adr/0019-file-search-index.adoc[ADR-0019 File Search Index]

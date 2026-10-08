@@ -1,4 +1,4 @@
-= 11. WebUI URL format
+= 11. WebUI URL Format
 :toc: right
 
 * Status: accepted
@@ -42,18 +42,29 @@ The oCIS web UI just takes the path and uses the `/webdav` endpoint of the curre
 PROPFIND https://demo.owncloud.com/remote.php/webdav/path/to/resource
 ----
 
-
 With the new ownCloud web client (owncloud/web)
 
  needs to interpret them to make API calls. With this in mind, this is the current mapping on ownCloud Web with OC10 and OCIS backend:
 
-|      | Browser URL                                                    | API URL                                |
-|------|----------------------------------------------------------------|----------------------------------------------------|
-| OC10 + classic WebUI | `https://demo.owncloud.com/apps/files/?dir=/path/to/resource&fileid=5472225`  | `https://demo.owncloud.com/remote.php/dav/files/demo/path/to/resource`    |
-| OC10 + OCIS WebUI| `https://web.owncloud.com/index.html#/files/list/all/path%2Fto%2Fresource`  | `https://demo.owncloud.com/remote.php/webdav/path/to/resource`    |
-| OCIS | `https://demo.owncloud.com/#/files/list/all/path/to/resource`                           | `https://demo.owncloud.com/remote.php/webdav/path/to/resource`              |
+[cols="2,4,4",options="header"]
+|===
+|
+| Browser URL
+| API URL
 
+| OC10 + classic WebUI
+| `\https://demo.owncloud.com/apps/files/?dir=/path/to/resource&fileid=5472225`
+| `\https://demo.owncloud.com/remote.php/dav/files/demo/path/to/resource`
 
+| OC10 + OCIS WebUI
+| `\https://web.owncloud.com/index.html#/files/list/all/path%2Fto%2Fresource`
+| `\https://demo.owncloud.com/remote.php/webdav/path/to/resource`
+
+| OCIS
+| `\https://demo.owncloud.com/#/files/list/all/path/to/resource`
+| `\https://demo.owncloud.com/remote.php/webdav/path/to/resource`
+|===
+i
 On an OC10 backend the `fileid` query parameter takes precedence over the `dir`. In fact if `dir` is invalid but `fileid` isn't, the resolution will succeed, as opposed to if the `fileid` is wrong (doesn't exist) and `dir` correct, resolution will fail altogether with a 404.
 
 This ADR is limited to the scope of "how will a web client deal with the browser URL?". The API URLs will change with the spaces concept to `https://demo.owncloud.com/dav/spaces/<space_id>/relative/path/to/resource`. The Web UI can look up a space id and the mount path using the `/graph/v1.0/drives` API:
@@ -107,15 +118,24 @@ Chosen option: "Mixed global URLs", because it meets the requirement to contain 
 
 == Pros and Cons of the Options
 
-=== Existing OwnCloud 10 URLs
+=== Existing ownCloud 10 URLs
 
 The existing ownCloud 10 URLs look like this
 
-| URL | comment |
-|-----|---------|
-| `https://<host>/apps/files/?dir=<path>&fileid=<fileid>` | pattern |
-| `https://demo.owncloud.com/apps/files/?dir=/&fileid=18` | root of the currently logged in user |
-| `https://demo.owncloud.com/index.php/apps/files/?dir=/path/to/resource&fileid=192` | sub folder `/path/to/resource` |
+[cols="3,2",options="header"]
+|===
+| URL
+| comment
+
+| `\https://<host>/apps/files/?dir=<path>&fileid=<fileid>`
+| pattern
+
+| `\https://demo.owncloud.com/apps/files/?dir=/&fileid=18`
+| root of the currently logged in user
+
+| `\https://demo.owncloud.com/index.php/apps/files/?dir=/path/to/resource&fileid=192`
+| sub folder `/path/to/resource`
+|===
 
 It contains a path and a `fileid` (which takes precedence).
 
@@ -127,15 +147,24 @@ It contains a path and a `fileid` (which takes precedence).
 * Bad, because if not configured properly an additional `/index.php` prefixes the route
 * Bad, because power users cannot navigate by updating only the path in the URL, as the `fileid` takes precedence. They have to delete the `fileid` to navigate
 
-=== ID based URLs
+=== ID Based URLs
 
 MS OneDrive has URLs like this:
 
-| URL | comment |
-|-----|---------|
-| `https://<host>/?id=<fileid>(&cid=<cid>)` | pattern, the `cid` is optional but added automatically |
-| `https://onedrive.live.com/?id=root&cid=A12345A14B0A7750` | root of a personal drive |
-| `https://onedrive.live.com/?id=A12345A14B0A7750%21359&cid=A12345A14B0A7750` | sub folder in a personal drive |
+[cols="3,2",options="header"]
+|===
+| URL
+| comment
+
+| `\https://<host>/?id=<fileid>(&cid=<cid>)`
+| pattern, the `cid` is optional but added automatically
+
+| `\https://onedrive.live.com/?id=root&cid=A12345A14B0A7750`
+| root of a personal drive
+
+| `\https://onedrive.live.com/?id=A12345A14B0A7750%21359&cid=A12345A14B0A7750`
+| sub folder in a personal drive
+|===
 
 It contains only IDs but no folder names. The `fileid` is a URL encoded `<cid>!<numericid>`. Very similar to the CS3 `resourceid` which consists of `storageid` and `nodeid`.
 
@@ -144,15 +173,24 @@ It contains only IDs but no folder names. The `fileid` is a URL encoded `<cid>!<
 * Bad, because the web UI needs to look up the space id in a registry to build an API request for the `/dav/space` endpoint
 * Bad, because URLs reveal no context to users
 
-=== Path based URLs
+=== Path Based URLs
 
 There is a customized ownCloud instance that uses path only based URLs:
 
-| URL | comment |
-|-----|---------|
-| `https://<host>/apps/files/?dir=/&` | root of the currently logged in user |
-| `https://demo.owncloud.com/apps/files/?dir=/&` | root of the currently logged in user |
-| `https://demo.owncloud.com/apps/files/?dir=/path/to/resource&` | sub folder `/path/to/resource` |
+[cols="3,2",options="header"]
+|===
+| URL
+| comment
+
+| `\https://<host>/apps/files/?dir=/&`
+| root of the currently logged in user
+
+| `\https://demo.owncloud.com/apps/files/?dir=/&`
+| root of the currently logged in user
+
+| `\https://demo.owncloud.com/apps/files/?dir=/path/to/resource&`
+| sub folder `/path/to/resource`
+|===
 
 * Good, because the URLs reveal the full path context to users
 * Good, because power users can navigate by updating the path in the url
@@ -161,14 +199,25 @@ There is a customized ownCloud instance that uses path only based URLs:
 * Bad, because there is no id that can be used as a fallback lookup mechanism
 * Bad, because URLs might leak too much context (parent folders of shared files)
 
-=== Space based URLs
+=== Space Based URLs
 
-| URL | comment |
-|-----|---------|
-| `https://<host>/#/s/<space_id>(/<relative/path>)(?id=<resource_id>)` | the pattern, relative `path` and `resource_id` are optional |
-| `https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607` | root of a storage space, might be the currently logged in users home |
-| `https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607/relative/path/to/resource` | sub folder `/relative/path/to/resource` in the storage with id `b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607`, works _*only*_ if path still exists  |
-| `https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607/relative/path/to/resource?id=ba4c1820-df12-11eb-8dcd-ff21f12c1264:beb78dd6-df12-11eb-a05c-a395505126f6` | sub folder `/relative/path/to/resource` in the storage with id `b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607`, lookup can fall back to the `id` |
+[cols="3,2",options="header"]
+|===
+| URL
+| comment
+
+| `\https://<host>/#/s/<space_id>(/<relative/path>)(?id=<resource_id>)`
+| the pattern, relative `path` and `resource_id` are optional
+
+| `\https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607`
+| root of a storage space, might be the currently logged in users home
+
+| `\https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607/relative/path/to/resource`
+| sub folder `/relative/path/to/resource` in the storage with id `b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607`, works _*only*_ if path still exists
+
+| `\https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607/relative/path/to/resource?id=ba4c1820-df12-11eb-8dcd-ff21f12c1264:beb78dd6-df12-11eb-a05c-a395505126f6`
+| sub folder `/relative/path/to/resource` in the storage with id `b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607`, lookup can fall back to the `id`
+|===
 
 [TIP]
 ====
@@ -190,45 +239,48 @@ There is a customized ownCloud instance that uses path only based URLs:
 
 With the above explained, let's see some use cases:
 
-==== Example 1: UserA shares something from her Home Folder with UserB
+==== Example 1: UserA Shares Something from Her Home Folder with UserB
 
 * open the browser and go to `demo.owncloud.com`
-* the browser's url changes to: `https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607`. You're now in YOUR home folder / personal space.
+* the browser's url changes to: `\https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607`. You're now in YOUR home folder / personal space.
 
 * you create a new folder `/relative/path/to/resource` and navigate into `/relative/path/to`
-** the URL now changes to: `https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607/relative/path/to`
+** the URL now changes to: `\https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607/relative/path/to`
 
 * You share `resource` with some else
 * You navigate into `/relative/path/to/resource`
-** now the URL would look like: `https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:3a9305da-df17-11eb-ab99-abe09d93e08a`
+** now the URL would look like: `\https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:3a9305da-df17-11eb-ab99-abe09d93e08a`
 
 As you can see, even if you're the owner of `/relative/path/to/resource` and navigate into it, the URL changes due to a new space being entered. This ensures that while working in your home folder, copying URLs and giving them to the person you share the resource with, the receiver can still navigate within the new space.
 
 In short terms, while navigating using the WebUI, the URL has to constantly change whenever we change spaces to reflect the most explicit one.
 
-==== Example 2: UserA Shares Something From a Workspace
+==== Example 2: UserA Shares Something from a Workspace
 
 Assuming we only have one storage provider; a consequence of this, all storage spaces will start with the same storage_id.
 
 * open the browser and go to `demo.owncloud.com`
-* the browser's url changes to: `https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607`. You're now in YOUR home folder / personal space.
+* the browser's url changes to: `\https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607`. You're now in YOUR home folder / personal space.
 * you have access to a workspace called `foo` (created by an admin)
 
 * navigate into workspace `foo`
-** the URL now changes to: `https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:d342f9ce-df18-11eb-b319-1b6d9df4bc74`. You are now at the root of the workspace `foo`.
+** the URL now changes to: `\https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:d342f9ce-df18-11eb-b319-1b6d9df4bc74`. You are now at the root of the workspace `foo`.
 *** because we only have one storage provider, the `space_id` section of the URL only updates the `node_id` part of it.
 *** had we had more than one storage provider, the `space_id` would depend on which storage provider contains the storage space.
 
 * you create a folder `/relative/path/to/resource`
 * you navigate into `/relative/path/to/resource`
-** now the URL would look like: `https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:d342f9ce-df18-11eb-b319-1b6d9df4bc74/relative/path/to/resource`
-** or a more robust url: `https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:d342f9ce-df18-11eb-b319-1b6d9df4bc74/relative/path/to/resource?id=b78c2044-5b51-446f-82f6-907a664d089c:04f1991c-df19-11eb-9cc7-3b09f04f9ca3`
+** now the URL would look like: `\https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:d342f9ce-df18-11eb-b319-1b6d9df4bc74/relative/path/to/resource`
+** or a more robust url: `\https://demo.owncloud.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:d342f9ce-df18-11eb-b319-1b6d9df4bc74/relative/path/to/resource?id=b78c2044-5b51-446f-82f6-907a664d089c:04f1991c-df19-11eb-9cc7-3b09f04f9ca3`
 
 ==== Spaces Registry
 
 A big drawback against this idea is that the length of the URL is increased by a lot, rendering them almost unreadable. Introducing a Spaces Registry (SR) would shorten them. Let's see how.
 
-A URL without a SR would look like: `https://ocis.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:d342f9ce-df18-11eb-b319-1b6d9df4bc74/TEST?id=b78c2044-5b51-446f-82f6-907a664d089c:04f1991c-df19-11eb-9cc7-3b09f04f9ca3`. The same URL with a SR `https://ocis.com/#/s/workspaceFoo/TEST?id=b78c2044-5b51-446f-82f6-907a664d089c:04f1991c-df19-11eb-9cc7-3b09f04f9ca3`
+A URL without a SR would look like: +
+`\https://ocis.com/#/s/b78c2044-5b51-446f-82f6-907a664d089c:d342f9ce-df18-11eb-b319-1b6d9df4bc74/TEST?id=b78c2044-5b51-446f-82f6-907a664d089c:04f1991c-df19-11eb-9cc7-3b09f04f9ca3`. +
+The same URL with a SR +
+`https://ocis.com/#/s/workspaceFoo/TEST?id=b78c2044-5b51-446f-82f6-907a664d089c:04f1991c-df19-11eb-9cc7-3b09f04f9ca3`
 
 Space Registry resolution can happen at the client side (i.e: the client keeps a list of space name -> space id [where space id = storageid + nodeid]; the client queries a SR) or server side. Server side is more resilient due to clients can have limited networking; for instance if they are running on a tight intranet.
 
@@ -238,19 +290,41 @@ While ID based space URLs can be made more readable by shortening the IDs they o
 
 When every space has a namespaced alias and a relative path we can build a global namespace:
 
-| URL | comment |
-|-----|---------|
-| `https://<host>/files</namespaced/alias></relative/path/to/resource>?id=<resource_id>` | the pattern, `/files` might become optional |
-| `https://demo.owncloud.com/files/personal/einstein/?id=b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607` | root of user `einstein` |
-| `https://demo.owncloud.com/files/personal/einstein/relative/path/to/resource?id=b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21608` | sub folder `/relative/path/to/resource` |
-| `https://demo.owncloud.com/files/shares/einstein/somesharename?id=b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21608` | shared URL for `/relative/path/to/resource` |
-| `https://demo.owncloud.com/files/personal/einstein/marie is stupid/and richard as well/resource?id=b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21608` | sub folder `marie is stupid/and richard as well/resource` ... something einstein might not want to reveal |
-| `https://demo.owncloud.com/files/shares/einstein/resource (2)?id=b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21608` | named link URL for `/marie is stupid/and richard as well/resource`, does not disclose the actual hierarchy, has an appended counter to avoid a collision |
-| `https://demo.owncloud.com/files/shares/einstein/mybestfriends?id=b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21608` | named link URL for `/marie is stupid/and richard as well/resource`, does not disclose the actual hierarchy, has a custom alias for the share |
-| `https://demo.owncloud.com/files/public/kcZVYaXr7oZ66bg/relative/path/to/resource` | sub folder `/relative/path/to/resource` in public link with token `kcZVYaXr7oZ66bg` |
-| `https://demo.owncloud.com/files/public/kcZVYaXr7oZ66bg/relative/path/to/resource` | sub folder `/relative/path/to/resource` in public link with token `kcZVYaXr7oZ66bg` |
-| `https://demo.owncloud.com/s/kcZVYaXr7oZ66bg/` | shortened link to a resource. This is needed to be able to copy a link to a resource without leaking any metadata. |
+[cols="3,2",options="header"]
+|===
+| URL
+| comment
 
+| `\https://<host>/files</namespaced/alias></relative/path/to/resource>?id=<resource_id>`
+| the pattern, `/files` might become optional
+
+| `\https://demo.owncloud.com/files/personal/einstein/?id=b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21607`
+| root of user `einstein`
+
+| `\https://demo.owncloud.com/files/personal/einstein/relative/path/to/resource?id=b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21608`
+| sub folder `/relative/path/to/resource`
+
+| `\https://demo.owncloud.com/files/shares/einstein/somesharename?id=b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21608`
+| shared URL for `/relative/path/to/resource`
+
+| `\https://demo.owncloud.com/files/personal/einstein/marie is stupid/and richard as well/resource?id=b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21608`
+| sub folder `marie is stupid/and richard as well/resource` ... something einstein might not want to reveal
+
+| `\https://demo.owncloud.com/files/shares/einstein/resource (2)?id=b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21608`
+| named link URL for `/marie is stupid/and richard as well/resource`, does not disclose the actual hierarchy, has an appended counter to avoid a collision
+
+| `\https://demo.owncloud.com/files/shares/einstein/mybestfriends?id=b78c2044-5b51-446f-82f6-907a664d089c:194b4a97-597c-4461-ab56-afd4f5a21608`
+| named link URL for `/marie is stupid/and richard as well/resource`, does not disclose the actual hierarchy, has a custom alias for the share
+
+| `\https://demo.owncloud.com/files/public/kcZVYaXr7oZ66bg/relative/path/to/resource`
+| sub folder `/relative/path/to/resource` in public link with token `kcZVYaXr7oZ66bg`
+
+| `\https://demo.owncloud.com/files/public/kcZVYaXr7oZ66bg/relative/path/to/resource`
+| sub folder `/relative/path/to/resource` in public link with token `kcZVYaXr7oZ66bg`
+
+| `\https://demo.owncloud.com/s/kcZVYaXr7oZ66bg/`
+| shortened link to a resource. This is needed to be able to copy a link to a resource without leaking any metadata.
+|===
 
 `</namespaced/alias></relative/path/to/resource>` is the global path in the CS3 api. The CS3 Storage Registry is responsible by managing the mount points.
 
@@ -285,10 +359,17 @@ With these different namespaces the `/files` part in the URL becomes obsolete, b
 Not every deployment may have the requirement to have the path in the URL. We could use id only based URLs, similar to onedrive and make showing paths configurable.
 
 
-| URL | comment |
-|-----|---------|
-| `https://<host>/files?id=<resource_id>` | default id based navigation |
-| `https://<host>/files</namespaced/alias></relative/path/to/resource>?id=<resource_id>` | optional path based navigation with fallback to id |
+[cols="3,2",options="header"]
+|===
+| URL
+| comment
+
+| `\https://<host>/files?id=<resource_id>`
+| default id based navigation
+
+| `\https://<host>/files</namespaced/alias></relative/path/to/resource>?id=<resource_id>`
+| optional path based navigation with fallback to id
+|===
 
 In contrast to ownCloud 10 path takes precedence and the user is warned when the fileid in his bookmark no longer matches the id on the server: sth. like "The path of the resource has changed, please verify and update your bookmark!"
 
@@ -296,7 +377,7 @@ When a file is selected the filename also becomes part of the URL so individual 
 
 If navigation is id based we need to look up the path for the id so we can make a webdav request, or we need to implement the graph drives and driveItem resources.
 
-The URL  `https://<host>/files?id=<resource_id>̀` is sent to the server. It has to look up the correct path and redirect the request, including the path. But that would make all bookmarks contain tha path again, even if paths were configured to not be part of the URL.
+The URL  `\https://<host>/files?id=<resource_id>̀` is sent to the server. It has to look up the correct path and redirect the request, including the path. But that would make all bookmarks contain tha path again, even if paths were configured to not be part of the URL.
 
 The `/meta/<fileid>` webdav endpoint can be used to look up the path with property `meta-path-for-user`.
 
@@ -312,6 +393,6 @@ This means that only the _resource path_ is part of the URL path. Any other para
 
 * [ ] The old sharing links and oc10 urls still need to be redirected by ocis/reva as in oc10.
 
-Public links would have the same format: `https://<host>/files?id=<resource_id>` The web UI has to detect if the user is logged in or not and adjust the ui accordingly.
+Public links would have the same format: `\https://<host>/files?id=<resource_id>` The web UI has to detect if the user is logged in or not and adjust the ui accordingly.
 
 WARNING: Since there is no difference between public and private files a logged-in user cannot see the public version of a link unless he logs out.

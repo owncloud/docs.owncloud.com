@@ -2,19 +2,18 @@
 :toc: right
 :toclevels: 3
 
-
 In this section we try to enable developers to write tests in oCIS using Ginkgo and Gomega and explain how to mock other microservices to also cover some integration tests. The full documentation of the tools can be found on the link:https://onsi.github.io/ginkgo/[Ginkgo] and link:https://onsi.github.io/gomega/[Gomega] websites.
 
-// SHORTCODE: {{% hint type=tip icon=gdoc_link title="Reading the documentation" %}}
+[TIP]
+====
 This page provides only a basic introduction to get started with Ginkgo and Gomega. For more detailed information, please refer to the official documentation.
 
 _Useful Links:_
 
-- link:https://onsi.github.io/ginkgo/[Ginkgo]
-- link:https://onsi.github.io/gomega/[Gomega]
-- link:https://vektra.github.io/mockery/latest/[Mockery]
-
-// SHORTCODE: {{% /hint %}}
+* link:https://onsi.github.io/ginkgo/[Ginkgo]
+* link:https://onsi.github.io/gomega/[Gomega]
+* link:https://vektra.github.io/mockery/latest/[Mockery]
+====
 
 == Prerequisites
 
@@ -38,7 +37,6 @@ cd ocis/ocis-pkg/config/parser
 ginkgo bootstrap
 Generating ginkgo test suite bootstrap for parser in:
         parser_suite_test.go
-
 ----
 
 This command creates a `parser_suite_test.go` file in the parser directory. This file contains the test suite for the parser package.
@@ -240,13 +238,14 @@ var _ = Describe("Parser", func() {
 })
 ----
 
-// SHORTCODE: {{% hint type="warning" title="Specs MUST be clean and independent"%}}
+[WARNING]
+====
 Always _declare variables in the container node_(which are basically `Describe()` and `Context()`)
 
 and _initialize your variables in the setup nodes._ (which are basically `BeforeEach()` and `JustBeforeEach()`).
 
 This will ensure that your specs are clean and independent of each other.
-// SHORTCODE: {{% /hint %}}
+====
 
 === Focused Specs
 
@@ -310,11 +309,12 @@ packages:
 
 We should add missing mocks to this file and define the interfaces we want to mock. After that, we can generate the mocks by running `mockery` in the repo, it will find all the `.mockery.yaml` files and generate the mocks for the interfaces defined in them.
 
-Our mocks are generated with the setting `with-expecter: true`. This allows us to use type-safe methods to generate the call expectations by simply calling `EXPECT()` on the mock object.
+Our mocks are generated with the setting `with-expecter: true`. This allows us to use type-safe methods to generate the call expectations by simply calling
 
-// SHORTCODE: {{% hint type="tip" title="Type safe mock identifiers" %}}
+[TIP]
+====
 By using `EXPECT()` on the mock object, we can work with type-safe methods to generate the call expectations.
-// SHORTCODE: {{% /hint %}}
+====
 
 _Example of a mocked gateway client_
 
@@ -322,8 +322,8 @@ In our oCIS services we need to use a gateway pool selector to get the gateway c
 
 We should always use the constructor on a new mock like `gatewayClient = cs3mocks.NewGatewayAPIClient(GinkgoT())`. This brings us two advantages:
 
-- The `AssertExpectations` method is registered to be called at the end of the tests via `t.Cleanup()` method.
-- The `testing.TB` interface is registered on the `mock.Mock` so that tests don't panic when a call on the mock is unexpected.
+* The `AssertExpectations` method is registered to be called at the end of the tests via `t.Cleanup()` method.
+* The `testing.TB` interface is registered on the `mock.Mock` so that tests don't panic when a call on the mock is unexpected.
 
 [source,go]
 ----
@@ -400,6 +400,7 @@ var _ = Describe("PublicShareProvider", func() {
 })
 ----
 
-// SHORTCODE: {{% hint type="tip" title="Mocking in oCIS" %}}
+[TIP]
+====
 Use the constructor on new mocks to register the `AssertExpectations` method to be called at the end of the tests via the `t.Cleanup()` method.
-// SHORTCODE: {{% /hint %}}
+====

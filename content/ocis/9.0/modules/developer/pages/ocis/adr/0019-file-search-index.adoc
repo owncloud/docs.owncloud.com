@@ -31,8 +31,8 @@ Sharing adds more complexity because the index also needs to react to create, de
 
 == Considered Options
 
-* <<bleve_search,Bleve Search>>
-* <<elastic_search,Elastic Search>>
+* xref:#bleve_search[Bleve Search]
+* xref:#elastic_search[Elastic Search]
 
 == Decision Outcome
 
@@ -43,7 +43,7 @@ Chosen option: Bleve Search, because we can fulfill the MVP and include it into 
 * Basic File Search works out of the box
 * We do not need heavy external dependencies which need to be deployed alongside
 
-=== Negative consequences
+=== Negative Consequences
 
 * We need to be aware of the scaling limits
 * We need to find a way to work with shares and spaces
@@ -69,7 +69,7 @@ Chosen option: Bleve Search, because we can fulfill the MVP and include it into 
 
 == Links
 
-* xref:0018-file-search-api.adoc[Search API]
-* xref:0020-file-search-query-language.adoc[Search Query Language]
+* xref:ocis/adr/0018-file-search-api.adoc[Search API]
+* xref:ocis/adr/0020-file-search-query-language.adoc[Search Query Language]
 * link:https://github.com/blevesearch/bleve[Bleve Search on GitHub]
 * link:https://www.elastic.co/elastic-stack/[ElasticSearch]

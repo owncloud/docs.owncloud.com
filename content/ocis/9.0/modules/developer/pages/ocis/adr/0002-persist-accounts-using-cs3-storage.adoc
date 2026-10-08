@@ -1,4 +1,4 @@
-= 2. Persist accounts in a CS3 storage
+= 2. Persist Accounts in a CS3 Storage
 :toc: right
 :toclevels: 3
 

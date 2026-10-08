@@ -314,7 +314,7 @@ BEHAT_FEATURE='tests/acceptance/features/coreApiVersions/fileVersions.feature:14
 . Remove those tests from the expected failures file
 . Make a PR that has the fixed code, and the relevant lines removed from the expected failures file.
 
-== Running Tests With And Without `remote.php`
+== Running Tests with and Without `remote.php`
 
 By default, the tests are run with `remote.php` enabled. If you want to run the tests without `remote.php`, you can disable it by setting the environment variable `WITH_REMOTE_PHP=false` while running the tests.
 
@@ -329,7 +329,7 @@ make test-acceptance-api
 
 Test suites tagged with `@env-config` are used to test the environment variables that are used to configure oCIS. These tests are special tests that require the oCIS server to be run using link:https://github.com/owncloud/ocis/blob/master/tests/ociswrapper/README.md[ociswrapper].
 
-=== Run oCIS With ociswrapper
+=== Run oCIS with ociswrapper
 
 [source,bash]
 ----
@@ -366,7 +366,7 @@ While writing tests for a new oCIS ENV configuration, please make sure to follow
 . Use `OcisConfigHelper.php` for helper functions - provides functions to reconfigure the running oCIS instance.
 . Recommended: add the new step implementations in `OcisConfigContext.php`
 
-== Running Test Suite With Email Service (@email)
+== Running Test Suite with Email Service (@email)
 
 Test suites that are tagged with `@email` require an email service. We use mailpit as the email service in our tests.
 
@@ -412,7 +412,7 @@ BEHAT_FEATURE="tests/acceptance/features/apiNotification/notification.feature" \
 make test-acceptance-api
 ----
 
-== Running Test Suite With Tika Service (@tikaServiceNeeded)
+== Running Test Suite with Tika Service (@tikaServiceNeeded)
 
 Test suites that are tagged with `@tikaServiceNeeded` require tika service.
 
@@ -455,11 +455,11 @@ BEHAT_FEATURE="tests/acceptance/features/apiSearchContent/contentSearch.feature"
 make test-acceptance-api
 ----
 
-== Running Test Suite With Antivirus Service (@antivirus)
+== Running Test Suite with Antivirus Service (@antivirus)
 
 Test suites that are tagged with `@antivirus` require antivirus service. The available antivirus and the configuration related to them can be found xref:admin:{s-path}/antivirus.adoc[here]. This documentation is only going to use `clamAv` as antivirus.
 
-=== Setup clamAV
+=== Setup ClamAV
 
 ==== 1. Setup Locally
 
@@ -494,7 +494,7 @@ Start ClamAV daemon
 /your/location/to/brew/Cellar/clamav/1.1.0/sbin/clamd
 ----
 
-==== 2. Setup clamAV With Docker
+==== 2. Setup ClamAV with Docker
 
 ===== Linux OS User
 
@@ -552,9 +552,9 @@ BEHAT_FEATURE="tests/acceptance/features/apiAntivirus/antivirus.feature" \
 make test-acceptance-api
 ----
 
-== Running Test Suite With Federated Sharing (@ocm)
+== Running Test Suite with Federated Sharing (@ocm)
 
-Test suites that are tagged with `@ocm` require running two different ocis instances. More detailed information and configuration related to it can be found xref:adoc:{s-path}/ocm.adoc[here].
+Test suites that are tagged with `@ocm` require running two different ocis instances. More detailed information and configuration related to it can be found xref:{dev-s-path}/ocm/index.adoc[here].
 
 === Setup First oCIS Instance
 
@@ -643,9 +643,11 @@ The sample `fontsMap.json` file is located in `tests/config/drone/fontsMap.json`
 }
 ----
 
+////
 == Running Test on Helm Setup
 
 Refer to the xref:../../../tests/config/k8s/README.adoc[Running API Tests in Kubernetes Cluster] documentation for running tests against a K8s setup.
+////
 
 == Generating Code Coverage Report by Running Acceptance Tests
 

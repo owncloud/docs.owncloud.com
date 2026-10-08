@@ -2,7 +2,6 @@
 :toc: right
 :toclevels: 3
 
-
 oCIS' default storage backend is the Decomposed FS. The Decomposed FS can be set up to run on a NFS share. That way the same storage can be provided over the network to other nodes running oCIS.
 
 This document summarizes a few important considerations of the NFS setup and describes a tested setup. The test has not covered concurrent access of data from different nodes yet.
@@ -10,10 +9,6 @@ This document summarizes a few important considerations of the NFS setup and des
 == NFS Server Setup
 
 This document covers the linux kernel NFS server on a standard Linux running on x86_64.
-
-The NFS server needs to be set up in a way that it supports link:https://en.wikipedia.org/wiki/Extended_file_attributes[extended file attributes].
-
-Extended attributes are supported by NFS starting with Kernel version 5.9, which means that the server with the NFS server has to run a kernel with that or a higher version number. To check that, run the command `uname -a` on the NFS server and compare the displayed version number.
 
 The NFS server in the test setup was configured with the following line in the config file `/etc/exports`:
 
@@ -23,7 +18,7 @@ This exports the directory `/space/nfstest` to the internal network with certain
 
 Important:
 
-- The share needs to be exported with the `async` option for proper NFS performance.
+* The share needs to be exported with the `async` option for proper NFS performance.
 
 == NFS Client Mount
 
@@ -41,7 +36,6 @@ After successfully mounting the storage on the client, it can be checked if the 
 ====
 The NFS server setup can be optimized considering system administrative-, performance- and security options. This is not (yet) covered in this documentation.
 ====
-
 
 == oCIS Start using the NFS Share
 

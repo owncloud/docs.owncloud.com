@@ -18,19 +18,19 @@ The ability to find files based on certain search terms is a key requirement for
 
 == Considered Options
 
-* <<libre_graph_api,Libre Graph API>>
-* <<webdav_api,WebDAV API>>
+* xref:#libre_graph_api[Libre Graph API]
+* xref:#webdav_api[WebDAV API]
 
 == Decision Outcome
 
-Chosen option: <<webdav_api,WebDAV API>> because the current WebUI is compatible with that API. We may use the GraphAPI later in a second iteration.
+Chosen option: xref:#webdav_api[WebDAV API] because the current WebUI is compatible with that API. We may use the GraphAPI later in a second iteration.
 
 === Positive Consequences
 
 * The existing Clients can continue to use the well-known API
 * There are existing API tests which cover the basic behavior
 
-=== Negative consequences
+=== Negative Consequences
 
 * We have no server side result filtering capabilities
 
@@ -52,5 +52,5 @@ Chosen option: <<webdav_api,WebDAV API>> because the current WebUI is compatible
 
 == Links
 
-* xref:0019-file-search-index.adoc[Search Indexing]
-* xref:0020-file-search-query-language.adoc[Search Query Language]
+* xref:ocis/adr/0019-file-search-index.adoc[Search Indexing]
+* xref:ocis/adr/0020-file-search-query-language.adoc[Search Query Language]

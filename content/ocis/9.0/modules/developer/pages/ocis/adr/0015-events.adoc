@@ -26,12 +26,12 @@ A simple example is the notification feature for oCIS: Users should receive an e
 
 == Considered Options
 
-1. Lightweight Events with Event Queue and "At most once" QoS
-2. As 1., but with "At least once" QoS
+. Lightweight Events with Event Queue and "At most once" QoS
+. As 1., but with "At least once" QoS
 
 == Options
 
-=== 1. Lightweight Events with Event Queue and "At most once" QoS
+=== 1. Lightweight Events with Event Queue and "At Most Once" QoS
 
 Reva will get a messaging service that is available to all services within oCIS and Reva. It is considered as one of the mandatory services of the oCIS system. If the messaging backend is not running, neither Reva nor oCIS can be considered healthy and should shut down.
 
@@ -71,7 +71,7 @@ If transactions are required, proper synchronous GRPC API calls should be used. 
 * A service needs to hold more state to ensure consistency
 * Message queue needs to be implemented in Reva
 
-=== 2. Lightweight Events with Event Queue and "At-least once" QoS
+=== 2. Lightweight Events with Event Queue and "At-Least Once" QoS
 
 Exactly as described above, but with a higher service level quality.
 

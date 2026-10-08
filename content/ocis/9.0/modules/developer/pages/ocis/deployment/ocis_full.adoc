@@ -413,6 +413,7 @@ Make sure to point to the `dist` folder inside your local copy of the web reposi
 WEB_ASSET_CORE_PATH: "/web/dist"
 WEB_ASSET_APPS_PATH: "/web/dist"
 ----
+--
 
 . Start the deployment example as described above in the xref:#local-setup[Local setup] section.
 
