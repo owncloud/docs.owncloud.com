@@ -5,7 +5,7 @@
 
 == Groups API
 
-The Groups API is implementing a subset of the functionality of the link:https://docs.microsoft.com/en-us/graph/api/resources/group?view=graph-rest-1.0[MS Graph Group resource] The JSON representation of a Group as handled by the Groups API looks like this:
+The Groups API is implementing a subset of the functionality of the link:https://learn.microsoft.com/en-us/graph/api/resources/group?view=graph-rest-1.0[MS Graph Group resource] The JSON representation of a Group as handled by the Groups API looks like this:
 
 [source,json]
 ----

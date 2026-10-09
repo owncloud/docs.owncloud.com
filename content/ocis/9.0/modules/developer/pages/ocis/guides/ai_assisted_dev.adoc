@@ -25,7 +25,7 @@ _Cost:_ ~$100 USD for two extensions (using the Claude Max subscription)
 Before starting, ensure you have the following:
 
 * A running oCIS instance, see the xref:admin:depl-examples/ubuntu-compose/ubuntu-compose-prod.adoc[Admin Docs, window=_blank] for a deployment example
-* link:https://claude.com/pricing/max[Claude Max subscription, window=_blank] (starts with $100 US/month at the time of writing, other plans availabe)
+* link:https://claude.com/pricing[Claude Max subscription, window=_blank] (starts with $100 US/month at the time of writing, other plans availabe)
 * SSH access to your server (for MCP connectivity)
 * Full root access to the server unless Claude Code, Claude MCP connector, oCIS and other tools all run as another user
 
@@ -44,8 +44,8 @@ MCP (Model Context Protocol) allows Claude to connect directly to a server, enab
 
 Follow the official MCP documentation to set up a connector:
 
-- _link:https://modelcontextprotocol.io/quickstart[MCP Quickstart Guide, window=_blank]_
-- _link:https://modelcontextprotocol.io/docs/develop/connect-local-servers[Connect to Local Servers, window=_blank]_
+- _link:https://modelcontextprotocol.io/docs/2026-07-28/develop/build-server[MCP Quickstart Guide, window=_blank]_
+- _link:https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers[Connect to Local Servers, window=_blank]_
 - _link:https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop[Claude Desktop MCP Setup, window=_blank]_
 
 === Verify Connection
@@ -442,10 +442,10 @@ Please note that, as with all contributions, this approach requires a full revie
 | URL
 
 | MCP Quickstart
-| https://modelcontextprotocol.io/quickstart
+| https://modelcontextprotocol.io/docs/2026-07-28/develop/build-server
 
 | MCP Local Servers
-| https://modelcontextprotocol.io/docs/develop/connect-local-servers
+| https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers
 
 | Claude Desktop MCP
 | https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop

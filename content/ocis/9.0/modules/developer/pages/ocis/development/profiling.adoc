@@ -5,7 +5,7 @@
 
 == 0. Prerequisites
 
-* Go development kit of a link:https://golang.org/doc/devel/release.html#policy[supported version]. Follow link:http://golang.org/doc/code.html[these instructions] to install the go tool and set up GOPATH.
+* Go development kit of a link:https://go.dev/doc/devel/release[supported version]. Follow link:https://go.dev/doc/code[these instructions] to install the go tool and set up GOPATH.
 * Graphviz: http://www.graphviz.org/. Used to generate graphic visualizations of profiles, which this example setup does.
 
 The only way to enable the profiler currently is to explicitly select which areas to collect samples for. In order to do this, the following steps have to be followed.
@@ -127,7 +127,7 @@ Once the collection is done a browser tab will open with the result `svg`, looki
 //https:/i.imgur.com/vo0EbcX.jpg
 image::ocis/development/vo0EbcX.png[img]
 
-For references on how to interpret this graph, link:https://github.com/google/pprof/blob/master/doc/README.md#interpreting-the-callgraph[continue reading here].
+For references on how to interpret this graph, link:https://github.com/google/pprof/blob/main/doc/README.md#interpreting-the-callgraph[continue reading here].
 
 == Room for Improvement
 

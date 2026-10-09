@@ -4,7 +4,7 @@
 
 == Packaging
 
-Web is using link:https://pnpm.io/[pnpm] as package manager and link:https://vitejs.dev/[vite] as build tool. The latter is built on top of link:https://rollupjs.org/[rollup] and brings some additional features such as instant hot-reloading.
+Web is using link:https://pnpm.io/[pnpm] as package manager and link:https://vite.dev/[vite] as build tool. The latter is built on top of link:https://rollupjs.org/[rollup] and brings some additional features such as instant hot-reloading.
 
 == Development Setup
 

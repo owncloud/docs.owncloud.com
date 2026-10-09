@@ -25,7 +25,7 @@ Migration is one of the most important topics of the oCIS story. We need to prov
   - _What about additional share permissions, e.g. comment on office files?_
 - Legacy clients need to keep working
   - To keep existing clients working the `remote.php/webdav` and `dav/files/<username>` webdav endpoints as well as the ocs API need to be available.
-- _What about link:https://doc.owncloud.com/server/user_manual/personal_settings/security.html#app-passwords-tokens[app passwords/tokens]?_
+- _What about xref:server:classic_ui:personal_settings/security.adoc#app-passwords-tokens[app passwords/tokens]?_
 
 == Considered Options
 

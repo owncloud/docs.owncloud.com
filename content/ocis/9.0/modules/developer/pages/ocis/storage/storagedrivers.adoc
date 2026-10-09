@@ -31,7 +31,7 @@ An important aspect of a filesystem is organizing files and directories in a fil
 [NOTE]
 ====
 _Folders are not directories_ +
-There is a difference between _folder_ and _directory_: a _directory_ is a file system concept. A _folder_ is a metaphor for the concept of a physical file folder. There are also _virtual folders_ or _smart folders_ like the recent files folder which are no file system _directories_. So, every _directory_ and every _virtual folder_ is a _folder_, but not every _folder_ is a _directory_. See link:https://en.wikipedia.org/wiki/Directory_(computing[the folder metaphor in wikipedia]#Folder_metaphor). Also see the activity history below.
+There is a difference between _folder_ and _directory_: a _directory_ is a file system concept. A _folder_ is a metaphor for the concept of a physical file folder. There are also _virtual folders_ or _smart folders_ like the recent files folder which are no file system _directories_. So, every _directory_ and every _virtual folder_ is a _folder_, but not every _folder_ is a _directory_. See link:https://en.wikipedia.org/wiki/Directory_(computing)[Folder metaphor, Wikipedia]. Also see the activity history below.
 ====
 
 
@@ -61,7 +61,7 @@ Depending on the underlying storage technology some operations may either be slo
 [NOTE]
 ====
 _S3 has no rename_ +
-Technically, link:https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/examples-s3-objects.html#copy-object[S3 has no rename operation at all]. By design, the location of the value is determined by the key, so it always has to do a copy and delete. Another example is the link:https://redis.io/commands/rename[redis RENAME operation]: while being specified as O(1) it _executes an implicit DEL operation, so if the deleted key contains a very big value it may cause high latency..._
+Technically, link:https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/examples-s3-objects.html#copy-object[S3 has no rename operation at all]. By design, the location of the value is determined by the key, so it always has to do a copy and delete. Another example is the link:https://redis.io/docs/latest/commands/rename/[redis RENAME operation]: while being specified as O(1) it _executes an implicit DEL operation, so if the deleted key contains a very big value it may cause high latency..._
 ====
 
 
@@ -169,7 +169,7 @@ The _minimal_ storage driver for a POSIX based filesystem. It literally supports
 ** fuse filesystem overlay
 
 * no native trash
-* could use link:https://specifications.freedesktop.org/trash-spec/trashspec-latest.html[The FreeDesktop.org Trash specification]
+* could use link:https://specifications.freedesktop.org/trash/latest/[The FreeDesktop.org Trash specification]
 * fuse filesystem overlay
 
 * no native versions, multiple options possible

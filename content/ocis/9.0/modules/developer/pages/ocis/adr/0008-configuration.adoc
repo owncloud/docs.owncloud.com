@@ -31,7 +31,7 @@ Because we solely rely on link:https://github.com/owncloud/ocis/blob/master/ocis
 
 === Considered Options
 
-* Extend link:https://github.com/urfave/cli/blob/master/altsrc/flag.go#L12-L17[FlagInputSourceExtension interface]
+* Extend link:https://github.com/urfave/cli/blob/main/flag.go#L13-L17[FlagInputSourceExtension interface]
 * Feature request: support for structured configuration (urfave/cli).
 * Clearly defined boundaries of what can and cannot be done.
 * Expose structured field values as CLI flags
@@ -51,9 +51,9 @@ Because we solely rely on link:https://github.com/owncloud/ocis/blob/master/ocis
 ==== Extend FlagInputSourceExtension Interface
 
 * Good, because we could still use Viper to load from config files here and apply values to the flags in the context.
-* Bad, because urfave/cli team are link:https://github.com/urfave/cli/issues/1051#issuecomment-606311923[actively working on v3 of altsrc] and we don't want to maintain yet another slice of the codebase.
+* Bad, because urfave/cli team are link:https://github.com/urfave/cli-altsrc/issues/2[actively working on v3 of altsrc] and we don't want to maintain yet another slice of the codebase.
 
-NOTE: Source is link:https://github.com/urfave/cli/blob/master/altsrc/flag.go#L12-L17[FlagInputSourceExtension interface]
+NOTE: Source is link:https://github.com/urfave/cli/blob/main/flag.go#L13-L17[FlagInputSourceExtension interface]
 
 ==== Feature request: support for structured configuration (urfave/cli).
 
@@ -200,5 +200,5 @@ Because this functionality is only available as an env var, there is no current 
 ==== State of the Art
 
 * link:https://docs.google.com/document/d/1Dvct469xfjkgy3tjWMAKvRAJo4CmGH4cgSVGTDpay6A[Kubernetes proposal on this very same topic]
-* link:https://www.pulumi.com/docs/intro/concepts/config/[Configuration \| Pulumi]
+* link:https://www.pulumi.com/docs/iac/concepts/config/[Configuration \| Pulumi]
 ** Configuration can be altered via setters through the CLI.

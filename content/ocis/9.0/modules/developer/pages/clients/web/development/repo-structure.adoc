@@ -33,7 +33,7 @@ This is probably no surprise: the root level `package.json` file defines the pro
 
 === vite.config.ts
 
-We're working with link:https://vitejs.dev[Vite] as a local development server and build tool. `vite.config.ts` is the main configuration file for that. You can read more about the usage in our xref:clients/web/development/tooling.adoc[tooling section].
+We're working with link:https://vite.dev[Vite] as a local development server and build tool. `vite.config.ts` is the main configuration file for that. You can read more about the usage in our xref:clients/web/development/tooling.adoc[tooling section].
 
 == (Published) Packages
 
@@ -66,7 +66,7 @@ The ownCloud Design System is a standalone project, but to make development easi
 
 The client package (`/packages/web-client`) serves as an abstraction layer for the various ownCloud APIs, like xref:apis/http/graph/[LibreGraph], xref:server:developer_manual:webdav_api/index.adoc[WebDAV] and xref:server:developer_manual:core/apis/ocs-capabilities.adoc[OCS]. The package provides TypeScript interfaces for various entities (like files, folders, shares and spaces) and makes sure that raw API responses are properly transformed so that you can deal with more useful objects. The web-client package gets published on npmjs.com as link:https://www.npmjs.com/package/@ownclouders/web-client[@ownclouders/web-client].
 
-Dedicated documentation for the `web-client` package is not available, yet, since our extension system is still work in progress. However, the package's link:https://github.com/owncloud/ocis//tree/master/web/packages/web-client/README.md[README.md] gives you a few examples on how to use it.
+Dedicated documentation for the `web-client` package is not available, yet, since our extension system is still work in progress. However, the package's link:https://github.com/owncloud/ocis/blob/master/web/packages/web-client/README.md[README.md] gives you a few examples on how to use it.
 
 === web-pkg
 

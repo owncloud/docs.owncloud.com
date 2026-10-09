@@ -104,7 +104,7 @@ Now, the same file is accessed as a share
 |===
 
 
-The `:`, `!` and `$` are chosen from the set of link:https://tools.ietf.org/html/rfc3986#section-2.2[RFC3986 sub delimiters] on purpose. They can be used in URLs without having to be encoded. In some cases, a delimiter can be left out if a component is not set:
+The `:`, `!` and `$` are chosen from the set of link:https://www.rfc-editor.org/info/rfc3986/[RFC3986 sub delimiters] on purpose. They can be used in URLs without having to be encoded. In some cases, a delimiter can be left out if a component is not set:
 
 [cols="3,2",options="header"]
 |===

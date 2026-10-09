@@ -45,7 +45,7 @@ Events are identified by their namespace and their respective name. The namespac
 
 Example: `ocis.ocdav.delete` - an event with that name sent out if an WebDAV DELETE request arrived in the oCDav service.
 
-An event can carry a payload which is encoded as json object. (See for example link:https://docs.nats.io/using-nats/developer/sending/structure[NATS] ). There are no pre-defined members in that object, it is fully up to the sender which data will be included in the payload. Receivers must be robust to deal with changes.
+An event can carry a payload which is encoded as json object. (See for example link:https://docs.nats.io/learn/[NATS] ). There are no pre-defined members in that object, it is fully up to the sender which data will be included in the payload. Receivers must be robust to deal with changes.
 
 ==== Quality of Service
 

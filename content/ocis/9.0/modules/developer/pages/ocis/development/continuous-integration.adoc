@@ -47,6 +47,6 @@ You may add flags to your commit message or PR title in order to speed up pipeli
 ====
   If you experience a `"build" struct has no .title attribute` you need a newer version of drone-cli.
 
-  You currently need to build it yourself from this link:https://github.com/drone/drone-cli[source code]. If you are not using master as source, please ensure that this link:https://github.com/drone/drone-cli/pull/175[PR] is included.
+  You currently need to build it yourself from this link:https://github.com/harness/drone-cli[source code]. If you are not using master as source, please ensure that this link:https://github.com/harness/drone-cli/pull/175[PR] is included.
 ====
 

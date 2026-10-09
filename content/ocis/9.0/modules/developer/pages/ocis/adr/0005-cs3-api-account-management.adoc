@@ -159,7 +159,7 @@ As explained before, during this flow no Reva middlewares are run. Creating an a
 * Good, because it solidifies what the CS3 API can or cannot do, and account management should be handled at the API level since ultimately accounts would contain a mix of required CS3 and vendor-specific attributes.
 * Good, because it centralizes account management and constrains it within the Reva boundaries.
 * Good, because there is a clear separation of concerns on what is accounts management logic.
-* Good, because we already designed link:https://github.com/owncloud/ocis/blob/master/accounts/pkg/proto/v0/accounts.proto#L42-L85[a similar API for the accounts service] the only difference being we (vendors) link:https://github.com/owncloud/ocis/blob/master/accounts/pkg/proto/v0/accounts.proto#L252-L408[define their own messages].
+* Good, because we already designed accounts service. Note that the accounts service has been removed before ocis 2.0.
 ** The API would fully include CRUD methods
 
 * Bad, because development cycles are larger.

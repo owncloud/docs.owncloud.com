@@ -209,7 +209,7 @@ This command is handy to run specific commands inside your service. Try `docker 
 
 === Persist Data, Restart and Logging
 
-The key to a successful container setup is the persistence of the application data to make the data survive a re-boot. Docker normally uses link:https://docs.docker.com/storage/volumes/[volumes] for this purpose. A volume can either be a "named volume" which are completely managed by docker and have many advantages (see the linked docker documentation), or "bind mounts" which are using the directory structure and OS of the host system. In our example we already use a bind mount for the config file. We will now add a named volume for the oCIS data directory.
+The key to a successful container setup is the persistence of the application data to make the data survive a re-boot. Docker normally uses link:https://docs.docker.com/engine/storage/volumes/[volumes] for this purpose. A volume can either be a "named volume" which are completely managed by docker and have many advantages (see the linked docker documentation), or "bind mounts" which are using the directory structure and OS of the host system. In our example we already use a bind mount for the config file. We will now add a named volume for the oCIS data directory.
 
 This is the way we should configure the ocis service:
 

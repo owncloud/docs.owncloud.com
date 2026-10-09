@@ -35,7 +35,7 @@ Infinite Scale uses a xref:{dev-s-path}/gateway/index.adoc[gRPC API Gateway] to 
 
 === Protobuf
 
-gRPC APIs are typically defined by link:https://developers.google.com/protocol-buffers/docs/overview[Protocol buffers]. The different client and server stubs are created from ``*.proto`` files by code generation tools.
+gRPC APIs are typically defined by link:https://protobuf.dev/overview/[Protocol buffers]. The different client and server stubs are created from ``*.proto`` files by code generation tools.
 
 == Versioning
 

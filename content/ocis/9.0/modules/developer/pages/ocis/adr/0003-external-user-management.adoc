@@ -96,7 +96,7 @@ We should use an existing LDAP server and make GLAuth a drop in replacement for 
 
 ** we use a service to wrap the LDAP server with other APIs:
 *** ms graph API - ODATA based restful API,
-*** link:http://www.simplecloud.info/[SCIM] - designed to manage user identities, supported by some IDPs,
+*** link:https://simplecloud.info/[SCIM] - designed to manage user identities, supported by some IDPs,
 *** the current accounts API (which is a protobuf spec following the ms graph API)
 
 ** our account management UI can use the ms graph based API service which can have different backends

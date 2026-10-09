@@ -44,7 +44,7 @@ Chosen option: option 2; Use third party libraries such as Open Policy Agent (a 
 
 == Chosen Option Approach
 
-Make use of link:https://www.openpolicyagent.org/docs/latest/external-data/#option-2-overload-input[overloading Open Policy Agent's input] along with an external storage source (instead of an OPA service) in conjunction with go-micro's gRPC client wrappers (a.k.a. middlewares) to leverage policy rules evaluation.
+Make use of link:https://www.openpolicyagent.org/docs/external-data/[overloading Open Policy Agent's input] along with an external storage source (instead of an OPA service) in conjunction with go-micro's gRPC client wrappers (a.k.a. middlewares) to leverage policy rules evaluation.
 
 === Terminology
 
@@ -52,7 +52,7 @@ New terms are defined to refer to new mental models:
 
 * Policy: self-imposed limitation of a piece of software. i.e: "after 20 users limit the use of thumbnails".
 * Checkers: in the context of a middleware, a checker is in charge of defining logical conditions that prevent requests (users) from doing an action.
-* Policy file: a link:https://www.openpolicyagent.org/docs/latest/policy-language/[rego file].
+* Policy file: a link:https://www.openpolicyagent.org/docs/policy-language/[rego file].
 * Policy evaluation: the act of piecing together input (from a request), data (from an external storage) and policies in order to make a decision.
 
 ==== Temporary New Interfaces Part of the PoC

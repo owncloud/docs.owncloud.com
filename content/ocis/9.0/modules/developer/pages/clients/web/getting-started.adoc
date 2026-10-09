@@ -4,7 +4,7 @@
 
 == Source Code
 
-The source code is hosted in the ocis repo in the link:https://github.com/owncloud/ocis/web[web, window=_blank] folder.
+The source code is hosted in the ocis repo in the link:https://github.com/owncloud/ocis/tree/master/web/[web, window=_blank] folder.
 
 == Installation
 

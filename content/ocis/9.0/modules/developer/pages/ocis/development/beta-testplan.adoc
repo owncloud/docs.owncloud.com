@@ -4,7 +4,7 @@
 
 == Beta Testing
 
-This document is supposed to give you some ideas how and what to test on ocis. It's not meant to be an extensive list of all tests to be done, rather it should help you, as beta-tester, to get started and enable you to get creative and create your own test-cases. link:https://twitter.com/sempf/status/514473420277694465[Derive from these examples, be creative, do unusual and unconventional things, to try to break things].
+This document is supposed to give you some ideas how and what to test on ocis. It's not meant to be an extensive list of all tests to be done, rather it should help you, as beta-tester, to get started and enable you to get creative and create your own test-cases. Be creative, do unusual and unconventional things, to try to break things.
 
 One option to create new test-cases and to stress the system is to examine what the
 xref:ocis/development/testing.adoc[API acceptance-tests] or the xref:#web[web-UI] does, xref:#decode_https_traffic_with_wireshark[examine the requests] and do something a bit different with curl. This is also a good way to find out how APIs work that are not already fully documented.
