@@ -48,6 +48,7 @@ This is the default user driver.
 
 If the following defaults don't match your environment then change them accordingly:
 
+[source,bash]
 ----
 export STORAGE_LDAP_HOSTNAME=localhost
 export STORAGE_LDAP_PORT=9126

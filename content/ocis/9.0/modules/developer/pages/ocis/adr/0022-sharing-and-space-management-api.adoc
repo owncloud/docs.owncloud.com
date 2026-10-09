@@ -31,12 +31,12 @@ The desktop and mobile client platforms were suffering from poor support from th
 
 == Considered Options
 
-* xref:#new_ocs_api_version[New OCS Api Version]
+* xref:#new_ocs_api_version[New OCS API Version]
 * xref:#sharing_via_libregraph[Sharing via LibreGraph]
 
 == Decision Outcome
 
-Chosen option: xref:#sharing_via_libregraph[LibreGraph]
+Chosen option: xref:#sharing_via_libregraph[Sharing via LibreGraph]
 
 === Positive Consequences:
 

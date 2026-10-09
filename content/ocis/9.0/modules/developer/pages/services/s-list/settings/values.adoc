@@ -6,7 +6,7 @@ A _Settings Value_ is the value an authenticated user has chosen for a specific 
 
 == Identifying Settings Values
 
-A _settings value_ is uniquely identified by four attributes. Three of them are coming from the definition of the setting within it's settings bundle (see xref:./bundles.adoc[Settings Bundles] for an example). The fourth identifies the user.
+A _settings value_ is uniquely identified by four attributes. Three of them are coming from the definition of the setting within it's settings bundle (see xref:services/s-list/settings/bundles.adoc[Settings Bundles] for an example). The fourth identifies the user.
 
 * extension: +
 Key of the extension that registered the settings bundle,

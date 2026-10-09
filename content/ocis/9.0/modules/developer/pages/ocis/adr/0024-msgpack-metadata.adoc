@@ -25,7 +25,7 @@ Going back to the original xref:ocis/adr/0016-files-metadata.adoc[ADR-0016 Stora
 
 == Decision Outcome
 
-Chosen option: xref:#msgpack_files[msgpack files], because we want to stay with a self describing binary format. This is a performance tradeoff that is faster and more efficient than text based formats and more flexible but less efficient than protobuf.
+Chosen option: xref:#msgpack_files[Msgpack Files], because we want to stay with a self describing binary format. This is a performance tradeoff that is faster and more efficient than text based formats and more flexible but less efficient than protobuf.
 
 Note: directory listings are still read from the storage and remain uncached.
 

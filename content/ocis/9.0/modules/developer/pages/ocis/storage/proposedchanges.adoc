@@ -23,8 +23,8 @@ Work on this is done in https://github.com/cs3org/reva/pull/2023
 ====
 What about copy pasting links from the browser? Well this storage is only really needed to have a path to ocm shares that actually reside on other instances. In the UI the shares would be listed by querying a _share manager_. It returns ResourceIds, which can be stated to fetch a path that is then accessible in the CS3 global namespace. Two caveats:
 
-- This only works for resources that are actually hosted by the current instance. For those it would leak the parent path segments to a shared resource.
-- For accepted OCM shares there must be a path in the xref:ocis/storage/namespaces.adoc#cs3-global-namespaces[_CS3 global namespace_] that has to be the same for all users, otherwise they cannot copy and share those URLs.
+* This only works for resources that are actually hosted by the current instance. For those it would leak the parent path segments to a shared resource.
+* For accepted OCM shares there must be a path in the xref:ocis/storage/namespaces.adoc#cs3-global-namespaces[_CS3 global namespace_] that has to be the same for all users, otherwise they cannot copy and share those URLs.
 ====
 
 === The Gateway Should Be Responsible for Path Transformations
@@ -145,13 +145,13 @@ Another aspect for the `file id` / `uuid` is that it must be a logical identifie
 
 Technically, this means that every storage driver needs to have a map of a `uuid` to an internal resource identifier. This internal resource identifier can be
 
-* an eos fileid, because eos can look up files by id
-* an inode if the filesystem and the storage driver support looking up by inode
+* An eos fileid, because eos can look up files by id
+* An inode if the filesystem and the storage driver support looking up by inode
 
-* a path if the storage driver has no way of looking up files by id.
+* A path if the storage driver has no way of looking up files by id.
 ** In this case other mechanisms like inotify, kernel audit or a fuse overlay might be used to keep the paths up to date.
-** to prevent excessive writes when deep folders are renamed a reverse map might be used: it will map the `uuid` to `<parentuuid>:<childname>`, in order to trade writes for reads
-** as a fallback a sync job can read the file id from the metadata of the resources and populate the uuid to internal id map.
+** To prevent excessive writes when deep folders are renamed a reverse map might be used: it will map the `uuid` to `<parentuuid>:<childname>`, in order to trade writes for reads
+** As a fallback a sync job can read the file id from the metadata of the resources and populate the uuid to internal id map.
 
 The TUS upload can take metadata, for PUT we might need a header.
 
@@ -176,9 +176,10 @@ The owncloudsql driver can return these spaceids when listing spaces.
 Why does it not work if we just use the fileid of the root node in the db?
 
 Say we have a space with three resources:
-`<instanceprefix>$<numericstorageid>!<fileid>`
-`instanceprefix$345!1`
-`instanceprefix$345!2`
++
+`<instanceprefix>$<numericstorageid>!<fileid>` +
+`instanceprefix$345!1` +
+`instanceprefix$345!2` +
 `instanceprefix$345!3`
 
 All users have moved to ocis and the registry contains a regex to route all `instanceprefix.*` references to the storageprovider with the owncloudsql driver. It is up to the driver to locate the correct resource by using the filecache table. In this case the numeric storage id is unnecessary.
@@ -212,15 +213,19 @@ Resources can be looked up because the oc_filecache has a unique fileid over all
 Now we again migrate the space `345` to another storage driver:
 
 * the storage registry contains a new entry for `instanceprefix!1` so the storage space root now points to the new storage provider
+
 * The registry needs to be aware of node ids to route properly. This is a no-go. We don't want to keep a cache of _all_ nodeids in the registry. Only the root nodes of spaces.
+
 * The new storage driver only has a nodeid which might collide with other nodeids from other storage spaces, e.g. when two instances are imported into one ocis instance. Although it would be possible to just set up two storage providers extra care would have to be taken to prevent nodeid collisions when importing a space.
 
 If we now have to fetch the path on the `/dav/meta/` endpoint:
 
 * `/dav/meta/instanceprefix!1` +
 would work because it is the root of a space +
+
 * `/dav/meta/instanceprefix!2` +
 would cause the gateway to poll all storage providers because the registry has no way to determine the responsible storage provider +
+
 * `/dav/meta/instanceprefix!3` +
 the same
 
@@ -230,7 +235,8 @@ Now, we could use the nodeid of the root of a storage space as the spaceid ... i
 
 * `<space-root-uuid>!<fileid>` +
 would be easy for the decomposedfs. +
-eos might use numeric ids: +
+eos might use numeric ids:
+
 * `<eosprefix>$<space-root-fileid>!<fileid>`, but it needs a custom prefix to distinguish multiple eos instances.
 
 Furthermore, when migrating spaces between storage providers we want to stay collision free, which is why we should recommend uuids.

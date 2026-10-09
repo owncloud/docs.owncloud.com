@@ -247,7 +247,7 @@ If you want to use a specific version of oCIS, set the version to a dedicated ta
 
 [TIP]
 ====
-You can read more about the different oCIS releases in the xref:ocis/release_roadmap.adoc[oCIS Release Lifecycle].
+You can read more about the different oCIS releases in the xref:ocis/release_roadmap.adoc[Release Life Cycle].
 ====
 
 Set your domain for the oCIS frontend in `OCIS_DOMAIN=`, e.g. `OCIS_DOMAIN=ocis.owncloud.test`.
@@ -415,7 +415,7 @@ WEB_ASSET_APPS_PATH: "/web/dist"
 ----
 --
 
-. Start the deployment example as described above in the xref:#local-setup[Local setup] section.
+. Start the deployment example as described above in the xref:#local-setup[Local Setup] section.
 
 For app provider frontend development in `web` you can find the source code in `web/packages/web-app-external`. Some parts of the integration live in `web/packages/web-app-files`.
 

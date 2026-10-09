@@ -23,15 +23,15 @@ From the users perspective, the interface to search is just a single form field 
 
 == Considered Options
 
-* xref:#keyword_query_language[KQL - Keyword Query Language]
-* xref:#simplified_query[Simple Query]
+* xref:#keyword_query_language[Keyword Query Language]
+* xref:#simplified_query[Simplified Query]
 * xref:#lucene_query_language[Lucene Query Language]
 * xref:#solr_query_language[Solr Query Language]
 * xref:#elasticsearch_query_language[Elasticsearch Query Language]
 
 == Decision Outcome
 
-Chosen option: xref:#keyword_query_language[KQL - Keyword Query Language], because it enables advanced search across all platforms.
+Chosen option: xref:#keyword_query_language[Keyword Query Language], because it enables advanced search across all platforms.
 
 === Positive Consequences
 

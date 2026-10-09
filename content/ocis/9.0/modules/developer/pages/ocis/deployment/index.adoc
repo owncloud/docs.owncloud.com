@@ -4,7 +4,7 @@
 
 == Deployments Scenarios and Examples
 
-This section handles deployments and operations for admins and people who are interested in how versatile oCIS is. If you want to just try oCIS you may also follow xref:ocis/development/getting-started.adoc[Getting started].
+This section handles deployments and operations for admins and people who are interested in how versatile oCIS is. If you want to just try oCIS you may also follow xref:ocis/development/getting-started.adoc[Getting Started].
 
 === Setup oCIS on Your Server
 
