@@ -4,7 +4,7 @@
 
 == Introduction
 
-Translations are essential for the web frontend. Sources are located in subfolders of the packages folder. A nightly sync automatically extracts and synchronizes data, see the link:https://owncloud.dev/services/general-info/add-translations/[Add Translations] documentation for more details, but it can also be triggered manually.
+Translations are essential for the web frontend. Sources are located in subfolders of the packages folder. A nightly sync automatically extracts and synchronizes data, see the xref:services/general-info/add-translations.adoc[Add Translations] documentation for more details, but it can also be triggered manually.
 
 == Preparation
 

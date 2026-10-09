@@ -47,7 +47,7 @@ Backport changes to `master` and create other required stable branches, update c
 ==== Details
 
 ----
-https://owncloud.dev/ocis/releasing_guide/
+https://doc.owncloud.com/ocis/releasing_guide/releasing_guide.html
 
 * [ ] Start the Releasing Process
   * [ ] Create a `stable-8.2` branch based on current `master`
@@ -139,7 +139,7 @@ Integrate all patches and set the final version
 
 [source,plaintext]
 ----
-https://owncloud.dev/ocis/releasing_guide/
+https://doc.owncloud.com/ocis/releasing_guide/releasing_guide.html
 
 * [ ] Prepare Release
   * [ ] Create a new feature branch based on `stable-8.2`

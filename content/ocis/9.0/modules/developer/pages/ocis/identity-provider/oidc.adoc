@@ -98,4 +98,4 @@ Here is an example of data returned:
 }
 ----
 
-Refer to the link:https://owncloud.dev/apis/http/authorization[Authorization] section for example usages and details.
+Refer to the xref:apis/http/authorization.adoc[Authorization] section for example usages and details.

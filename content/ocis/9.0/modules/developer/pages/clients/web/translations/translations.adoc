@@ -52,7 +52,7 @@ Note 2: The source string is used for any language that does not meet 2.) *OR* i
 
 == Translation Process
 
-A nightly sync automatically extracts and synchronizes data, see the link:https://owncloud.dev/services/general-info/add-translations/[Add Translations] documentation for more details, but it can also be triggered manually. Here are the steps for a manual process, run the commands from the repos root:
+A nightly sync automatically extracts and synchronizes data, see the xref:services/general-info/add-translations.adoc[Add Translations] documentation for more details, but it can also be triggered manually. Here are the steps for a manual process, run the commands from the repos root:
 
 ----
 make l10n-read         --> Extract source strings from gettext

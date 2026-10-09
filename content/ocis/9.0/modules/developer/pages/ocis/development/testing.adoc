@@ -514,7 +514,7 @@ docker run -d -p 3310:3310 -v /your/local/filesystem/path/to/clamav/:/var/lib/cl
 
 === Run oCIS
 
-As `antivirus` service is not enabled by default we need to enable the service while running oCIS server. We also need to enable `async upload` and as virus scan is performed in post-processing step, we need to set it as well. Documentation for environment variables related to antivirus is available link:https://owncloud.dev/services/antivirus/#environment-variables[here]
+As `antivirus` service is not enabled by default we need to enable the service while running oCIS server. We also need to enable `async upload` and as virus scan is performed in post-processing step, we need to set it as well. Documentation for environment variables related to antivirus is available xref:{dev-s-path}/antivirus/index.adoc[here].
 
 [source,bash]
 ----

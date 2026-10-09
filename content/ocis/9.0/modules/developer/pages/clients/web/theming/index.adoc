@@ -10,11 +10,12 @@ This page documents the setup and configuration options, and provides a template
 
 == Ways of providing a theme
 
-Generally, your theming configuration lives inside a `.json` file, e.g. `theme.json`. To load this file, it needs to be correctly referenced inside your `config/config.json` (example configurations can be link:https://github.com/owncloud/web/tree/master/config[found on GitHub]).
+Generally, your theming configuration lives inside a `.json` file, e.g. `theme.json`. To load this file, it needs to be correctly referenced inside your `config/config.json` (example configurations can be link:https://github.com/owncloud/ocis/tree/master/web/config[found on GitHub]).
 
 To reference your theme, you have two options:
 
 * Using a URL, e.g. `"theme": "https://externalurl.example.com/theme-name/theme.json",`. To avoid CORS issues, please make sure that you host the URL on the same URL as your ownCloud web hosting.
+
 * For development and testing purposes, you can store your `theme.json` inside `+packages/web-runtime/themes/{theme-name}/+` and reference it in the `config.json`. However, this isn't recommended for production use since your changes may get lost when updating oCIS or the `web` app in ownCloud Classic.
 
 *Hint:* If no theme is provided, the loading of your custom theme fails or the theme can't be parsed correctly, the standard ownCloud theme will be loaded as a fallback and an error with further information will be logged on the browser console.
@@ -124,11 +125,20 @@ Example structure:
 }
 ----
 
-* `title` is usually your app's name as shown in the App Store or Google Play. `publisher` is the app developer's name.
-* `additionalInformation` can be used to specify pricing information, such as "FREE" or a catchphrase like "Don't miss out on our awesome app!".
-* `ctaText` refers to the text in the call to action button on the right side. The `icon` directive may be used to specify your own app icon.
-* `icon` links the icon to be displayed as a preview for the final app icon within the app banner
-* `appScheme` is the first part of the URL that is used to tell the mobile OS which app to open, so using `ownCloud` will generate links such as `owncloud://yourdomain.com/f/2b61b822...`.
+* `title` +
+Is usually your app's name as shown in the App Store or Google Play. `publisher` is the app developer's name.
+
+* `additionalInformation` +
+Can be used to specify pricing information, such as "FREE" or a catchphrase like "Don't miss out on our awesome app!".
+
+* `ctaText` +
+Refers to the text in the call to action button on the right side. The `icon` directive may be used to specify your own app icon.
+
+* `icon` +
+Links the icon to be displayed as a preview for the final app icon within the app banner
+
+* `appScheme` +
+Is the first part of the URL that is used to tell the mobile OS which app to open, so using `ownCloud` will generate links such as `owncloud://yourdomain.com/f/2b61b822...`.
 
 ===== The "logo" options
 
@@ -267,7 +277,7 @@ Again, you can use the link:https://owncloud.design/#/Design%20Tokens[ownCloud d
 
 ====== Font sizes
 
-You can change the `default`, `large` and `medium` font sizes according to your needs. If you need more customization options regarding font sizes, please link:https://github.com/owncloud/web/issues/new[open an issue on GitHub] with a detailed description.
+You can change the `default`, `large` and `medium` font sizes according to your needs. If you need more customization options regarding font sizes, please link:https://github.com/owncloud/ocis/issues/new[open an issue on GitHub] with a detailed description.
 
 Font size variables get prepended with `--oc-font-size-`, so e.g. _"default"_ creates the custom CSS property `--oc-font-size-default`.
 
@@ -298,7 +308,7 @@ Please note that you also need to make the font available as a `font-face` via C
 ====== Sizes
 
 Use sizing variables to change various UI elements, such as icon and logo appearance, table row or checkbox sizes, according to your needs.
-If you need more customization options regarding sizes, please link:https://github.com/owncloud/web/issues/new[open an issue on GitHub] with a detailed description.
+If you need more customization options regarding sizes, please link:https://github.com/owncloud/ocis/issues/new[open an issue on GitHub] with a detailed description.
 
 Size variables get prepended with `--oc-size-`, so e.g. _"icon-default"_ creates the custom CSS property `--oc-size-icon-default`.
 
@@ -321,7 +331,7 @@ Size variables get prepended with `--oc-size-`, so e.g. _"icon-default"_ creates
 
 ====== Spacing
 
-Use the six spacing options (`xsmall | small | medium | large | xlarge | xxlarge`) to create a more (or less) condensed version of the user interface. If you need more customization options regarding sizes, please link:https://github.com/owncloud/web/issues/new[open an issue on GitHub] with a detailed description.
+Use the six spacing options (`xsmall | small | medium | large | xlarge | xxlarge`) to create a more (or less) condensed version of the user interface. If you need more customization options regarding sizes, please link:https://github.com/owncloud/ocis/issues/new[open an issue on GitHub] with a detailed description.
 
 Spacing variables get prepended with `--oc-space-`, so e.g. _"xlarge"_ creates the custom CSS property `--oc-space-xlarge`.
 
@@ -368,16 +378,28 @@ Again, both the global `common` section as well as the `defaults` will get merge
 
 Required information
 
-* `name` for the visible name in the theme switcher and to save the current theme to localStorage
-* `isDark` to provide the user agent with additional information
+* `name` +
+For the visible name in the theme switcher and to save the current theme to localStorage
+
+* `isDark` +
+To provide the user agent with additional information
 
 Optional information
 
-* `appBanner` see section above
-* `common` see section above
-* `designTokens` see section above
-* `logo` see section above
-* `loginPage` see section above
+* `appBanner` +
+See section above
+
+* `common` +
+See section above
+
+* `designTokens` +
+See section above
+
+* `logo` +
+See section above
+
+* `loginPage` +
+See section above
 
 == Extendability
 
