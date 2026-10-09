@@ -32,10 +32,10 @@ Again, the problem is that a resource can be shared multiple times.
 
 == Considered Options
 
-* xref:#share_based_id[Share based id]
-* xref:#resource_based_id[Resource based id]
-* xref:#permission_based_id[Permission based id]
-* xref:#use_graph_for_file_metadata[Use graph for file metadata]
+* xref:#share_based_id[Share Based ID]
+* xref:#resource_based_id[Resource Based ID]
+* xref:#permission_based_id[Permission Based ID]
+* xref:#use_graph_for_file_metadata[Use Graph for File Metadata]
 
 == Decision Outcome
 

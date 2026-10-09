@@ -16,6 +16,7 @@ image::ocis/storage/overview.drawio.svg[,width=300]
 The dashed lines in the diagram indicate requests that are made to authenticate requests or lookup the storage provider:
 
 . After authenticating a request, the proxy may either use the CS3 `userprovider` or the accounts service to fetch the user information that will be minted into the `x-access-token`.
+
 . The gateway will verify the JWT signature of the `x-access-token` or try to authenticate the request itself, e.g. using a public link token.
 
 [WARNING]

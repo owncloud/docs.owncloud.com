@@ -16,7 +16,7 @@ See the xref:admin:index.adoc[admin] documentation for prerequisites, configurat
 
 == Release Life Cycle
 
-Starting with version 6 of Infinite Scale, releases are now split into `production` and `rolling`. See the xref:/ocis/release_roadmap.adoc[Developer Docs Release Life Cycle] page for more details and impacts.
+Starting with version 6 of Infinite Scale, releases are now split into `production` and `rolling`. See the xref:ocis/release_roadmap.adoc[Release Life Cycle] page for more details and impacts.
 
 You can find more details on changes made in each release published in the xref:ROOT::/ocis_release_notes.adoc[Infinite Scale Server Release Notes].
 

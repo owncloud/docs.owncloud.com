@@ -86,9 +86,9 @@ Technically, the `/home` namespace is not necessary: the storage xref:ocis/stora
 
 The `/shares` namespace is used to solve two problems:
 
-- To query all shares the current user has access to the _share manager_ can be used to list the resource ids. While the shares can then be navigated by resource id, they will return the relative path in the actual xref:ocis/storage/terminology.adoc#storage-providers[_storage provider_], leaking parent folders of the shared resource.
+* To query all shares the current user has access to the _share manager_ can be used to list the resource ids. While the shares can then be navigated by resource id, they will return the relative path in the actual xref:ocis/storage/terminology.adoc#storage-providers[_storage provider_], leaking parent folders of the shared resource.
 
-- When accepting a remote share e.g., for OCM the resource does not exist on the local instance. They are made accessible in the global namespace under the `/shares` namespace.
+* When accepting a remote share e.g., for OCM the resource does not exist on the local instance. They are made accessible in the global namespace under the `/shares` namespace.
 
 [WARNING]
 ====
@@ -104,16 +104,16 @@ In ownCloud 10 you can not only create _public links_ but also _private links_. 
 | URL
 | description
 
-| https://demo.owncloud.com/apps/files/?dir=/Photos/Vacation&fileid=24
+| \https://demo.owncloud.com/apps/files/?dir=/Photos/Vacation&fileid=24
 | The normal browser URL
 
-| https://demo.owncloud.com/apps/files/?fileid=24
+| \https://demo.owncloud.com/apps/files/?fileid=24
 | the `dir` is actually not used to find the directory and will be filled when pasting this URL
 
-| https://demo.owncloud.com/f/24
+| \https://demo.owncloud.com/f/24
 | _private links_ are the shortened version of this and work in the same way
 
-| https://demo.owncloud.com/s/piLdAAt1m3Bg0Fk
+| \https://demo.owncloud.com/s/piLdAAt1m3Bg0Fk
 | public link
 |===
 

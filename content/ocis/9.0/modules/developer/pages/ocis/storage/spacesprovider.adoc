@@ -9,18 +9,24 @@ The current implementation in oCIS might not yet fully reflect this concept. Fee
 
 == Spaces Provider
 
-A _storage provider_ manages xref:ocis/storage/terminology.adoc#_resources[_resources_] identified by a xref:ocis/storage/terminology.adoc#_references[_reference_]
-by accessing a xref:ocis/storage/terminology.adoc#_storage_systems[_storage system_] with a xref:ocis/storage/storagedrivers.adoc[_storage driver_].
+A _storage provider_ manages xref:ocis/storage/terminology.adoc#_resources[_resources_] identified by a xref:ocis/storage/terminology.adoc#_references[_reference_] by accessing a xref:ocis/storage/terminology.adoc#_storage_systems[_storage system_] with a xref:ocis/storage/storagedrivers.adoc[_storage driver_].
 
 image::ocis/storage/spacesprovider.drawio.svg[,width=300]
 
 == Frontend
 
 The oCIS frontend service starts all services that handle incoming HTTP requests:
-- _ocdav_ for ownCloud flavoured WebDAV
-- _ocs_ for sharing, user provisioning, capabilities and other OCS API endpoints
-- _datagateway_ for up and downloads
-- TODO: _ocm_
+
+* _ocdav_ +
+For ownCloud flavoured WebDAV
+
+* _ocs_ +
+For sharing, user provisioning, capabilities and other OCS API endpoints
+
+* _datagateway_ +
+For up and downloads
+
+* TODO: _ocm_
 
 image::ocis/storage/frontend.drawio.svg[,width=300]
 
@@ -138,7 +144,7 @@ The current reva implementation jails shares into a `remote.php/webdav/Shares` f
 
 [WARNING]
 ====
-TODO rewrite this hint with `/dav/spaces`
+TODO rewrite this hint with `/dav/spaces` +
 Existing folder sync pairs in legacy clients will break when moving the user home down in the path hierarchy like CernBox did.
 For legacy clients the `remote.php/webdav` endpoint will no longer list the users home directly, but instead present the different types of storage spaces:
 - `remote.php/webdav/home`: the users home is pushed down into a new `home` xref:ocis/storage/terminology.adoc#_storage_spaces[_storage space_]

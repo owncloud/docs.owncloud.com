@@ -2,7 +2,7 @@
 :toc: right
 :toclevels: 3
 
-* Status: superseded by xref:ocis/adr/0017-allow-read-only-external-user-management.adoc[17. Allow read only external User Management]
+* Status: superseded by xref:ocis/adr/0017-allow-read-only-external-user-management.adoc[17. Allow Read Only External User Management]
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/micbar[@micbar], link:https://github.com/dragotin[@dragotin], link:https://github.com/hodyroff[@hodyroff], link:https://github.com/pmaier1[@pmaier1]
 * Date: 2022-02-08
 
@@ -118,4 +118,4 @@ We should use an existing LDAP server and make GLAuth a drop in replacement for 
 == Links
 
 * supersedes xref:ocis/adr/0001-introduce-accounts-service.adoc[ADR-0001]
-* superseded by xref:ocis/adr/0017-allow-read-only-external-user-management.adoc[17. Allow read only external User Management]
+* superseded by xref:ocis/adr/0017-allow-read-only-external-user-management.adoc[17. Allow Read Only External User Management]

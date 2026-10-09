@@ -235,6 +235,10 @@ File: ocis/storage/index.adoc
 
 Only apply corrections after explicit user confirmation.
 
+## File Relationship: CLAUDE.md and AGENTS.md
+
+`CLAUDE.md` is a symlink to this file (`AGENTS.md`). Both names are provided so that different AI tools find their expected filename — Claude Code reads `CLAUDE.md`, OpenAI Codex-based tools read `AGENTS.md`. **Always edit `AGENTS.md` directly**; `CLAUDE.md` reflects all changes automatically via the symlink.
+
 ## Context for AI Agents
 - Match existing code style
 - Do not refactor unrelated code in the same PR

@@ -2,7 +2,6 @@
 :toc: right
 :toclevels: 3
 
-
 == Editing a Storage Space
 
 The OData specification allows for a mirage of ways of addressing an entity. We will support addressing a Drive entity by its unique identifier, which is the one the graph-api returns when listing spaces, and its format is:
@@ -56,7 +55,6 @@ curl -X PATCH 'https://localhost:9200/graph/v1.0/drives/1284d238-aa92-42ce-bdc4-
 
 The previous URL resource path segment (`1284d238-aa92-42ce-bdc4-0b0000009157!07c26b3a-9944-4f2b-ab33-b0b326fc7570`) is parsed and handed over to the storage registry in order to apply the patch changes in the body, in this case update the space name attribute to `42`. Since space names are not unique we only support addressing them by their unique identifiers, any other query would render too ambiguous and explode in complexity.
 
-
 === Updating a Space Description
 
 Since every space is the root of a webdav directory, following some conventions we can make use of this to set a default storage description and image. In order to do so, every space is created with a hidden `.space` folder at its root, which can be used to store such data.
@@ -88,7 +86,7 @@ Creating a Space with a quota of 10 bytes:
 
 `curl -k -X POST 'https://localhost:9200/graph/v1.0/drives' -u admin:admin -d '{"name":"marketing", "quota": {"total": 10}}' -v`
 
-[source,console]
+[source,plaintext]
 ----
 /var/tmp/ocis/storage/users
 ├── blobs
@@ -154,7 +152,10 @@ Query the quota again:
 
 Now attempt to upload 5 bytes to the space:
 
-`curl -k -X PUT https://localhost:9200/dav/spaces/1284d238-aa92-42ce-bdc4-0b0000009157\!627981c2-2a71-4adf-b680-177e245afdda/5bytes.txt -d "01234" -u admin:admin -v`
+[source,json]
+----
+curl -k -X PUT https://localhost:9200/dav/spaces/1284d238-aa92-42ce-bdc4-0b0000009157\!627981c2-2a71-4adf-b680-177e245afdda/5bytes.txt -d "01234" -u admin:admin -v
+----
 
 The request will fail with `507 Insufficient Storage`:
 
@@ -177,35 +178,36 @@ The request will fail with `507 Insufficient Storage`:
 
 ===== Considerations
 
-- If a Space quota is updated to unlimited, the upper limit is the entire available space on disk
+* If a Space quota is updated to unlimited, the upper limit is the entire available space on disk
+
 [WARNING]
 ====
-
 The current implementation in oCIS might not yet fully reflect this concept. Feel free to add links to ADRs, PRs and Issues in short warning boxes like this.
-
 ====
 
-
 == Storage Spaces
-A storage _space_ is a logical concept. It organizes a set of xref:#resources.adoc[_resources_] in a hierarchical tree. It has a single _owner_ (_user_ or _group_),
-a _quota_, _permissions_ and is identified by a `storage space id`.
+
+A storage _space_ is a logical concept. It organizes a set of xref:#resources.adoc[_resources_] in a hierarchical tree. It has a single _owner_ (_user_ or _group_), a _quota_, _permissions_ and is identified by a `storage space id`.
 
 image::ocis/storage/storagespace.drawio.svg[]
 
-Examples would be every user's personal storage _space_, project storage _spaces_ or group storage _spaces_. While they all serve different purposes and may or may not have workflows like antivirus scanning enabled, we need a way to identify and manage these subtrees in a generic way. By creating a dedicated concept for them this becomes easier and literally makes the codebase cleaner. A storage xref:./spacesregistry.adoc[_Spaces Registry_] then allows listing the capabilities of storage _spaces_, e.g. free space, quota, owner, syncable, root etag, upload workflow steps, ...
+Examples would be every user's personal storage _space_, project storage _spaces_ or group storage _spaces_. While they all serve different purposes and may or may not have workflows like antivirus scanning enabled, we need a way to identify and manage these subtrees in a generic way. By creating a dedicated concept for them this becomes easier and literally makes the codebase cleaner. A storage xref:ocis/storage/spacesregistry.adoc[_Spaces Registry_] then allows listing the capabilities of storage _spaces_, e.g. free space, quota, owner, syncable, root etag, upload workflow steps, ...
 
-Finally, a logical `storage space id` is not tied to a specific xref:./spacesprovider.adoc[_spaces provider_]. If the xref:./storagedrivers.adoc[_storage driver_] supports it, we can import existing files including their `file id`, which makes it possible to move storage _spaces_ between xref:./spacesprovider.adoc[_spaces providers_] to implement storage classes, e.g. with or without archival, workflows, on SSDs or HDDs.
+Finally, a logical `storage space id` is not tied to a specific xref:ocis/storage/spacesprovider.adoc[_spaces provider_]. If the xref:ocis/storage/storagedrivers.adoc[_storage driver_] supports it, we can import existing files including their `file id`, which makes it possible to move storage _spaces_ between xref:ocis/storage/spacesprovider.adoc[_spaces providers_] to implement storage classes, e.g. with or without archival, workflows, on SSDs or HDDs.
 
 == Shares
-_To be clarified: we are aware that xref:#storage-spaces.adoc[_storage spaces_] may be too 'heavyweight' for ad hoc sharing with groups. That being said, there is no technical reason why group shares should not be treated like storage xref:#storage-spaces.adoc[_spaces_] that users can provision themselves. They would share the quota with the users home or personal storage xref:#storage-spaces.adoc[_space_] and the share initiator would be the sole owner. Technically, the mechanism of treating a share like a new storage xref:#storage-spaces.adoc[_space_] would be the same. This obviously also extends to user shares and even file individual shares that would be wrapped in a virtual collection. It would also become possible to share collections of arbitrary files in a single storage space, e.g. the ten best pictures from a large album._
+
+_To be clarified: we are aware that xref:#storage-spaces[_storage spaces_] may be too 'heavyweight' for ad hoc sharing with groups. That being said, there is no technical reason why group shares should not be treated like storage xref:#storage-spaces[_spaces_] that users can provision themselves. They would share the quota with the users home or personal storage xref:#storage-spaces[_space_] and the share initiator would be the sole owner. Technically, the mechanism of treating a share like a new storage xref:#storage-spaces[_space_] would be the same. This obviously also extends to user shares and even file individual shares that would be wrapped in a virtual collection. It would also become possible to share collections of arbitrary files in a single storage space, e.g. the ten best pictures from a large album._
 
 == Notes
 
 We can implement link:https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.ListStorageSpacesRequest[ListStorageSpaces] by either
-- iterating over the root of the storage and treating every folder following the `<user_layout>` as a `home` _storage space_,
-- iterating over the root of the storage and treating every folder following a new `<project_layout>` as a `project` _storage space_, or
-- iterating over the root of the storage and treating every folder following a generic `<layout>` as a _storage space_ for a configurable space type, or
-- we allow configuring a map of `space type` to `layout` (based on the link:https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.CreateStorageSpaceRequest[CreateStorageSpaceRequest]) which would allow things like
+
+* iterating over the root of the storage and treating every folder following the `<user_layout>` as a `home` _storage space_,
+* iterating over the root of the storage and treating every folder following a new `<project_layout>` as a `project` _storage space_, or
+* iterating over the root of the storage and treating every folder following a generic `<layout>` as a _storage space_ for a configurable space type, or
+* we allow configuring a map of `space type` to `layout` (based on the link:https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.CreateStorageSpaceRequest[CreateStorageSpaceRequest]) which would allow things such as +
+[source,plaintext]
 ----
 home=/var/lib/ocis/storage/home/{{substr 0 1 .Owner.Username}}/{{.Owner.Username}}
 spaces=/spaces/var/lib/ocis/storage/projects/{{.Name}}

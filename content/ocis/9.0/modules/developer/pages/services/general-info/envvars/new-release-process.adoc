@@ -8,7 +8,7 @@ The following can be done at any time but it must be done _latest_ when no envva
 
 == Special Scope Envvars
 
-Ask the developers if envvars of this type have been changed (added or removed). See the xref:services/general-info/envvars/special-envvars.adoc#special-scope-envvars[Special Envvars] documentation for more details on how to manage such a change.
+Ask the developers if envvars of this type have been changed (added or removed). See the xref:services/general-info/envvars/special-envvars.adoc#special-scope-envvars[Special Scope Envvars] documentation for more details on how to manage such a change.
 
 == Extended Envvars
 
@@ -25,7 +25,7 @@ Discard any changes in `env_vars.yaml`!
 --
 
 * Check if there is a change in the `extended-envars.yaml` output.\
-If so, process xref:services/general-info/envvars/special-envvars.adoc##fixing-changed-items[Extended Envvars - Fixing Changed Items].
+If so, process xref:services/general-info/envvars/special-envvars.adoc#fixing-changed-items[Fixing Changed Items].
 
 * When done, re-run `make docs-generate` and check if the output matches the expectations in `./docs/services/_includes/adoc/extended_configvars.adoc`.
 
@@ -76,4 +76,4 @@ Now, `env_vars.yaml` is up to date in the repo in master. Next steps depend on t
 
 === Create Envvar Delta Files
 
-* Create xref:services/general-info/envvars/env-var-deltas/index.adoc[Envvar Deltas Between Versions] files according the linked description.
+* Create xref:services/general-info/envvars/env-var-deltas/index.adoc[Deltas Between Versions] files according the linked description.

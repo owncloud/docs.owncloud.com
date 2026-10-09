@@ -125,8 +125,8 @@ If you are using an old version of Sentry (9 and before), you might want to add 
 
 Since web version larger than 7.0.2, web only supports oCIS, whereas older versions (< 7.1.0) also supported the classic ownCloud Server. This has been deprecated and is no longer available.
 
-* xref:clients/web/backend/backend-ocis.adoc[Setting up with oCIS as backend]
+* xref:clients/web/backend/backend-ocis.adoc[Setup With oCIS]
 
 == Running
 
-* xref:clients/web/backend/backend-ocis.adoc#running-web[Running with oCIS as backend]
+* xref:clients/web/backend/backend-ocis.adoc#running-web[Running Web]
