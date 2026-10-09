@@ -75,7 +75,7 @@ You can use optional OData system query options to include more or fewer propert
 
 For example, adding the following filter parameter restricts the drives returned to only those with the driveType property of `project`.
 
-[source,shell]
+[source,bash]
 ----
 GET https://ocis.url/graph/v1.0/drives?$filter=driveType eq 'project'
 ----

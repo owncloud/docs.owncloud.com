@@ -28,16 +28,23 @@ For `id`, `type`, and `extensionPointIds`, please see xref:clients/web/extension
 
 The most important configuration options are:
 
-* `icon` - The icon to be displayed, can be picked from https://owncloud.design/#/Design%20Tokens/IconList
-* `name` - The text to be displayed
-* `route` - The string/route to navigate to, if the nav item should be a `<router-link>` (Mutually exclusive with `handler`)
-* `handler` - The action to perform upon click, if the nav item should be a `<button>` (Mutually exclusive with `route`)
+* `icon` +
+The icon to be displayed, can be picked from https://owncloud.design/#/Design%20Tokens/IconList
 
-Please check the link:https://github.com/owncloud/web/blob/f069ce44919cde5d112c68a519d433e015a4a011/packages/web-pkg/src/apps/types.ts#L14[`AppNavigationItem` type] for a full list of configuration options.
+* `name` +
+The text to be displayed
+
+* `route` +
+The string/route to navigate to, if the nav item should be a `<router-link>` (Mutually exclusive with `handler`)
+
+* `handler` +
+The action to perform upon click, if the nav item should be a `<button>` (Mutually exclusive with `route`)
+
+Please check the link:https://github.com/owncloud/ocis/blob/master/web/packages/web-pkg/src/apps/types.ts#L16[`AppNavigationItem` type] for a full list of configuration options.
 
 === Example
 
-The following example shows an extension that adds a left sidebar nav item inside the files app, linking to a custom page. Note that the extension is wrapped inside a Vue composable so it can easily be reused. All helper types and composables are being provided via the link:https://github.com/owncloud/web/tree/master/packages/web-pkg[web-pkg] package.
+The following example shows an extension that adds a left sidebar nav item inside the files app, linking to a custom page. Note that the extension is wrapped inside a Vue composable so it can easily be reused. All helper types and composables are being provided via the link:https://github.com/owncloud/ocis/tree/master/web/packages/web-pkg[web-pkg] package.
 
 [source,typescript]
 ----

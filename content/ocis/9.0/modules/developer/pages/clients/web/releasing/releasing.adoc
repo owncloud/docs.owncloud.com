@@ -24,14 +24,17 @@ Replace `$major` with the *last* released major version.
 Replace `$major` with the *new* major version.
 
 . Push the newly created `stable-$major` branch
+
 . Create and checkout a new branch `chore/bump-version-$major.$minor.$patch` using the branch from previous step as base +
 Replace `$major`, `$minor` and `$patch` with the new version.
 
 . Cherry pick all required changes from `master` into the current branch
+
 . Create a new sub-folder in the `/changelog/` folder using the release version and current date `mkdir $major.$minor.$patch_$YYYY-MM-DD` +
 Replace `$major`, `$minor` and `$patch` with the new version and `$YYYY-MM-DD` with the current date in the format `YYYY-MM-DD`.
 
 . Move all changelog items from the `/changelog/unreleased/` folder into the `$major.$minor.$patch_$YYYY-MM-DD` folder created in the previous step
+
 . Run `make l10n-pull` to pull the translations +
 This command will pull the latest translations from Transifex into the current branch and saves them in the `/packages/*/l10n/` folders.
 
@@ -43,8 +46,11 @@ This script will bump the `package.json` files in all relevant packages and the 
 Replace `$major`, `$minor` and `$patch` with the new version.
 
 . Commit and push your changes.
+
 . Create a PR with tag `[full-ci]` in the title at the beginning to merge the `chore/bump-version-$major.$minor.$patch` branch into the new `stable-$major` branch
+
 . After merging, checkout the new `stable-$major` branch again
+
 . Run `./dev/scripts/create_and_push_tags.sh` +
 This script will create and push tags for the main app as well as all packages that need to be released
 
@@ -60,10 +66,12 @@ Replace the `$major` with the last released major version.
 Replace `$major`, `$minor` and `$patch` with the new version.
 
 . Cherry pick all required changes from `master` into the current branch
+
 . Create a new sub-folder in the `/changelog/` folder using the release version and current date `mkdir $major.$minor.$patch_$YYYY-MM-DD` +
 Replace `$major`, `$minor` and `$patch` with the new version and `$YYYY-MM-DD` with the current date in the format `YYYY-MM-DD`.
 
 . Move all changelog items from the `/changelog/unreleased/` folder into the `$major.$minor.$patch_$YYYY-MM-DD` folder created in previous step
+
 . Run `make l10n-pull` to pull the translations +
 This command will pull the latest translations from Transifex into the current branch and saves them in the `/packages/*/l10n/` folders.
 
@@ -75,8 +83,11 @@ This script will bump the `package.json` files in all relevant packages and the 
 Replace the `$major`, `$minor` and `$patch` with the new version.
 
 . Commit and push your changes.
+
 . Create a PR with tag `[full-ci]` in the title at the beginning to merge the `chore/bump-version-$major.$minor.$patch` branch into the latest `stable-$major` branch
+
 . After merging, checkout the latest `stable-$major` branch again
+
 . Run `./dev/scripts/create_and_push_tags.sh` +
 This script will create and push tags for the main app as well as all packages that need to be released
 
@@ -92,14 +103,17 @@ Replace `$major` with the target released major version.
 Replace the `$major` and `$minor` with the new version.
 
 . Push the newly created `stable-$major.$minor` branch
+
 . Create a new branch `chore/bump-version-$major.$minor.$patch` using the branch from previous step as base +
 Replace the `$major`, `$minor` and `$patch` with the new version.
 
 . Cherry pick all required changes from `master` into the current branch
+
 . Create a new sub-folder in the `/changelog/` folder using the release version and current date `mkdir $major.$minor.$patch_$YYYY-MM-DD` +
 Replace the `$major`, `$minor` and `$patch` with the new version and `$YYYY-MM-DD` with the current date in the format `YYYY-MM-DD`.
 
 . Move all changelog items from the `/changelog/unreleased/` folder into the `$major.$minor.$patch_$YYYY-MM-DD` folder created in previous step
+
 . Run `make l10n-pull` to pull the translations +
 This command will pull the latest translations from Transifex into the current branch and saves them in the `/packages/*/l10n/` folders.
 
@@ -111,22 +125,12 @@ This script will bump the `package.json` files in all relevant packages and the 
 Replace `$major`, `$minor` and `$patch` with the new version.
 
 . Commit and push your changes.
+
 . Create a PR with tag `[full-ci]` in the title at the beginning to merge the `chore/bump-version-$major.$minor.$patch` branch into the new `stable-$major.$minor` branch
+
 . After merging, checkout the new `stable-$major.$minor` branch again
+
 . Run `./dev/scripts/create_and_push_tags.sh` +
 This script will create and push tags for the main app as well as all packages that need to be released
 
 . The GitHub release will be created automatically together with the release artifacts
-
-=== Update Web in oCIS
-
-. In the link:https://github.com/owncloud/ocis[oCIS repository], checkout the `master` branch
-. Create a new branch `chore/bump-web-to-$major.$minor.$patch` +
-Replace `$major`, `$minor` and `$patch` with the released Web version.
-
-. In `.drone.env`, update `WEB_COMMITID` to the commit id of the Web release tag
-. In `.drone.env`, update `WEB_BRANCH` to the Web release stable branch
-. In `services/web/Makefile`, update `WEB_ASSETS_VERSION` to the Web release version
-. Add a new `enhancement` changelog item into the `/changelog/unreleased/` folder with the changelog from the Web release and link to the GitHub release
-. Commit and push your changes
-. Create a PR with tag `[full-ci]` in the title at the beginning to merge the `chore/bump-web-to-$major.$minor.$patch` branch into the master branch

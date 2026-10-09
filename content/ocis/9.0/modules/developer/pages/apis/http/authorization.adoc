@@ -8,7 +8,7 @@ In its default configuration, Infinite Scale supports three authentication metho
 . Implicit Flow
 . Hybrid Flow
 
-For detailed information on Infinite Scale's support for OpenID Connect (OIDC), please consult the link:https://owncloud.dev/ocis/identity-provider/oidc[OIDC section]. To authenticate a client app using OIDC, both `client_id` and `client_secret` are essential. Infinite Scale does not offer dynamic registration. The required data for the default link:https://doc.owncloud.com/server/next/admin_manual/configuration/user/oidc/oidc.html#client-ids-secrets-and-redirect-uris[ownCloud clients] can be found in the link and are availble for the following apps:
+For detailed information on Infinite Scale's support for OpenID Connect (OIDC), please consult the xref:ocis/identity-provider/oidc.adoc[OIDC section]. To authenticate a client app using OIDC, both `client_id` and `client_secret` are essential. Infinite Scale does not offer dynamic registration. The required data for the default xref:server:admin_manual:configuration/user/oidc/oidc.adoc#client-ids-secrets-and-redirect-uris[ownCloud clients] can be found in the link and are availble for the following apps:
 
 * Desktop
 * Android
@@ -21,15 +21,14 @@ While selecting an ownCloud client for authentication, take note of specific lim
 | Source
 | Redirect URI
 
-|Android
-|oc://android.owncloud.com
+| Android
+| oc://android.owncloud.com
 
-|iOS
-|oc://ios.owncloud.com
-|Desktop
-a|http://127.0.0.1 +
+| iOS
+| oc://ios.owncloud.com
+| Desktop
+a| http://127.0.0.1 +
 http://localhost
-
 |===
 
 In this example, the desktop app's `client_id` and `client_secret` are being used.

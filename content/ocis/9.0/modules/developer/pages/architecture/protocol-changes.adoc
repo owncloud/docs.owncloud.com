@@ -15,8 +15,8 @@ sequenceDiagram
     participant Graph
     participant SpaceA
     participant SpaceB
-    links Client: {"web": "https://owncloud.dev/clients/web/", "RClone": "https://owncloud.dev/clients/rclone/"}
-    link Graph: Documentation @ https://owncloud.dev/extensions/graph/
+    links Client: {"web": "https://doc.owncloud.com/ocis/developer/clients/web/index.html", "RClone": ""https://doc.owncloud.com/ocis/developer/clients/rclone/index.html"}
+    link Graph: Documentation @ "https://doc.owncloud.com/ocis/developer/
 
     Note left of Client:  First, a clients looks<br/>up the spaces a user has access to
     opt space lookup

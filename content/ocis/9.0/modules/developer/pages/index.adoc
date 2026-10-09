@@ -12,13 +12,13 @@ include::admin:partial$multi-location/compose-version.adoc[]
 == Target Audience
 
 This documentation addresses developers only. +
-See the xref:admin:index.adoc[admin] documnetation for prerequisites, configurations and deployment examples.
+See the xref:admin:index.adoc[admin] documentation for prerequisites, configurations and deployment examples.
 
 == Release Life Cycle
 
-Starting with version 6 of Infinite Scale, releases are now split into `production` and `rolling`. See the https://owncloud.dev/ocis/release_roadmap/[Developer Docs Release Life Cycle] page for more details and impacts.
+Starting with version 6 of Infinite Scale, releases are now split into `production` and `rolling`. See the xref:/ocis/release_roadmap.adoc[Developer Docs Release Life Cycle] page for more details and impacts.
 
-You can find more details on changes made in each release published in the https://doc.owncloud.com/ocis_release_notes.html[Infinite Scale Server Release Notes].
+You can find more details on changes made in each release published in the xref:ROOT::/ocis_release_notes.adoc[Infinite Scale Server Release Notes].
 
 IMPORTANT: Rolling releases are published in a cycle of 3 weeks. Due to this relative short cycle, you will find the actual development and the current published rolling release documentation *not* separated. They are both part of the `next` segment in the URL. Compared to production releases where the respective release number is used, the actual rolling release number published can be found e.g. in each service description in section "Environment Variables".
 

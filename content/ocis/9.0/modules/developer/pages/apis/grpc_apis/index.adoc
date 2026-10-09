@@ -29,13 +29,12 @@ a| *Microservices*
 gRPC has been evolving and has become the best option for communication between microservices because of its unmatched performance and its polyglot nature. One of the biggest strengths of microservices is the freedom of programming languages and technologies. By using gRPC we can leverage all the advantages of strictly enforced communication standards combined with freedom of choice between different programming languages - whichever would fit best.
 |===
 
-
 [NOTE]
 ====
-- http/2
-- Protocol buffers
-- Reusable connections
-- Multi language support
+* http/2
+* Protocol buffers
+* Reusable connections
+* Multi language support
 ====
 
 == CS3 APIs

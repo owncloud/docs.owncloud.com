@@ -6,11 +6,14 @@
 
 In ownCloud, we use Playwright for webUI test automation. We benefit from lower barriers to entry, readability, and usability when test standards are consistent across repositories. For example:
 
-* *Reusability:* Enhances reusability by making it easier to reuse functions, locators, shared steps, and other test code. Finding the necessary components and functionalities will be simple for someone working on a test resulting in reduced duplication and the requirement for rework after the initiation of a code review.
+* *Reusability:* +
+Enhances reusability by making it easier to reuse functions, locators, shared steps, and other test code. Finding the necessary components and functionalities will be simple for someone working on a test resulting in reduced duplication and the requirement for rework after the initiation of a code review.
 
-* *Facilitates reviews:* Code can be examined more quickly. Since you can quickly determine what the test code is doing, it eases the mental strain of code review.
+* *Facilitates reviews:* +
+Code can be examined more quickly. Since you can quickly determine what the test code is doing, it eases the mental strain of code review.
 
-* *Faster onboarding:* By following naming conventions, new contributors are onboarded more rapidly and feel comfortable enough to contribute to the codebase.
+* *Faster onboarding:* +
+By following naming conventions, new contributors are onboarded more rapidly and feel comfortable enough to contribute to the codebase.
 
 Here are the test standards and guidelines we adhere to when creating Playwright tests at ownCloud.
 
@@ -181,8 +184,11 @@ page.getByText('OK');
 
 === Files and folders
 
-* *Files*: Declare in *_camelCase_*
-* *Folders*: Declare in *_kebab-case_*
+* *Files*: +
+Declare in *_camelCase_*
+
+* *Folders*: +
+Declare in *_kebab-case_*
 
 === Variables
 
@@ -223,9 +229,11 @@ Use descriptive naming, which can help the reader quickly identify what element 
 
 As an example, you can use a naming structure that contains *_“action / name of element” + “type of element”_*.
 
-*_Defining type of element_* - These are your basic HTML element types, they’ll be defined and named in the design system, or as a team you can align on a consistent naming of the elements. Example: checkbox, tickbox, button, tooltip
+*_Defining type of element_* +
+These are your basic HTML element types, they’ll be defined and named in the design system, or as a team you can align on a consistent naming of the elements. Example: checkbox, tickbox, button, tooltip
 
-*_Defining action / name -_* Think about what action this element will perform when interacted with. Or any existing name/text of the element
+*_Defining action / name -_* +
+Think about what action this element will perform when interacted with. Or any existing name/text of the element
 
 DO 👍
 

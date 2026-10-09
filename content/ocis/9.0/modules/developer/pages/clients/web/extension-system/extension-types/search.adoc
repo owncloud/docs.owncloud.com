@@ -31,18 +31,30 @@ For `id`, `type`, and `extensionPointIds`, please see xref:clients/web/extension
 
 The `searchProvider` object configures the actual provider. It consist of the following:
 
-* `id` - Since your extension has an `id` and can only have one searchProvider, you can reuse the same value
-* `available` - Can be used to programmatically disable/enable any searchProvider, e.g. by dynamically checking backend capabilities
-* `displayName` - Optional, used to add a small hint to indicate the connection between search providers and their corresponding results
-* `previewSearch` - See below
-* `listSearch` - See below
+* `id` +
+Since your extension has an `id` and can only have one searchProvider, you can reuse the same value
+
+* `available` +
+Can be used to programmatically disable/enable any searchProvider, e.g. by dynamically checking backend capabilities
+
+* `displayName` +
+Optional, used to add a small hint to indicate the connection between search providers and their corresponding results
+
+* `previewSearch` +
+See below
+
+* `listSearch` +
+See below
 
 ==== ListSearch
 
 The listSearch object consists of:
 
-* `component` - Vue component that can render the values from the SearchResult below
-* `search(term: string)` - Function that exectues the search, based on a given term. The term is formatted in link:https://owncloud.dev/services/search/#query-language[KQL]. Please note that the returned values needs to be formatted to fit either `SearchResource` or `GenericSearchResultItem` type
+* `component` +
+Vue component that can render the values from the SearchResult below
+
+* `search(term: string)` +
+Function that exectues the search, based on a given term. The term is formatted in xref:{dev-s-path}/search/index.adoc[KQL]. Please note that the returned values needs to be formatted to fit either `SearchResource` or `GenericSearchResultItem` type
 
 ==== PreviewSearch
 
@@ -52,7 +64,7 @@ The previewSearch object extends the listSearch with one additional attribute:
 
 == Example
 
-The following example shows how a search extension that queries a Solr search engine could look like. Note that the extension is wrapped inside a Vue composable so it can easily be reused. All helper types and composables are being provided via the link:https://github.com/owncloud/web/tree/master/packages/web-pkg[web-pkg] and the link:https://github.com/owncloud/web/tree/master/packages/web-client[web-client] packages.
+The following example shows how a search extension that queries a Solr search engine could look like. Note that the extension is wrapped inside a Vue composable so it can easily be reused. All helper types and composables are being provided via the link:https://github.com/owncloud/ocis/tree/master/web/packages/web-pkg[web-pkg] and the link:https://github.com/owncloud/ocis/tree/master/web/packages/web-client[web-client] packages.
 
 [source,typescript]
 ----

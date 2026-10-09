@@ -34,11 +34,11 @@ The most important configuration options are:
 * `handler` - The action to perform upon click. The nav item will be a `<button>` tag.
 * `isVisible` - Determines whether the action is displayed to the user
 
-Please check the link:https://github.com/owncloud/web/blob/236c185540fc6758dc7bd84985c8834fa4145530/packages/web-pkg/src/composables/actions/types.ts#L6[`Action` type] for a full list of configuration options.
+Please check the link:https://github.com/owncloud/ocis/blob/master/web/packages/web-pkg/src/composables/actions/types.ts#L9[`Action` type] for a full list of configuration options.
 
 === Example
 
-The following example shows how an action extension for downloading files could look like. Note that the extension is wrapped inside a Vue composable so it can easily be reused. All helper types and composables are being provided via the link:https://github.com/owncloud/web/tree/master/packages/web-pkg[web-pkg] package.
+The following example shows how an action extension for downloading files could look like. Note that the extension is wrapped inside a Vue composable so it can easily be reused. All helper types and composables are being provided via the link:https://github.com/owncloud/ocis/tree/master/web/packages/web-pkg[web-pkg] package.
 
 [source,typescript]
 ----

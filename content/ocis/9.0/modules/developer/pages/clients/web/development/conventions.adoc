@@ -2,30 +2,21 @@
 :toc: right
 :toclevels: 3
 
-This is a collection of tips and conventions to follow when working on the link:https://github.com/owncloud/web[ownCloud web frontend].
-Since it is a living document, please open a PR if you find something missing.
+This is a collection of tips and conventions to follow when working on the link:https://github.com/owncloud/ocis[ownCloud web frontend]. Since it is a living document, please open a PR if you find something missing.
 
 == Contributing to ownCloud Web
 
-Everyone is invited to contribute. Simply fork the link:https://github.com/owncloud/web/[codebase],
-check the link:https://github.com/owncloud/web/issues?q=is%3Aopen+is%3Aissue+label%3ATopic%3Agood-first-issue[issues]
-for a suitable one and open a pull request!
+Everyone is invited to contribute. Simply fork the link:https://github.com/owncloud/ocis/[codebase], check the link:https://github.com/owncloud/ocis/issues?q=is%3Aopen+is%3Aissue+label%3ATopic%3Agood-first-issue[issues] for a suitable one and open a pull request!
 
 === Linting and Tests
 
-To make sure your pull request can be efficiently reviewed and won't need a lot of changes down the road, please run the linter and
-the unit tests via `pnpm lint --fix` and `pnpm test:unit` locally. Our link:https://drone.owncloud.com/owncloud/web[CI] will run on
-pull requests and report back any problems after that. For a further introduction on how we handle testing, please head to
-the xref:clients/web/testing/index.adoc[testing docs].
+To make sure your pull request can be efficiently reviewed and won't need a lot of changes down the road, please run the linter and the unit tests via `pnpm lint --fix` and `pnpm test:unit` locally. `CI` will run on pull requests and report back any problems after that. For a further introduction on how we handle testing, please head to the xref:clients/web/testing/index.adoc[testing docs].
 
 === Changelog Items
 
-In our project, we follow link:https://semver.org/[SemVer] and keep a changelog for every change that influences the user experience (where
-"users" can be admins, end-users and developers).
-Some changes, like refactoring, updating dependencies, writing documentation or adding tests don't require a changelog item.
+In our project, we follow link:https://semver.org/[SemVer] and keep a changelog for every change that influences the user experience (where "users" can be admins, end-users and developers). Some changes, like refactoring, updating dependencies, writing documentation or adding tests don't require a changelog item.
 
-Please add a changelog item to the `changelog/unreleased/` folder, referencing the issue and pull request numbers, following
-the link:https://github.com/owncloud/web/blob/master/changelog/TEMPLATE[changelog item template].
+Please add a changelog item to the `changelog/unreleased/` folder, referencing the issue and pull request numbers, following the link:https://github.com/owncloud/ocis/blob/master/changelog/TEMPLATE[changelog item template].
 
 == Code Conventions
 
