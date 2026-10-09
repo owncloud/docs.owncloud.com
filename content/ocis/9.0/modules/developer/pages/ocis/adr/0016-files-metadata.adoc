@@ -2,7 +2,7 @@
 :toc: right
 :toclevels: 3
 
-* Status: superseded by xref:0024-msgpack-metadata.adoc[ADR-0024]
+* Status: superseded by xref:ocis/adr/0024-msgpack-metadata.adoc[ADR-0024]
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/dragotin[@dragotin], link:https://github.com/micbar[@micbar], link:https://github.com/c0rby[@c0rby]
 * Date: 2022-02-04
 

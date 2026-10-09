@@ -79,6 +79,6 @@ link:https://github.com/owncloud/ocis/pull/2236[This proof of concept] is very r
 This problem perfectly encompasses the use of a message broker, where services such as OCS will emit messages to a bus and only listeners react to them. In this case the following applies:
 
 //https:/i.imgur.com/sa1pANQ.jpg
-image::ocis/adr/sa1pANQ.jpg[message broker]
+image::ocis/adr/sa1pANQ.png[message broker]
 
 The necessary interfaces are provided to us by go-micro, only implementations are to be done.

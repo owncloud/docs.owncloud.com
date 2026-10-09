@@ -16,7 +16,7 @@ Performance of reading extended attributes suffers from the syscall overhead whe
 
 == Considered Options
 
-Going back to the original xref:0016-files-metadata.adoc[ADR-0016 Storage for Files Metadata] we decided to use a dedicated file for metadata storage next to the decomposedfs file representing the node. Several options for the data format were considered:
+Going back to the original xref:ocis/adr/0016-files-metadata.adoc[ADR-0016 Storage for Files Metadata] we decided to use a dedicated file for metadata storage next to the decomposedfs file representing the node. Several options for the data format were considered:
 
 * Use JSON files to store metadata
 * Use INI files to store metadata

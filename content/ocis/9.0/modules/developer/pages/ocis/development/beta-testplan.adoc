@@ -22,13 +22,14 @@ Some cases have suggested setup steps, but feel free to use other setups. This c
 ** xref:ocis/deployment/ocis_keycloak.adoc[keycloak example]
 ** xref:{dev-s-path}/idp/index.adoc[service configuration]
 
-* different storage systems (decomposedFS on local POSIX (default), xref:ocis/storage-backends/dcfsnfs.adoc[decomposedFS on NFS], xref:ocis/deployment/ocis_s3.adoc[S3] )
+* different storage systems (decomposedFS on local POSIX (default), xref:ocis/storage-backends/dcfsnfs.adoc[decomposedFS on NFS],
+xref:ocis/deployment/ocis_full.adoc[S3])
 
 It's a good idea to test ocis in the same environment where you are planning to use it later (with the LDAP server, storage system, etc. of your organisation).
 
 == Run oCIS
 
-For a quick start, please have a look into the xref:ocis/getting-started.adoc[getting started documentation of oCIS]. If you would like to access oCIS remotely please refer to the xref:ocis/deployment/basic-remote-setup.adoc[Basic Remote Setup] section.
+For a quick start, please have a look into the xref:ocis/development/getting-started.adoc[getting started documentation of oCIS]. If you would like to access oCIS remotely please refer to the xref:ocis/deployment/basic-remote-setup.adoc[Basic Remote Setup] section.
 
 === Additional Tips
 
@@ -96,7 +97,7 @@ Should be tried in various ways and in different environments
 
 Documentation resources:
 
-* xref:server:developer_manual:developer_manual/core/apis/ocs-share-api.adoc[sharing API is compatible to ownCloud 10 and ownCloud 11]
+* xref:server:developer_manual:core/apis/ocs-share-api.adoc[sharing API is compatible to ownCloud 10 and ownCloud 11]
 * xref:#webdav[webDav operations]
 
 [cols="3,2,1",options="header"]

@@ -20,50 +20,62 @@ This deployment is based on our modular xref:ocis/deployment/ocis_full.adoc[ocis
 
 Credentials:
 
-* oCIS: see xref:ocis/development/getting-started.adoc#login-to-owncloud-web[default demo users]
+* oCIS: +
+see xref:ocis/getting-started/demo-users.adoc[default demo users]
 
 === Master
 
-* *oCIS:* ocis.ocis.master.owncloud.works
-* *Mail:* mail.ocis.master.owncloud.works
+* *oCIS:* +
+ocis.ocis.master.owncloud.works
+* *Mail:* +
+mail.ocis.master.owncloud.works
 
 === Rolling Release
 
-- *oCIS:* ocis.ocis.rolling.owncloud.works
-- *Mail:* mail.ocis.rolling.owncloud.works
+- *oCIS:* +
+ocis.ocis.rolling.owncloud.works
+- *Mail:* +
+mail.ocis.rolling.owncloud.works
 
 === Production Release
 
-- *oCIS:* ocis.ocis.production.owncloud.works
-- *Mail:* mail.ocis.production.owncloud.works
+- *oCIS:* +
+ocis.ocis.production.owncloud.works
+- *Mail:* +
+mail.ocis.production.owncloud.works
 
 === Master with OnlyOffice
 
 This example is using OnlyOffice as the office suite.
 
-* *oCIS:* ocis.ocis-onlyoffice.master.owncloud.works
+* *oCIS:* +
+ocis.ocis-onlyoffice.master.owncloud.works
 
 === Rolling Release with OnlyOffice
 
 This example is using OnlyOffice as the office suite.
 
-* *oCIS:* ocis.ocis-onlyoffice.rolling.owncloud.works
+* *oCIS:* +
+ocis.ocis-onlyoffice.rolling.owncloud.works
 
 == oCIS and ownCloud Web with Both Most Recent Development Versions
 
 Credentials:
 
-* *oCIS:* see xref:ocis/development/getting-startedadoc#login-to-owncloud-web.[default demo users]
+* *oCIS:* +
+see xref:ocis/getting-started/demo-users.adoc[default demo users]
 
 === Master Branches
 
-* *oCIS:* ocis.ocis-web.master.owncloud.works
+* *oCIS:* +
+ocis.ocis-web.master.owncloud.works
 
 == oCIS with Keycloak
 
 Credentials:
 
-* *oCIS:* see xref:ocis/development/getting-started.adoc#login-to-owncloud-web[default demo users]
+* *oCIS:* +
+see xref:ocis/getting-started/demo-users.adoc[default demo users]
 
 * Keycloak:
 ** username: admin
@@ -71,9 +83,12 @@ Credentials:
 
 === Rolling Release
 
-* *oCIS:* ocis.ocis-keycloak.rolling.owncloud.works
-* *Keycloak admin access:* keycloak.ocis-keycloak.rolling.owncloud.works
-* *Keycloak account management:* keycloak.ocis-keycloak.rolling.owncloud.works/realms/oCIS/account/#/
+* *oCIS:* +
+ocis.ocis-keycloak.rolling.owncloud.works
+* *Keycloak admin access:* +
+keycloak.ocis-keycloak.rolling.owncloud.works
+* *Keycloak account management:* +
+keycloak.ocis-keycloak.rolling.owncloud.works/realms/oCIS/account/#/
 
 == oCIS with S3 Storage Backend (MinIO)
 
@@ -83,29 +98,40 @@ The MinIO server provides a powerful Web UI for browser-based access to the stor
 
 Credentials:
 
-* *oCIS:* see xref:ocis/development/getting-started/demo-users/.adoc[default demo users]
+* *oCIS:* +
+see xref:ocis/getting-started/demo-users.adoc[default demo users]
 
 * *MinIO:*
-** *access key:* ocis
-** *secret access key:* ocis-secret-key
+** *access key:* +
+ocis
+** *secret access key:* +
+ocis-secret-key
 
 === Rolling Release
 
-* *oCIS:* ocis.ocis-s3.rolling.owncloud.works
-* *MinIO:* minio.ocis-s3.rolling.owncloud.works
-* *Mail:* mail.ocis-s3.rolling.owncloud.works
+* *oCIS:* +
+ocis.ocis-s3.rolling.owncloud.works
+* *MinIO:* +
+minio.ocis-s3.rolling.owncloud.works
+* *Mail:* +
+mail.ocis-s3.rolling.owncloud.works
 
 == oCIS with LDAP for Users and Groups
 
 Credentials:
 
-* *oCIS:* see xref:ocis/development/getting-started/demo-users/.adoc[default demo users]
+* *oCIS:* see xref:ocis/getting-started/demo-users.adoc[default demo users]
 
 * *LDAP admin:*
-** *username:* cn=admin,dc=owncloud,dc=com
-** *password:* admin
+** *username:* +
+cn=admin,dc=owncloud,dc=com
+** *password:* +
+admin
 
 === Rolling Release
 
-* *oCIS:* ocis.ocis-ldap.rolling.owncloud.works
-* *LDAP admin:* ldap.ocis-ldap.rolling.owncloud.works
+* *oCIS:* +
+ocis.ocis-ldap.rolling.owncloud.works
+
+* *LDAP admin:* +
+ldap.ocis-ldap.rolling.owncloud.works
