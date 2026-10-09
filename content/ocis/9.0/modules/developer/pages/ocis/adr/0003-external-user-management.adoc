@@ -2,7 +2,7 @@
 :toc: right
 :toclevels: 3
 
-* Status: superseded by xref:0017-allow-read-only-external-user-management.adoc[17. Allow read only external User Management]
+* Status: superseded by xref:ocis/adr/0017-allow-read-only-external-user-management.adoc[17. Allow read only external User Management]
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/micbar[@micbar], link:https://github.com/dragotin[@dragotin], link:https://github.com/hodyroff[@hodyroff], link:https://github.com/pmaier1[@pmaier1]
 * Date: 2022-02-08
 

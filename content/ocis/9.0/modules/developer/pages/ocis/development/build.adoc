@@ -5,7 +5,7 @@
 
 == Build Requirements
 
-see xref:getting-started/#requirements.adoc[Development - Getting Started]
+See xref:ocis/development/getting-started.adoc#requirements[Development - Getting Started]
 
 == Get the Sources
 

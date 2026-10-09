@@ -13,6 +13,7 @@ The ocis package offers a variety of CLI commands for monitoring or repairing oc
 * `--basePath` (or `-p`) +
 Needs to point to a storage provider, paths can vary depending on your ocis installation. Example paths are: +
 [source,bash]
+----
 /var/tmp/ocis/storage/users  # docker installation
 ...
 ----

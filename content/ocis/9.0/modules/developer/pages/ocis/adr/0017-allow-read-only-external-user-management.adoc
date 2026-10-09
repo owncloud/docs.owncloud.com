@@ -79,6 +79,6 @@ Idp sends sub & iss and mail or username claims. We need to provision an interna
 
 == Links <!-- optional -->
 
-* [Link type] [Link to ADR] <!-- example: Refined by xref:ocis/adr/0005-example.adoc[ADR-0005] -->
+* [Link type] [Link to ADR] <!-- example: Refined by \xref:ocis/adr/0005-example.adoc[ADR-0005] -->
 * … <!-- numbers of links can vary -->
 * supersedes xref:ocis/adr/0003-external-user-management.adoc[3. Use external User Management]

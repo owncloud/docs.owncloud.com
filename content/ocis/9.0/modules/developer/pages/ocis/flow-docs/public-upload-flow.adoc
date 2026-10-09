@@ -6,4 +6,4 @@
 
 The following diagram describes the flow of requests:
 
-image::ocis/tus-public-upload.svg[]
+image::ocis/flow-docs/tus-public-upload.svg[]

@@ -40,7 +40,7 @@ gRPC has been evolving and has become the best option for communication between 
 
 == CS3 APIs
 
-image:ocis/cs3org.png[]
+image:ocis/apis/cs3org.png[]
 
 The link:https://github.com/cs3org/cs3apis[CS3 APIs] connect storages and application providers.
 

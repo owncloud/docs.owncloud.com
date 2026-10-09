@@ -2,4 +2,4 @@
 :toc: right
 :toclevels: 3
 
-image::ocis/ocis-services-communication.drawio.svg[]
+image::ocis/architecture/ocis-services-communication.drawio.svg[]

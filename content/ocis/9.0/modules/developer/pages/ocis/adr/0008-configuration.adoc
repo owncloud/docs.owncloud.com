@@ -67,7 +67,7 @@ NOTE: Source is link:https://github.com/urfave/cli/blob/master/altsrc/flag.go#L1
 
 ==== Expose Structured Field Values as CLI Flags
 
-* Good, because it has been already taken into account on large projects (kubernetes) link:https://docs.google.com/document/d/1Dvct469xfjkgy3tjWMAKvRAJo4CmGH4cgSVGTDpay6A[here.] in point 5.
+* Good, because it has been already taken into account on large projects (kubernetes) link:https://docs.google.com/document/d/1Dvct469xfjkgy3tjWMAKvRAJo4CmGH4cgSVGTDpay6A[here], in point 5.
 * Bad, because it requires quite a bit^1^ of custom logic.
 * Bad, because how should these flags be present in the `-h` menu of a subcommand? Probably some code generation needed.
 
@@ -89,7 +89,8 @@ NOTE: Source is link:https://github.com/urfave/cli/blob/master/altsrc/flag.go#L1
 
 ===== Supervised (`ocis server` or `ocis run extension`)
 
-image::https:/user-images.githubusercontent.com/6905948/116872568-62b1a780-ac16-11eb-9f29-030a651ee39b.png[grafik]
+// https:/user-images.githubusercontent.com/6905948/116872568-62b1a780-ac16-11eb-9f29-030a651ee39b.png
+image::ocis/adr/116872568-62b1a780-ac16-11eb-9f29-030a651ee39b.png[grafik,width=300]
 
 * Use a global config file (ocis.yaml) to configure an entire set of services: `ocis --config-file /etc/ocis.yaml service`
 * Use a global config file (ocis.yaml) to configure a single extension: `ocis --config-file /etc/ocis/yaml proxy`
@@ -102,14 +103,19 @@ image::https:/user-images.githubusercontent.com/6905948/116872568-62b1a780-ac16-
 
 ====== Known Gotchas
 
-* `ocis --config-file /etc/ocis/ocis.yaml server` does not work. It currently only supports reading global config values from the predefined locations.
+* `ocis --config-file /etc/ocis/ocis.yaml server` +
+Does not work. It currently only supports reading global config values from the predefined locations.
 
 ===== Unsupervised (`ocis proxy`)
 
-image::https:/user-images.githubusercontent.com/6905948/116872534-54fc2200-ac16-11eb-8267-ffe7b03177b3.png[grafik]
+// https:/user-images.githubusercontent.com/6905948/116872534-54fc2200-ac16-11eb-8267-ffe7b03177b3.png
+image::ocis/adr/116872534-54fc2200-ac16-11eb-8267-ffe7b03177b3.png[grafik,width=300]
 
-* `ocis.yaml` is parsed first (since `proxy` is a subcommand of `ocis`)
-*`proxy.yaml` is parsed if present, overriding values from `ocis.yaml` and any cli flag or env variable present.
+* `ocis.yaml` +
+Is parsed first (since `proxy` is a subcommand of `ocis`)
+
+*`proxy.yaml` +
+Is parsed if present, overriding values from `ocis.yaml` and any cli flag or env variable present.
 
 ==== Other Known Use Cases
 

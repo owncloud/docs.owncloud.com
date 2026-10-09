@@ -2,4 +2,4 @@
 :toc: right
 :toclevels: 3
 
-The Infinite Scale Release Notes are published with the xref:ROOT:ocis_release_notes.adoc[ownCloud Documentation].
+The Infinite Scale Release Notes are published with the xref:ROOT::ocis_release_notes.adoc[ownCloud Documentation].

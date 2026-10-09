@@ -239,7 +239,7 @@ BACKUP REQUIRED. Contains user data. Path can be specified via `STORAGE_USERS_OC
 
 === `thumbnails`
 
-Contains thumbnails data. See the xref:{dev-s-path}/services/thumbnails/index.adoc[THUMBNAILS README] for more details.
+Contains thumbnails data. See the xref:{dev-s-path}/thumbnails/index.adoc[THUMBNAILS README] for more details.
 
 [source,bash]
 ----
@@ -253,7 +253,7 @@ OPTIONAL/RECOMMENDED. This folder contains prerendered thumbnails. Can be specif
 
 === `web`
 
-Contains web assets such as custom logos, themes etc. See the xref:{dev-s-path}/services/web/index.adoc[WEB README] for more details.
+Contains web assets such as custom logos, themes etc. See the xref:{dev-s-path}/web/index.adoc[WEB README] for more details.
 
 [source,bash]
 ----
