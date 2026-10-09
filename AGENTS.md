@@ -160,6 +160,24 @@ Do **not** convert `doc.owncloud.com` URLs that appear inside any of the followi
 
 When presenting a table of convertible links, mark these rows as `NOT CONVERTIBLE` and state the reason (e.g. "in source block", "in Mermaid diagram").
 
+## External Link Maintenance
+
+When auditing external `link:` URLs for validity:
+
+1. **Permanent redirects (301)** — update the link to the canonical target URL. The redirect target is authoritative; leaving the old URL means every visitor follows an unnecessary hop and the link may break again if the redirect is removed.
+
+2. **Temporary redirects (302/307)** — evaluate case by case. A `master`→`main` branch rename on GitHub (302) should be updated; a login-wall redirect (e.g. transifex requiring sign-in) is expected behaviour and should be left as-is.
+
+3. **Permanent redirects (308)** — treat the same as 301: update to the redirect target.
+
+4. **403 bot-blocked** — do **not** treat as broken. Many sites (npmjs.com, medium.com, ClamAV docs) return 403 to headless HTTP clients but serve content normally in a browser. Only flag as broken if a manual browser check also fails.
+
+5. **Private GitHub repositories** (e.g. `https://github.com/owncloud/enterprise/...`) return 404 to unauthenticated requests. These links are valid — the repository is private, not gone. Do not flag or remove them.
+
+6. **Links inside code blocks, literal blocks, `.env` blocks, or diagram blocks** — cannot be updated to xref macros and must stay as plain URLs. See "Links That Cannot Be Converted" above for the full list of non-convertible contexts.
+
+7. **Reporting** — present findings as a numbered table with columns: `#`, `File:Line`, `Status`, `Current URL`, `Suggested URL`. Separate broken links (4xx) from redirects. Apply fixes only after explicit user confirmation.
+
 ## AsciiDoc Image Width
 
 All images — both block (`image::`) and inline (`image:`) — must include a `width=` attribute. The first positional attribute in the brackets is alt text and is left empty, so the width is always preceded by a comma:

@@ -2,7 +2,7 @@
 :toc: right
 :toclevels: 3
 
-This page is designed to provide clarity and transparency regarding the scheduling, nature, and support of our releases, ensuring you have all the information you need to stay updated and manage your deployments effectively. Find here an overview of our plans for future enhancements and features: link:https://owncloud.com/roadmap[owncloud.com/roadmap]
+This page is designed to provide clarity and transparency regarding the scheduling, nature, and support of our releases, ensuring you have all the information you need to stay updated and manage your deployments effectively. Find here an overview of our plans for future enhancements and features: link:https://github.com/orgs/owncloud/projects/344[owncloud.com/roadmap]
 
 == Release Types
 

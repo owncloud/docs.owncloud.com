@@ -37,7 +37,7 @@ If that is still too abstract, link:https://dev.to/miguelmota/comment/filh[here 
 
 === References and Further Reads
 
-- link:https://github.com/Deaddy[Marcel Wunderlich's] link:http://deaddy.net/introduction-to-kubernetes-pt-1.html[4 series articles] on Kubernetes clarifying its declarative nature, deep diving into ingress networking, storage and monitoring.
+- link:https://github.com/Deaddy[Marcel Wunderlich's] link:https://deaddy.net/introduction-to-kubernetes-pt-1.html[4 series articles] on Kubernetes clarifying its declarative nature, deep diving into ingress networking, storage and monitoring.
 
 === How Does oCIS Fit in the Kubernetes Model
 
@@ -67,7 +67,7 @@ For a guide on how to set minikube up follow the link:https://minikube.sigs.k8s.
 
 We have not yet published the oCIS Helm charts, therefore you need to clone the git repository manually. It currently also does not support to be run on Kind or Minikube clusters. For known issues and planned features, please have a look at the link:https://github.com/owncloud/ocis-charts/issues[GitHub issue tracker].
 
-Configuration options are described link:https://github.com/owncloud/ocis-charts/tree/master/charts/ocis#configuration[here].
+Configuration options are described link:https://github.com/owncloud/ocis-charts/tree/main/charts/ocis#configuration[here].
 
 === Run oCIS
 

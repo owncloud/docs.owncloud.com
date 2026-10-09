@@ -9,9 +9,9 @@ So we are trying to reflect this in the tooling. It should be kept simple and qu
 
 Besides standard development tools like git and a text editor, you need the following software for development:
 
-- Go >= v1.22 (link:https://golang.org/doc/install[install instructions])
+- Go >= v1.22 (link:https://go.dev/doc/install[install instructions])
 - pnpm (link:https://pnpm.io/installation[install instructions])
-- docker (link:https://docs.docker.com/get-docker/[install instructions])
+- docker (link:https://docs.docker.com/get-started/get-docker/[install instructions])
 - docker-compose (link:https://docs.docker.com/compose/install/[install instructions])
 
 If you find tools needed besides the mentioned above, please feel free to open an issue or open a PR.
@@ -22,7 +22,7 @@ oCIS consists of multiple microservices, also called extensions. We started by h
 
 Each extension lives in a subfolder (e.g. `accounts` or `settings`) within this repository as an independent Go module, following the link:https://github.com/golang-standards/project-layout[golang-standard project-layout]. They have common Makefile targets and can be used to change, build and run individual extensions. This allows us to version and release each extension independently.
 
-The `ocis` folder contains our link:https://github.com/asim/go-micro/[go-micro] and link:https://github.com/thejerf/suture[suture] based runtime. It is used to import all extensions and implements commands to manage them, similar to a small orchestrator. With the resulting oCIS binary you can start single extensions or even all extensions at the same time.
+The `ocis` folder contains our link:https://github.com/micro/go-micro/[go-micro] and link:https://github.com/thejerf/suture[suture] based runtime. It is used to import all extensions and implements commands to manage them, similar to a small orchestrator. With the resulting oCIS binary you can start single extensions or even all extensions at the same time.
 
 The `deployments` folder contains documented deployment configurations and templates. On a single node, running a single ocis runtime is a resource efficient way to deploy ocis. For multiple nodes docker compose or helm charts for kubernetes examples can be found here.
 

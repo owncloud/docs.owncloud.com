@@ -2,7 +2,7 @@
 :toc: right
 :toclevels: 3
 
-oCIS can be configured to run on top of link:https://eos.web.cern.ch/[eos]. While the link:http://eos-docs.web.cern.ch/[eos documentation] does cover a lot of topics, it leaves out some details that you may have to either pull from various link:https://gitlab.cern.ch/eos/eos-docker[docker containers], the link:https://eos-community.web.cern.ch/[forums] or even the link:https://github.com/cern-eos/eos[source] itself.
+oCIS can be configured to run on top of link:https://eos-web.web.cern.ch/[eos]. While the link:http://eos-docs.web.cern.ch/[eos documentation] does cover a lot of topics, it leaves out some details that you may have to either pull from various link:https://gitlab.cern.ch/eos/eos-docker[docker containers], the link:https://eos-community.web.cern.ch/[forums] or even the link:https://github.com/cern-eos/eos[source] itself.
 
 This document is a work in progress of the current setup.
 

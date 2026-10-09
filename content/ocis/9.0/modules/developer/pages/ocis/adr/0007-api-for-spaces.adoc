@@ -5,7 +5,7 @@
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/micbar[@micbar], link:https://github.com/dragotin[@dragotin], link:https://github.com/hodyroff[@hodyroff], link:https://github.com/pmaier1[@pmaier1]
 * Date: 2021-03-19
 
-Technical Story: API to enable the concept of link:https://github.com/owncloud/enterprise/issues/3863[Spaces]
+Technical Story: API to enable the concept of link:https://github.com/owncloud/enterprise/issues/3863[Spaces].
 
 == Context and Problem Statement
 
@@ -46,7 +46,7 @@ See the openAPI Specification for the link:https://owncloud.dev/libre-graph-api/
 
 Most important, the API returns the WebDAV endpoint for each space. With that, clients do not have to make assumptions about WebDAV routes any more.
 
-See link:https://docs.microsoft.com/en-us/graph/api/resources/onedrive?view=graph-rest-1.0[Drive item in Microsoft Graph API] for an overview of `drive` and `driveItem` resources. The concrete list of drives / spaces a user has access to can be obtained on multiple endpoints.
+See link:https://learn.microsoft.com/en-us/graph/api/resources/onedrive?view=graph-rest-1.0[Drive item in Microsoft Graph API] for an overview of `drive` and `driveItem` resources. The concrete list of drives / spaces a user has access to can be obtained on multiple endpoints.
 
 === Get "Home Folder"
 
@@ -64,7 +64,7 @@ There is also `/drives`, returning the list of spaces the user has access to. Th
 
 === Common Reply
 
-The reply to both calls is either one or a list of link:https://docs.microsoft.com/de-de/graph/api/resources/drive?view=graph-rest-1.0[Drive representation objects]:
+The reply to both calls is either one or a list of link:https://learn.microsoft.com/de-de/graph/api/resources/drive?view=graph-rest-1.0[Drive representation objects]:
 
 ----
 {
@@ -117,7 +117,7 @@ ____
 
 The (*) marked types are not defined in the official MS API. They are prefixed with `oc` to avoid namespace clashes.
 
-The `root` object equals a link:https://docs.microsoft.com/de-de/graph/api/resources/driveitem?view=graph-rest-1.0[driveItem] and contains information about the root resource (directory) of the space.
+The `root` object equals a link:https://learn.microsoft.com/de-de/graph/api/resources/driveitem?view=graph-rest-1.0[driveItem] and contains information about the root resource (directory) of the space.
 
 This is an example object as it can be expected as `root` element. It is not complete, as not all elements will be implemented so far.
 
