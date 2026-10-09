@@ -3,7 +3,7 @@
 :toclevels: 3
 
 
-== oCIS online demo
+== oCIS Online Demo
 
 We have an oCIS demo instance running on link:https://ocis.owncloud.com[ocis.owncloud.com] where you can get a first impression of it.
 

@@ -2,7 +2,7 @@
 :toc: right
 :toclevels: 3
 
-== Setting up Web
+== Setting Up Web
 
 * Clone the link:https://github.com/owncloud/ocis/[repository].
 * Initally install all dependencies by running `pnpm install`.
@@ -12,7 +12,7 @@
 
 * Start bundling web with a watcher by running `pnpm build:w`
 
-== Setting up oCIS
+== Setting Up oCIS
 
 * Setup oCIS by following the xref:ocis/getting-started/index.adoc/[setup instructions]
 * Start oCIS with local links to your bundled web frontend and config by running the following command, adjust the paths as necessary:

@@ -32,7 +32,7 @@ The request component consists of:
 | Optional parameters for the request to customize the response.
 |===
 
-=== HTTP methods
+=== HTTP Methods
 
 [width="100%", cols="25%,75%", options="header"]
 |===
@@ -67,7 +67,7 @@ A resource could be an entity or a complex type and is usually defined by proper
 
 Each resource could possibly require different permissions. Usually you need permissions on a higher level for creating or updating an existing resource than for reading.
 
-=== Query parameters
+=== Query Parameters
 
 Query parameters can be OData system query options, or other strings that a method accepts to customize its response.
 

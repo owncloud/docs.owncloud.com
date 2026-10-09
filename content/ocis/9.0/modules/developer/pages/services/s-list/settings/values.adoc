@@ -28,7 +28,7 @@ a JWT, providing it in the HTTP header as `x-access-token`. That UUID is then us
 `me` with the actual UUID of the authenticated user.
 ====
 
-== Example of stored settings values
+== Example of Stored Settings Values
 
 [source,json]
 ----

@@ -27,7 +27,7 @@ What about copy pasting links from the browser? Well this storage is only really
 - For accepted OCM shares there must be a path in the xref:ocis/storage/namespaces.adoc#cs3-global-namespaces[_CS3 global namespace_] that has to be the same for all users, otherwise they cannot copy and share those URLs.
 ====
 
-=== The Gateway Should be Responsible for Path Transformations
+=== The Gateway Should Be Responsible for Path Transformations
 
 Currently, storage providers are aware af their mount point, coupling them tightly with the gateway.
 
@@ -137,7 +137,7 @@ TODO discuss to clarify further.
 
 == Storage Drivers
 
-=== Allow Clients to Send a uuid on Upload
+=== Allow Clients to Send a UUID on Upload
 
 iOS clients can only queue single requests to be executed in the background. They queue an upload and need to be able to identify the uploaded file after it has been uploaded to the server. The disconnected nature of the connection might cause workflows or manual user interaction with the file on the server to move the file to a different place or changing the content while the device is offline. However, on the device users might have marked the file as favorite or added it to other iOS specific collections. To be able to reliably identify the file the client can generate a `uuid` and attach it to the file metadata during the upload. While it is not necessary to look up files by this `uuid` having a second file id that serves exactly the same purpose as the `file id` is redundant.
 

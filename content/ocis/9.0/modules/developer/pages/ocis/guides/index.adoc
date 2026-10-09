@@ -2,7 +2,7 @@
 :toc: right
 :toclevels: 3
 
-== Step-by-step Guides
+== Step-by-Step Guides
 
 These guides should extend the generic documentation and help admins to learn Infinite Scale through digestable "hands-on" sessions.
 

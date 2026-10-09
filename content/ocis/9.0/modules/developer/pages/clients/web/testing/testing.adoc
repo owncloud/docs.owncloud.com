@@ -151,11 +151,11 @@ pnpm test:e2e:playwright -- --reporter=html
 npx playwright show-report
 ----
 
-== E2E Tests on oCIS With Keycloak
+== E2E Tests on oCIS with Keycloak
 
 We can run some of the e2e tests on oCIS setup with Keycloak as an external idp. To run tests against locally, please follow the steps below:
 
-=== Run oCIS With Keycloak
+=== Run oCIS with Keycloak
 
 There's a documentation to serve xref:ocis/deployment/ocis_keycloak.adoc[oCIS with Keycloak]. Please follow each step to run *oCIS with Keycloak*.
 
@@ -182,7 +182,7 @@ runs the tests with Keycloak
 * `KEYCLOAK_REALM` +
 sets oCIS realm name used on Keycloak
 
-== E2E Tests With Predefiend Users (`@predefined-users`)
+== E2E Tests with Predefined Users (`@predefined-users`)
 
 It is possible to run e2e tests with predefined users. This is useful for running tests in a production-like environment.
 The following environment variables are used to run the tests with predefined users:
@@ -262,7 +262,7 @@ All tests which are related to:
 * Running latest tests against an older version of oCIS/Web
 * Large file uploads may take longer time
 
-== Usage of `web-packages.txt` In the Test Suite
+== Usage of `web-packages.txt` in the Test Suite
 
 Test suites may include the `web-packages.txt` file to denote which web packages changes affect the defined test scenarios. This information is used in CI pipelines to determine which test suites to run based on the changed web packages.
 

@@ -6,7 +6,7 @@
 
 ownCloud Web can be extended through various entry points with custom *apps* and *extensions*.
 
-=== Distinction between Apps and Extensions
+=== Distinction Between Apps and Extensions
 
 An Application in the context of ownCloud Web is an artifact which can be installed in an ownCloud Infinite Scale instance.
 It serves two main purposes:
@@ -161,7 +161,7 @@ There are standardized components and places where extensions are being used aut
 
 To allow users to configure extensions, extension points can define user preferences. User preferences are defined as an object on the extension point configuration. Whenever an extension point declares to accept user preferences, it will get listed with a dropdown on the Preferences page (reachable via top right user menu). The user can then select one out of all the extensions which have been registered for this extension point.
 
-=== Helpful packages
+=== Helpful Packages
 
 We currently offer the following packages that can be integrated into your app, providing useful utilities and types.
 

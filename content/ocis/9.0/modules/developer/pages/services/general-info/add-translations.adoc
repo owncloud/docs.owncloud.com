@@ -18,7 +18,7 @@ drone cron exec owncloud/translation-sync nightly
 ----
 Note that you need to be logged on in drone to execute the command.
 
-== Implementing ocis Translations
+== Implementing oCIS Translations
 
 The implementation example is a guide and shall show how to do it. You can derive at any time according to your needs.
 

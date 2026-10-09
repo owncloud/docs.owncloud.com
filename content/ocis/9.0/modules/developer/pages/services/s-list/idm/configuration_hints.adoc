@@ -26,7 +26,7 @@ This user is used by the "reva" services `user`, `group` and `auth-basic`.
 IDM is also able to create xref:ocis/getting-started/demo-users.adoc[Demo Users] upon startup. 
 --
 
-== Access via LDAP command line tools
+== Access via LDAP Command Line Tools
 
 For testing purposes it is sometimes helpful to query IDM using the ldap command line clients. To e.g. list all users, this command can be used:
 

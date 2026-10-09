@@ -3,7 +3,7 @@
 
 To prepare an oCIS production release, you must follow a specific sequence of steps in the correct order.
 
-== New ocis Version
+== New oCIS Version
 
 Use this detailed copy/paste checklists for Jira when starting a new release.
 

@@ -8,7 +8,7 @@ By providing your own theme, you can customize the user experience for your own 
 
 This page documents the setup and configuration options, and provides a template for you to get started.
 
-== Ways of providing a theme
+== Ways of Providing a Theme
 
 Generally, your theming configuration lives inside a `.json` file, e.g. `theme.json`. To load this file, it needs to be correctly referenced inside your `config/config.json` (example configurations can be link:https://github.com/owncloud/ocis/tree/master/web/config[found on GitHub]).
 
@@ -20,7 +20,7 @@ To reference your theme, you have two options:
 
 *Hint:* If no theme is provided, the loading of your custom theme fails or the theme can't be parsed correctly, the standard ownCloud theme will be loaded as a fallback and an error with further information will be logged on the browser console.
 
-== Configuring a theme
+== Configuring a Theme
 
 Inside your `theme.json`, there is a `common` key, which is explained in the next section, and a `clients` key: Here, you can find the available ownCloud clients - please note that the documentation below focuses on `web` and check the respective documentation for other clients for details on their themability.
 
@@ -39,7 +39,7 @@ The general top-level structure of a valid `theme.json` is outlined below:
 }
 ----
 
-=== Common section
+=== Common Section
 
 The `common` section provides a set of information that is designed to be available for all clients. It gets merged "down" to the final themes and aims to reduce duplication, but can be overwritten by more specific information inside both the clients' defaults and actual themes.
 
@@ -101,11 +101,11 @@ The structure of a valid `web` client section is outlined below:
 }
 ----
 
-==== The "defaults"
+==== The "Defaults"
 
 Similar to the top level `common` section, this object contains information that shall be shared among the available themes and can/should be defined only once. The top level `common` section first gets merged into the `defaults`, which then get merged into the individual themes.
 
-===== The "appBanner" options
+===== The "appBanner" Options
 
 Configures a app banner that gets shown on mobile devices and suggests downloading the native client from the respective app store. Omitting the key disables the banner.
 
@@ -140,7 +140,7 @@ Links the icon to be displayed as a preview for the final app icon within the ap
 * `appScheme` +
 Is the first part of the URL that is used to tell the mobile OS which app to open, so using `ownCloud` will generate links such as `owncloud://yourdomain.com/f/2b61b822...`.
 
-===== The "logo" options
+===== The "logo" Options
 
 Here, you can specify the images to be used in the `"topbar"`, for the `"favicon"` and on the `"login"` page. Various formats are supported and it's up to you to decide which one fits your use case best.
 
@@ -153,7 +153,7 @@ Here, you can specify the images to be used in the `"topbar"`, for the `"favicon
 },
 ----
 
-===== The "loginPage" options
+===== The "loginPage" Options
 
 You can set the background image for the login page by providing an image file in the `"backgroundImg"` option.
 
@@ -164,7 +164,7 @@ You can set the background image for the login page by providing an image file i
 },
 ----
 
-===== The "designTokens" options
+===== The "designTokens" Options
 
 To further customize your ownCloud instance, you can provide your own styles. To give you an idea of how a working design system looks like, feel free to head over to the link:https://owncloud.design/#/Design%20Tokens[ownCloud design tokens] for inspiration.
 
@@ -275,7 +275,7 @@ Again, you can use the link:https://owncloud.design/#/Design%20Tokens[ownCloud d
 }
 ----
 
-====== Font sizes
+====== Font Sizes
 
 You can change the `default`, `large` and `medium` font sizes according to your needs. If you need more customization options regarding font sizes, please link:https://github.com/owncloud/ocis/issues/new[open an issue on GitHub] with a detailed description.
 
@@ -292,7 +292,7 @@ Font size variables get prepended with `--oc-font-size-`, so e.g. _"default"_ cr
 }
 ----
 
-====== Font family
+====== Font Family
 
 You can change the font family according to your needs. The font family gets written into the `--oc-font-family` CSS variable.
 
@@ -405,7 +405,7 @@ See section above
 
 If you define different key-value pairs inside any of the objects (`breakpoints`, `colorPalette`, `fontSizes`, `sizes`, `spacing`) in `"designTokens"`, they will get loaded and initialized as CSS custom properties but don't necessarily take any effect in the user interface. This gives you an opportunity to, for example, customize extensions from within the theme in the web runtime (and not the extension itself).
 
-== Example theme
+== Example Theme
 
 A full template for your custom theme is provided below, and you can use the instructions above to set it up according to your needs:
 

@@ -181,7 +181,7 @@ graph TD
 
 Since the active clients will poll the etag for all active users the gateway will have their ETag cached. This is where sharing comes into play: The gateway also needs to stat the ETag of all other entry points ... or mount points. That may increase the number of stat like requests to storage providers by an order of magnitude.
 
-=== Ram Considerations
+=== RAM Considerations
 
 For a single machine using a local posix storage the linux kernel already caches the inodes that contain the metadata that is necessary to calculate the ETag (even extended attributes are supported). With 4k inodes 256 nodes take 1Mb of RAM, 1k inodes take 4Mb and 1M inodes take 4Gb to completely cache the file metadata. For distributed filesystems a dedicated cache might make sense to prevent hammering it with stat like requests to calculate ETags.
 

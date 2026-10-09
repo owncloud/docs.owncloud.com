@@ -1,4 +1,4 @@
-= Invitation flow
+= Invitation Flow
 :toc: right
 :toclevels: 3
 

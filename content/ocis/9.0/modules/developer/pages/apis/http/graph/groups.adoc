@@ -30,7 +30,7 @@ Our implementation currently supports two Attributes for a Group:
 |===
 
 
-=== Reading groups
+=== Reading Groups
 
 ==== `GET /groups`
 
@@ -244,7 +244,7 @@ Updating attributes of a single group is supposed to be done with a patch reques
 implemented for our write-enabled backends. The PATCH request can however be used to add multiple members to a group at once.
 See below.
 
-=== Adding a single member to a group
+=== Adding a Single Member to a Group
 
 ==== `POST /groups/\{id}/members/$ref`
 
@@ -261,7 +261,7 @@ curl -k --header "Content-Type: application/json" \
 
 When successful the API returns no response body and the HTTP status code 204 (No Content)
 
-=== Adding multiple members in a single request
+=== Adding Multiple Members in a Single Request
 
 ==== `PATCH /groups/\{id}`
 
@@ -280,7 +280,7 @@ Example:
 
 When successful the API returns no response body and the HTTP status code 204 (No Content)
 
-=== Removing a member
+=== Removing a Member
 
 ==== `DELETE /groups/\{groupid}/members/\{id}/$ref`
 

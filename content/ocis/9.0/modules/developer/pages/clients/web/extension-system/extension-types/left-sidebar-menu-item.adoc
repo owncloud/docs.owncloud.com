@@ -2,7 +2,7 @@
 :toc: right
 :toclevels: 3
 
-== Left sidebar menu item extension type
+== Left Sidebar Menu Item Extension Type
 
 One possible extension type is left sidebar menu items. Registered left sidebar menu items get rendered in the left sidebar, as long as there is more than one available.
 

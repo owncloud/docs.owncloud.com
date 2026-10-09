@@ -121,7 +121,7 @@ Any other key under `sentry` will be forwarded to the Sentry initialization. You
 If you are using an old version of Sentry (9 and before), you might want to add the setting `sentry.autoSessionTracking: false` to avoid errors related to breaking changes introduced in the integration libraries.
 ====
 
-== Setting up Backend and Running
+== Setting Up Backend and Running
 
 Since web version larger than 7.0.2, web only supports oCIS, whereas older versions (< 7.1.0) also supported the classic ownCloud Server. This has been deprecated and is no longer available.
 

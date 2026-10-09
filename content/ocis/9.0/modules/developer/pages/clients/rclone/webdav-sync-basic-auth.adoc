@@ -13,7 +13,7 @@ Please consider to use xref:clients/rclone/webdav-sync-oidc.adoc[Rclone with Ope
 
 For the usage of a WebDAV remote with Rclone see also the link:https://rclone.org/webdav/[Rclone documentation]
 
-== Configure the WebDAV remote
+== Configure the WebDAV Remote
 
 First of all we need to set up our credentials and the WebDAV remote for Rclone. In this example we do this by setting environment variables. You might also set up a named remote or use command line options to achieve the same.
 
@@ -33,7 +33,7 @@ Please note that `RCLONE_WEBDAV_PASS` is not set to the actual password, but to 
 We now can use Rclone to sync the local folder `/tmp/test` to `/test` in your oCIS home folder.
 
 
-=== Sync to the WebDAV remote
+=== Sync to the WebDAV Remote
 
 [source,bash]
 ----
