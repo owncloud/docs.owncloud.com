@@ -1,4 +1,4 @@
-= Upload processing
+= Upload Processing
 :toc: right
 :toclevels: 3
 
@@ -6,7 +6,7 @@ Uploads are handled by a dedicated service that uses TUS.io for resumable upload
 
 The finalization may be asynchronous when mandatory workflow steps are involved.
 
-== Legacy PUT upload
+== Legacy PUT Upload
 
 // SHORTCODE: {{<mermaid class="text-center">}}
 
@@ -30,7 +30,7 @@ sequenceDiagram
 
 // SHORTCODE: {{</mermaid>}}
 
-== TUS upload
+== TUS Upload
 
 // SHORTCODE: {{<mermaid class="text-center">}}
 
@@ -60,7 +60,7 @@ sequenceDiagram
 // SHORTCODE: {{</mermaid>}}
 
 
-== TUS upload with async postprocessing
+== TUS Upload with Async Postprocessing
 
 
 
@@ -122,7 +122,7 @@ sequenceDiagram
 // SHORTCODE: {{</mermaid>}}
 
 
-== Async TUS upload with postprocessing
+== Async TUS Upload with Postprocessing
 This might be a TUS extension or a misunderstanding on our side of what tus can do for us. Clients should send a `Prefer: respond-async` header to allow the server to return early when postprocessing might take longer. The PATCH requests can then return status `202 Accepted` and a `Location` header to a websocket that clients can use to track the processing / upload progress.
 
 TODO there is a conflict with the TUS.io POST request with the creation extension, as that also returns a `Location` header which carries the upload URL. We would need another header to transport the websocket location. Maybe `Websocket-Location` or `Progress-Location`?

@@ -18,14 +18,14 @@ https://owncloud.dev/libre-graph-api/#/roleManagement/GetPermissionRoleDefinitio
 
 == Role Assignment
 
-=== Get appRoleAssignments of a user `GET /v1.0/users/\{user-id}/appRoleAssignments`
+=== Get appRoleAssignments of a User `GET /v1.0/users/\{user-id}/appRoleAssignments`
 
 https://owncloud.dev/libre-graph-api/#/user.appRoleAssignment/user.ListAppRoleAssignments
 
-=== Grant an appRoleAssignment to a user `POST /v1.0/users/\{user-id}/appRoleAssignments`
+=== Grant an appRoleAssignment to a User `POST /v1.0/users/\{user-id}/appRoleAssignments`
 
 https://owncloud.dev/libre-graph-api/#/user.appRoleAssignment/user.CreateAppRoleAssignments
 
-=== Delete the appRoleAssignment from a user `DELETE /v1.0/users/\{user-id}/appRoleAssignments/\{appRoleAssignment-id}`
+=== Delete the appRoleAssignment from a User `DELETE /v1.0/users/\{user-id}/appRoleAssignments/\{appRoleAssignment-id}`
 
 https://owncloud.dev/libre-graph-api/#/user.appRoleAssignment/user.DeleteAppRoleAssignments

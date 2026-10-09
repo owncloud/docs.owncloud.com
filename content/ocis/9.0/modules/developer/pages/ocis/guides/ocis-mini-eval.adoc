@@ -9,7 +9,7 @@ _IMPORTANT_ This type of installation is _ONLY_ intended for a quick evaluation 
 
 As a prerequisite, we assume you have Docker installed locally on a machine that has a GUI. A headless one will not work. You know how to use Docker commands and what they mean. This guide is not intended to be a detailed explanation.
 
-== What you can Expect
+== What You Can Expect
 
 By passing the commands as described, you will be able to get a very first look and feel of Infinite Scale, which can be accessed from your browser using `localhost`.
 

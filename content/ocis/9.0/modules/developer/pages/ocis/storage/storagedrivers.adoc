@@ -1,4 +1,4 @@
-= Storage drivers
+= Storage Drivers
 :toc: right
 :toclevels: 3
 
@@ -9,7 +9,7 @@ It maps the _path_ and _id_ based CS3 _references_ to an appropriate xref:#stora
 - posix inodes or paths
 - deconstructed filesystem nodes
 
-== Storage providers
+== Storage Providers
 
 To manage the file tree oCIS uses _storage providers_ that are accessing the underlying storage using a _storage driver_. The driver can be used to change the implementation of a storage aspect to better reflect the actual underlying storage capabilities. As an example a move operation on a POSIX filesystem (link:https://danluu.com/deconstruct-files/[theoretically]) is an atomic operation. When trying to implement a file tree on top of S3 there is no native move operation that can be used. A naive implementation might fall back on a COPY and DELETE. Some S3 implementations provide a COPY operation that uses an existing key as the source, so the file at least does not need to be reuploaded. In the worst case scenario, which is renaming a folder with hundreds of thousands of objects, a reupload for every file has to be made. Instead of hiding this complexity a better choice might be to disable renaming of files or at least folders on S3. There are however implementations of filesystems on top of S3 that store the tree metadata in dedicated objects or use a completely different persistence mechanism like a distributed key value store to implement the file tree aspect of a storage.
 
@@ -20,12 +20,12 @@ While the _storage provider_ is responsible for managing the tree, file up- and 
 ====
 
 
-== Storage aspects
+== Storage Aspects
 A lot of different storage technologies exist, ranging from general purpose file systems with POSIX semantics to software defined storage with multiple APIs. Choosing any of them is making a tradeoff decision. Or, if a storage technology is already in place it automatically predetermines the capabilities that can be made available. _Not all storage systems are created equal._
 
 Unfortunately, no POSIX filesystem natively supports all storage aspects that ownCloud 10 requires:
 
-=== A hierarchical file tree
+=== A Hierarchical File Tree
 An important aspect of a filesystem is organizing files and directories in a file hierarchy, or tree. It allows you to create, move and delete nodes. Beside the name a node also has well known metadata like size and mtime that are persisted in the tree as well.
 
 [NOTE]
@@ -35,13 +35,13 @@ There is a difference between _folder_ and _directory_: a _directory_ is a file 
 ====
 
 
-==== Id based lookup
+==== ID Based Lookup
 While traditionally nodes in the tree are reached by traversing the path the tree persistence should be prepared to look up a node by an id. Think of an inode in a POSIX filesystem. If this operation needs to be cached for performance reasons keep in mind that cache invalidation is hard and crawling all files to update the inode to path mapping takes O(n), not O(1).
 
-==== ETag propagation
+==== ETag Propagation
 For the state based sync a client can discover changes by recursively descending the tree and comparing the ETag for every node. If the storage technology supports propagating ETag changes up the tree, only the root node of a tree needs to be checked to determine if a discovery needs to be started and which nodes need to be traversed. This allows using the storage technology itself to persist all metadata that is necessary for sync, without additional services or caches.
 
-==== Subtree size accounting
+==== Subtree Size Accounting
 The tree can keep track of how many bytes are stored in a folder. Similar to ETag propagation a change in file size is propagated up the hierarchy.
 
 [NOTE]
@@ -61,16 +61,16 @@ Technically, link:https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/ex
 ====
 
 
-==== Arbitrary metadata persistence
+==== Arbitrary Metadata Persistence
 In addition to well known metadata like name size and mtime, users might be able to add arbitrary metadata like tags, comments or link:https://en.wikipedia.org/wiki/Dublin_Core[dublin core]. In POSIX filesystems this maps to extended attributes.
 
-=== Grant persistence
+=== Grant Persistence
 The CS3 API uses grants to describe access permissions. Storage systems have a wide range of permissions granularity and not all grants may be supported by every storage driver. POSIX ACLs for example have no expiry. If the storage system does not support certain grant properties, e.g. expiry, then the storage driver may choose to implement them in a different way. Expiries could be persisted in a different way and checked periodically to remove the grants. Again: every decision is a tradeoff.
 
-=== Trash persistence
+=== Trash Persistence
 After deleting a node the storage allows listing the deleted nodes and has an undo mechanism for them.
 
-=== Versions persistence
+=== Versions Persistence
 A user can restore a previous version of a file.
 
 [NOTE]
@@ -83,11 +83,11 @@ Modern POSIX filesystems support snapshotting of volumes. This is different from
 === Activity History
 The storage keeps an activity history, tracking the different actions that have been performed. This does not only include file changes but also metadata changes like renames and permission changes.
 
-== Storage drivers
+== Storage Drivers
 
 Reva currently has several storage driver implementations that can be used for _storage providers_ as well as _data providers_.
 
-=== OCIS and S3NG Storage Driver
+=== oCIS and S3NG Storage Driver
 
 The oCIS storage driver is the default storage driver. It decomposes the metadata and persists it in a POSIX filesystem. Blobs are stored on the filesystem as well. The layout makes extensive use of symlinks and extended attributes. A filesystem like xfs or zfs without practical inode size limitations is recommended. We will evolve this to further integrate with file systems like cephfs or gpfs.
 
@@ -110,7 +110,7 @@ The S3NG storage driver uses the same metadata layout on a POSIX storage as the 
 
 ➖ Metadata limited by Kernel VFS limits (see below)
 
-==== Related Kernel limits
+==== Related Kernel Limits
 The Decomposed FS currently stores CS3 grants in extended attributes. When listing extended attributes the result is currently limited to 64kB. Assuming a 20 byte uuid a grant has ~40 bytes. Which would limit the number of extended attributes to ~1630 entries or ~1600 shares. This can be extended by moving the grants from extended attributes into a dedicated file and is tracked in link:https://github.com/owncloud/ocis/issues/4638[ocis/issues/4638].
 
 From link:https://en.wikipedia.org/wiki/Extended_file_attributes#Linux[Wikipedia on Extended file attributes]:
@@ -192,12 +192,12 @@ The _data provider_ uses the same _storage driver_ as the _storage provider_ but
 
 The dataprovider allows uploading the file to a quarantine area where further data analysis may happen before making the file accessible again. One use case for this is antivirus scanning for files coming from untrusted sources.
 
-== Future work
+== Future Work
 
-=== FUSE overlay filesystem
+=== FUSE Overlay Filesystem
 We are planning to further separate the concerns and use a local storage provider with a FUSE filesystem overlaying the actual POSIX storage that can be used to capture deletes and writes that might happen outside of ocis/reva.
 
 It would allow us to extend the local storage driver with missing storage aspects while keeping a tree like filesystem that end users are used to see when sshing into the machine.
 
-=== Upload to Quarantine area
+=== Upload to Quarantine Area
 Antivirus scanning of random files uploaded from untrusted sources and executing metadata extraction or thumbnail generation should happen in a sandboxed system to prevent malicious users from gaining any information about the system. By spawning a new container with access to only the uploaded data we can further limit the attack surface.

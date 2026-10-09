@@ -182,7 +182,7 @@ page.getByText('OK');
 
 == Naming Conventions
 
-=== Files and folders
+=== Files and Folders
 
 * *Files*: +
 Declare in *_camelCase_*
@@ -251,7 +251,7 @@ DO 👍
 const uploadProfilePictureButton = await page.locator("<locator-path>");
 ----
 
-=== Function names
+=== Function Names
 
 Always start function names with a *_“verb”_*, followed by the *_“component context”_* that the function is interacting with i.e. what entity it is having an effect on.
 

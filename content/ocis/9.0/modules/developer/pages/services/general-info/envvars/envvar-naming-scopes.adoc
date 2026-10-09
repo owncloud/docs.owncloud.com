@@ -41,7 +41,7 @@ The envvar struct tag contains at maximum the following key/value pairs to docum
 * `deprecationInfo`
 * `deprecationReplacement`
 
-=== Introduce new Envvars
+=== Introduce New Envvars
 
 * If a _new_ envvar is introduced, the entire structure must be added, including the `introductionVersion` field. Note that 'introduced' means, that the new envvar was not present in any of the services.
 +

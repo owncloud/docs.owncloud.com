@@ -34,7 +34,7 @@ sequenceDiagram
     end
 ----
 
-=== New /dav/spaces/\{spaceid} Endpoint With Spaceid and a Relative Path
+=== New /dav/spaces/\{spaceid} Endpoint with Spaceid and a Relative Path
 
 The ocDAV service is responsible for translating ownCloud flavoured WebDAV into CS3 API calls.
 
@@ -128,7 +128,7 @@ sequenceDiagram
 ----
 --
 
-=== Old /dav/files/\{username} Endpoint With Username and a Path Relative to the Users Home
+=== Old /dav/files/\{username} Endpoint with Username and a Path Relative to the Users Home
 
 PROPFIND request against old webdav endpoints::
 +

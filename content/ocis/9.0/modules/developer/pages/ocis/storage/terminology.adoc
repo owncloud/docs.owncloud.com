@@ -4,7 +4,7 @@
 
 Communication is hard. And clear communication is even harder. You may encounter the following terms throughout the documentation, in the code or when talking to other developers. Just keep in mind that whenever you hear or read _storage_, that term needs to be clarified, because on its own it is too vague. PR welcome.
 
-== Logical concepts
+== Logical Concepts
 
 === Resources
 A _resource_ is the basic building block that oCIS manages. It can be of link:https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.ResourceType[different types]:
@@ -60,7 +60,7 @@ Technically, this means that every storage driver needs to have a map of a `uuid
 
 == Storage Providers
 
-== Technical concepts
+== Technical Concepts
 
 === Storage Systems
 image::ocis/storage/storageprovider.drawio.svg[]

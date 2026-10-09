@@ -37,7 +37,7 @@ After successfully mounting the storage on the client, it can be checked if the 
 The NFS server setup can be optimized considering system administrative-, performance- and security options. This is not (yet) covered in this documentation.
 ====
 
-== oCIS Start using the NFS Share
+== oCIS Start Using the NFS Share
 
 The oCIS server can be instructed to set up the decomposed FS at a certain path by setting the environment variable `OCIS_BASE_DATA_PATH`.
 

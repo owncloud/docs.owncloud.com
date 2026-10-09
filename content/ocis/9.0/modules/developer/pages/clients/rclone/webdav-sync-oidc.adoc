@@ -6,7 +6,7 @@
 
 Rclone itself is not able to open and maintain an OpenID Connect session. But it is able to still use OpenID Connect for authentication by leveraging a so called OIDC-agent.
 
-=== Setting up the OIDC-agent
+=== Setting Up the OIDC-agent
 
 You need to install the link:https://github.com/indigo-dc/oidc-agent[OIDC-agent] from your OS' package repository (e.g. link:https://github.com/indigo-dc/oidc-agent#debian-packages[Debian] or link:https://github.com/indigo-dc/oidc-agent#debian-packages[MacOS]).
 
@@ -48,7 +48,7 @@ Please also note that the OIDC-agent will listen on your localhost interface on 
 After a successful login or an already existing session you will be redirected to success page of the OIDC-agent.
 You will now be asked for a password for your account configuration, so that your OIDC session is secured and cannot be used by other people with access to your computer.
 
-== Configure the WebDAV remote
+== Configure the WebDAV Remote
 
 First of all we need to set up our credentials and the WebDAV remote for Rclone. In this example we do this by setting environment variables. You might also set up a named remote or use command line options to achieve the same.
 
@@ -59,7 +59,7 @@ export RCLONE_WEBDAV_URL=https://ocis.owncloud.test/remote.php/webdav/
 export RCLONE_WEBDAV_BEARER_TOKEN_COMMAND="oidc-token einstein-ocis-owncloud-test"
 ----
 
-=== Sync to the WebDAV remote
+=== Sync to the WebDAV Remote
 
 We now can use Rclone to sync the local folder `/tmp/test` to `/test` in your oCIS home folder.
 

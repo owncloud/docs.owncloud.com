@@ -40,7 +40,7 @@ Our implementation currently supports only a limited set of Attributes of Users:
 | Contains the password of the users. This is only present when updating or creating users. It is never returned by the API
 |===
 
-=== Reading users
+=== Reading Users
 
 ==== `GET /me`
 
@@ -272,7 +272,7 @@ to be updated. E.g. to update the `displayName` Attribute:
 
 Similar to creating a user via `POST`,  the `PATCH` request will return the user object containing the new attribute values.
 
-=== Change password
+=== Change Password
 
 ==== `POST /me/changePassword`
 
