@@ -149,6 +149,17 @@ link:https://doc.owncloud.com/server/developer_manual/core/apis/ocs-share-api.ht
 xref:server:developer_manual:core/apis/ocs-share-api.adoc#function-arguments[text]
 ```
 
+### Links That Cannot Be Converted
+
+Do **not** convert `doc.owncloud.com` URLs that appear inside any of the following contexts — AsciiDoc does not process macros inside verbatim or code regions:
+
+- **Literal / source blocks** (`----` or `[source,...]` delimited blocks) — the URL is rendered as plain text and is intentional (e.g. a checklist template or a config comment).
+- **`.env` / config file code blocks** — comment lines starting with `#` that reference documentation are part of the embedded file content; they cannot contain xref macros.
+- **Diagram blocks** (e.g. Mermaid `@startdiagram`) — participant link metadata is processed by the diagram renderer, not by Asciidoctor.
+- **Base URLs with no page path** (e.g. `https://doc.owncloud.com/ocis/`) — there is no target page to map to an xref.
+
+When presenting a table of convertible links, mark these rows as `NOT CONVERTIBLE` and state the reason (e.g. "in source block", "in Mermaid diagram").
+
 ## AsciiDoc Image Width
 
 All images — both block (`image::`) and inline (`image:`) — must include a `width=` attribute. The first positional attribute in the brackets is alt text and is left empty, so the width is always preceded by a comma:
@@ -218,22 +229,26 @@ When section headings are updated to AP title case, `xref:` link text across the
 
 ### Output format
 
-Always report as a numbered list grouped by file, never silently fix:
+Always report as a **numbered table** so the user can reference items by number. Never silently fix — present findings first and wait for explicit confirmation.
+
+Use two separate tables: one for close matches (fixable) and one for significant differences (human review). Add a `[CROSS-COMPONENT]` note in the Notes column for xrefs that include a component prefix.
 
 ```
-File: ocis/storage/namespaces.adoc
-  1. xref:ocis/storage/spacesprovider.adoc#webdav[webdav]
-     Heading: "WebDAV"  →  suggest link text: "WebDAV"
-  2. [CROSS-COMPONENT] xref:server:developer_manual:core/apis/ocs-share-api.adoc[OCS share api]
-     Heading: "OCS Share API"  →  suggest link text: "OCS Share API"
+**Close matches — pending confirmation:**
 
-File: ocis/storage/index.adoc
-  3. [INTENTIONAL — differs significantly, review manually]
-     xref:ocis/storage/terminology.adoc#references[_references_]
-     Heading: "References"
+| # | File | xref link text | Actual heading/title | Notes |
+|---|---|---|---|---|
+| 1 | `ocis/storage/namespaces.adoc:42` | `webdav` | `WebDAV` | Casing only |
+| 2 | `ocis/storage/index.adoc:10` | `OCS share api` | `OCS Share API` | [CROSS-COMPONENT] |
+
+**Significant differences — human review required:**
+
+| # | File | xref link text | Actual heading/title | Notes |
+|---|---|---|---|---|
+| 3 | `ocis/storage/index.adoc:15` | `_references_` | `References` | Descriptive/intentional |
 ```
 
-Only apply corrections after explicit user confirmation.
+Only apply corrections after explicit user confirmation, referencing items by number.
 
 ## File Relationship: CLAUDE.md and AGENTS.md
 

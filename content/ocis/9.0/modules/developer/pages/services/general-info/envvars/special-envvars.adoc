@@ -7,7 +7,7 @@ Handling these envvars properly is very important for the automated doc process 
 
 == Special Scope Envvars
 
-Variables with special scope are only related to a deployment method such as `OCIS_RUN_SERVICES`. These variables cannot be gathered automatically, rarely change, can be viewed and must be maintained manually via the link:https://doc.owncloud.com/ocis/next/deployment/services/env-vars-special-scope.html[admin documentation].
+Variables with special scope are only related to a deployment method such as `OCIS_RUN_SERVICES`. These variables cannot be gathered automatically, rarely change, can be viewed and must be maintained manually via the xref:ocis:admin:deployment/services/env-vars-special-scope.adoc[admin documentation].
 
 == Extended Envvars
 

@@ -100,4 +100,4 @@ sudo rm -r $HOME/ocis
 
 == Next Steps
 
-After evaluation, we strongly recommend that you use the link:https://doc.owncloud.com/ocis/next/depl-examples/ubuntu-compose/ubuntu-compose-prod.html[Install Infinite Scale on a Server] documentation which is ready for production and remove this evaluation setup completely.
+After evaluation, we strongly recommend that you use the xref:ocis:admin:depl-examples/ubuntu-compose/ubuntu-compose-prod.adoc[Install Infinite Scale on a Server] documentation which is ready for production and remove this evaluation setup completely.
