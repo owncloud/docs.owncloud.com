@@ -7,15 +7,14 @@
 // compute required links as attributes
 include::partial$services/compute-links.adoc[]
 
-== Introduction
-
-{description} It is mainly suitable for smaller installations. The recommendation for larger setups is to replace IDP with and external OpenID Connect Provider.
+TIP: For service description, configuration, and administration, see the xref:{service-path-to-admin}[admin documentation, window=_blank] for this service.
 
 == Developer Readme
 
 // add a predefined text that uses the computed links
 include::partial$services/readme-link-text.adoc[]
 
-== Configuration
+== Developer Topics
 
-include::partial$services/env-and-yaml.adoc[tag=envvars-yaml]
+* xref:{dev-s-path}/idp/theming.adoc[Theming]
+
