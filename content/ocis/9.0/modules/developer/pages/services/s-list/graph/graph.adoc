@@ -1,0 +1,20 @@
+= Graph
+:toc: right
+:description: The graph service provides the Graph API which is a RESTful web API used to access Infinite Scale resources.
+
+:service_name: graph
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+
+== Developer Topics
+
+* xref:{dev-s-path}/graph/unified-roles.adoc[Unified Roles]
+

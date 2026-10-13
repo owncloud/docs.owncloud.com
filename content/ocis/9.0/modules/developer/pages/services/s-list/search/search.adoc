@@ -1,0 +1,16 @@
+= Search
+:toc: right
+:description: The Infinite Scale Search service is responsible for metadata and content extraction, stores that data as index and makes it searchable.
+
+:service_name: search
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+

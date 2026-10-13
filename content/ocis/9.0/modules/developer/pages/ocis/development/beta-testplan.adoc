@@ -20,7 +20,7 @@ Some cases have suggested setup steps, but feel free to use other setups. This c
 * different OpenIDConnect IDPs (e.g builtin IDP, xref:ocis/deployment/ocis_keycloak.adoc[keycloak], AzureAD)
 ** for some functionalities you will need an xref:ocis/deployment/ocis_ldap.adoc[LDAP server] where the IDP and oCIS both get the users from the:
 ** xref:ocis/deployment/ocis_keycloak.adoc[keycloak example]
-** xref:{dev-s-path}/idp/index.adoc[service configuration]
+** xref:{dev-s-path}/idp/idp.adoc[service configuration]
 
 * different storage systems (decomposedFS on local POSIX (default), xref:ocis/storage-backends/dcfsnfs.adoc[decomposedFS on NFS],
 xref:ocis/deployment/ocis_full.adoc[S3])

@@ -28,7 +28,7 @@ Get a more verbose output.
 
 For CLI commands that are _embedded in a service_, see the following services:
 
-* xref:{dev-s-path}/auth-app/index.adoc[Auth-App]
-* xref:{dev-s-path}/graph/index.adoc[Graph]
-* xref:{dev-s-path}/postprocessing/index.adoc[Postprocessing]
-* xref:{dev-s-path}/storage-users/index.adoc[Storage-Users]
+* xref:{dev-s-path}/auth-app/auth-app.adoc[Auth-App]
+* xref:{dev-s-path}/graph/graph.adoc[Graph]
+* xref:{dev-s-path}/postprocessing/postprocessing.adoc[Postprocessing]
+* xref:{dev-s-path}/storage-users/storage-users.adoc[Storage-Users]

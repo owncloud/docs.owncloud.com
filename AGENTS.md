@@ -268,6 +268,65 @@ Use two separate tables: one for close matches (fixable) and one for significant
 
 Only apply corrections after explicit user confirmation, referencing items by number.
 
+## Developer Service Pages
+
+The oCIS developer module (`content/ocis/<version>/modules/developer/`) has a specific structure and content rule for service pages.
+
+### File Naming and Location
+
+Service pages live at `pages/services/s-list/<service>/<service>.adoc` — the filename matches the service name, **not** `index.adoc`. This aligns with the admin module naming convention.
+
+### Content Separation Rule
+
+Developer service pages must **not** duplicate admin content. The admin documentation is authoritative for service descriptions, configuration, and administration. A developer page contains:
+
+1. The mandatory partial sequence (see below) — always present.
+2. A `== Developer Readme` section — always present, links to the upstream README.
+3. A `== Developer Topics` section — **only** when there is genuine developer-specific content (e.g. API details, code-level configuration, CLI internals). Omit the section entirely if there is nothing to add.
+
+### Mandatory Partial Sequence
+
+Every service page must open with these three includes in order, after setting `service_name`:
+
+```asciidoc
+= <Service Title>
+:toc: right
+:description: ...
+
+:service_name: <service-folder-name>
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+```
+
+### Service Partials
+
+All three live in `developer/partials/services/`:
+
+- **`compute-links.adoc`** — computes `{git-service-root}` (link to source on GitHub) and `{service-path-to-admin}` (xref to the admin page). Requires `service_name` to be set **before** this include.
+- **`admin-tip.adoc`** — block TIP admonition pointing to the admin docs. Requires `{service-path-to-admin}` (set by `compute-links.adoc`).
+- **`readme-link-text.adoc`** — standard prose linking to the upstream README and back to the admin docs. Requires both `{git-service-root}` and `{service-path-to-admin}`.
+
+### Key Antora Attributes for Services
+
+Defined in `content/ocis/<version>/antora.yml`:
+
+| Attribute | Value | Use |
+|---|---|---|
+| `{s-path}` | `deployment/services/s-list` | Path segment for admin service pages |
+| `{dev-s-path}` | `services/s-list` | Path segment for developer service pages |
+| `{dev_ocis_services_path}` | `/services/` | Git path segment used in `compute-links.adoc` |
+
+Use `{s-path}` in xrefs to admin service pages: `xref:admin:{s-path}/<service>.adoc[...]`.
+Use `{dev-s-path}` in xrefs to developer service pages: `xref:developer:{dev-s-path}/<service>/<service>.adoc[...]`.
+
 ## File Relationship: CLAUDE.md and AGENTS.md
 
 `CLAUDE.md` is a symlink to this file (`AGENTS.md`). Both names are provided so that different AI tools find their expected filename — Claude Code reads `CLAUDE.md`, OpenAI Codex-based tools read `AGENTS.md`. **Always edit `AGENTS.md` directly**; `CLAUDE.md` reflects all changes automatically via the symlink.

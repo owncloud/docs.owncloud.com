@@ -5,3 +5,16 @@
 == General Information
 
 This section provides general information how to manage environment variables.
+
+[IMPORTANT]
+====
+* For documentating environment variables, many processes are handled via a go program or shell scripts located in the `ocis_helper` directory in the link:https://github.com/owncloud/docs.owncloud.com/blob/main/ocis_helpers/README.md[ownCloud documentation, window=_blank]. The link directly opens the README.
+
+* Anything the helpers for envvars will write, is only written into the documentation repository. The ocis repository is the source and must be corrected if something needs changes. Possible source changes for envvars that have documentation impact are:
+** Placeholder for an envvar's introduction version
+** Releasing (finding placeholders and replace them with real versions before creating the first release candidate)
+** Deprecations
+** Removals
+** Extended Envvars
+** Special Scope Envvars
+====

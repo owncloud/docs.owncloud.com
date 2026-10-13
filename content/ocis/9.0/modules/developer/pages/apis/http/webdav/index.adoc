@@ -388,7 +388,7 @@ Available namespaces:
 
 === Supported WebDAV Properties
 
-[width="100%", cols="34%,50%,100%", options="header"]
+[width="100%", cols="35%,30%,35%", options="header"]
 |===
 | Property
 | Description

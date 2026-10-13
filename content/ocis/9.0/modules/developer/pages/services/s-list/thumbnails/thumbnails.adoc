@@ -1,0 +1,50 @@
+= Thumbnails
+:toc: right
+:description: The thumbnails service provides methods to generate thumbnails for various files and resolutions based on requests,
+
+:service_name: thumbnails
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+
+== Developer Topics
+
+=== Using libvips for Thumbnail Generation
+
+To improve performance and support a wider range of image formats, the thumbnails service can use the https://www.libvips.org/[libvips library, window=_blank]. Support must be enabled at build time and has the following implications:
+
+* With libvips support enabled, it is not possible to create a statically linked oCIS binary.
+* The libvips shared libraries must be available at runtime in the same release used to build the oCIS binary.
+* When using the oCIS Docker images, the libvips shared libraries are included in the image.
+
+libvips support is disabled by default. To enable it, install libvips and its build-time dependencies first. On macOS:
+
+[source,bash]
+----
+brew install vips pkg-config
+export PKG_CONFIG_PATH="/usr/local/opt/libffi/lib/pkgconfig"
+----
+
+Then build with the `ENABLE_VIPS` variable:
+
+[source,bash]
+----
+make -C ocis build ENABLE_VIPS=1
+----
+
+Or pass the build tag directly:
+
+[source,bash]
+----
+go build -tags enable_vips -o bin/ocis ./cmd/ocis
+----
+
+When building a Docker image using the Dockerfile in the top-level oCIS directory, libvips support is enabled automatically and the shared libraries are included in the resulting image.
+

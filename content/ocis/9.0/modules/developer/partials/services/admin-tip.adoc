@@ -1,0 +1,8 @@
+// TIP admonition pointing to the admin documentation for this service.
+// Requires 'service-path-to-admin' to be defined via compute-links.adoc before inclusion.
+
+[TIP]
+====
+* The xref:{service-path-to-admin}[admin documentation, window=_blank] for this service contains the full service description, configuration, and administration details. The content there is valid for both administrators and developers.
+* Anything that is relevant only for developers is described on this page.
+====

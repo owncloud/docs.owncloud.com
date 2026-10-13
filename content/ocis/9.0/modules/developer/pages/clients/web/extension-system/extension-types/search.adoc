@@ -54,7 +54,7 @@ The listSearch object consists of:
 Vue component that can render the values from the SearchResult below
 
 * `search(term: string)` +
-Function that exectues the search, based on a given term. The term is formatted in xref:{dev-s-path}/search/index.adoc[KQL]. Please note that the returned values needs to be formatted to fit either `SearchResource` or `GenericSearchResultItem` type
+Function that exectues the search, based on a given term. The term is formatted in xref:{dev-s-path}/search/search.adoc[KQL]. Please note that the returned values needs to be formatted to fit either `SearchResource` or `GenericSearchResultItem` type
 
 ==== PreviewSearch
 

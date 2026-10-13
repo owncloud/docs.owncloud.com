@@ -1,0 +1,16 @@
+= Auth Bearer
+:toc: right
+:description: The Infinite Scale Auth Bearer service authenticates OpenID Connect bearer tokens.
+
+:service_name: auth-bearer
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+

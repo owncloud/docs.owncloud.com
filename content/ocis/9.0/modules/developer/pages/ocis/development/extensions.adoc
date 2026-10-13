@@ -40,7 +40,7 @@ For a consistent look and feel, ownCloud Web uses an external design library, th
 
 === Settings
 
-An extension likely has some behaviour which the user can configure. Fundamental configuration will often be done by administrators during deployment, via configuration files or by setting environment variables. But for other settings, which are supposed to change more often or which are even user specific, this is not a viable way. Therefore you need to offer the users a UI where they can configure your extension to their liking. Because implementing something like this is a repetitive task among extensions, oCIS already offers the settings extensions which does that for your extension. Your extension just needs to register settings bundles, respective permissions and finally read the current values from the settings service. You can read more on that on the xref:{dev-s-path}/settings/index.adoc[settings extension].
+An extension likely has some behaviour which the user can configure. Fundamental configuration will often be done by administrators during deployment, via configuration files or by setting environment variables. But for other settings, which are supposed to change more often or which are even user specific, this is not a viable way. Therefore you need to offer the users a UI where they can configure your extension to their liking. Because implementing something like this is a repetitive task among extensions, oCIS already offers the settings extensions which does that for your extension. Your extension just needs to register settings bundles, respective permissions and finally read the current values from the settings service. You can read more on that on the xref:{dev-s-path}/settings/settings.adoc[settings extension].
 
 === Proxy
 

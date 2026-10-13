@@ -1,0 +1,58 @@
+= Proxy
+:toc: right
+:description: The proxy service is an API-Gateway for the ownCloud Infinite Scale microservices.
+
+:service_name: proxy
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+
+== Developer Topics
+
+=== Configuring Routes
+
+The proxy handles routing to all endpoints that oCIS offers. The currently available default routes can be found link:{git-service-root}/pkg/config/defaults/defaultconfig.go[in the source code, window=_blank]. Changing or adding routes can be necessary when writing own oCIS extensions.
+
+Due to the complexity when defining routes, these can only be defined in the YAML config file and not via environment variables.
+
+To *overwrite* default routes:
+
+[source,yaml]
+----
+policies:
+  - name: ocis
+    routes:
+      - endpoint: /
+        service: com.owncloud.web.web
+      - endpoint: /dav/
+        service: com.owncloud.web.ocdav
+----
+
+To add *additional* routes to the default routes:
+
+[source,yaml]
+----
+additional_policies:
+  - name: ocis
+    routes:
+      - endpoint: /custom/endpoint
+        service: com.owncloud.custom.custom
+----
+
+A route has the following configurable parameters:
+
+[source,yaml]
+----
+endpoint: ""       # the URL that should be routed
+service: ""        # the service the URL should be routed to
+unprotected: false # false (default): calling the endpoint requires authorization
+                   # true: anyone can call the endpoint without authorization
+----
+

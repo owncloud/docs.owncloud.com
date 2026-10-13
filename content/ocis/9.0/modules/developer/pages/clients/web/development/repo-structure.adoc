@@ -96,7 +96,7 @@ within the `files` app. We currently bundle the following apps with the default 
 * `web-app-epub-reader` +
 a simple reader for `.epub` files
 * `web-app-external` +
-an iframe integration of all the apps coming from the xref:{dev-s-path}/app-provider/index.adoc[app provider] (e.g. OnlyOffice, Collabora Online and others)
+an iframe integration of all the apps coming from the xref:{dev-s-path}/app-provider/app-provider.adoc[app provider] (e.g. OnlyOffice, Collabora Online and others)
 * `web-app-pdf-viewer` +
 a viewer for `.pdf` files, which relies on native PDF rendering support from the browser
 * `web-app-preview` +

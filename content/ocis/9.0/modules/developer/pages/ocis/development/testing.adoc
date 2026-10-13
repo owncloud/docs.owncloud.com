@@ -381,7 +381,7 @@ docker run -d --restart unless-stopped --name=mailpit -p 8025:8025 -p 1025:1025 
 
 === Run oCIS
 
-Documentation for environment variables is available xref:{dev-s-path}/notifications/index.adoc[here]
+Documentation for environment variables is available xref:{dev-s-path}/notifications/notifications.adoc[here]
 
 [source,bash]
 ----
@@ -514,7 +514,7 @@ docker run -d -p 3310:3310 -v /your/local/filesystem/path/to/clamav/:/var/lib/cl
 
 === Run oCIS
 
-As `antivirus` service is not enabled by default we need to enable the service while running oCIS server. We also need to enable `async upload` and as virus scan is performed in post-processing step, we need to set it as well. Documentation for environment variables related to antivirus is available xref:{dev-s-path}/antivirus/index.adoc[here].
+As `antivirus` service is not enabled by default we need to enable the service while running oCIS server. We also need to enable `async upload` and as virus scan is performed in post-processing step, we need to set it as well. Documentation for environment variables related to antivirus is available xref:{dev-s-path}/antivirus/antivirus.adoc[here].
 
 [source,bash]
 ----
@@ -554,7 +554,7 @@ make test-acceptance-api
 
 == Running Test Suite with Federated Sharing (@ocm)
 
-Test suites that are tagged with `@ocm` require running two different ocis instances. More detailed information and configuration related to it can be found xref:{dev-s-path}/ocm/index.adoc[here].
+Test suites that are tagged with `@ocm` require running two different ocis instances. More detailed information and configuration related to it can be found xref:{dev-s-path}/ocm/ocm.adoc[here].
 
 === Setup First oCIS Instance
 

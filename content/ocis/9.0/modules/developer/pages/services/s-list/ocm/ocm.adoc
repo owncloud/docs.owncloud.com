@@ -1,0 +1,21 @@
+= OCM
+:toc: right
+:description: The Infinite Scale OCM service provides federated sharing functionality based on ScienceMesh and the OCM 1.1.0 HTTP API.
+
+:service_name: ocm
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+
+== Developer Topics
+
+* xref:{dev-s-path}/ocm/create_share_flow.adoc[Create Share Flow]
+* xref:{dev-s-path}/ocm/invitation_flow.adoc[Invitation Flow]
+

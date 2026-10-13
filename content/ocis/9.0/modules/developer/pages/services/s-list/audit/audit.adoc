@@ -1,0 +1,16 @@
+= Audit
+:toc: right
+:description: The audit service logs all events of the system as an audit log. With audit logs, you are able to prove compliance with corporate and legal guidelines as well as enable reporting and auditing of operations.
+
+:service_name: audit
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+

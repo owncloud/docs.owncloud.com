@@ -1,0 +1,16 @@
+= Storage-System
+:toc: right
+:description: The Infinite Scale Storage-System service persists and caches user related data that is defined via Infinite Scale.
+
+:service_name: storage-system
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+
