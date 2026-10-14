@@ -4,6 +4,11 @@
 
 This document describes ocis CLI commands that are _embedded in a service_.
 
+[NOTE]
+====
+For all admin-related CLI commands, see the xref:admin:maintenance/commands/commands.adoc#online-only-commands[Maintenance Commands] in the admin documentation.
+====
+
 == Common Parameters
 
 The ocis package offers a variety of CLI commands for monitoring or repairing ocis installations. Most of these commands have common parameters such as:
@@ -11,7 +16,8 @@ The ocis package offers a variety of CLI commands for monitoring or repairing oc
 * `--help` (or `-h`) +Use to print all available options.
 
 * `--basePath` (or `-p`) +
-Needs to point to a storage provider, paths can vary depending on your ocis installation. Example paths are: +
+Needs to point to a storage provider, paths can vary depending on your ocis installation. Example paths are:
++
 [source,bash]
 ----
 /var/tmp/ocis/storage/users  # docker installation
@@ -26,9 +32,10 @@ Get a more verbose output.
 
 == List of CLI Commands
 
-For CLI commands that are _embedded in a service_, see the following services:
+For example CLI commands that are _embedded in a service_, see the following services:
 
 * xref:{dev-s-path}/auth-app/auth-app.adoc[Auth-App]
 * xref:{dev-s-path}/graph/graph.adoc[Graph]
 * xref:{dev-s-path}/postprocessing/postprocessing.adoc[Postprocessing]
 * xref:{dev-s-path}/storage-users/storage-users.adoc[Storage-Users]
+* ...

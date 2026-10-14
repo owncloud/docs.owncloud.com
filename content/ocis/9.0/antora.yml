@@ -54,5 +54,27 @@ asciidoc:
     download-gh-directory-url: 'https://download-directory.github.io'
 
     # the url to download ocis
-    # note that this is inactive but required in the migration section for upgrading old binaries which do not longer exist. 
+    # note that this is inactive but required in the migration section for upgrading old binaries which do not longer exist.
     ocis-downloadpage-url: 'https://download.owncloud.com/ocis/ocis'
+
+# The collector fetches the Libre Graph API OpenAPI spec from the source repository and places it
+# in the developer module's attachments family so the swagger-ui extension can render it on the
+# libre-graph-api page. See https://github.com/owncloud/libre-graph-api for the source repository.
+#
+# The fetch is cached in .cache/libre-graph/: if the network is unavailable, the last successful
+# download is reused silently. The build only fails if the cache is empty AND the fetch fails.
+ext:
+  collector:
+  - run:
+      command: |
+        mkdir -p .cache/libre-graph build/libre-graph
+        if curl -sLf \
+          https://raw.githubusercontent.com/owncloud/libre-graph-api/main/api/openapi-spec/v1.0.yaml \
+          -o .cache/libre-graph/v1.0.yaml.new 2>/dev/null; then
+          mv .cache/libre-graph/v1.0.yaml.new .cache/libre-graph/v1.0.yaml
+        fi
+        cp .cache/libre-graph/v1.0.yaml build/libre-graph/v1.0.yaml
+      shell: true
+    scan:
+      dir: build/libre-graph
+      into: modules/developer/attachments

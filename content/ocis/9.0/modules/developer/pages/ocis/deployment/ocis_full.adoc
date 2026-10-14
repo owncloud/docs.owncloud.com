@@ -247,7 +247,7 @@ If you want to use a specific version of oCIS, set the version to a dedicated ta
 
 [TIP]
 ====
-You can read more about the different oCIS releases in the xref:ocis/release_life_cycle.adoc[Release Life Cycle].
+You can read more about the different oCIS releases in the xref:release_life_cycle.adoc[Release Life Cycle].
 ====
 
 Set your domain for the oCIS frontend in `OCIS_DOMAIN=`, e.g. `OCIS_DOMAIN=ocis.owncloud.test`.

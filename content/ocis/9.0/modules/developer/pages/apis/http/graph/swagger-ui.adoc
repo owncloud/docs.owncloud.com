@@ -1,0 +1,7 @@
+= Libre Graph API
+:toc: right
+:description: Interactive API reference for the Libre Graph API used by oCIS.
+
+The Libre Graph API is the ownCloud-developed REST API for oCIS, aligned with the Microsoft Graph API specification.
+
+swagger-ui::attachment$v1.0.yaml[]

@@ -327,6 +327,53 @@ Defined in `content/ocis/<version>/antora.yml`:
 Use `{s-path}` in xrefs to admin service pages: `xref:admin:{s-path}/<service>.adoc[...]`.
 Use `{dev-s-path}` in xrefs to developer service pages: `xref:developer:{dev-s-path}/<service>/<service>.adoc[...]`.
 
+## Antora Collector and Swagger UI Extensions
+
+Two additional Antora extensions are installed and configured in this repo:
+
+| Package | License | Purpose |
+|---|---|---|
+| `@antora/collector-extension` | Apache 2.0 | Fetches remote files into the content catalog at build time |
+| `@opendevise/antora-swagger-ui-extension` | MPL-2.0 | Renders an OpenAPI spec as an interactive Swagger UI page |
+
+The MPL-2.0 license for `@opendevise/antora-swagger-ui-extension` was explicitly approved via discussion with Dan Allen (Antora maintainer) before introduction.
+
+### Collector Configuration
+
+The Collector is configured **per component** in `antora.yml` under the `ext.collector` key — not in `site.yml`. `site.yml` only registers the extension (`'@antora/collector-extension'`).
+
+The collector for the Libre Graph API OpenAPI spec uses a **cache-with-fallback** shell pattern: it tries to fetch the remote file and refresh the cache; if the network is unavailable it silently falls back to the last cached copy. The build only fails if the cache is empty AND the fetch fails (i.e. first run without network). Use this pattern for any future remote content added via the Collector:
+
+```yaml
+ext:
+  collector:
+  - run:
+      command: |
+        mkdir -p .cache/<name> build/<name>
+        if curl -sLf <remote-url> -o .cache/<name>/<file>.new 2>/dev/null; then
+          mv .cache/<name>/<file>.new .cache/<name>/<file>
+        fi
+        cp .cache/<name>/<file> build/<name>/<file>
+      shell: true
+    scan:
+      dir: build/<name>
+      into: modules/<module>/attachments
+```
+
+### Swagger UI Macro
+
+Once a YAML file is in the `attachments` family, render it with:
+
+```asciidoc
+swagger-ui::attachment$<filename>.yaml[]
+```
+
+The extension injects the Swagger UI CSS/JS and generates a spec-loader script automatically. No other configuration is needed on the page.
+
+### Libre Graph API Page
+
+The interactive API reference lives at `content/ocis/9.0/modules/developer/pages/apis/http/graph/swagger-ui.adoc`. It renders the OpenAPI spec fetched from `https://github.com/owncloud/libre-graph-api`. The Collector config and cache are in `content/ocis/9.0/antora.yml` under `ext.collector`.
+
 ## File Relationship: CLAUDE.md and AGENTS.md
 
 `CLAUDE.md` is a symlink to this file (`AGENTS.md`). Both names are provided so that different AI tools find their expected filename — Claude Code reads `CLAUDE.md`, OpenAI Codex-based tools read `AGENTS.md`. **Always edit `AGENTS.md` directly**; `CLAUDE.md` reflects all changes automatically via the symlink.

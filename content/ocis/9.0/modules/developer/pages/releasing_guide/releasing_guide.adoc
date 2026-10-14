@@ -194,7 +194,8 @@ Note that this section is only _informational_ for oCIS developers and is done b
 
 [source,plaintext]
 ----
-* [ ] Create _overview release notes_ in the `docs-main` repo based on the changelog\
+* [ ] Create _overview release notes_ in the `ROOT` module of the `main` component\
+in the `docs.owncloud.com` repo based on the changelog\
 The source is most likely the unreleased folder during the development cycle
 * [ ] For Major and Minor versions:
   * [ ] Add all _documentation changes_ including the upgrade guide in the `docs-ocis` repo in master

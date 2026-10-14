@@ -104,6 +104,6 @@ Please consider the link:https://github.com/owncloud/ocis/blob/master/CONTRIBUTI
 
 == Versioning Scheme
 
-image::./storage/semver-schema.png[Schema of Semantic Versioning,width=300]
+image::ocis/storage/semver-schema.png[Schema of Semantic Versioning,width=300]
 
 We adhere to _Semantic Versioning_ (SemVer) to ensure clarity and predictability in each of our releases. Learn how Semantic Versioning works on link:https://semver.org/[https://semver.org/].

@@ -3,6 +3,16 @@
 
 ** xref:developer:index.adoc[Introduction]
 
+** xref:developer:release_notes.adoc[Release Notes]
+
+** xref:developer:release_life_cycle.adoc[Release Life Cycle]
+
+** xref:developer:license.adoc[License]
+
+** xref:developer:releasing_guide/releasing_guide.adoc[Releasing Guide]
+*** xref:developer:releasing_guide/releasing_guide.adoc[Process]
+*** xref:developer:releasing_guide/troubleshooting.adoc[Troubleshooting]
+
 ** xref:developer:architecture/index.adoc[Architecture]
 
 *** xref:developer:architecture/upload-processing.adoc[Upload Processing]
@@ -22,6 +32,7 @@
 ***** xref:developer:apis/http/graph/permissions.adoc[Permissions]
 ***** xref:developer:apis/http/graph/role.adoc[Roles]
 ***** xref:developer:apis/http/graph/spaces.adoc[Spaces]
+***** xref:developer:apis/http/graph/swagger-ui.adoc[Swagger UI]
 **** xref:developer:apis/http/webdav/index.adoc[WebDAV API]
 *** xref:developer:apis/http/authorization.adoc[Authorization]
 *** xref:developer:apis/http/tus_upload.adoc[TUS Upload]
@@ -29,9 +40,6 @@
 ** xref:developer:ocis/index.adoc[oCIS]
 
 *** xref:developer:ocis/config.adoc[Configuration]
-*** xref:developer:ocis/release_notes.adoc[Release Notes]
-*** xref:developer:ocis/release_life_cycle.adoc[Release Life Cycle]
-*** xref:developer:ocis/license.adoc[License]
 
 *** xref:developer:ocis/adr/index.adoc[Architecture Decision Records]
 **** xref:developer:ocis/adr/0001-introduce-accounts-service.adoc[0001 Accounts Service]
@@ -110,9 +118,6 @@
 **** xref:developer:ocis/identity-provider/oidc.adoc[OIDC]
 **** xref:developer:ocis/identity-provider/ldap-active-directory.adoc[LDAP / Active Directory]
 
-*** xref:developer:ocis/releasing_guide/releasing_guide.adoc[Releasing Guide]
-**** xref:developer:ocis/releasing_guide/releasing_guide.adoc[Process]
-**** xref:developer:ocis/releasing_guide/troubleshooting.adoc[Troubleshooting]
 
 *** xref:developer:ocis/storage/index.adoc[Storage]
 **** xref:developer:ocis/storage/terminology.adoc[Terminology]
@@ -132,8 +137,8 @@
 
 
 ** xref:developer:cli-commands/index.adoc[CLI Commands]
-*** xref:developer:cli-commands/create-new-cli-command.adoc[Create a New CLI Command]
 *** xref:developer:cli-commands/document-cli-commands.adoc[Document CLI Commands]
+*** xref:developer:cli-commands/create-new-cli-command.adoc[Create a New CLI Command]
 *** xref:developer:cli-commands/service_dependent_cli.adoc[Service-Dependent CLI]
 *** xref:developer:cli-commands/service_independent_cli.adoc[Service-Independent CLI]
 
