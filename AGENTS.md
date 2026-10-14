@@ -342,7 +342,20 @@ The MPL-2.0 license for `@opendevise/antora-swagger-ui-extension` was explicitly
 
 The Collector is configured **per component** in `antora.yml` under the `ext.collector` key — not in `site.yml`. `site.yml` only registers the extension (`'@antora/collector-extension'`).
 
-The collector for the Libre Graph API OpenAPI spec uses a **cache-with-fallback** shell pattern: it tries to fetch the remote file and refresh the cache; if the network is unavailable it silently falls back to the last cached copy. The build only fails if the cache is empty AND the fetch fails (i.e. first run without network). Use this pattern for any future remote content added via the Collector:
+The Collector shell runs from the **repository root** (not the component directory).
+
+Multiple entries are supported under `ext.collector` as a YAML list.
+
+### Collector Fetch Pattern
+
+All Collector fetch commands use a **SHA-check + cache-with-fallback** pattern:
+
+1. `git ls-remote` fetches only the remote ref metadata (no data download) to get the current SHA.
+2. If the SHA matches the cached SHA **and** the cache file exists → skip the download entirely.
+3. Otherwise, download using the **commit-SHA URL** (not the branch URL) to bypass GitHub's CDN cache, which can serve stale content for a long time after a push.
+4. Validate the download before accepting it (non-empty for single files; check for expected path for tarballs).
+5. Only update the cache and SHA file if validation passes.
+6. If `git ls-remote` fails (no network) and cache exists → use cache. If no cache → download with branch URL as fallback.
 
 ```yaml
 ext:
@@ -350,14 +363,49 @@ ext:
   - run:
       command: |
         mkdir -p .cache/<name> build/<name>
-        if curl -sLf <remote-url> -o .cache/<name>/<file>.new 2>/dev/null; then
-          mv .cache/<name>/<file>.new .cache/<name>/<file>
+        CACHE=".cache/<name>/<file>"
+        SHA_FILE=".cache/<name>/main.sha"
+        REMOTE_SHA=$(git ls-remote https://github.com/<org>/<repo> refs/heads/main 2>/dev/null | awk '{print $1}')
+        CACHED_SHA=$(cat "$SHA_FILE" 2>/dev/null || echo "")
+        if ([ -n "$REMOTE_SHA" ] && [ "$REMOTE_SHA" != "$CACHED_SHA" ]) || [ ! -f "$CACHE" ]; then
+          [ -n "$REMOTE_SHA" ] \
+            && URL="https://github.com/<org>/<repo>/archive/${REMOTE_SHA}.tar.gz" \
+            || URL="https://github.com/<org>/<repo>/archive/refs/heads/main.tar.gz"
+          if curl -sLf "$URL" -o "${CACHE}.new" 2>/dev/null && [ -s "${CACHE}.new" ]; then
+            mv "${CACHE}.new" "$CACHE"
+            [ -n "$REMOTE_SHA" ] && echo "$REMOTE_SHA" > "$SHA_FILE"
+          fi
         fi
-        cp .cache/<name>/<file> build/<name>/<file>
+        cp "$CACHE" build/<name>/<file>
       shell: true
     scan:
       dir: build/<name>
       into: modules/<module>/attachments
+```
+
+### GitHub Tarball Gotchas
+
+**CDN staleness:** Branch-based tarball URLs (`/archive/refs/heads/main.tar.gz`) are served from GitHub's CDN and can remain stale long after a push. Always use the commit-SHA URL (`/archive/${REMOTE_SHA}.tar.gz`) obtained from `git ls-remote` — SHA-based URLs bypass the CDN cache.
+
+**`export-ignore` in `.gitattributes`:** GitHub generates tarballs using `git archive` internally, which honours `export-ignore` entries in `.gitattributes`. Any folder marked `export-ignore` will be silently absent from the tarball regardless of URL or SHA. **Always check `.gitattributes` in the source repo before designing a Collector fetch.** Fix: remove `export-ignore` from any folder that the Collector needs to fetch (see `owncloud/ocis-php-sdk` PR #322 as an example).
+
+### Attachment Directory Structure
+
+`scan.dir` sets the root of what gets scanned into the target family. Files are placed at `attachment$<relative-path-within-scan-dir>`.
+
+- **Single file** (`libre-graph`): `scan.dir: build/libre-graph` → `attachment$v1.0.yaml`
+- **Multi-file tree** (`ocis-php-sdk`): `scan.dir: build/ocis-php-sdk` with files at `build/ocis-php-sdk/ocis-php-sdk-docs/index.html` → `attachment$ocis-php-sdk-docs/index.html`
+
+For a multi-file tree from a repo tarball, the top-level directory name changes with each commit SHA. Detect it dynamically:
+
+```bash
+TOP=$(tar -tzf "$CACHE" 2>/dev/null | head -1 | cut -d/ -f1)
+tar -xzf "$CACHE" --strip-components=2 -C build/<name>/<subdir> "${TOP}/<subfolder>"
+```
+
+Validate before accepting:
+```bash
+tar -tzf "${CACHE}.new" 2>/dev/null | grep -q "^${TOP}/<subfolder>/"
 ```
 
 ### Swagger UI Macro
@@ -370,9 +418,44 @@ swagger-ui::attachment$<filename>.yaml[]
 
 The extension injects the Swagger UI CSS/JS and generates a spec-loader script automatically. No other configuration is needed on the page.
 
-### Libre Graph API Page
+### Embedding a Multi-File HTML Site (phpDocumentor)
 
-The interactive API reference lives at `content/ocis/9.0/modules/developer/pages/apis/http/graph/swagger-ui.adoc`. It renders the OpenAPI spec fetched from `https://github.com/owncloud/libre-graph-api`. The Collector config and cache are in `content/ocis/9.0/antora.yml` under `ext.collector`.
+When the fetched content is a self-contained HTML site (e.g. phpDocumentor output), it cannot be imported as Antora pages. Place the whole tree in `attachments` — internal relative links within the HTML continue to work because all files maintain their relative directory structure.
+
+Embed on an AsciiDoc page using a `++++` passthrough block with an iframe. Set `src="about:blank"` and resolve the URL at runtime via JavaScript to avoid hardcoding the Antora published path (which includes component, version, and module segments):
+
+```asciidoc
+++++
+<iframe id="my-frame" src="about:blank" style="width:100%;border:none;min-height:300px;" title="...">
+</iframe>
+<script>
+  (function () {
+    var path = window.location.pathname;
+    var moduleBase = path.substring(0, path.indexOf('/<known-path-segment>/'));
+    var frame = document.getElementById('my-frame');
+    frame.src = moduleBase + '/_attachments/<attachment-subdir>/index.html';
+    frame.onload = function () {
+      try {
+        this.style.height = this.contentWindow.document.documentElement.scrollHeight + 'px';
+      } catch (e) {}
+    };
+  })();
+</script>
+++++
+```
+
+- The `onload` handler dynamically resizes the iframe height by reading `scrollHeight` from the loaded document — requires same-origin (both Antora pages and their attachments are served from the same domain in production).
+- The `try/catch` silently suppresses cross-origin errors in local or preview builds.
+- Always add a `link:attachment$<subdir>/index.html[Open in new tab,window=_blank]` fallback above the passthrough block.
+
+### Collector Use Cases in This Repo
+
+| Source | Type | Attachment path | Page |
+|---|---|---|---|
+| `owncloud/libre-graph-api` | Single YAML | `attachment$v1.0.yaml` | `apis/http/graph/swagger-ui.adoc` |
+| `owncloud/ocis-php-sdk` | phpDocumentor HTML tree | `attachment$ocis-php-sdk-docs/...` | `clients/ocis-php-sdk/ocis-php-sdk-docs.adoc` |
+
+Both Collector configs live in `content/ocis/9.0/antora.yml` under `ext.collector`.
 
 ## File Relationship: CLAUDE.md and AGENTS.md
 

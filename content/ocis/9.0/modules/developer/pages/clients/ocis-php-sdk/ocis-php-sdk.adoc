@@ -1,0 +1,364 @@
+= oCIS PHP SDK
+:toc: right
+:toclevels: 3
+:description: PHP SDK for interacting with ownCloud Infinite Scale (oCIS) storage.
+
+This SDK allows you to interact with ownCloud Infinite Scale (oCIS) storage using PHP.
+
+The source code is available at link:https://github.com/owncloud/ocis-php-sdk[github.com/owncloud/ocis-php-sdk].
+
+== Installation via Composer
+
+Add `owncloud/ocis-php-sdk` to the require block in your `composer.json` and then run `composer install`.
+
+[WARNING]
+====
+The ocis-php-sdk currently relies on a development version of the `owncloud/libre-graph-api-php` package. To ensure proper dependency resolution, it is necessary to set `"minimum-stability": "dev"` and `"prefer-stable": true` in your `composer.json` file.
+====
+
+[source,json]
+----
+{
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "owncloud/ocis-php-sdk": "^1.0"
+  }
+}
+----
+
+Alternatively, you can run the following commands from the command line:
+
+[source,bash]
+----
+composer config minimum-stability dev
+composer config prefer-stable true
+composer require owncloud/ocis-php-sdk
+----
+
+== Getting Started
+
+oCIS has two types of access token:
+
+- An OIDC access token used to interact with drives, groups, users, shares, etc.
+- An education access token used to interact with education endpoints.
+
+Create an `Ocis` object using the service URL and an OIDC access token:
+
+[source,php]
+----
+$ocis = new Ocis('https://example.ocis.com', $accessToken);
+----
+
+Or create an `Ocis` object to interact with education endpoints using the service URL and an education access token:
+
+[source,php]
+----
+$ocis = new Ocis('https://education.ocis.com', null, [], $educationAccessToken);
+----
+
+At least one access token must be provided to use the SDK.
+
+Acquiring an OIDC access token is out of scope of this SDK, but you can find xref:#acquiring-an-access-token[examples for that below]. Refreshing OIDC tokens is also not part of the SDK, but after you receive a new token, you can update the `Ocis` object:
+
+[source,php]
+----
+$ocis->setAccessToken($newAccessToken);
+----
+
+The education access token is set when starting the oCIS graph server. You can retrieve it using the following snippet:
+
+[source,php]
+----
+$educationAccessToken = getenv("GRAPH_HTTP_API_TOKEN")
+----
+
+== Drives (Spaces)
+
+Drives can be listed using the `getAllDrives` or the `getMyDrives` method. The `Drive` class is responsible for most file and folder related actions, such as listing files, creating folders, and uploading files.
+
+[source,php]
+----
+// get the personal drive of the authorized user
+// `getMyDrives` returns all drives that the user is a member of
+// but in this example the result is filtered to only return
+// the personal drive (parameter 3 = DriveType::PERSONAL)
+$drives = $ocis->getMyDrives(
+    DriveOrder::NAME,
+    OrderDirection::ASC,
+    DriveType::PERSONAL
+);
+
+// get the drive id
+$id = $drives[0]->getId();
+
+// get the name of the drive
+$name = $drives[0]->getName();
+
+// get a link to the drive that can be opened in a browser and will lead the user to the web interface
+$webUrl = $drives[0]->getWebUrl();
+
+// create a folder inside the drive
+$drives[0]->createFolder("/documents");
+
+// upload a file to the drive
+$drives[0]->uploadFile("/documents/myfile.txt", "Hello World!");
+
+// get an array of all resources of the "/documents" folder inside the drive
+$resources = $drives[0]->getResources("/documents");
+----
+
+=== Drive Permission
+
+Users and groups can be invited to drives by specifying permissions. The `Drive` class has methods to invite users and groups, update permission roles and expiration dates, remove users and groups, etc. Drive invitations are only possible on project drives.
+
+[source,php]
+----
+// find all users with a specific surname
+$users = $ocis->getUsers("einstein")[0];
+
+// get all drives of type project
+$drives = $ocis->getMyDrives(
+    DriveOrder::NAME,
+    OrderDirection::ASC,
+    DriveType::PROJECT
+);
+
+// get the drive named 'game'
+foreach ($drives as $drive) {
+    if ($drive->getName() === 'game') {
+        $gameDrive = $drive;
+        break;
+    }
+}
+
+// get all roles that are possible for that drive
+$driveRoles = $gameDrive->getRoles();
+
+// get the role that is allowed to view, download, upload, edit, add, delete and manage members
+foreach ($driveRoles as $role) {
+    if ($role->getDisplayName() === 'Manager') {
+        $managerRole = $role;
+        break;
+    }
+}
+
+// invite user einstein on project drive 'game' with manager permission
+$gameDrive->invite($users, $managerRole);
+----
+
+== Notifications
+
+Notifications can be listed using the `getNotifications` method, which returns an array of `Notification` objects representing all active notifications. The `Notification` object can retrieve details of the corresponding notification and mark it as read (delete it).
+
+== Sharing
+
+Given the correct permissions, an `OcisResource` can be shared with a group or a user. To define the access permissions of the receiver, every share must set `SharingRole`(s).
+
+[source,php]
+----
+// get the resources of a subfolder inside a drive
+$resources = $drive->getResources("/documents");
+
+// get all roles that are possible for that particular resource
+$roles = $resources[0]->getRoles();
+
+// find the role that is allowed to read and write the shared file or folder
+foreach ($roles as $role) {
+    if ($role->getDisplayName() === 'Can edit') {
+        $editorRole = $role;
+        break;
+    }
+}
+
+// find all users with a specific surname
+$users = $ocis->getUsers("einstein")[0];
+
+// share the resource with the users
+$resources[0]->invite($users, $editorRole);
+----
+
+== Education User
+
+Education users can only be created, listed, and deleted using an education access token. If you want to use other APIs, you need to use the OIDC access token.
+
+[source,php]
+----
+// create education user
+$educationUsers = $ocis->createEducationUser()
+// list all education users
+$educationUsers = $ocis->getEducationUsers()
+// list education user by id
+$educationUsers = $ocis->getEducationUserById()
+// delete education user
+$educationUser[0]->delete()
+----
+
+== Requirements
+
+- PHP 8.1 or higher
+- oCIS 5.0.0 or higher
+
+== Acquiring an Access Token
+
+For an easier experience in acquiring an access token, several PHP OIDC client libraries are available. The following code snippet showcases how to retrieve an access token with the link:https://github.com/facile-it/php-openid-client[facile-it/php-openid-client] library.
+
+=== Install PHP Dependencies
+
+Install the required libraries using Composer:
+
+[source,bash]
+----
+composer require facile-it/php-openid-client
+composer require nyholm/psr7
+----
+
+=== Required PHP Libraries
+
+The following PHP extensions are required:
+
+- `php-bcmath`
+- `php-gmp`
+
+=== Code Snippet to Fetch an Access Token
+
+[source,php]
+----
+<?php
+
+require __DIR__ . '/path/to/vendor/autoload.php';
+
+use Facile\OpenIDClient\Client\ClientBuilder;
+use Facile\OpenIDClient\Issuer\IssuerBuilder;
+use Facile\OpenIDClient\Client\Metadata\ClientMetadata;
+use Facile\OpenIDClient\Service\Builder\AuthorizationServiceBuilder;
+use Nyholm\Psr7\ServerRequest;
+
+$issuer = (new IssuerBuilder())
+    ->build('https://example.ocis.com');
+
+$clientMetadata = ClientMetadata::fromArray([
+    'client_id' => 'client_id',
+    'client_secret' => 'client_secret',
+    'redirect_uris' => [
+        'http://url-of-this-file',
+    ],
+]);
+$client = (new ClientBuilder())
+    ->setIssuer($issuer)
+    ->setClientMetadata($clientMetadata)
+    ->build();
+
+$authorizationService = (new AuthorizationServiceBuilder())->build();
+$redirectAuthorizationUri = $authorizationService->getAuthorizationUri(
+    $client,
+    ['scope' => 'openid profile email offline_access']
+);
+
+if (!isset($_REQUEST["code"])) {
+    header('Location: ' . $redirectAuthorizationUri);
+} else {
+    $serverRequest = new ServerRequest('GET', $_SERVER['REQUEST_URI']);
+
+    $callbackParams = $authorizationService->getCallbackParams($serverRequest, $client);
+
+    $tokenSet = $authorizationService->callback($client, $callbackParams);
+
+    // store access and refresh token in database
+    $accessToken = $tokenSet->getAccessToken();
+    echo 'AccessToken : ' . $accessToken;
+    echo '<hr>';
+
+    $refreshToken = $tokenSet->getRefreshToken();
+    echo 'RefreshToken : ' . $refreshToken;
+    echo '<hr>';
+
+    // use this code to get a new access token when expired
+    $tokenSet = $authorizationService->refresh($client, $refreshToken);
+    $accessToken = $tokenSet->getAccessToken();
+    echo 'NewAccessToken : ' . $accessToken;
+}
+----
+
+To test, open a browser and navigate to the URL of this file.
+
+If you're working in a development environment where you need to bypass SSL verification (not recommended for production):
+
+[source,php]
+----
+<?php
+// ...
+use Facile\OpenIDClient\Issuer\Metadata\Provider\MetadataProviderBuilder;
+use Facile\JoseVerifier\JWK\JwksProviderBuilder;
+use Symfony\Component\HttpClient\Psr18Client;
+use Symfony\Component\HttpClient\CurlHttpClient;
+
+$symHttpClient = new CurlHttpClient([
+    'verify_peer' => false,
+    'verify_host' => false
+]);
+$httpClient = new Psr18Client($symHttpClient);
+
+$metadataProviderBuilder = (new MetadataProviderBuilder())
+    ->setHttpClient($httpClient);
+$jwksProviderBuilder = (new JwksProviderBuilder())
+    ->setHttpClient($httpClient);
+$issuer = (new IssuerBuilder())
+    ->setMetadataProviderBuilder($metadataProviderBuilder)
+    ->setJwksProviderBuilder($jwksProviderBuilder)
+    ->build('https://example.ocis.com');
+// ...
+$client = (new ClientBuilder())
+    ->setHttpClient($httpClient)
+    ->setIssuer($issuer)
+    ->setClientMetadata($clientMetadata)
+    ->build();
+
+$authorizationService = (new AuthorizationServiceBuilder())
+    ->setHttpClient($httpClient)
+    ->build();
+// ...
+----
+
+== Development
+
+=== Integration Tests
+
+To run the tests locally:
+
+. Install and set up Docker (minimum version 24) and Docker Compose (minimum version 2.21).
+
+. Ensure that the following PHP extensions are installed for executing the integration tests:
++
+[source]
+----
+php-curl
+php-dom
+php-phpdbg
+php-mbstring
+php-ast
+----
+
+. Add these lines to your `/etc/hosts` file:
++
+[source]
+----
+127.0.0.1 ocis.owncloud.test
+127.0.0.1 keycloak.owncloud.test
+----
+
+. Run the whole test suite (this starts a full oCIS server with Keycloak and other services using Docker):
++
+[source,bash]
+----
+make test-php-integration
+----
+
+. Run a single test (this starts a full oCIS server with Keycloak and other services using Docker):
++
+[source,bash]
+----
+make test-php-integration testGetResources
+----
+
+If something goes wrong, use `make clean` to clean up the created containers and volumes.

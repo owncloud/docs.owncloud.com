@@ -37,7 +37,7 @@
 *** xref:developer:apis/http/authorization.adoc[Authorization]
 *** xref:developer:apis/http/tus_upload.adoc[TUS Upload]
 
-** xref:developer:ocis/index.adoc[oCIS]
+** xref:developer:ocis/index.adoc[oCIS Internals]
 
 *** xref:developer:ocis/config.adoc[Configuration]
 
@@ -182,6 +182,9 @@
 *** xref:developer:clients/rclone/index.adoc[rclone]
 **** xref:developer:clients/rclone/webdav-sync-basic-auth.adoc[WebDAV Sync — Basic Auth]
 **** xref:developer:clients/rclone/webdav-sync-oidc.adoc[WebDAV Sync — OIDC]
+
+*** xref:developer:clients/ocis-php-sdk/ocis-php-sdk.adoc[oCIS PHP SDK]
+**** xref:developer:clients/ocis-php-sdk/ocis-php-sdk-docs.adoc[API Reference]
 
 ** Services
 *** General Information

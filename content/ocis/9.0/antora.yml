@@ -61,20 +61,68 @@ asciidoc:
 # in the developer module's attachments family so the swagger-ui extension can render it on the
 # libre-graph-api page. See https://github.com/owncloud/libre-graph-api for the source repository.
 #
-# The fetch is cached in .cache/libre-graph/: if the network is unavailable, the last successful
-# download is reused silently. The build only fails if the cache is empty AND the fetch fails.
+# A git ls-remote check avoids downloading when the remote SHA matches the cached SHA.
+# The download is only accepted if the file is non-empty. The build only fails if the cache is
+# empty AND the fetch fails.
 ext:
   collector:
   - run:
       command: |
         mkdir -p .cache/libre-graph build/libre-graph
-        if curl -sLf \
-          https://raw.githubusercontent.com/owncloud/libre-graph-api/main/api/openapi-spec/v1.0.yaml \
-          -o .cache/libre-graph/v1.0.yaml.new 2>/dev/null; then
-          mv .cache/libre-graph/v1.0.yaml.new .cache/libre-graph/v1.0.yaml
+        CACHE=".cache/libre-graph/v1.0.yaml"
+        SHA_FILE=".cache/libre-graph/main.sha"
+        REMOTE_SHA=$(git ls-remote https://github.com/owncloud/libre-graph-api refs/heads/main 2>/dev/null | awk '{print $1}')
+        CACHED_SHA=$(cat "$SHA_FILE" 2>/dev/null || echo "")
+        if [ -z "$REMOTE_SHA" ] || [ "$REMOTE_SHA" != "$CACHED_SHA" ] || [ ! -f "$CACHE" ]; then
+          if curl -sLf \
+            https://raw.githubusercontent.com/owncloud/libre-graph-api/main/api/openapi-spec/v1.0.yaml \
+            -o "${CACHE}.new" 2>/dev/null && \
+            [ -s "${CACHE}.new" ]; then
+            mv "${CACHE}.new" "$CACHE"
+            [ -n "$REMOTE_SHA" ] && echo "$REMOTE_SHA" > "$SHA_FILE"
+          fi
         fi
-        cp .cache/libre-graph/v1.0.yaml build/libre-graph/v1.0.yaml
+        cp "$CACHE" build/libre-graph/v1.0.yaml
       shell: true
     scan:
       dir: build/libre-graph
+      into: modules/developer/attachments
+
+  # The collector fetches the phpDocumentor-generated HTML reference from the ocis-php-sdk source
+  # repository and places it in the developer module's attachments family so it can be embedded
+  # via iframe on the clients/ocis-php-sdk/ocis-php-sdk-docs page.
+  # See https://github.com/owncloud/ocis-php-sdk for the source repository.
+  #
+  # The whole-repo tarball is downloaded and only the docs/ subtree is extracted.
+  # The tarball is cached in .cache/ocis-php-sdk/: if the network is unavailable, the last
+  # successful download is reused silently. The build only fails if the cache is empty AND
+  # the fetch fails.
+  - run:
+      command: |
+        rm -rf build/ocis-php-sdk/ocis-php-sdk-docs
+        mkdir -p .cache/ocis-php-sdk build/ocis-php-sdk/ocis-php-sdk-docs
+        CACHE=".cache/ocis-php-sdk/main.tar.gz"
+        SHA_FILE=".cache/ocis-php-sdk/main.sha"
+        REMOTE_SHA=$(git ls-remote https://github.com/owncloud/ocis-php-sdk refs/heads/main 2>/dev/null | awk '{print $1}')
+        CACHED_SHA=$(cat "$SHA_FILE" 2>/dev/null || echo "")
+        if ([ -n "$REMOTE_SHA" ] && [ "$REMOTE_SHA" != "$CACHED_SHA" ]) || [ ! -f "$CACHE" ]; then
+          [ -n "$REMOTE_SHA" ] \
+            && URL="https://github.com/owncloud/ocis-php-sdk/archive/${REMOTE_SHA}.tar.gz" \
+            || URL="https://github.com/owncloud/ocis-php-sdk/archive/refs/heads/main.tar.gz"
+          if curl -sLf "$URL" -o "${CACHE}.new" 2>/dev/null; then
+            TOP=$(tar -tzf "${CACHE}.new" 2>/dev/null | head -1 | cut -d/ -f1)
+            if tar -tzf "${CACHE}.new" 2>/dev/null | grep -q "^${TOP}/docs/"; then
+              mv "${CACHE}.new" "$CACHE"
+              [ -n "$REMOTE_SHA" ] && echo "$REMOTE_SHA" > "$SHA_FILE"
+            fi
+          fi
+        fi
+        TOP=$(tar -tzf "$CACHE" 2>/dev/null | head -1 | cut -d/ -f1)
+        tar -xzf "$CACHE" \
+          --strip-components=2 \
+          -C build/ocis-php-sdk/ocis-php-sdk-docs \
+          "${TOP}/docs"
+      shell: true
+    scan:
+      dir: build/ocis-php-sdk
       into: modules/developer/attachments
