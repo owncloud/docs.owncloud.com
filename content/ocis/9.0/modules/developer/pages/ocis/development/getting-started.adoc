@@ -9,10 +9,17 @@ So we are trying to reflect this in the tooling. It should be kept simple and qu
 
 Besides standard development tools like git and a text editor, you need the following software for development:
 
-- Go >= v1.22 (link:https://go.dev/doc/install[install instructions])
-- pnpm (link:https://pnpm.io/installation[install instructions])
-- docker (link:https://docs.docker.com/get-started/get-docker/[install instructions])
-- docker-compose (link:https://docs.docker.com/compose/install/[install instructions])
+* Go >= v1.22 +
+(link:https://go.dev/doc/install[install instructions])
+
+* pnpm +
+(link:https://pnpm.io/installation[install instructions])
+
+* docker +
+(link:https://docs.docker.com/get-started/get-docker/[install instructions])
+
+* docker-compose +
+(link:https://docs.docker.com/compose/install/[install instructions])
 
 If you find tools needed besides the mentioned above, please feel free to open an issue or open a PR.
 

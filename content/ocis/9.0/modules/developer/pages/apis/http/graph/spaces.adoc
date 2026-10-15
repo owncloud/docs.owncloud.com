@@ -86,13 +86,17 @@ The JSON representation of a Drive, as handled by the Spaces API, looks like thi
 
 ## Creating Spaces
 
-### Create a single space `POST /drives`
+### Create a single space
 
-https://owncloud.dev/libre-graph-api/#/drives/CreateDrive
+`POST /drives`
 
-### Create a space item (Enable sync) `POST /drives/\{drive-id}/root/children`
+link:swagger-ui.html#/drives/CreateDrive[LibreGraph: drives/CreateDrive,window=_blank]
 
-https://owncloud.dev/libre-graph-api/#/drives.root/CreateDriveItem
+### Create a space item (Enable sync)
+
+`POST /drives/\{drive-id}/root/children`
+
+link:swagger-ui.html#/drives.root/CreateDriveItem[LibreGraph: drives.root/CreateDriveItem,window=_blank]
 
 ## Reading Spaces
 
@@ -116,7 +120,9 @@ GET https://ocis.url/graph/{version}/{me/}drives/?{query-parameters}
 | Optional parameters for the request to customize the response.
 |===
 
-=== List All Spaces `GET /drives`
+=== List All Spaces
+
+`GET /drives`
 
 Returns a list of all available spaces, even ones where the acting user is not a regular member of. You need elevated permissions to do list all spaces. If you don't have the elevated permissions, the result is the same like `GET /me/drives`.
 
@@ -131,15 +137,19 @@ There is a global user role "Space Admin" which grants users some global permiss
 The "Space Manager" is a user which is a regular member of a space because he has been invited. In addition to being part of a space the user can also manage the memberships of the space.
 ====
 
-=== List My Spaces `GET /me/drives`
+=== List My Spaces
 
-https://owncloud.dev/libre-graph-api/#/me.drives/ListMyDrives
+`GET /me/drives`
+
+link:swagger-ui.html#/me.drives/ListMyDrives[LibreGraph: me.drives/ListMyDrives,window=_blank]
 
 == Modifying Spaces
 
 Modify the properties of a space. You need elevated permissions to execute this request.
 
-=== Set the Space Quota to 5GB `PATCH /drives/\{drive-id}`
+=== Set the Space Quota to 5GB
+
+`PATCH /drives/\{drive-id}`
 
 To limit the quota of a space you need to set the `quota.total` value. The API response will give back all actual quota properties.
 
@@ -236,7 +246,9 @@ Response - 200 OK::
 --
 ====
 
-### Change the space name, subtitle and alias `PATCH /drives/\{drive-id}`
+### Change the space name, subtitle and alias
+
+`PATCH /drives/\{drive-id}`
 
 You can change multiple space properties in one request as long as you submit a valid JSON body. Please be aware that some properties need different permissions.
 
@@ -305,7 +317,9 @@ Response - 200 OK::
 
 ## Disabling / Deleting Spaces
 
-### Disable a space `DELETE /drives/\{drive-id}`
+### Disable a space
+
+`DELETE /drives/\{drive-id}`
 
 This operation will make the space content unavailable for all space members. No data will be deleted.
 
@@ -374,7 +388,9 @@ A disabled space will appear in listings with a `root.deleted.state=trashed` pro
 --
 ====
 
-=== Restore a Space `PATCH /drives/\{drive-id}`
+=== Restore a Space
+
+`PATCH /drives/\{drive-id}`
 
 This operation will make the space content available again to all members. No content will be changed.
 
@@ -446,7 +462,9 @@ Response - 200 OK::
 --
 ====
 
-=== Permanently Delete a Space `DELETE /drives/\{drive-id}`
+=== Permanently Delete a Space
+
+`DELETE /drives/\{drive-id}`
 
 This operation will delete a space and all its data permanently. This is restricted to spaces which are already disabled.
 
@@ -495,30 +513,42 @@ The space to be deleted was not disabled before.
 
 == Sharing Space
 
-=== Add Member to Space `POST /drives/\{drive-id}/root/invite`
+=== Add Member to Space
 
-https://owncloud.dev/libre-graph-api/#/drives.permissions/Invite
+`POST /drives/\{drive-id}/root/invite`
 
-=== Sharing Space as a Link `POST /drives/\{drive-id}/root/createLink`
+link:swagger-ui.html#/drives.permissions/Invite[LibreGraph: drives.permissions/Invite,window=_blank]
 
-https://owncloud.dev/libre-graph-api/#/drives.root/CreateLinkSpaceRoot
+=== Sharing Space as a Link
+
+`POST /drives/\{drive-id}/root/createLink`
+
+link:swagger-ui.html#/drives.root/CreateLinkSpaceRoot[LibreGraph: drives.root/CreateLinkSpaceRoot,window=_blank]
 
 == Reading Space Permissions
 
-=== Listing Permissions of a Space `GET /drives/\{drive-id}/root/permissions`
+=== Listing Permissions of a Space
 
-https://owncloud.dev/libre-graph-api/#/drives.root/ListPermissionsSpaceRoot
+`GET /drives/\{drive-id}/root/permissions`
+
+link:swagger-ui.html#/drives.root/ListPermissionsSpaceRoot[LibreGraph: drives.root/ListPermissionsSpaceRoot,window=_blank]
 
 == Modifying / Deleting Space Permissions
 
-=== Update Permissions of a Drive `PATCH /drives/\{drive-id}/root/permissions/\{perm-id}`
+=== Update Permissions of a Drive
 
-https://owncloud.dev/libre-graph-api/#/drives.root/UpdatePermissionSpaceRoot
+`PATCH /drives/\{drive-id}/root/permissions/\{perm-id}`
 
-=== Set Password of a Link Share `POST /drives/\{drive-id}/root/permissions/\{perm-id}/setPassword`
+link:swagger-ui.html#/drives.root/UpdatePermissionSpaceRoot[LibreGraph: drives.root/UpdatePermissionSpaceRoot,window=_blank]
 
-https://owncloud.dev/libre-graph-api/#/drives.root/SetPermissionPasswordSpaceRoot
+=== Set Password of a Link Share
 
-=== Removing Access to a Space `DELETE /drives/\{drive-id}/root/permissions/\{perm-id}`
+`POST /drives/\{drive-id}/root/permissions/\{perm-id}/setPassword`
 
-https://owncloud.dev/libre-graph-api/#/drives.root/DeletePermissionSpaceRoot
+link:swagger-ui.html#/drives.root/SetPermissionPasswordSpaceRoot[LibreGraph: drives.root/SetPermissionPasswordSpaceRoot,window=_blank]
+
+=== Removing Access to a Space
+
+`DELETE /drives/\{drive-id}/root/permissions/\{perm-id}`
+
+link:swagger-ui.html#/drives.root/DeletePermissionSpaceRoot[LibreGraph: drives.root/DeletePermissionSpaceRoot,window=_blank]

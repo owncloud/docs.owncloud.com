@@ -146,34 +146,48 @@ The JSON representation of a Drive, as handled by the Spaces API, looks like thi
 
 ## Creating Share Invitation / Link
 
-### Create a link share `POST /drives/\{drive-id}/items/\{item-id}/createLink`
+### Create a link share
 
-https://owncloud.dev/libre-graph-api/#/drives.permissions/CreateLink
+`POST /drives/\{drive-id}/items/\{item-id}/createLink`
 
-### Create a user/group share `POST /drives/\{drive-id}/items/\{item-id}/invite`
+link:swagger-ui.html#/drives.permissions/CreateLink[LibreGraph: drives.permissions/CreateLink,window=_blank]
 
-https://owncloud.dev/libre-graph-api/#/drives.permissions/Invite
+### Create a user/group share
+
+`POST /drives/\{drive-id}/items/\{item-id}/invite`
+
+link:swagger-ui.html#/drives.permissions/Invite[LibreGraph: drives.permissions/Invite,window=_blank]
 
 ## Reading Permissions
 
-### List the effective sharing permissions on a driveitem `GET /drives/\{drive-id}/items/\{item-id}/permissions`
+### List the effective sharing permissions on a driveitem
 
-https://owncloud.dev/libre-graph-api/#/drives.permissions/ListPermissions
+`GET /drives/\{drive-id}/items/\{item-id}/permissions`
 
-### List Get sharing permission for a file or folder `GET /drives/\{drive-id}/items/\{item-id}/permissions/\{perm-id}`
+link:swagger-ui.html#/drives.permissions/ListPermissions[LibreGraph: drives.permissions/ListPermissions,window=_blank]
 
-https://owncloud.dev/libre-graph-api/#/drives.permissions/GetPermission
+### List Get sharing permission for a file or folder
+
+`GET /drives/\{drive-id}/items/\{item-id}/permissions/\{perm-id}`
+
+link:swagger-ui.html#/drives.permissions/GetPermission[LibreGraph: drives.permissions/GetPermission,window=_blank]
 
 ## Updating Permissions
 
-### Updating sharing permission `POST /drives/\{drive-id}/items/\{item-id}/permissions/\{perm-id}`
+### Updating sharing permission
 
-https://owncloud.dev/libre-graph-api/#/drives.permissions/UpdatePermission
+`POST /drives/\{drive-id}/items/\{item-id}/permissions/\{perm-id}`
 
-### Set password of permission `POST /drives/\{drive-id}/items/\{item-id}/permissions/\{perm-id}/setPassword`
+link:swagger-ui.html#/drives.permissions/UpdatePermission[LibreGraph: drives.permissions/UpdatePermission,window=_blank]
 
-https://owncloud.dev/libre-graph-api/#/drives.permissions/SetPermissionPassword
+### Set password of permission
 
-### Deleting permission `DELETE /drives/\{drive-id}/items/\{item-id}/permissions/\{perm-id}`
+`POST /drives/\{drive-id}/items/\{item-id}/permissions/\{perm-id}/setPassword`
 
-https://owncloud.dev/libre-graph-api/#/drives.permissions/DeletePermission
+link:swagger-ui.html#/drives.permissions/SetPermissionPassword[LibreGraph: drives.permissions/SetPermissionPassword,window=_blank]
+
+### Deleting permission
+
+`DELETE /drives/\{drive-id}/items/\{item-id}/permissions/\{perm-id}`
+
+link:swagger-ui.html#/drives.permissions/DeletePermission[LibreGraph: drives.permissions/DeletePermission,window=_blank]

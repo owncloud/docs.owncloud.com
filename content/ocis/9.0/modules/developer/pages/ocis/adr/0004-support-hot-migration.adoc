@@ -6,7 +6,7 @@
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/micbar[@micbar], link:https://github.com/dragotin[@dragotin], link:https://github.com/hodyroff[@hodyroff], link:https://github.com/pmaier1[@pmaier1]
 * Date: 2021-03-16
 
-Technical Story: \[description | ticket/issue URL\]
+Technical Story: [description | ticket/issue URL]
 
 == Context and Problem Statement
 
@@ -14,18 +14,21 @@ Migration is one of the most important topics of the oCIS story. We need to prov
 
 == Decision Drivers
 
-- Do not lose file blob or metadata.
-  - To prevent a sync surge from clients the etag for files should be migrated.
-  - To prevent internal links from breaking or pointing to wrong files the file id of existing files needs to be migrated.
-  - To prevent data loss trash and version blobs should be migrated.
-- Existing shares like public links and federated shares must remain functional after the migration.
-  - To prevent internal shares the share type, permissions and expiry needs to be migrated.
-  - To prevent public links from breaking the url token, permissions, expiry and password needs to be migrated.
-  - _What about federated shares?_
-  - _What about additional share permissions, e.g. comment on office files?_
-- Legacy clients need to keep working
-  - To keep existing clients working the `remote.php/webdav` and `dav/files/<username>` webdav endpoints as well as the ocs API need to be available.
-- _What about xref:server:classic_ui:personal_settings/security.adoc#app-passwords-tokens[app passwords/tokens]?_
+* Do not lose file blob or metadata.
+** To prevent a sync surge from clients the etag for files should be migrated.
+** To prevent internal links from breaking or pointing to wrong files the file id of existing files needs to be migrated.
+** To prevent data loss trash and version blobs should be migrated.
+
+* Existing shares like public links and federated shares must remain functional after the migration.
+** To prevent internal shares the share type, permissions and expiry needs to be migrated.
+** To prevent public links from breaking the url token, permissions, expiry and password needs to be migrated.
+** _What about federated shares?_
+** _What about additional share permissions, e.g. comment on office files?_
+
+* Legacy clients need to keep working
+** To keep existing clients working the `remote.php/webdav` and `dav/files/<username>` webdav endpoints as well as the ocs API need to be available.
+
+* _What about xref:server:classic_ui:personal_settings/security.adoc#app-passwords-tokens[app passwords/tokens]?_
 
 == Considered Options
 
@@ -34,17 +37,17 @@ Migration is one of the most important topics of the oCIS story. We need to prov
 
 == Decision Outcome
 
-Chosen option: "\[option 1\]", because \[justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | … | comes out best (see below)\].
+Chosen option: "option 1", because justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | … | comes out best (see below).
 
 === Positive Consequences
 
-* \[e.g., improvement of quality attribute satisfaction, follow-up decisions required, …]
+* e.g., improvement of quality attribute satisfaction, follow-up decisions required, …
 * …
 
 === Negative Consequences
 
-- \[e.g., compromising quality attribute, follow-up decisions required, …]
-- …
+* e.g., compromising quality attribute, follow-up decisions required, …
+* …
 
 == Pros and Cons of the Options
 

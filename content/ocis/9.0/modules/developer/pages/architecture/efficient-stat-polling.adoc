@@ -8,7 +8,7 @@ The fallback sync mechanism uses the ETag to determine which part of a sync tree
 
 What does ETag propagation mean? Whenever a file changes its content or metadata the ETag or "entity tag" changes. In the early days of ownCloud it was decided to extend this behavior to folders as well, which is outside of any WebDAV RFC specification. Nevertheless, here we are, using the ETag to reflect changes, not only on WebDAV resources but also WebDAV collections. The server will propagate the ETag change up to the root of the tree.
 
-[mermaid]
+[mermaid,width=300]
 ----
 graph TD
   linkStyle default interpolate basis
@@ -40,7 +40,7 @@ To let the client detect changes in the drive (a tree of files and folders) of a
 
 This works, because the server side will propagate ETag changes in the tree up to the root.
 
-[mermaid]
+[mermaid,width=300]
 ----
 graph TD
   linkStyle default interpolate basis
@@ -59,7 +59,7 @@ On an ocis server there is not one user but many. Each of them may have one or m
 
 Keep in mind that etags are only propagated inside each distinct tree. No sharing is considered yet.
 
-[mermaid]
+[mermaid,width=300]
 ----
 graph TD
   linkStyle default interpolate basis
@@ -102,7 +102,7 @@ The storage provider is also responsible for keeps track of references e.g. usin
 
 To prevent write amplification ETags must not propagate across references. When a file that was shared by einstein changes the ETag must not be propagated into any share recipients tree.
 
-[mermaid]
+[mermaid,width=300]
 ----
 graph TD
   linkStyle default interpolate basis
@@ -138,7 +138,7 @@ But having to list n storages might become a bottleneck anyway, so we are going 
 
 Every client polls the virtual root ETag (every 30 sec). The gateway will cache the virtual root ETag of every storage for 30 sec as well. That way every storage provider is only stated once every 30 sec (can be throttled dynamically to adapt to storage io load).
 
-[mermaid]
+[mermaid,width=300]
 ----
 graph TD
   linkStyle default interpolate basis

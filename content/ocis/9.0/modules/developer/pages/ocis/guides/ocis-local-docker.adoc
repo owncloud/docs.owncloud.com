@@ -4,8 +4,8 @@
 
 == Prerequisites
 
-- Local docker installation (e.g. Docker for Desktop)
-- Check xref:ocis/guides/ocis-and-containers.adoc[oCIS and Containers]
+* Local docker installation (e.g. Docker for Desktop)
+* Check xref:ocis/guides/ocis-and-containers.adoc[oCIS and Containers]
 
 == Start oCIS with Docker Compose
 
@@ -203,7 +203,7 @@ You do not need to shut down your service to apply changes from the docker-compo
 _docker compose ps_ +
 This gives you a status of the services of the project.
 
-_docker compose exec \<service name\> \<command\>_ +
+_docker compose exec <service name> <command>_ +
 This command is handy to run specific commands inside your service. Try `docker compose exec ocis ocis version`.
 ====
 

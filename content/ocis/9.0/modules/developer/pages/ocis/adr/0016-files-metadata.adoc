@@ -39,7 +39,7 @@ Chosen option: "Extended File Attributes", because we guarantee the consistency 
 * The storage inside extended file attributes has limits
 * Changes to extended attributes are not atomic and need file locks
 
-== Pros and Cons of the Options <!-- optional -->
+== Pros and Cons of the Options
 
 === Database or Key-Value Store
 
@@ -60,7 +60,6 @@ From Wikipedia on link:https://en.wikipedia.org/wiki/Extended_file_attributes#Li
 ____
 The Linux kernel allows extended attribute to have names of up to 255 bytes and values of up to 64 KiB,[14] as do XFS and ReiserFS, but ext2/3/4 and btrfs impose much smaller limits, requiring all the attributes (names and values) of one file to fit in one “filesystem block” (usually 4 KiB). Per POSIX.1e,[citation needed] the names are required to start with one of security, system, trusted, and user plus a period. This defines the four namespaces of extended attributes.
 ____
-
 
 * Good, because metadata is stored in the filesystem
 * Good, because consistency is easy to maintain

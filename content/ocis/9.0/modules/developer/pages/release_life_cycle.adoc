@@ -2,7 +2,7 @@
 :toc: right
 :toclevels: 3
 
-This page is designed to provide clarity and transparency regarding the scheduling, nature, and support of our releases, ensuring you have all the information you need to stay updated and manage your deployments effectively. Find an overview of our plans for future enhancements and features here at: link:https://github.com/orgs/owncloud/projects/344[owncloud.com/roadmap].
+This page is designed to provide clarity and transparency regarding the scheduling, nature, and support of our releases, ensuring you have all the information you need to stay updated and manage your deployments effectively. Find an overview of our plans for future enhancements and features here at: link:https://github.com/orgs/owncloud/projects/344[owncloud.com/roadmap,window=_blank].
 
 == Release Types
 
@@ -10,7 +10,7 @@ ownCloud Infinite Scale is released in two different release types: _Production_
 
 [NOTE]
 ====
-link:https://hub.docker.com/r/owncloud/ocis[Production]
+link:https://hub.docker.com/r/owncloud/ocis[Production,window=_blank]
 
 * Stable and fully tested release using automated and manual tests, suitable for critical data.
 * Slow cycle, but most stable with slow feature additions.
@@ -19,7 +19,7 @@ link:https://hub.docker.com/r/owncloud/ocis[Production]
 
 [NOTE]
 ====
-link:https://hub.docker.com/r/owncloud/ocis-rolling[Rolling]
+link:https://hub.docker.com/r/owncloud/ocis-rolling[Rolling,window=_blank]
 
 * Automated tests always run. Some manual testing may has happened, yet not structured.
 * Based on oCIS master, a Docker image is created once a day.
@@ -107,3 +107,7 @@ Please consider the link:https://github.com/owncloud/ocis/blob/master/CONTRIBUTI
 image::ocis/storage/semver-schema.png[Schema of Semantic Versioning,width=300]
 
 We adhere to _Semantic Versioning_ (SemVer) to ensure clarity and predictability in each of our releases. Learn how Semantic Versioning works on link:https://semver.org/[https://semver.org/].
+
+== Version Naming
+
+In addition to using SemVer, developers often give upcoming releases descriptive names, such as *Daledda* or *Ebadi*. This is particularly important if the SemVer version is likely to change. Breaking changes may necessitate updating the major version rather than just incrementing the minor one. The name is often used to reference the version being developed.

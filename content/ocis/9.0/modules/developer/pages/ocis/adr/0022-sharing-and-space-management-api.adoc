@@ -31,12 +31,12 @@ The desktop and mobile client platforms were suffering from poor support from th
 
 == Considered Options
 
-* xref:#new_ocs_api_version[New OCS API Version]
-* xref:#sharing_via_libregraph[Sharing via LibreGraph]
+* xref:#new-ocs-api-version[New OCS API Version]
+* xref:#sharing-via-libregraph[Sharing via LibreGraph]
 
 == Decision Outcome
 
-Chosen option: xref:#sharing_via_libregraph[Sharing via LibreGraph]
+Chosen option: xref:#sharing-via-libregraph[Sharing via LibreGraph]
 
 === Positive Consequences:
 
@@ -75,7 +75,7 @@ Integrate Sharing into the link:https://github.com/owncloud/libre-graph-api[Libr
 * Good, because we would use the existing OData pattern
 * Bad, because we need to deprecate the OCS API
 
-== Links <!-- optional -->
+== Links
 
 * link:https://github.com/owncloud/libre-graph-api[LibreGraph API]
 * link:https://www.odata.org/documentation/[OData]

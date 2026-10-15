@@ -45,16 +45,16 @@ There are two case to consider:
 It's not really possible single out any of the options for this ADR. In the end we will likely need
 to support both scenarios.
 
-=== Positive Consequences: <!-- optional -->
+=== Positive Consequences:
 
 * Very flexible integration with a wide range of external systems
 
-=== Negative Consequences: <!-- optional -->
+=== Negative Consequences:
 
 * configuration complexity, high support efforts
 * Increasingly complex code in oCIS
 
-== Pros and Cons of the Options <!-- optional -->
+== Pros and Cons of the Options
 
 === External Identity Management System Is Read Only and Provides an Interface to Query Users (e.g. Corporate Active Directory)
 
@@ -77,8 +77,8 @@ Idp sends sub & iss and mail or username claims. We need to provision an interna
 * Bad, because users will only a visible after the first login
 * Bad, because our internal account mapping might get out of date when user attribute (e.g. name or mail) change. At least until the next time that user logs in
 
-== Links <!-- optional -->
+== Links
 
 * [Link type] [Link to ADR] <!-- example: Refined by \xref:ocis/adr/0005-example.adoc[ADR-0005] -->
-* … <!-- numbers of links can vary -->
+* …
 * supersedes xref:ocis/adr/0003-external-user-management.adoc[3. Use External User Management]

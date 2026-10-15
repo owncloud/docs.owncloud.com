@@ -51,4 +51,4 @@ Chosen option: "Dynamic service registration". There were some drawbacks regardi
 ** This means we can have a service registry that we extensively use in oCIS and inject its functionality onto Reva.
 
 * Bad, because it's yet another abstraction.
-* Bad, because firewalls are harder to configure with dynamic IPs.f
+* Bad, because firewalls are harder to configure with dynamic IPs.

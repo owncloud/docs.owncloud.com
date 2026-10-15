@@ -23,9 +23,14 @@ The other container is oCIS itself, running all services in one container. In th
 * Linux server with docker and docker-compose installed
 
 * These domains set up and pointing to your server
-** `ocis.*` for serving oCIS
-** `keycloak.*` for serving Keycloak
-** `traefik.*` for serving the Traefik dashboard
+** `ocis.*` +
+for serving oCIS
+
+** `keycloak.*` +
+for serving Keycloak
+
+** `traefik.*` +
+for serving the Traefik dashboard
 
 See also xref:ocis/deployment/preparing_server.adoc[example server setup]
 

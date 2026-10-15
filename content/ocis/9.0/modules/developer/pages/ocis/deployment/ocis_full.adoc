@@ -24,18 +24,18 @@ The Infinite Scale Team and product management are providing a default setup for
 
 === Default Components
 
-- Infinite Scale
-- Full Text Search
-- Collabora Online Web Office
-- Prepared for LetsEncrypt SSL certificates via Traefik Reverse Proxy
+* Infinite Scale
+* Full Text Search
+* Collabora Online Web Office
+* Prepared for LetsEncrypt SSL certificates via Traefik Reverse Proxy
 
 === Optional Components
 
-- ClamAV Virusscanner
-- Cloud Importer (Experimental)
-- OnlyOffice as an alternative to Collabora
-- S3 Storage config to connect to an S3 storage backend
-- S3 Minio Server as a local S3 storage backend for debugging and development
+* ClamAV Virusscanner
+* Cloud Importer (Experimental)
+* OnlyOffice as an alternative to Collabora
+* S3 Storage config to connect to an S3 storage backend
+* S3 Minio Server as a local S3 storage backend for debugging and development
 
 === Important Note
 
@@ -48,12 +48,23 @@ If you deviate from the configuration setup and let the `collaboration` service 
 * Linux server with docker and docker-compose installed
 
 * Three domains set up and pointing to your server
-** `ocis.*` for serving oCIS
-** `collabora.*` for serving Collabora
-** `onlyoffice.*` for serving OnlyOffice
-** `wopiserver.*` for serving the WOPI server
-** `traefik.*` for serving the Traefik dashboard
-** `companion.*` for serving the uppy companion app
+** `ocis.*` +
+for serving oCIS
+
+** `collabora.*` +
+for serving Collabora
+
+** `onlyoffice.*` +
+for serving OnlyOffice
+
+** `wopiserver.*` +
+for serving the WOPI server
+
+** `traefik.*` +
+for serving the Traefik dashboard
+
+** `companion.*` +
+for serving the uppy companion app
 
 See also xref:ocis/deployment/preparing_server.adoc[example server setup]
 

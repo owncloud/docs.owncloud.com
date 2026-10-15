@@ -253,7 +253,8 @@ To run a single feature
 A specific scenario from a feature can be run by adding `:<line-number>` at the end of the feature file path. For example, to run the scenario at line 26 of the feature file `apiGraphUser/createUser.feature`, simply add the line number like this: `apiGraphUser/createUser.feature:26`. Note that the line numbers mentioned in the examples might not always point to a scenario, so always check the line numbers before running the test.
 ====
 
-.Example:
+Example::
++
 [source,bash]
 ----
 BEHAT_FEATURE=tests/acceptance/features/apiGraphUser/createUser.feature
@@ -265,7 +266,8 @@ BEHAT_FEATURE=tests/acceptance/features/apiGraphUser/createUser.feature:13
 
 `BEHAT_SUITE`: to run a single suite
 
-.Example:
+Example::
++
 [source,bash]
 ----
 BEHAT_SUITE=apiGraph
@@ -273,7 +275,8 @@ BEHAT_SUITE=apiGraph
 
 `STORAGE_DRIVER`: to run tests with a different user storage driver. Available options are `ocis` (default), `owncloudsql` and `s3ng`
 
-.Example:
+Example::
++
 [source,bash]
 ----
 STORAGE_DRIVER=owncloudsql
@@ -281,7 +284,8 @@ STORAGE_DRIVER=owncloudsql
 
 `STOP_ON_FAILURE`: to stop running tests after the first failure
 
-.Example:
+Example::
++
 [source,bash]
 ----
 STOP_ON_FAILURE=true
@@ -299,7 +303,8 @@ The tests are not currently run in CI with the OWNCLOUD or EOS storage drivers, 
 
 If you want to work on a specific issue:
 
-. Locally run each of the tests marked with that issue in the expected failures file, e.g.: +
+. Locally run each of the tests marked with that issue in the expected failures file, e.g.:
++
 [source,bash]
 ----
 make test-acceptance-api \
@@ -376,7 +381,10 @@ Run the following command to setup mailpit
 
 [source,bash]
 ----
-docker run -d --restart unless-stopped --name=mailpit -p 8025:8025 -p 1025:1025 axllent/mailpit:v1.22.3
+docker run -d --restart unless-stopped --name=mailpit \
+  -p 8025:8025 \
+  -p 1025:1025 \
+  axllent/mailpit:v1.22.3
 ----
 
 === Run oCIS

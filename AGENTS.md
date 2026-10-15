@@ -160,6 +160,10 @@ Do **not** convert `doc.owncloud.com` URLs that appear inside any of the followi
 
 When presenting a table of convertible links, mark these rows as `NOT CONVERTIBLE` and state the reason (e.g. "in source block", "in Mermaid diagram").
 
+### Developer Docs Audit (2026-10-15)
+
+`content/ocis/9.0/modules/developer/` was fully audited. Every `doc.owncloud.com` occurrence is in a non-convertible context (source/literal blocks, Mermaid diagram participant directives, bare base URLs, plain prose). No xref conversions are outstanding. Re-run the grep if new files are added.
+
 ## External Link Maintenance
 
 When auditing external `link:` URLs for validity:
@@ -195,8 +199,10 @@ image:path/to/image.svg[,width=300]
 
 A list must be preceded by a blank line. If the first list item immediately follows a paragraph or any other block with no blank line in between, AsciiDoc will not render it as a list.
 
+Use `*` instead of `-` for unordered list items. Both render identically but `*` is easier to read in source.
+
 ```asciidoc
-// Wrong — no blank line before list
+// Wrong — no blank line before list, wrong marker
 Some text:
 - item one
 - item two
@@ -204,11 +210,11 @@ Some text:
 // Correct
 Some text:
 
-- item one
-- item two
+* item one
+* item two
 ```
 
-This applies to all list types: unordered (`-`, `*`), ordered (`.`), and description lists.
+This applies to all list types: unordered (`*`), ordered (`.`), and description lists.
 
 ## AsciiDoc Section Heading Capitalisation
 
@@ -456,6 +462,27 @@ Embed on an AsciiDoc page using a `++++` passthrough block with an iframe. Set `
 | `owncloud/ocis-php-sdk` | phpDocumentor HTML tree | `attachment$ocis-php-sdk-docs/...` | `clients/ocis-php-sdk/ocis-php-sdk-docs.adoc` |
 
 Both Collector configs live in `content/ocis/9.0/antora.yml` under `ext.collector`.
+
+## UI Supplemental JavaScript
+
+Custom JavaScript lives in `ui/supplemental/js/` and is layered onto the stock Antora default UI at build time.
+
+### Click-to-zoom for images and diagrams (`medium-zoom-init.js`)
+
+`medium-zoom-init.js` wires click-to-zoom behaviour for the whole site:
+
+- **Regular images** (`div.imageblock img`, `span.image img`) — bound directly via `mediumZoom()` on page load.
+- **Mermaid diagrams** — handled separately via a `MutationObserver` + custom overlay (see below).
+
+**Why Mermaid needs special treatment:** `@sntke/antora-mermaid-extension` renders diagrams client-side as inline `<svg>` elements inside `div.mermaid.content`, asynchronously after the DOM is ready. `medium-zoom` v1.1.0 filters all targets through `tagName === "IMG"` and silently ignores anything else, so passing an `<svg>` node attaches nothing. Serialising the SVG to a blob URL and wrapping it in an `<img>` also fails because Mermaid's generated SVGs rely on inline `<style>` blocks that lose their document context when loaded as a standalone resource.
+
+**The fix:** a `MutationObserver` watches for `<svg>` nodes inserted into the container elements listed in `SVG_CONTAINER_CLASSES`. When one appears, a click handler is attached that opens a full-screen overlay containing a `cloneNode(true)` of the live SVG — no serialisation, all inline styles intact.
+
+**Extending to another diagram library:** if a new library also renders async `<svg>` children that are not zoomable on click, add its container CSS class to the `SVG_CONTAINER_CLASSES` array at the top of the observer block in `medium-zoom-init.js` — no other changes needed:
+
+```js
+var SVG_CONTAINER_CLASSES = ['mermaid', 'your-new-library-class']
+```
 
 ## File Relationship: CLAUDE.md and AGENTS.md
 

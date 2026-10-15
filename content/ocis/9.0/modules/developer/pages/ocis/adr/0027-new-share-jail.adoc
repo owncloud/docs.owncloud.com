@@ -25,17 +25,17 @@ The WebDAV PROPFIND response also contains a `oc:shareid` which currently is der
 
 Again, the problem is that a resource can be shared multiple times.
 
-== Decision Drivers <!-- optional -->
+== Decision Drivers
 
 * We need to change the `oc:fileid` pattern without breaking clients.
 * We need to be able to correlate files from WebDAV and the Graph API.
 
 == Considered Options
 
-* xref:#share_based_id[Share Based ID]
-* xref:#resource_based_id[Resource Based ID]
-* xref:#permission_based_id[Permission Based ID]
-* xref:#use_graph_for_file_metadata[Use Graph for File Metadata]
+* xref:#share-based-id[Share Based ID]
+* xref:#resource-based-id[Resource Based ID]
+* xref:#permission-based-id[Permission Based ID]
+* xref:#use-graph-for-file-metadata[Use Graph for File Metadata]
 
 == Decision Outcome
 
@@ -53,7 +53,7 @@ Resource based id: it correctly reflects the semantic meaning of a mount point, 
 
 * The graph api also needs to be able to list entries from the new share jail. _jfd: clients could use a filter to ask for the new share jail id_
 
-== Pros and Cons of the Options <!-- optional -->
+== Pros and Cons of the Options
 
 === Share Based ID
 
@@ -73,6 +73,7 @@ Hardcode `756e6cdf-5630-4b66-9380-55a85188e0f6` as a new `\{sharespaceid}` to al
 * + Good, clients can detect the new share jail and deal with it on their terms.
 
 === Permission Based ID
+
 Follow the pattern `\{shareproviderid}$\{sharespaceid}!\{shared-resource-providerid}:\{shared-resource-spaceid}:\{shared-resource-opaqueid}:\{permission-id}`.
 
 * - Bad, same instability as the share id
@@ -91,4 +92,4 @@ WebDAV can be stripped of any ownCloud specific properties and will only be used
 * + Good, WebDAV can be stripped down.
 * + Good, Clients could get rid of WebDAV client and XML libs as all endpoints use JSON (all OCS endpoins return JSON when appending a `format=json` query parameter)
 
-== Links <!-- optional -->
+== Links

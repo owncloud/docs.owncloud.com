@@ -105,14 +105,14 @@ TIP: @jfd: The graph api returns a `path` in the `parentReference`, which is par
 
 Chosen option: "Mixed global URLs", because it meets the requirement to contain a path and a stable identifier.
 
-=== Positive Consequences <!-- optional -->
+=== Positive Consequences
 
 * The path makes it "human readable"
 * The URL can be bookmarked
 * The bookmarked URLs remain stable even if the path changes
 * All URLs can be shortened to hide any metadata like path, resource name and query parameters
 
-=== Negative Consequences <!-- optional -->
+=== Negative Consequences
 
 * the web UI needs to look up the space alias in a registry to build an API request for the `/dav/space` endpoint
 
@@ -353,11 +353,9 @@ With these different namespaces the `/files` part in the URL becomes obsolete, b
 * Good, because all urls can be shortened to hide any metadata like path, resource name and query parameters
 * Bad, because the web UI needs to look up the space alias in a registry to build an API request for the `/dav/space` endpoint
 
-
 === Configurable Path Component in URLs
 
 Not every deployment may have the requirement to have the path in the URL. We could use id only based URLs, similar to onedrive and make showing paths configurable.
-
 
 [cols="3,2",options="header"]
 |===

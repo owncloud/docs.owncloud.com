@@ -4,7 +4,7 @@
 
 == OCM Invitation Flow
 
-[mermaid]
+[mermaid,width=300]
 ----
 sequenceDiagram
     box Instance A

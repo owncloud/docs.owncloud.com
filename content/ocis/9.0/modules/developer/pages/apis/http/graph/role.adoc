@@ -8,24 +8,34 @@ The Roles API is implementing a subset of the functionality of the link:https://
 
 == Role Management
 
-=== List roleDefinitions `GET /v1beta1/roleManagement/permissions/roleDefinitions`
+=== List roleDefinitions
 
-https://owncloud.dev/libre-graph-api/#/roleManagement/ListPermissionRoleDefinitions
+`GET /v1beta1/roleManagement/permissions/roleDefinitions`
 
-=== Get unifiedRoleDefinition `GET /drives/\{drive-id}/items/\{item-id}/permissions/\{perm-id}`
+link:swagger-ui.html#/roleManagement/ListPermissionRoleDefinitions[LibreGraph: roleManagement/ListPermissionRoleDefinitions,window=_blank]
 
-https://owncloud.dev/libre-graph-api/#/roleManagement/GetPermissionRoleDefinition
+=== Get unifiedRoleDefinition
+
+`GET /drives/\{drive-id}/items/\{item-id}/permissions/\{perm-id}`
+
+link:swagger-ui.html#/roleManagement/GetPermissionRoleDefinition[LibreGraph: roleManagement/GetPermissionRoleDefinition,window=_blank]
 
 == Role Assignment
 
-=== Get appRoleAssignments of a User `GET /v1.0/users/\{user-id}/appRoleAssignments`
+=== Get appRoleAssignments of a User
 
-https://owncloud.dev/libre-graph-api/#/user.appRoleAssignment/user.ListAppRoleAssignments
+`GET /v1.0/users/\{user-id}/appRoleAssignments`
 
-=== Grant an appRoleAssignment to a User `POST /v1.0/users/\{user-id}/appRoleAssignments`
+link:swagger-ui.html#/user.appRoleAssignment/user.ListAppRoleAssignments[LibreGraph: user.appRoleAssignment/user.ListAppRoleAssignments,window=_blank]
 
-https://owncloud.dev/libre-graph-api/#/user.appRoleAssignment/user.CreateAppRoleAssignments
+=== Grant an appRoleAssignment to a User
 
-=== Delete the appRoleAssignment from a User `DELETE /v1.0/users/\{user-id}/appRoleAssignments/\{appRoleAssignment-id}`
+`POST /v1.0/users/\{user-id}/appRoleAssignments`
 
-https://owncloud.dev/libre-graph-api/#/user.appRoleAssignment/user.DeleteAppRoleAssignments
+link:swagger-ui.html#/user.appRoleAssignment/user.CreateAppRoleAssignments[LibreGraph: user.appRoleAssignment/user.CreateAppRoleAssignments,window=_blank]
+
+=== Delete the appRoleAssignment from a User
+
+`DELETE /v1.0/users/\{user-id}/appRoleAssignments/\{appRoleAssignment-id}`
+
+link:swagger-ui.html#/user.appRoleAssignment/user.DeleteAppRoleAssignments[LibreGraph: user.appRoleAssignment/user.DeleteAppRoleAssignments,window=_blank]

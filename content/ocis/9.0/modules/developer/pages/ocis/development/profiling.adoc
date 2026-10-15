@@ -125,7 +125,7 @@ pprof -web http://:1234/debug/pprof/profile\?seconds\=30
 Once the collection is done a browser tab will open with the result `svg`, looking similar to this:
 
 //https:/i.imgur.com/vo0EbcX.jpg
-image::ocis/development/vo0EbcX.png[img]
+image::ocis/development/vo0EbcX.png[img, width=300]
 
 For references on how to interpret this graph, link:https://github.com/google/pprof/blob/main/doc/README.md#interpreting-the-callgraph[continue reading here].
 

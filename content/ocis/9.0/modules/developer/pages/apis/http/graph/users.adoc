@@ -46,16 +46,16 @@ Our implementation currently supports only a limited set of Attributes of Users:
 
 Returns the user object of the currently signed-in user
 
-Example:
-
+Example::
++
 [source,bash]
 ----
 curl -k 'https://localhost:9200/graph/v1.0/me' \
      -u user:password
 ----
 
-Response:
-
+Response::
++
 [source,json]
 ----
 {
@@ -70,16 +70,16 @@ Response:
 
 Returns a list of all users
 
-Example:
-
+Example::
++
 [source,bash]
 ----
 curl -k 'https://localhost:9200/graph/v1.0/users' \
      -u user:password
 ----
 
-Response:
-
+Response::
++
 [source,json]
 ----
 {
@@ -104,8 +104,8 @@ Response:
 
 Returns a list of all users
 
-Example:
-
+Example::
++
 [source,bash]
 ----
 curl -k 'https://localhost:9200/graph/v1.0/users?$expand=memberOf' \
@@ -113,8 +113,8 @@ curl -k 'https://localhost:9200/graph/v1.0/users?$expand=memberOf' \
 
 ----
 
-Response:
-
+Response::
++
 [source,json]
 ----
 {
@@ -161,16 +161,17 @@ Response:
 
 ==== `GET /users/{userid or accountname}`
 
-Example:
-
+Example::
++
 [source,bash]
 ----
 curl -k 'https://localhost:9200/graph/v1.0/users/058bff95-6708-4fe5-91e4-9ea3d377588b' \
      -u user:password
 ----
 
-Response:
-
+Response::
++
+[source,json]
 ----
 {
     "displayName": "Maurice Moss",
@@ -182,16 +183,16 @@ Response:
 
 ==== `GET /users/{userid or accountname}?$expand=memberOf`
 
-Example:
-
+Example::
++
 [source,bash]
 ----
 curl -k 'https://localhost:9200/graph/v1.0/users/058bff95-6708-4fe5-91e4-9ea3d377588b?$expand=memberOf' \
      -u user:password
 ----
 
-Response:
-
+Response::
++
 [source,json]
 ----
 {
@@ -246,8 +247,8 @@ When successful, the response will return the new user, without the password, bu
 
 ==== `DELETE /users/\{id}`
 
-Example:
-
+Example::
++
 [source,bash]
 ----
 curl -k --request DELETE 'https://localhost:9200/graph/v1.0/users/c067b139-c91c-4e47-8be6-669156a0587b' \

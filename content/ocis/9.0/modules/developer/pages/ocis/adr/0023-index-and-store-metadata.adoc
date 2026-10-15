@@ -13,7 +13,7 @@ Currently only metadata common to all file types (filesize, mime-type, ...) is s
 We want to make other file type specific metadata available to consumers of our internal and external APIs.
 Simple examples would be audio metadata like artist, album and title or exif metadata in images.
 
-== Decision Drivers <!-- optional -->
+== Decision Drivers
 
 == Considered Options
 
@@ -23,7 +23,7 @@ Simple examples would be audio metadata like artist, album and title or exif met
 
 == Decision Outcome
 
-Chosen option: xref:#store_subset_of_extracted_metadata_required_for_graph_api[store only subset of extracted metadata required for graph api], because Graph API is a simple common denominator and we want to avoid putting the complexity of mapping non-standardized data from potentially different extractors in several areas of the code base. Storage and index keys are determined by facet and property name, e.g. `audio.artist` for the artist in a music file. Storage keys are additionally prefixed with `libre.graph.`, i.e. `libre.graph.audio.artist`. Handling Graph API specific metadata is a first step towards handling metadata. More generic and extensible handling of arbitrary metadata can be added later.
+Chosen option: xref:#store-subset-of-extracted-metadata-required-for-graph-api[store only subset of extracted metadata required for graph api], because Graph API is a simple common denominator and we want to avoid putting the complexity of mapping non-standardized data from potentially different extractors in several areas of the code base. Storage and index keys are determined by facet and property name, e.g. `audio.artist` for the artist in a music file. Storage keys are additionally prefixed with `libre.graph.`, i.e. `libre.graph.audio.artist`. Handling Graph API specific metadata is a first step towards handling metadata. More generic and extensible handling of arbitrary metadata can be added later.
 
 === Positive Consequences:
 
@@ -36,7 +36,7 @@ Chosen option: xref:#store_subset_of_extracted_metadata_required_for_graph_api[s
 * Graph API is limited, so not _all_ available metadata can be accessed
 * Switching the internal format and adding more metadata later will require re-indexing
 
-== Pros and Cons of the Options <!-- optional -->
+== Pros and Cons of the Options
 
 === Store Subset of Extracted Metadata Required for Graph API
 
@@ -63,7 +63,7 @@ There are a bunch of metadata standards but none of them is really universal. Th
 * Good, because extractor implementation becomes more trivial
 * Bad, because all applications become dependent on the extractor and need to handle different extractors on their own
 
-== Links <!-- optional -->
+== Links
 
 * https://github.com/owncloud/libre-graph-api/pull/120 / https://learn.microsoft.com/de-de/graph/api/resources/audio?view=graph-rest-1.0
 * https://github.com/owncloud/libre-graph-api/pull/122 / https://learn.microsoft.com/en-us/graph/api/resources/photo?view=graph-rest-1.0

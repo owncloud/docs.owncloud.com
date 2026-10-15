@@ -20,7 +20,7 @@ Starting with version 6 of Infinite Scale, releases are now split into `producti
 
 You can find more details on changes made in each release published in the xref:ROOT::/ocis_release_notes.adoc[Infinite Scale Server Release Notes].
 
-IMPORTANT: Rolling releases are published daily. Due to this short cycle, you will find the actual development and the current published rolling release documentation *not* separated. They are both part of the `next` segment in the URL. Compared to production releases where the respective release number is used, the actual rolling release number published can be found e.g. in each service description in section "Environment Variables".
+IMPORTANT: Rolling releases are published daily. Due to this short cycle, you will find the actual development and the current published rolling release documentation *not* separated. They are both part of the `latest` segment in the URL. Compared to production releases where the respective release number is used, the actual rolling release number published can be found e.g. in each service description in section "Environment Variables".
 
 == We Love Open Source
 
@@ -48,4 +48,4 @@ We are very happy to hear your feedback and ideas!
 
 == End-User License Agreement (EULA)
 
-ownCloud provides an EULA to clarify, among various topics, who can use this software and which conditions apply to the groups of users defined. See the actual {compose_raw_url}{compose_version}/assets/End-User-License-Agreement-for-ownCloud-Infinite-Scale.pdf[EULA] for details.
+See the xref:license.adoc#end-user-license-agreement-eula[End-User License Agreement (EULA)] page for details.

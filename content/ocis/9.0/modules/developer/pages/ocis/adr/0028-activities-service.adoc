@@ -11,7 +11,7 @@
 The user should be able to see all activities for a resource.
 Besides the current resource, the user should also be able to decide if he wants to include child resource activities or not.
 
-== Decision Drivers <!-- optional -->
+== Decision Drivers
 
 * The user should be able to see all activities for a resource.
 * The user should be able to decide if he wants to include child resource activities.
@@ -34,7 +34,8 @@ Besides the current resource, the user should also be able to decide if he wants
 === Activity Format
 
 * Normalize the activities before storing them.
-* Only store relevant data to get the related event from the event-history service when needed, e.g., +
+* Only store relevant data to get the related event from the event-history service when needed, e.g.,
++
 [source,go]
 ----
 go
@@ -87,7 +88,7 @@ go
 ** Storing only the event ids and getting the related data from the event-history service when needed might introduce additional latency when querying activities.
 ** Adding each event-id to each resource parent leads to a lot of duplicated data.
 
-== Pros and Cons of the Options <!-- optional -->
+== Pros and Cons of the Options
 
 * Activity store:
 ** (PRO) Introducing a new database type might be more efficient for storing activities.
@@ -100,6 +101,6 @@ go
 ** (CON) Storing each activity only on the resource itself increases the complexity of querying activities.
 ** (CON) Storing each activity in a human-readable format is not space-efficient.
 
-== Links <!-- optional -->
+== Links
 
 * link:https://github.com/owncloud/ocis/issues/8881[Story]

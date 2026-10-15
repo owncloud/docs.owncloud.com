@@ -156,7 +156,7 @@ For legacy clients the `remote.php/webdav` endpoint will no longer list the user
 
 The xref:server:developer_manual:core/apis/ocs-share-api.adoc[OCS Share API] endpoint `/ocs/v1.php/apps/files_sharing/api/v1/shares` returns shares, which have their own share id and reference files using a path relative to the users home. They API also lists the numeric storage id as well as the string type `storage_id` (which is confusing ... but yeah) which would allow constructing combined references with a `storage space id` and a `path` relative to the root of that xref:ocis/storage/terminology.adoc#_storage_spaces[_storage space_]. The web UI however assumes that it can take the path from the `file_target` and append it to the users home to access it.
 
-[Note]
+[NOTE]
 ====
 The API xref:server:developer_manual:core/apis/ocs-share-api.adoc#example-request-response-payloads-4[already returns the storage id] (and numeric id) in addition to the file id:
 

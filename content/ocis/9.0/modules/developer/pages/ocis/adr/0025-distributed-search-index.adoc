@@ -12,7 +12,7 @@ Search is currently implemented with link:https://github.com/blevesearch/bleve[b
 
 The initial implementation used a single blevesearch index for all spaces. While this makes querying all spaces easy because the results do not need to be aggregated from multiple indexes, the single node becomes a bottleneck when answering search queries. Furthermore, indexing is also part of the search service and has to share the resources.
 
-== Decision Drivers <!-- optional -->
+== Decision Drivers
 
 * Indexing should be decoupled from the search service
 * The search service should be able to scale horizontally
@@ -38,7 +38,7 @@ Chosen option: _???_
 
 * TODO
 
-== Pros and Cons of the Options <!-- optional -->
+== Pros and Cons of the Options
 
 === One Index per Space
 
@@ -59,13 +59,15 @@ How a search provider is implemented then depends on the requirements. For a sin
 * Good, embeddable? (go) - TODO verify
 
 === Manticore
+
 * Good, commercial support available at https://manticoresearch.com/services/
 * Bad, not embeddable (C++)
 
 === Meilisearch
+
 * Good, commercial support available at https://www.meilisearch.com/pricing
 * Bad, not embeddable (Rust)
 
-== Links <!-- optional -->
+== Links
 
 * supersedes xref:ocis/adr/0019-file-search-index.adoc[ADR-0019 File Search Index]

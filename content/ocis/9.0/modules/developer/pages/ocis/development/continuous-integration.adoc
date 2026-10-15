@@ -2,51 +2,56 @@
 :toc: right
 :toclevels: 3
 
+oCIS uses link:https://docs.github.com/en/actions[GitHub Actions,window=_blank] as its CI system. Workflow runs are visible in the link:https://github.com/owncloud/ocis/actions[Actions tab,window=_blank] of the repository, and the status of each run is reported directly on the pull request.
 
-oCIS uses link:https://www.drone.io/[DRONE] as CI system. You can find the pipeline logs link:https://drone.owncloud.com/owncloud/ocis[here] or in your PR.
+== Workflow Files
 
-== Concepts
+All workflows are defined as YAML files in the link:https://github.com/owncloud/ocis/tree/master/.github/workflows[`.github/workflows/`,window=_blank] directory of the repository. The following workflows are active:
 
-The pipeline is defined in link:https://github.com/bazelbuild/starlark[Starlark] and transformed to YAML upon pipeline run. This enables us to do a highly dynamic and non repeating pipeline configuration. We enforce Starlark format guidelines with Bazel Buildifier. You can format the .drone.star file by running `make ci-format`.
+[cols="30%,70%",options="header"]
+|===
+| Workflow
+| Description
 
-Upon running the pipeline, your branch gets merged to the master branch. This ensures that we always test your changeset if as it was applied to the master of oCIS. Please note that this does not apply to the pipeline definition (`.drone.star`).
+| `acceptance-tests.yml`
+| Runs acceptance and API tests on every pull request. Automatically skips when only documentation files are changed.
 
-== Things Done in CI
+| `web-tests.yml`
+| Runs UI and web integration tests on pull requests and pushes to `master` and `stable-*` branches.
 
-- static code analysis
-- linting
-- running UI tests
-- running ownCloud 10 test suite against oCIS
-- build and release docker images
-- build and release binaries
-- build and release documentation
+| `check-licenses.yml`
+| Verifies REUSE license compliance on pull requests and pushes to `master` and `stable-*` branches.
 
-== Flags in Commit Message and PR Title
+| `commit-message.yml`
+| Validates that pull request titles and commit messages follow the Conventional Commits format.
 
-You may add flags to your commit message or PR title in order to speed up pipeline runs and take load from the CI runners.
+| `deployment-test.yml`
+| Runs deployment smoke tests.
 
-- `[CI SKIP]`: no CI is run on the commit or PR
+| `k8s.yml`
+| Runs Kubernetes deployment tests.
 
-- `[full-ci]`: deactivates the fail early mechanism and runs all available test (as default only smoke tests are run)
+| `k6-load-test.yml`
+| Runs load tests using k6.
 
-=== Knowledge Base
+| `release.yml`
+| Builds and publishes Docker images and binaries when a version tag (`v*`) is pushed.
 
-- My pipeline fails because some CI related files or commands are missing.
+| `translation-sync.yml`
+| Synchronises translation strings with the translation platform.
+|===
 
-  Please make sure to rebase your branch onto the latest master of oCIS. It could be that the pipeline definition (`.drone.star`) was changed on the master branch. This is the only file, that will not be auto merged to master upon pipeline run. So things could be out of sync.
+== Skipping CI
 
-- How can I see the YAML drone pipeline definition?
+GitHub Actions recognises the following keywords in a commit message or pull request title to skip all workflow runs:
 
-  In order to see the Yaml pipeline definition you can use the drone-cli to convert the Starlark file.
+* `[skip ci]`
+* `[ci skip]`
+* `[no ci]`
+* `[skip actions]`
 
-  ```
-  drone starlark
-  ```
+Note that the acceptance test workflow additionally performs an automatic change detection step: if a pull request touches only documentation files, the test jobs are skipped without requiring a skip keyword.
 
-[NOTE]
-====
-  If you experience a `"build" struct has no .title attribute` you need a newer version of drone-cli.
+== Viewing Logs
 
-  You currently need to build it yourself from this link:https://github.com/harness/drone-cli[source code]. If you are not using master as source, please ensure that this link:https://github.com/harness/drone-cli/pull/175[PR] is included.
-====
-
+Workflow run logs are available in the link:https://github.com/owncloud/ocis/actions[Actions tab,window=_blank]. Individual job logs and artefacts can be downloaded from the summary page of each run.

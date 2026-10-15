@@ -36,16 +36,16 @@ Our implementation currently supports two Attributes for a Group:
 
 Returns a list of all groups
 
-Example:
-
+Example::
++
 [source,bash]
 ----
 curl -k 'https://localhost:9200/graph/v1.0/groups' \
      -u user:password
 ----
 
-Response:
-
+Response::
++
 [source,json]
 ----
 {
@@ -67,16 +67,16 @@ Response:
 
 Returns a list of all groups including its members
 
-Example:
-
+Example::
++
 [source,bash]
 ----
 curl -k 'https://localhost:9200/graph/v1.0/groups?$expand=members' \
      -u user:password
 ----
 
-Response:
-
+Response::
++
 [source,json]
 ----
 {
@@ -117,16 +117,16 @@ Response:
 
 ==== `GET /groups/\{groupid}`
 
-Example:
-
+Example::
++
 [source,bash]
 ----
 curl -k 'https://localhost:9200/graph/v1.0/groups/7a20f238-8a22-4458-902d-47674c317e5f' \
      -u user:password
 ----
 
-Response:
-
+Response::
++
 [source,json]
 ----
 {
@@ -137,16 +137,16 @@ Response:
 
 ==== `GET /groups/\{groupid}?$expand=members`
 
-Example:
-
+Example::
++
 [source,bash]
 ----
 curl -k 'https://localhost:9200/graph/v1.0/groups/7a20f238-8a22-4458-902d-47674c317e5f?$expand=members' \
      -u user:password
 ----
 
-Response:
-
+Response::
++
 [source,json]
 ----
 {
@@ -169,16 +169,16 @@ Response:
 
 Returns a list of User objects that are members of a group.
 
-Example:
-
+Example::
++
 [source,bash]
 ----
 curl -k 'https://localhost:9200/graph/v1.0/groups/7a20f238-8a22-4458-902d-47674c317e5f/members' \
      -u user:password
 ----
 
-Response:
-
+Response::
++
 [source,json]
 ----
 [
@@ -228,8 +228,8 @@ When successful, the response will return the new group including the newly allo
 
 ==== `DELETE /groups/\{id}`
 
-Example:
-
+Example::
++
 [source,bash]
 ----
 curl -k --request DELETE 'https://localhost:9200/graph/v1.0/groups/7a20f238-8a22-4458-902d-47674c317e5f' \
@@ -248,8 +248,10 @@ See below.
 
 ==== `POST /groups/\{id}/members/$ref`
 
-The request body contains a single attribute "`@odata.id`" referencing the new member of the group by URI. Example:
+The request body contains a single attribute "`@odata.id`" referencing the new member of the group by URI.
 
+Example::
++
 [source,bash]
 ----
 curl -k --header "Content-Type: application/json" \
@@ -266,8 +268,9 @@ When successful the API returns no response body and the HTTP status code 204 (N
 ==== `PATCH /groups/\{id}`
 
 The request body contains the attribute `members@odata.bind` holding a list of URI references for the new members.
-Example:
 
+Example::
++
 [source,json]
 ----
 {
@@ -284,8 +287,8 @@ When successful the API returns no response body and the HTTP status code 204 (N
 
 ==== `DELETE /groups/\{groupid}/members/\{id}/$ref`
 
-Example
-
+Example::
++
 [source,bash]
 ----
 curl -k --request DELETE  \

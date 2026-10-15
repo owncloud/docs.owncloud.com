@@ -9,7 +9,7 @@
 
 To share user settings across devices applications want to store user specific settings on the server. The ePUB app wants to remember which page the user is on. The iOS app wants to rember search queries. The Caldav app needs a space to store data.
 
-== Decision Drivers <!-- optional -->
+== Decision Drivers
 
 == Considered Options
 
@@ -29,7 +29,7 @@ Chosen option: _???_
 
 * TODO
 
-== Pros and Cons of the Options <!-- optional -->
+== Pros and Cons of the Options
 
 === OCS Provisioning API
 
@@ -94,4 +94,4 @@ Then we can decide if we want to store these files in the users personal drive, 
 * Good, because clients can remain in libregraph API land
 * Bad, we currently have no application tokens
 
-== Links <!-- optional -->
+== Links

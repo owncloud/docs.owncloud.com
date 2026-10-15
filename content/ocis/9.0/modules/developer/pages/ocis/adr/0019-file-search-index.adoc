@@ -31,8 +31,8 @@ Sharing adds more complexity because the index also needs to react to create, de
 
 == Considered Options
 
-* xref:#bleve_search[Bleve Search]
-* xref:#elastic_search[Elastic Search]
+* xref:#bleve-search[Bleve Search]
+* xref:#elastic-search[Elastic Search]
 
 == Decision Outcome
 

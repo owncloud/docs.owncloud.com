@@ -42,7 +42,7 @@ This the DRAFT for the API.
 
 ownCloud servers provide an API to query for available spaces of an user.
 
-See the openAPI Specification for the link:https://owncloud.dev/libre-graph-api/[Libre Graph API].
+See the openAPI Specification for the xref:apis/http/graph/swagger-ui.adoc[Libre Graph API^].
 
 Most important, the API returns the WebDAV endpoint for each space. With that, clients do not have to make assumptions about WebDAV routes any more.
 

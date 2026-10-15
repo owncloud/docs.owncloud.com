@@ -18,12 +18,12 @@ The ability to find files based on certain search terms is a key requirement for
 
 == Considered Options
 
-* xref:#libre_graph_api[Libre Graph API]
-* xref:#webdav_api[WebDAV API]
+* xref:#libre-graph-api[Libre Graph API]
+* xref:#webdav-api[WebDAV API]
 
 == Decision Outcome
 
-Chosen option: xref:#webdav_api[WebDAV API] because the current WebUI is compatible with that API. We may use the GraphAPI later in a second iteration.
+Chosen option: xref:#webdav-api[WebDAV API] because the current WebUI is compatible with that API. We may use the GraphAPI later in a second iteration.
 
 === Positive Consequences
 
