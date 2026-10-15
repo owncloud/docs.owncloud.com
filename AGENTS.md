@@ -463,6 +463,34 @@ Embed on an AsciiDoc page using a `++++` passthrough block with an iframe. Set `
 
 Both Collector configs live in `content/ocis/9.0/antora.yml` under `ext.collector`.
 
+## LLM Discovery File (`llms.txt`)
+
+`ui/supplemental/llms.txt` is served at `https://doc.owncloud.com/llms.txt` and follows the [llmstxt.org](https://llmstxt.org/) convention for AI-readable site indexes. It lists one URL per documentation section. **CI validates every URL in this file; an unresolvable URL is a build error.**
+
+### Maintenance rules
+
+- **Adding a module** to any Antora component → add a corresponding entry to `llms.txt`.
+- **Removing a module** from any component → remove its entry from `llms.txt`.
+- **Adding a new component** (new product) → add a new section with the component's index URL.
+
+### Version pinning for prerelease components
+
+All entries use the `latest` URL segment **unless** the target module exists only in a version that is still marked `prerelease: true` in its `antora.yml`. In that case the entry must use the explicit version number instead of `latest`, because the `latest` alias resolves to the most recent GA release — which may not have that module at all.
+
+Current example: the Infinite Scale Developer Documentation lives only in 9.0, which has `prerelease: true`. The `latest` alias resolves to 8.2 (no developer module), so the entry is pinned:
+
+```
+https://doc.owncloud.com/ocis/9.0/developer/index.html
+```
+
+**When to switch:** once `prerelease: true` is removed from the component version's `antora.yml` and `latest` moves to that version, replace the explicit version with `latest`.
+
+This rule applies to **any component** — not just ocis. Whenever a new module is introduced in a prerelease version of any component, pin its `llms.txt` URL to that version number until GA.
+
+### Versionless components
+
+The `webui` component uses `version: ~` (no version segment in URLs). Its entries in `llms.txt` correctly omit the version segment, e.g. `https://doc.owncloud.com/webui/index.html`.
+
 ## UI Supplemental JavaScript
 
 Custom JavaScript lives in `ui/supplemental/js/` and is layered onto the stock Antora default UI at build time.
