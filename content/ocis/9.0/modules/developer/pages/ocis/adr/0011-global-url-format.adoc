@@ -42,9 +42,7 @@ The oCIS web UI just takes the path and uses the `/webdav` endpoint of the curre
 PROPFIND https://demo.owncloud.com/remote.php/webdav/path/to/resource
 ----
 
-With the new ownCloud web client (owncloud/web)
-
- needs to interpret them to make API calls. With this in mind, this is the current mapping on ownCloud Web with OC10 and OCIS backend:
+With the new ownCloud web client (owncloud/web), the URL needs to be interpreted to make API calls. With this in mind, this is the current mapping on ownCloud Web with OC10 and OCIS backend:
 
 [cols="2,4,4",options="header"]
 |===

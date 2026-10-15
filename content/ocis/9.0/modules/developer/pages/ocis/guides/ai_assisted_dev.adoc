@@ -25,7 +25,7 @@ _Cost:_ ~$100 USD for two extensions (using the Claude Max subscription)
 Before starting, ensure you have the following:
 
 * A running oCIS instance, see the xref:admin:depl-examples/ubuntu-compose/ubuntu-compose-prod.adoc[Admin Docs, window=_blank] for a deployment example
-* link:https://claude.com/pricing[Claude Max subscription, window=_blank] (starts with $100 US/month at the time of writing, other plans availabe)
+* link:https://claude.com/pricing[Claude Max subscription, window=_blank] (starts with $100 US/month at the time of writing, other plans available)
 * SSH access to your server (for MCP connectivity)
 * Full root access to the server unless Claude Code, Claude MCP connector, oCIS and other tools all run as another user
 
@@ -361,7 +361,7 @@ Console errors, network requests, and performance profiles are incredibly valuab
 
 Extensions must:
 
-* Use CJS module format (not ES modules)
+* Use AMD module format (not ES modules)
 * Have a proper `manifest.json`
 * Use the oCIS web SDK for API access
 

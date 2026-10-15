@@ -43,6 +43,6 @@ image:ocis/apis/cs3org.png[,width=150]
 
 The link:https://github.com/cs3org/cs3apis[CS3 APIs] connect storages and application providers.
 
-The CS3 APIs follow Google and Uber API design guidelines, specially on error handling and naming convention. You can read more about these guidelines at https://cloud.google.com/apis/design/ and https://github.com/uber/prototool/blob/dev/style/README.md.
+The CS3 APIs follow Google and Uber API design guidelines, especially on error handling and naming convention. You can read more about these guidelines at https://cloud.google.com/apis/design/ and https://github.com/uber/prototool/blob/dev/style/README.md.
 
 The CS3 APIs use link:https://github.com/protocolbuffers/protobuf[Protocol Buffers version 3 (proto3)] as their Interface Definition Language (IDL) to define the API interface and the structure of the payload messages.

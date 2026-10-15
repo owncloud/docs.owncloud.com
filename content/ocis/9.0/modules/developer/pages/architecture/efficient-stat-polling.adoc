@@ -29,7 +29,7 @@ graph TD
   end
 ----
 
-The old `etag:O` is replaced by propagating the new `etag:N` up to the root, where the client will pick it up and explore the tree by comparing the old ETags known to him with the state of the current ETags on the server. This form of sync is called _state based sync_.
+The old `etag:O` is replaced by propagating the new `etag:N` up to the root, where the client will pick it up and explore the tree by comparing the old ETags known to the client with the state of the current ETags on the server. This form of sync is called _state based sync_.
 
 == Single User Sync
 
@@ -55,7 +55,7 @@ graph TD
 
 == Multiple Users
 
-On an ocis server there is not one user but many. Each of them may have one or more clients running. In the worst case all of them polling the ETag of his home root node every 30 seconds.
+On an ocis server there is not one user but many. Each of them may have one or more clients running. In the worst case all of them are polling the ETag of their home root node every 30 seconds.
 
 Keep in mind that etags are only propagated inside each distinct tree. No sharing is considered yet.
 
@@ -98,7 +98,7 @@ If users can bypass the storage provider using e.g. `ssh` additional mechanisms 
 - deleted files should land in the trash (e.g. `rm` could be wrapped to move files to trash)
 - overwriting files should create a new version ... other than a fuse fs I see no way of providing this for normal posix filesystems. Other storage backends that use the s3 protocol might provide versions natively.
 
-The storage provider is also responsible for keeps track of references e.g. using a shadow tree that users normally cannot see or representing them as symbolic links in the filesystem (Beware of symbolic link cycles. The clients are currently unaware of them and would flood the filesystem).
+The storage provider is also responsible for keeping track of references e.g. using a shadow tree that users normally cannot see or representing them as symbolic links in the filesystem (Beware of symbolic link cycles. The clients are currently unaware of them and would flood the filesystem).
 
 To prevent write amplification ETags must not propagate across references. When a file that was shared by einstein changes the ETag must not be propagated into any share recipients tree.
 

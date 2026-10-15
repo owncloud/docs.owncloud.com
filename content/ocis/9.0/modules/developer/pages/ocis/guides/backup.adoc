@@ -4,11 +4,11 @@
 
 This small guide aims to shed some light on the internal Infinite Scale data structure. You can refer to it when you are trying to optimize your backups or if you are just curious about how Infinite Scale stores its data.
 
-Note, as a prerequisite backing up Infinite Scale, the instance has to be fully shut down for the time being.
+Note, as a prerequisite for backing up Infinite Scale, the instance has to be fully shut down for the time being.
 
 == oCIS Data Structure
 
-Ocis stores its data in a folder that can be configured via the environment variable `OCIS_BASE_DATA_PATH`. Without further configuration, services derive from that path when they store data, though individual settings for certain data types can be configured.
+oCIS stores its data in a folder that can be configured via the environment variable `OCIS_BASE_DATA_PATH`. Without further configuration, services derive from that path when they store data, though individual settings for certain data types can be configured.
 
 The default value for the `OCIS_BASE_DATA_PATH` variable is `$HOME/.ocis` (or `/var/lib/ocis` when using the docker container. Note: Configuration data is by default stored in `/etc/ocis/` in the container.).
 
@@ -232,7 +232,7 @@ Contains Infinite Scale meta (and blob) data, depending on the blobstore. See th
 BACKUP REQUIRED. Contains system data. Path can be specified via `STORAGE_SYSTEM_OCIS_ROOT`. Not backing it up will remove shares from the system and will also remove custom settings.
 
 * *ocm* +
-BACKUP REQUIRED/OMITABLE. Contains ocm share data. When not using ocm sharing, this folder does not need to be backed up.
+BACKUP REQUIRED/OMITTABLE. Contains ocm share data. When not using ocm sharing, this folder does not need to be backed up.
 
 * *users* +
 BACKUP REQUIRED. Contains user data. Path can be specified via `STORAGE_USERS_OCIS_ROOT`. Not backing it up will remove all spaces and all files. As result, you will have a configured but empty Infinite Scale instance, which is fully functional accepting new data. Old data is lost.
@@ -265,7 +265,7 @@ Contains web assets such as custom logos, themes etc. See the xref:{dev-s-path}/
 ----
 
 * *assets* +
-BACKUP RECOMMENDED/OMITABLE. This folder contains custom web assets. Can be specified via `WEB_ASSET_CORE_PATH`. If no custom web assets are used, there is no need for a backup. If those exist but are not backed up, they need to be reuploaded.
+BACKUP RECOMMENDED/OMITTABLE. This folder contains custom web assets. Can be specified via `WEB_ASSET_CORE_PATH`. If no custom web assets are used, there is no need for a backup. If those exist but are not backed up, they need to be reuploaded.
 
 === `external services`
 

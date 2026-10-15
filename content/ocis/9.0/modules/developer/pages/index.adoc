@@ -24,23 +24,23 @@ IMPORTANT: Rolling releases are published daily. Due to this short cycle, you wi
 
 == We Love Open Source
 
-The oCIS is Apache v2 licensed.
+oCIS is Apache v2 licensed.
 
 The lower storage layer of oCIS is defined by the CS3 APIs and implemented in the REVA project. Our goal is to develop the CS3 APIs to an open standard and collaborate on the open source REVA reference implementation for CS3 APIs.
 
 You can also find all app sources at::
 +
 --
-- https://github.com/owncloud/android[ownCloud Android App]
-- https://github.com/owncloud/ios-app[ownCloud iOS App]
-- https://github.com/owncloud/client[ownCloud Desktop App]
+* link:https://github.com/owncloud/android[ownCloud Android App]
+* link:https://github.com/owncloud/ios-app[ownCloud iOS App]
+* link:https://github.com/owncloud/client[ownCloud Desktop App]
 --
 
 == Join the oCIS Community
 
-The https://github.com/owncloud/ocis[oCIS repository] is a good entry point to the oCIS project. The https://github.com/owncloud/ocis/tree/master/web[Web frontend] is part of the oCIS monorepo.
+The link:https://github.com/owncloud/ocis[oCIS repository] is a good entry point to the oCIS project. The link:https://github.com/owncloud/ocis/tree/master/web[Web frontend] is part of the oCIS monorepo.
 
-To chat about development, join our public chat on https://matrix.to/#/#ocis:matrix.org[matrix: ownCloud Infinite Scale].
+To chat about development, join our public chat on link:https://matrix.to/#/#ocis:matrix.org[matrix: ownCloud Infinite Scale].
 
 If you want to help and improve, start coding or open issues on GitHub in the related repositories.
 

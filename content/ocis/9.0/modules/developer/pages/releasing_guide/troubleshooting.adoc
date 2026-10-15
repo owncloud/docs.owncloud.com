@@ -47,11 +47,11 @@ Changes to the `ocis_full` deployment example are less critical. But as this is 
 
 ==== Web Extensions
 
-Update all dependencies and extension related data in the `web-extensions` repo and create for each extension a new release if applicapable.
+Update all dependencies and extension related data in the `web-extensions` repo and create for each extension a new release if applicable.
 
 ==== ocis_full
 
-Update the `ocis_full` deployment example as required in master which includes to update the versions of the web extensions used. Test the functionality if the example works.
+Update the `ocis_full` deployment example as required in master which includes updating the versions of the web extensions used. Test the functionality if the example works.
 
 Follow these steps to apply all `ocis_full` deployment example related changes from master to the stable branch:
 

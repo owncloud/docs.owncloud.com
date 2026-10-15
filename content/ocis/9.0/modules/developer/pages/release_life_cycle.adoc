@@ -21,7 +21,7 @@ link:https://hub.docker.com/r/owncloud/ocis[Production,window=_blank]
 ====
 link:https://hub.docker.com/r/owncloud/ocis-rolling[Rolling,window=_blank]
 
-* Automated tests always run. Some manual testing may has happened, yet not structured.
+* Automated tests always run. Some manual testing may have happened, yet not structured.
 * Based on oCIS master, a Docker image is created once a day.
 * Features, if added, may not have been fully completed. Upgrading is on own risk and documented upgrade paths such as with production releases are yet not fully tested or provided. Great release to use with non critical data.
 * Critical bugs are guaranteed to be fixed with the next rolling release.
@@ -34,7 +34,7 @@ link:https://hub.docker.com/r/owncloud/ocis-rolling[Rolling,window=_blank]
 | Rolling
 
 | Frequency
-| About every 6 month
+| About every 6 months
 | Daily
 
 | Audience
@@ -77,10 +77,10 @@ link:https://hub.docker.com/r/owncloud/ocis-rolling[Rolling,window=_blank]
 == Documentation
 
 * *Production* +
-Will come with released documentation that is specific for the release. It will remain valid throughout the whole livetime of the release. If patches require documentation changes, addendums will be delivered.
+Will come with released documentation that is specific for the release. It will remain valid throughout the whole lifetime of the release. If patches require documentation changes, addendums will be delivered.
 
 * *Rolling* +
-Will have access to the documentation as it moves forward in the development process along with the product which will be available on ownClouds web site. There wont be specific releases. Changelog entries, PR comments and similar engineering output can complement the information.
+Will have access to the documentation as it moves forward in the development process along with the product which will be available on ownClouds web site. There won't be specific releases. Changelog entries, PR comments and similar engineering output can complement the information.
 
 == Updating and Overlap
 
@@ -88,7 +88,7 @@ Will have access to the documentation as it moves forward in the development pro
 Provides a guaranteed upgrade path from the last Production release, as well as from the previous Rolling release before the new Production. For that, support from ownCloud is required. Upgrades between two Production releases are only supported to tested patch releases provided by ownCloud. In an upgrade process, all released patch releases have to be installed in the correct sequence.
 
 * *Rolling* +
-Does not come with any guaranteed update path. Chances are good that updates will go smooth, but that might have hickups in cases where the upgrade code is not finalized in time.
+Does not come with any guaranteed update path. Chances are good that updates will go smooth, but that might have hiccups in cases where the upgrade code is not finalized in time.
 
 Only production gives a reasonable overlap time between releases, for example if version 9 was released, version 8 will still receive a patch release for critical bugs for a reasonable time frame. That time frame will be announced separately and will be aligned with customer needs.
 

@@ -5,7 +5,7 @@ To prepare an oCIS production release, you must follow a specific sequence of st
 
 == New oCIS Version
 
-Use this detailed copy/paste checklists for Jira when starting a new release.
+Use these detailed copy/paste checklists for Jira when starting a new release.
 
 [WARNING]
 ====
@@ -13,7 +13,7 @@ Use this detailed copy/paste checklists for Jira when starting a new release.
 ** For Major and Minor versions: `8.2.0`
 ** For Patch releases: `8.2.1`
 
-* The process differs slighly when creating a patch release only.
+* The process differs slightly when creating a patch release only.
 * Changes applied to a `stable-8.2` branch valid for documentation will be processed to the `docs-stable-x.y` branch automatically after merging.
 ====
 
@@ -107,9 +107,6 @@ https://doc.owncloud.com/ocis/releasing_guide/releasing_guide.html
     * [ ] Create orphan branch: `git checkout --orphan docs-stable-8.2`
     * [ ] Initial commit: `git commit --allow-empty -m "initial commit"`
     * [ ] Push it: `git push`
-  * [ ] Adjust the `.drone.star` file to write to `docs-stable-8.2`
-    * [ ] Find target_branch value in the docs section and change it to `docs-stable-8.2`
-    * [ ] Example: https://github.com/owncloud/ocis/blame/56f7645f0b11c9112e15ce46f6effd2fea01d6be/.drone.star#L2249
   * [ ] Add `stable-8.2` to the nightly cron jobs in drone (`Settings` -> `Cron Jobs`)
 ----
 

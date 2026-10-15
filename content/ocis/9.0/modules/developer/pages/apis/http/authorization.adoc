@@ -8,7 +8,7 @@ In its default configuration, Infinite Scale supports three authentication metho
 . Implicit Flow
 . Hybrid Flow
 
-For detailed information on Infinite Scale's support for OpenID Connect (OIDC), please consult the xref:ocis/identity-provider/oidc.adoc[OIDC section]. To authenticate a client app using OIDC, both `client_id` and `client_secret` are essential. Infinite Scale does not offer dynamic registration. The required data for the default xref:server:admin_manual:configuration/user/oidc/oidc.adoc#client-ids-secrets-and-redirect-uris[ownCloud clients] can be found in the link and are availble for the following apps:
+For detailed information on Infinite Scale's support for OpenID Connect (OIDC), please consult the xref:ocis/identity-provider/oidc.adoc[OIDC section]. To authenticate a client app using OIDC, both `client_id` and `client_secret` are essential. Infinite Scale does not offer dynamic registration. The required data for the default xref:server:admin_manual:configuration/user/oidc/oidc.adoc#client-ids-secrets-and-redirect-uris[ownCloud clients] can be found in the link and are available for the following apps:
 
 * Desktop
 * Android
@@ -115,7 +115,7 @@ Response looks like this:
 ----
 --
 
-== Implicit Code Flow
+== Implicit Flow
 
 When using the implicit flow, tokens are provided in a URI fragment of the redirect URL. Valid values for the `response_type` request parameter are:
 

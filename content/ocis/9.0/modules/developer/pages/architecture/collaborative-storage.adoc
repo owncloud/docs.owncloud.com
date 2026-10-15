@@ -15,16 +15,16 @@ This discusses a few components and sub functions of the storage driver that hav
 
 What is called "the oCIS file system" is defined as the entire filetree underneath a special path in the local POSIX file system, which might either be a real local file system or a mounted net filesystem. It is expected that oCIS is the only consumer of that file tree, except what is expected behaviour with a collaborative file system, that adds and edits files in that tree.
 
-Underneath the oCIS file system root, there is an collection of different folders containing oCIS specific data.  Specific storage driver data is in the directory `storage/users`, organized by spaces.
+Underneath the oCIS file system root, there is a collection of different folders containing oCIS specific data.  Specific storage driver data is in the directory `storage/users`, organized by spaces.
 (TODO: Check again how different storage drivers work together without overwriting data of each other)
 
 === Spaces
 
-Infinite Scale provides spaces as an additional organization organizational unit for data. Each space is a separate entity with its own attributes such as access patterns and quota.
+Infinite Scale provides spaces as an additional organizational unit for data. Each space is a separate entity with its own attributes such as access patterns and quota.
 
 A storage driver has to model the separation of spaces and provide a list of spaces in general and also a list of spaces a user can access. Furthermore, it needs to be able to create different types of spaces (Home- or Project space).
 
-On POSIX, each space could for example be mapped to it's own directory in a special spaces folder under the oCIS root folder.
+On POSIX, each space could for example be mapped to its own directory in a special spaces folder under the oCIS root folder.
 
 === ID to Path Lookup
 
@@ -36,7 +36,7 @@ The interface defining the collaborative storage needs an abstraction for this p
 
 When a file is changed by a process outside of oCIS, this needs to be monitored by oCIS to quickly maintain internal caches and data structures as required.
 
-The collaborative storage driver needs a way to achieve that. The easiest way for an POSIX based collaborative storage is inotify, that needs to be set up recursively on a file tree to record changes. Additional it is a challenge to destinguish between changes that were done from external activity and the ones that oCIS creates by its own file operations.
+The collaborative storage driver needs a way to achieve that. The easiest way for an POSIX based collaborative storage is inotify, that needs to be set up recursively on a file tree to record changes. Additionally, it is a challenge to distinguish between changes that were done from external activity and the ones that oCIS creates by its own file operations.
 
 For GPFS, there is a subsystem called delivering that, see link:https://www.ibm.com/docs/en/storage-scale/5.1.9?topic=reference-clustered-watch-folder[Clustered watch folder] for more details.
 
@@ -52,11 +52,11 @@ Certain file systems implement this functionality either independently from Infi
 
 === Metadata Management
 
-Metadata are data "snippets" that are as tightly attached to files as ever possible. In best case, a rename of a file silently keeps the metadata as well. In POSIX, this can be achieved by extended file attributes with certain limitations.
+Metadata is data "snippets" that are as tightly attached to files as ever possible. In best case, a rename of a file silently keeps the metadata as well. In POSIX, this can be achieved by extended file attributes with certain limitations.
 
 === Quota
 
-Each space has it's own quota, thus a storage driver implementation needs to consider that.
+Each space has its own quota, thus a storage driver implementation needs to consider that.
 
 For GPFS for example, there is support for quota handling in the file system, see link:https://www.ibm.com/docs/en/storage-scale/5.1.9?topic=interfaces-gpfs-quotactl-subroutine[gpfs_quotactl() subroutine] for more details.
 
@@ -72,13 +72,13 @@ In exclusive environments (aka. decomposedFS) all files of oCIS (ie. the entire 
 
 ==== Collaborative Storage
 
-For collaborative storages, the approach described above does not longer work because users are supposed to be able to manipulate data in "their" file tree parts, and that is identified by ACLs and the owner of the files.
+For collaborative storages, the approach described above no longer works because users are supposed to be able to manipulate data in "their" file tree parts, and that is identified by ACLs and the owner of the files.
 
 That requires a few prerequisites that have to be fulfilled:
 
 . oCIS as one "client" changing data and the system that allows to access the file tree directly have to use the same user provider, to ensure that each user that is available on a shell is also available in oCIS. That ensures that changes are authenticated through system ACLs and users. LDAP based authentication on the system via PAM and the same LDAP as source for the oCIS IDP should be a sufficient setup.
 
-. oCIS must be able to write as a "different" user than the ocis system user. That means that we somehow have to impersonate file changing ooperations and run these as the user that is authenticated in oCIS.
+. oCIS must be able to write as a "different" user than the ocis system user. That means that we somehow have to impersonate file changing operations and run these as the user that is authenticated in oCIS.
 
 Example: There is a user ben. It has to have an entry in the LDAP that is used by IDP which oCIS is running "behind". With that, ben is able to authenticate through the IDP and work in the oCIS web app. The oCIS linux process will do writes and other changes impersonated as user ben.
 
@@ -88,7 +88,7 @@ To give permissions to groups, the linux group management must work accordingly.
 
 == Trashbin
 
-When a user deletes a file in oCIS it is moved to a so called trashbin that allows to restore the file if the deletion was accidentailly.
+When a user deletes a file in oCIS it is moved to a so called trashbin that allows to restore the file if the deletion was accidental.
 
 == Versions
 

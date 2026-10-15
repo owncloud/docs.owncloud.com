@@ -8,7 +8,7 @@ There are too many cloud variants and use cases out there to have a migration pa
 
 The awesome rclone tool makes it easy to migrate data from one installation to another on a user per user base. A very good first step.
 
-This article explains by the example of Nextcloud how you would migrate your data from an running NC to Infinite Scale. A prerequisite is that you have Infinite Scale already set up and running on a different domain.
+This article explains by the example of Nextcloud how you would migrate your data from a running NC to Infinite Scale. A prerequisite is that you have Infinite Scale already set up and running on a different domain.
 
 [WARNING]
 ====

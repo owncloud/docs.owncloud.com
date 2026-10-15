@@ -20,10 +20,10 @@ Let's see what is available. Invoke the following command from within the root o
 make -C tests/acceptance/docker help
 ----
 
-Basically we have two sources for feature tests and test suites:
+Basically we have two sources for feature tests and test suites located at: link:https://github.com/owncloud/ocis/tree/master/tests/acceptance/features[Acceptance Tests: features]
 
-* link:https://github.com/owncloud/ocis/tree/master/tests/acceptance/features[oCIS feature test and test suites]
-* link:https://github.com/owncloud/ocis/tree/master/tests/acceptance/features[tests and test suites transferred from ownCloud core, they have prefix coreApi]
+* oCIS feature test and test suites
+* Tests and test suites transferred from ownCloud core, they have prefix coreApi
 
 At the moment, both can be applied to oCIS since the api of oCIS is designed to be compatible with ownCloud.
 
@@ -473,7 +473,7 @@ Test suites that are tagged with `@antivirus` require antivirus service. The ava
 
 ===== Linux OS User
 
-Run the following command to set up calmAV and clamAV daemon
+Run the following command to set up ClamAV and ClamAV daemon
 
 [source,bash]
 ----
@@ -544,8 +544,8 @@ ocis/bin/ocis server
 ====
 The value for `ANTIVIRUS_CLAMAV_SOCKET` is an example which needs adaption according your OS.
 
-For antivirus running localy on Linux OS, use `ANTIVIRUS_CLAMAV_SOCKET= "/var/run/clamav/clamd.ctl"`.
-For antivirus running localy on Mac OS, use `ANTIVIRUS_CLAMAV_SOCKET= "/tmp/clamd.socket"`.
+For antivirus running locally on Linux OS, use `ANTIVIRUS_CLAMAV_SOCKET= "/var/run/clamav/clamd.ctl"`.
+For antivirus running locally on Mac OS, use `ANTIVIRUS_CLAMAV_SOCKET= "/tmp/clamd.socket"`.
 For antivirus running with docker, use `ANTIVIRUS_CLAMAV_SOCKET= "tcp://host.docker.internal:3310"`
 ====
 

@@ -12,7 +12,7 @@ Containers are more lightweight than VMs. It is easier to work with shared volum
 
 === Dependencies
 
-The container images have all dependencies installed and the maintainer takes care for keeping them up-to-date.
+The container images have all dependencies installed and the maintainer takes care of keeping them up-to-date.
 
 === Scaling
 
