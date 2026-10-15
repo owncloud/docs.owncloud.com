@@ -70,6 +70,20 @@ Node 22 is used in CI.
 - **DCO sign-off**: Every commit needs a `Signed-off-by` line (`git commit -s`).
 - **Conventional Commits & Squash Merge**: Use the [Conventional Commits](https://www.conventionalcommits.org/) format. This repository squash-merges, so the PR title becomes the commit message on `main` -- apply Conventional Commits format to PR titles as well. A GitHub Actions workflow enforces this.
 
+## Where the Other Rules Live
+
+Subdirectory `AGENTS.md` files are loaded on demand when working in that subtree:
+
+* `content/AGENTS.md` -- AsciiDoc authoring rules (tables, images, lists, heading capitalisation), xref fixes, `doc.owncloud.com` link conversion, external link maintenance, xref link-text checks
+* `content/ocis/AGENTS.md` -- oCIS developer service pages, Antora Collector and Swagger UI extensions
+* `ui/AGENTS.md` -- `llms.txt` maintenance and supplemental UI JavaScript
+
+## File Relationship: CLAUDE.md and AGENTS.md
+
+Every `CLAUDE.md` is a symlink to the `AGENTS.md` beside it (root, `content/`, `content/ocis/`, `ui/`). Both names are provided so that different AI tools find their expected filename — Claude Code reads `CLAUDE.md`, OpenAI Codex-based tools read `AGENTS.md`. **Always edit `AGENTS.md` directly**; `CLAUDE.md` reflects all changes automatically via the symlink. When adding a new subdirectory `AGENTS.md`, add the sibling `CLAUDE.md` symlink and list it under "Where the Other Rules Live".
+
+Keep these files outside the Antora `start_paths` (never inside a `content/<product>/<version>/` directory, which is added and dropped over time) and outside `ui/supplemental/`, otherwise they would be published. `extension-tests/static-files.test.js` guards this.
+
 ## Context for AI Agents
 - Match existing code style
 - Do not refactor unrelated code in the same PR

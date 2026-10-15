@@ -1,0 +1,41 @@
+= Role
+:toc: right
+:toclevels: 3
+
+== Role API
+
+The Roles API is implementing a subset of the functionality of the link:https://learn.microsoft.com/en-us/graph/api/resources/rolemanagement?view=graph-rest-1.0[MS Graph Role Management].
+
+== Role Management
+
+=== List roleDefinitions
+
+`GET /v1beta1/roleManagement/permissions/roleDefinitions`
+
+link:swagger-ui.html#/roleManagement/ListPermissionRoleDefinitions[LibreGraph: roleManagement/ListPermissionRoleDefinitions,window=_blank]
+
+=== Get unifiedRoleDefinition
+
+`GET /drives/\{drive-id}/items/\{item-id}/permissions/\{perm-id}`
+
+link:swagger-ui.html#/roleManagement/GetPermissionRoleDefinition[LibreGraph: roleManagement/GetPermissionRoleDefinition,window=_blank]
+
+== Role Assignment
+
+=== Get appRoleAssignments of a User
+
+`GET /v1.0/users/\{user-id}/appRoleAssignments`
+
+link:swagger-ui.html#/user.appRoleAssignment/user.ListAppRoleAssignments[LibreGraph: user.appRoleAssignment/user.ListAppRoleAssignments,window=_blank]
+
+=== Grant an appRoleAssignment to a User
+
+`POST /v1.0/users/\{user-id}/appRoleAssignments`
+
+link:swagger-ui.html#/user.appRoleAssignment/user.CreateAppRoleAssignments[LibreGraph: user.appRoleAssignment/user.CreateAppRoleAssignments,window=_blank]
+
+=== Delete the appRoleAssignment from a User
+
+`DELETE /v1.0/users/\{user-id}/appRoleAssignments/\{appRoleAssignment-id}`
+
+link:swagger-ui.html#/user.appRoleAssignment/user.DeleteAppRoleAssignments[LibreGraph: user.appRoleAssignment/user.DeleteAppRoleAssignments,window=_blank]

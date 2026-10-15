@@ -1,0 +1,99 @@
+= Getting Started
+:toc: right
+:toclevels: 3
+
+
+== oCIS Online Demo
+
+We have an oCIS demo instance running on link:https://ocis.owncloud.com[ocis.owncloud.com] where you can get a first impression of it.
+
+We also have some more variations of oCIS running and xref:ocis/deployment/continuous_deployment.adoc[continuously deployed] to reflect different scenarios in that oCIS might be used.
+
+== Run oCIS
+
+We are distributing oCIS as Docker images only.
+
+[WARNING]
+====
+The examples in this document assume that oCIS is accessed from the same host as it is running on (`localhost`). If you would like
+to access oCIS remotely please refer to the xref:ocis/deployment/basic-remote-setup.adoc[Basic Remote Setup] section. Especially
+to the notes about setting the `PROXY_HTTP_ADDR` and `OCIS_URL` environment variables.
+====
+
+You can find more deployment examples in the xref:ocis/deployment/index.adoc[deployment overview] documentaion.
+
+=== Docker
+
+Docker images for oCIS are available on link:https://hub.docker.com/r/owncloud/ocis[Docker Hub].
+
+For rolling releases, the `latest` tag always reflects the current master branch.
+
+[source,console]
+----
+docker pull owncloud/ocis-rolling
+docker run --rm -it -v ocis-config:/etc/ocis owncloud/ocis init
+docker run --rm -p 9200:9200 \
+  -v ocis-config:/etc/ocis
+  -v ocis-data:/var/lib/ocis \
+  -e IDM_CREATE_DEMO_USERS=true owncloud/ocis
+----
+
+[NOTE]
+====
+When you're using oCIS with self-signed certificates, you need to set the environment variable `OCIS_INSECURE=true`, in order to make oCIS work.
+====
+
+[NOTE]
+====
+When you're creating the xref:ocis/getting-started/demo-users.adoc[demo users] by setting `IDM_CREATE_DEMO_USERS=true`, you need to be sure that this instance is not used in production because the passwords are public.
+====
+
+[WARNING]
+====
+We are using named volumes for the oCIS configuration and oCIS data in the above example (`-v ocis-config:/etc/ocis -v ocis-data:/var/lib/ocis`). You could instead also use host bind-mounts instead, eg. `-v /some/host/dir:/var/lib/ocis`.
+====
+
+== Usage
+
+=== Login to ownCloud Web
+
+Open \https://localhost:9200 and xref:ocis/getting-started/demo-users.adoc[login using one of the demo accounts].
+
+=== Basic Management Commands
+
+The oCIS single binary (only when you build manually) contains multiple extensions and the `ocis` command helps you to manage them. We now will show you some more management commands, which you may also explore by typing `ocis --help` or going to the xref:ocis/config.adoc[docs].
+
+To initialize the oCIS configuration:
+
+[source,bash]
+----
+ocis init
+----
+
+To start oCIS server:
+
+[source,bash]
+----
+ocis server
+----
+
+The list command prints all running oCIS services.
+
+[source,bash]
+----
+ocis list
+----
+
+The version command prints the version of your installed oCIS.
+
+[source,bash]
+----
+ocis --version
+----
+
+The health command is used to execute a health check, if the exit code equals zero the service should be up and running, if the exit code is greater than zero the service is not in a healthy state. Generally this command is used within our Docker containers, it could also be used within Kubernetes.
+
+[source,bash]
+----
+ocis health --help
+----

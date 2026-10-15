@@ -1,0 +1,18 @@
+= License
+:toc: right
+:toclevels: 3
+
+// this generates a proper link to the actual version of the eula which can be ocis version dependent.
+include::admin:partial$multi-location/compose-version.adoc[]
+
+== End-User License Agreement (EULA)
+
+The source code of the project is licensed under the link:https://github.com/owncloud/ocis/blob/master/LICENSE[Apache 2.0] license. For the license of the used libraries you have to check the respective sources.
+
+Stable, supported binary builds of ownCloud Infinite Scale that will be distributed by ownCloud GmbH are covered by a non OSS Freemium License link:https://owncloud.com/license-owncloud-infinite-scale/[EULA (web),window=_blank]. This protects additional efforts that ownCloud GmbH - Kiteworks Company is putting into these builds.
+
+Since the source code of Infinite Scale is available under free licenses, the free usage can, should and will not be limited in general.
+
+== Download the EULA as PDF
+
+The EULA is available for download as a PDF: link:{compose_raw_url}{compose_version}/assets/End-User-License-Agreement-for-ownCloud-Infinite-Scale.pdf[EULA (PDF),window=_blank]

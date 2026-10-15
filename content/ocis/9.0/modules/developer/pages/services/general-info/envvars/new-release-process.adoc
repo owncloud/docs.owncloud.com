@@ -1,0 +1,37 @@
+= Release Process for Envvars
+:toc: right
+
+[IMPORTANT]
+====
+For a new ocis release, some tasks are necessary to be done _BEFORE_ releasing. Follow the steps carefully to avoid issues. Most of the docs related tasks are not part of the CI. With each step finished successfully, the next step can be started. Sometimes, due to last minute changes, steps need to be redone!
+====
+
+The following can be done at any time but it must be done _latest_ when no envvar changes are made which is just before a new release gets finally tagged. The data generated _must_ be part of the upcoming release and be merged before tagging/branching!
+
+== Special Scope Envvars
+
+Ask the developers if envvars of this type have been changed (added or removed). See the xref:services/general-info/envvars/special-envvars.adoc#special-scope-envvars[Special Scope Envvars] documentation for more details on how to manage such a change.
+
+== Extended Envvars
+
+For more details see the xref:services/general-info/envvars/special-envvars.adoc#extended-envvars[Extended Envvars] documentation.
+
+== Ordinary Envvars
+
+=== Set the Correct IntroductionVersion
+
+* Once the release is cut, _before_ creating the first release candidate, replace them with the actual semantic version (e.g. `releaseX` → `9.0.0`). To find these placeholders in `introductionVersion` keys, you can run a helper script that originates in the link:https://github.com/owncloud/docs.owncloud.com/blob/main/ocis_helpers[documenation repository]. To use this script, you must be in the linked directory, the ocis repository is located in parallel to the docs repository and the respective ocis branch is checked out and up-to-date.
++
+[source,bash]
+----
+./identify_envvar_placeholder_names.sh
+----
+
+[NOTE]
+====
+A new production version _MUST NOT_ contain any alphabetic identifyers but the semantic version only, using _major, minor and a patch version, which is always 0!_.
+====
+
+=== Create Envvar Delta Files
+
+Envvar delta files are maintained via the `ocis_helper` go program in the root of the link:https://github.com/owncloud/docs.owncloud.com/blob/main/ocis_helpers/README.md[ownCloud documentation, window=_blank] repository. The link directly opens the README.

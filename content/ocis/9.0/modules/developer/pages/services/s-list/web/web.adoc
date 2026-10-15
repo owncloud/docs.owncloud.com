@@ -1,0 +1,122 @@
+= Web
+:toc: right
+:description: The web service embeds and serves the static files for the Infinite Scale web client.
+
+:service_name: web
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+
+== Developer Topics
+
+* xref:{dev-s-path}/web/releasing.adoc[Releasing]
+
+=== Web Apps
+
+Administrators can provide custom web applications to users. This is useful for organizations that want to offer third-party or custom apps. The feature currently supports static web applications (`.js`, `.mjs`, etc.) only; dynamic backends are not supported.
+
+==== Loading Themes
+
+Web themes that are added in the Infinite Scale source code are loaded at build time from `<ocis_repo>/services/web/assets/themes` and cannot be changed at runtime.
+
+Administrators can provide additional custom themes by storing them in the path defined by `WEB_ASSET_THEMES_PATH`. The active theme is selected via `WEB_UI_THEME_PATH`. The final theme is composed of the built-in theme and any custom theme provided via those two variables.
+
+For example, if `WEB_ASSET_THEMES_PATH/owncloud/themes.json` exists, it replaces the built-in ownCloud theme. Mandatory theme keys (such as `common.shareRoles`) are injected automatically at runtime if missing.
+
+==== Loading Applications
+
+Web applications added in the Infinite Scale source code are loaded at build time from `<ocis_repo>/services/web/assets/apps` and cannot be changed at runtime.
+
+Administrators can provide custom applications by storing them in the path defined by `WEB_ASSET_APPS_PATH`, which defaults to `$OCIS_BASE_DATA_PATH/web/assets/apps`. The final list of available applications is the union of built-in and custom applications from that path.
+
+==== Application Structure
+
+Every application must follow a strict directory structure; anything else is ignored:
+
+* Each application must be in its own subdirectory under `WEB_ASSET_APPS_PATH`.
+* Each application directory must contain a `manifest.json` file.
+* Each application directory may contain a `config.json` file.
+
+The `manifest.json` file contains:
+
+`entrypoint` (required):: The entrypoint of the application (e.g. `index.js`), relative to the application directory.
+`config` (optional):: A list of key-value pairs merged into the global `apps.yaml` configuration.
+
+==== Application Configuration
+
+For custom configuration, provide the required values inside `$OCIS_BASE_DATA_PATH/config/apps.yaml`. The `apps.yaml` file contains key-value pairs that are merged with the `config` field from `manifest.json`.
+
+NOTE: Never edit `manifest.json` directly — use xref:_using_custom_assets[Using Custom Assets] for customisation instead.
+
+For example, given a `manifest.json` for `image-viewer-obj`:
+
+[source,json]
+----
+{
+  "entrypoint": "index.js",
+  "config": {
+    "maxWidth": 1280,
+    "maxHeight": 1280
+  }
+}
+----
+
+And `apps.yaml`:
+
+[source,yaml]
+----
+image-viewer-obj:
+  config:
+    maxHeight: 640
+    maxSize: 512
+----
+
+And optionally a per-application `config.json`:
+
+[source,json]
+----
+{
+  "config": {
+    "maxWidth": 320
+  }
+}
+----
+
+The merge order is: `config.json` overwrites `apps.yaml` overwrites `manifest.json`. The resulting effective config is:
+
+[source,json]
+----
+{
+  "external_apps": [
+    {
+      "id": "image-viewer-obj",
+      "path": "index.js",
+      "config": {
+        "maxWidth": 320,
+        "maxHeight": 640,
+        "maxSize": 512
+      }
+    }
+  ]
+}
+----
+
+Both `apps.yaml` and `config.json` also support the optional field:
+
+`disabled` (optional):: Defaults to `false`. Set to `true` to prevent the application from loading.
+
+==== Using Custom Assets
+
+To overwrite a single asset in a built-in application (such as a logo) without replacing the entire application, place a custom file at the same relative path under `WEB_ASSET_APPS_PATH`. For example, to replace the logo in `image-viewer-dfx`, create `WEB_ASSET_APPS_PATH/image-viewer-dfx/logo.png`. Custom assets override the defaults at load time. This also applies to `manifest.json`.
+
+=== Miscellaneous
+
+oCIS (and in particular the web service) requires a restart to load new applications or changes to the `apps.yaml` file.
+

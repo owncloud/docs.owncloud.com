@@ -1,0 +1,65 @@
+= Storage-Users
+:toc: right
+:description: The Infinite Scale Storage-Users service
+
+:service_name: storage-users
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+
+== Developer Topics
+
+=== CLI Commands
+
+==== Delete Stale Nodes
+
+Removes (or reverts) nodes that are stuck in postprocessing because their upload session is gone. The command checks all nodes in postprocessing state: if no other versions exist, the node is deleted; if other versions exist, the node is reverted to the previous version.
+
+[source,bash]
+----
+ocis storage-users uploads delete-stale-nodes [command options]
+----
+
+Options:
+
+`--spaceid value`:: Space ID to check for processing nodes; omit to check all spaces.
+`--dry-run`:: Only show what would be deleted without actually deleting (default: `true`).
+`--verbose`:: Enable verbose logging (default: `false`).
+
+NOTE: Removing a stale node does not reclaim the quota it consumed. Run the xref:_recalculate_treesize[Recalculate Treesize command] command afterwards to correct the reported quota usage of the space.
+
+==== Recalculate Treesize
+
+The treesize of a directory is maintained as a running counter updated on every change. A failed or incomplete update leaves the counter wrong and the reported quota usage of a space drifts from the data on disk. This command walks a space bottom-up, recalculates the treesize of every directory from the actual size of its children, and corrects the stored values.
+
+[source,bash]
+----
+ocis storage-users spaces recalculate-treesize [command options]
+----
+
+Options:
+
+`--space-id value`:: Space ID to recalculate; omit to process all spaces.
+`--dry-run`:: Only show which treesizes would be corrected without writing them (default: `true`).
+`--verbose`:: Enable verbose logging (default: `false`).
+
+Examples:
+
+[source,bash]
+----
+# report incorrect treesizes of a single space without changing anything
+ocis storage-users spaces recalculate-treesize --space-id 43972c79-f7ce-441b-9fe0-cf5170e4d61e
+
+# correct them
+ocis storage-users spaces recalculate-treesize --space-id 43972c79-f7ce-441b-9fe0-cf5170e4d61e --dry-run=false
+----
+
+NOTE: The command reads the metadata of every node in the space and is I/O-intensive on large spaces. Prefer targeting a single space with `--space-id` over processing all spaces.
+

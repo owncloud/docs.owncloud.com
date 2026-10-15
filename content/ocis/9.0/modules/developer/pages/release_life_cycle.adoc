@@ -1,0 +1,113 @@
+= Release Life Cycle
+:toc: right
+:toclevels: 3
+
+This page is designed to provide clarity and transparency regarding the scheduling, nature, and support of our releases, ensuring you have all the information you need to stay updated and manage your deployments effectively. Find an overview of our plans for future enhancements and features here at: link:https://github.com/orgs/owncloud/projects/344[owncloud.com/roadmap,window=_blank].
+
+== Release Types
+
+ownCloud Infinite Scale is released in two different release types: _Production_ and _Rolling_. Each of them is targeted to a specific use case and audience group:
+
+[NOTE]
+====
+link:https://hub.docker.com/r/owncloud/ocis[Production,window=_blank]
+
+* Stable and fully tested release using automated and manual tests, suitable for critical data.
+* Slow cycle, but most stable with slow feature additions.
+* Patch releases are provided for critical- and security-bugs as defined by ownCloud support regulations.
+====
+
+[NOTE]
+====
+link:https://hub.docker.com/r/owncloud/ocis-rolling[Rolling,window=_blank]
+
+* Automated tests always run. Some manual testing may have happened, yet not structured.
+* Based on oCIS master, a Docker image is created once a day.
+* Features, if added, may not have been fully completed. Upgrading is on own risk and documented upgrade paths such as with production releases are yet not fully tested or provided. Great release to use with non critical data.
+* Critical bugs are guaranteed to be fixed with the next rolling release.
+====
+
+[cols="2,4,3",options="header"]
+|===
+| Type
+| Production
+| Rolling
+
+| Frequency
+| About every 6 months
+| Daily
+
+| Audience
+| Everyone
+| Early adopters and Developers
+
+| Risk
+| Low (known) risk
+| High (unknown) risk
+
+| Support
+| Commercially supported
+| Company support on special agreement with ownCloud
+
+| Documentation
+| Official
+| Moving documentation, engineering output
+
+| Updates
+| Patch releases based on last stable
+| Daily
+
+| Update path
+| Incremental: from previous production to new production, from last rolling before a production release
+| From previous rolling to new rolling
+
+| Downgrade
+| No
+| No
+
+| Service-level agreement (SLA)
+| Yes
+| No
+
+| Overlapping support
+| Yes
+| No
+|===
+
+== Documentation
+
+* *Production* +
+Will come with released documentation that is specific for the release. It will remain valid throughout the whole lifetime of the release. If patches require documentation changes, addendums will be delivered.
+
+* *Rolling* +
+Will have access to the documentation as it moves forward in the development process along with the product which will be available on ownClouds web site. There won't be specific releases. Changelog entries, PR comments and similar engineering output can complement the information.
+
+== Updating and Overlap
+
+* *Production* +
+Provides a guaranteed upgrade path from the last Production release, as well as from the previous Rolling release before the new Production. For that, support from ownCloud is required. Upgrades between two Production releases are only supported to tested patch releases provided by ownCloud. In an upgrade process, all released patch releases have to be installed in the correct sequence.
+
+* *Rolling* +
+Does not come with any guaranteed update path. Chances are good that updates will go smooth, but that might have hiccups in cases where the upgrade code is not finalized in time.
+
+Only production gives a reasonable overlap time between releases, for example if version 9 was released, version 8 will still receive a patch release for critical bugs for a reasonable time frame. That time frame will be announced separately and will be aligned with customer needs.
+
+== Support
+
+ownCloud only offers commercial support for _Production_. Rolling might be considered for customer installations in the sales process but always requires an individual agreement between all parties.
+
+_Rolling_ is supported on best effort provided by community and ownCloud staff. There is _no SLA_ and no guarantee for attention.
+
+As ownCloud understands that the effort taken to report a problem is significant and results benefit all users in the community and ownCloud customers, there are resources available to respectfully work on community issues.
+
+Please consider the link:https://github.com/owncloud/ocis/blob/master/CONTRIBUTING.md[Contribution guidelines] for this.
+
+== Versioning Scheme
+
+image::ocis/storage/semver-schema.png[Schema of Semantic Versioning,width=300]
+
+We adhere to _Semantic Versioning_ (SemVer) to ensure clarity and predictability in each of our releases. Learn how Semantic Versioning works on link:https://semver.org/[https://semver.org/].
+
+== Version Naming
+
+In addition to using SemVer, developers often give upcoming releases descriptive names, such as *Daledda* or *Ebadi*. This is particularly important if the SemVer version is likely to change. Breaking changes may necessitate updating the major version rather than just incrementing the minor one. The name is often used to reference the version being developed.

@@ -1,0 +1,9 @@
+= Public Upload Flow
+:toc: right
+:toclevels: 3
+
+== Public Upload Flow
+
+The following diagram describes the flow of requests:
+
+image::ocis/flow-docs/tus-public-upload.svg[, width=400]

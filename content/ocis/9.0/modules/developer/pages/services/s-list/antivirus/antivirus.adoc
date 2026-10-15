@@ -1,0 +1,16 @@
+= Antivirus
+:toc: right
+:description: The Infinite Scale antivirus service is responsible for scanning files for viruses.
+
+:service_name: antivirus
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+

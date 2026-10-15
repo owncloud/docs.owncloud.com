@@ -1,0 +1,178 @@
+= Service Independent CLI
+:toc: right
+:toclevels: 3
+
+This document describes ocis CLI commands that are _service independent_.
+
+[NOTE]
+====
+For all admin-related CLI commands, see the xref:admin:maintenance/commands/commands.adoc#offline-commands[Maintenance Commands] in the admin documentation.
+====
+
+== Common Parameters
+
+The ocis package offers a variety of CLI commands for monitoring or repairing ocis installations. Most of these commands have common parameters such as:
+
+* `--help` (or `-h`) +
+  Use to print all available options.
+
+* `--basePath` (or `-p`) +
+Needs to point to a storage provider, paths can vary depending on your ocis installation. Example paths are:
++
+[source,plaintext]
+----
+/var/tmp/ocis/storage/users  # docker installation
+...
+----
+
+* `--dry-run` +
+  This parameter, when available, defaults to `true` and must explicitly set to `false`.
+
+* `--verbose` (or `-v`) +
+  Get a more verbose output.
+
+== List of Developer Only CLI Commands
+
+=== Cleanup Orphaned Grants
+
+Detect and optionally delete storage grants that have no corresponding share-manager entry.
+
+Sharing in ocis relies on two truths. The share manager and the grants. When a share is created, ocis will 
+
+. Create a grant for the specific file or folder. +
+This grant is _checked when access to the file is requested_.
+
+. Create an entry in the `created.json`/`received.json` files of the specific user. +
+These files are _checked whenever shares are listed_.
+
+The process for creating a share is as follows: first, ocis creates the grant, and then adds the share entry. The reverse order is followed when deleting a share. This means that if the second step fails, the grant will still be present. This can be visually confirmed in the webUI. The webUI details of the "share" section will show an error fetching information for orphan grants.
+
+The following command fixes the problem of orhaned grants.
+
+Usage:
+[source,bash]
+----
+ocis shares clean-orphaned-grants \
+  --service-account-id "<id>" \
+  --service-account-secret "<secret>" \
+  [--force] \
+  [--space-id "<space-opaque-id>"] \
+  [--dry-run=false]
+----
+
+Notes:
+* `--dry-run` +
+Defaults to `true` (no deletions). Set to `false` to remove orphaned grants.
+
+* `--space-id` +
+Limit the scan to a specific storage space (opaque ID).
+
+* `--force` +
+Force removal of suspected orphans even when listing shares fails.
+
+* Public links are not touched.
+
+=== Cleanup Orphaned Shares
+
+When a shared space or directory got deleted, use the `shares cleanup` command to remove those share orphans. This can't be done automatically at the moment.
+
+[source,bash]
+----
+ocis shares cleanup
+----
+
+=== List Unified Roles
+
+This command simplifies the process of finding out which UID belongs to which role. The command using markdown as output format is:
+
+[source,bash]
+----
+ocis graph list-unified-roles --output-format md
+----
+
+The output of this command includes the following information for each role:
+
+* `Name` +
+The human readable name of the role.
+
+* `UID` +
+The unique identifier of the role.
+
+* `Enabled` +
+Whether the role is enabled or not.
+
+* `Description` +
+A short description of the role.
+
+* `Condition`
+* `Allowed Resource Actions`
+
+_Example output (shortned)_
+
+[cols="1,2,3,1,3,3,3",options="header"]
+|===
+| #
+| Label
+| UID
+| Enabled
+| Description
+| Condition
+| Allowed Resource Actions
+
+| 1
+| Viewer
+| b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5
+| enabled
+| View and download.
+| exists @Resource.File
+| libre.graph/driveItem/path/read
+
+|
+|
+|
+|
+|
+| exists @Resource.Folder
+| libre.graph/driveItem/quota/read
+
+|
+|
+|
+|
+|
+| exists @Resource.File && @Subject.UserType=="Federated"
+| libre.graph/driveItem/content/read
+
+|
+|
+|
+|
+|
+| exists @Resource.Folder && @Subject.UserType=="Federated"
+| libre.graph/driveItem/children/read
+
+|
+|
+|
+|
+|
+|
+| libre.graph/driveItem/deleted/read
+
+|
+|
+|
+|
+|
+|
+| libre.graph/driveItem/basic/read
+
+| 2
+| ViewerListGrants
+| d5041006-ebb3-4b4a-b6a4-7c180ecfb17d
+| disabled
+| View, download and show all invite
+|
+|
+|===
+

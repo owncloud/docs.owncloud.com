@@ -1,0 +1,16 @@
+= Frontend
+:toc: right
+:description: The frontend service translates various ownCloud-related HTTP APIs to CS3 requests.
+
+:service_name: frontend
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+

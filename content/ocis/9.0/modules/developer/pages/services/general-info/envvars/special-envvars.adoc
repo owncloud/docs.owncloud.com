@@ -1,0 +1,20 @@
+= Special Envvars
+:toc: right
+:toclevels: 3
+
+
+Handling these envvars properly is very important for the automated doc process for both the developer and the admin docs!
+
+== Special Scope Envvars
+
+Variables with special scope are only related to a deployment method such as `OCIS_RUN_SERVICES`. These variables cannot be gathered automatically, rarely change, can be viewed and must be maintained manually via the xref:ocis:admin:deployment/services/env-vars-special-scope.adoc[admin documentation].
+
+== Extended Envvars
+
+Environment variables with extended scope are not included in a service. They are rarely added or removed, though their code location can change during development.
+
+They are variables that must be present before the core or services start up because they depend on information such as the path to configuration files. Therefore, they are not bound to services like other environment variables. Extended environment variables are identified via `os.Getenv` and are usually defined via a subfolder of `ocis-pkg`. The real envvar name cannot be automatically assigned and must be defined manually via the code in the generated `extended_vars.yaml` file.
+
+These special envvars are maintained via the `ocis_helper` go program in the root of the link:https://github.com/owncloud/docs.owncloud.com/blob/main/ocis_helpers/README.md[ownCloud documentation, window=_blank] repository. The link directly opens the README.
+
+NOTE: With the introduction of the `ocis_helper`, the ocis repository became independent of the documentation with regard to new versions. Whenever a new ocis version is released, the documentation team can carry out their processes independently, and vice versa.

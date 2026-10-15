@@ -1,0 +1,16 @@
+= Auth App
+:toc: right
+:description: The Infinite Scale Auth App service provides authentication for 3rd party apps.
+
+:service_name: auth-app
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+

@@ -1,0 +1,270 @@
+= App-Registry
+:toc: right
+:description: The Infinite Scale App-Registry service is the single point where all apps register themselves and their respective supported mime types
+
+:service_name: app-registry
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+
+== Developer Topics
+
+=== Endpoint Access
+
+Clients (for example ownCloud Web) query the app-registry to discover available applications and MIME types, and to open or create files via those applications.
+
+==== Listing Available Apps and MIME Types
+
+*Endpoint*:: `/app/list` (as specified in capabilities under `apps_url`)
+*Method*:: HTTP GET
+*Authentication*:: None
+
+Request example:
+
+[source,bash]
+----
+curl 'https://ocis.test/app/list'
+----
+
+Response example (HTTP 200):
+
+[source,json]
+----
+{
+  "mime-types": [
+    {
+      "mime_type": "application/pdf",
+      "ext": "pdf",
+      "app_providers": [
+        {
+          "name": "OnlyOffice",
+          "icon": "https://some-website.test/onlyoffice-pdf-icon.png"
+        }
+      ],
+      "name": "PDF",
+      "description": "PDF document"
+    },
+    {
+      "mime_type": "application/vnd.oasis.opendocument.text",
+      "ext": "odt",
+      "app_providers": [
+        {
+          "name": "Collabora",
+          "icon": "https://some-website.test/collabora-odt-icon.png"
+        },
+        {
+          "name": "OnlyOffice",
+          "icon": "https://some-website.test/onlyoffice-odt-icon.png"
+        }
+      ],
+      "name": "OpenDocument",
+      "icon": "https://some-website.test/opendocument-text-icon.png",
+      "description": "OpenDocument text document",
+      "allow_creation": true,
+      "default_application": "Collabora"
+    },
+    {
+      "mime_type": "text/markdown",
+      "ext": "md",
+      "app_providers": [
+        {
+          "name": "CodiMD",
+          "icon": "https://some-website.test/codimd-md-icon.png"
+        }
+      ],
+      "name": "Markdown file",
+      "description": "Markdown file",
+      "allow_creation": true,
+      "default_application": "CodiMD"
+    }
+  ]
+}
+----
+
+==== Open a File With ownCloud Web
+
+*Endpoint*:: `/app/open-with-web` (as specified in capabilities under `open_web_url`)
+*Method*:: HTTP POST
+*Authentication* (one of):::
+* `Authorization` header with OIDC Bearer token or basic auth credentials (if enabled in oCIS)
+* `X-Access-Token` header with a REVA token
+
+Query parameters:
+
+`file_id` (mandatory):: ID of the file to be opened.
+`app_name` (optional):: Application to use; defaults to the default app for the MIME type. Possible values come from the `/app/list` endpoint.
+
+Request examples:
+
+[source,bash]
+----
+curl -X POST 'https://ocis.test/app/open-with-web?file_id=ZmlsZTppZAo='
+curl -X POST 'https://ocis.test/app/open-with-web?file_id=ZmlsZTppZAo=&app_name=Collabora'
+----
+
+Response example (HTTP 200) — the returned URI is intended to be opened with a GET request in a browser; if the user has no active session, ownCloud Web handles the login flow:
+
+[source,json]
+----
+{
+  "uri": "https://....."
+}
+----
+
+==== Open a File With the App Provider
+
+*Endpoint*:: `/app/open` (as specified in capabilities under `open_url`)
+*Method*:: HTTP POST
+*Authentication* (one of):::
+* `Authorization` header with OIDC Bearer token or basic auth credentials (if enabled in oCIS)
+* `Public-Token` header with a public link token
+* `X-Access-Token` header with a REVA token
+
+Query parameters:
+
+`file_id` (mandatory):: ID of the file to be opened.
+`app_name` (optional):: Application to use; defaults to the default app for the MIME type.
+`view_mode` (optional):: Defaults to the highest possible view mode given the file permissions. Values: `write` (edit + download), `read` (view + download), `view` (view only, no download).
+`lang` (optional):: ISO 639-1 language code for the application UI (e.g. `de`, `en`, `es`).
+
+Request examples:
+
+[source,bash]
+----
+curl -X POST 'https://ocis.test/app/open?file_id=ZmlsZTppZAo='
+curl -X POST 'https://ocis.test/app/open?file_id=ZmlsZTppZAo=&lang=de'
+curl -X POST 'https://ocis.test/app/open?file_id=ZmlsZTppZAo=&app_name=Collabora'
+curl -X POST 'https://ocis.test/app/open?file_id=ZmlsZTppZAo=&view_mode=read'
+curl -X POST 'https://ocis.test/app/open?file_id=ZmlsZTppZAo=&app_name=Collabora&view_mode=write'
+----
+
+All apps are expected to open in an iframe. Apps that require a form POST respond with:
+
+[source,json]
+----
+{
+  "app_url": "https://.....",
+  "method": "POST",
+  "form_parameters": {
+    "access_token": "eyJ0...",
+    "access_token_ttl": "1634300912000",
+    "arbitrary_param": "lorem-ipsum"
+  }
+}
+----
+
+Apps that require a GET request respond with:
+
+[source,json]
+----
+{
+  "app_url": "https://...",
+  "method": "GET",
+  "headers": {
+    "access_token": "eyJ0e...",
+    "access_token_ttl": "1634300912000",
+    "arbitrary_header": "lorem-ipsum"
+  }
+}
+----
+
+Error responses:
+
+[cols="1,1,3",options="header"]
+|===
+| HTTP status
+| Code
+| Message
+
+| 400
+| `INVALID_PARAMETER`
+| `missing file ID`
+
+| 400
+| `INVALID_PARAMETER`
+| `invalid view mode`
+
+| 400
+| `INVALID_PARAMETER`
+| `invalid file ID`
+
+| 400
+| `INVALID_PARAMETER`
+| `the given file id does not point to a file`
+
+| 400
+| `INVALID_PARAMETER`
+| `lang parameter does not contain a valid ISO 639-1 language code`
+
+| 404
+| `RESOURCE_NOT_FOUND`
+| `app '<name>' not found`
+
+| 404
+| `RESOURCE_NOT_FOUND`
+| `file does not exist`
+|===
+
+==== Creating a File With the App Provider
+
+*Endpoint*:: `/app/new` (as specified in capabilities under `new_file_url`)
+*Method*:: HTTP POST
+*Authentication* (one of):::
+* `Authorization` header with OIDC Bearer token or basic auth credentials (if enabled in oCIS)
+* `Public-Token` header with a public link token
+* `X-Access-Token` header with a REVA token
+
+Query parameters:
+
+`parent_container_id` (mandatory):: ID of the folder in which the file will be created.
+`filename` (mandatory):: Name of the new file.
+`template` (optional):: Not yet implemented.
+
+Request example:
+
+[source,bash]
+----
+curl -X POST 'https://ocis.test/app/new?parent_container_id=c2lkOmNpZAo=&filename=test.odt'
+----
+
+Response example (HTTP 200) — returns the file ID of the newly created file, which can be used to open the file in an editor:
+
+[source,json]
+----
+{
+  "file_id": "ZmlsZTppZAo="
+}
+----
+
+Error responses:
+
+[cols="1,1,3",options="header"]
+|===
+| HTTP status
+| Code
+| Message
+
+| 400
+| `INVALID_PARAMETER`
+| `missing parent container ID`
+
+| 400
+| `INVALID_PARAMETER`
+| `missing filename`
+
+| 400
+| `INVALID_PARAMETER`
+| `the parent container id does not point to a container`
+
+| 404
+| `RESOURCE_NOT_FOUND`
+| `the parent container is not accessible or does not exist`
+|===
+

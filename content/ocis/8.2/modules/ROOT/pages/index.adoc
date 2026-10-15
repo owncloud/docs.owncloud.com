@@ -9,7 +9,9 @@ include::admin:partial$multi-location/compose-version.adoc[]
 
 {description}
 
-This documentation provides xref:admin:index.adoc[admin] and xref:developer:index.adoc[developer] related information.
+// This documentation provides xref:admin:index.adoc[admin] and xref:developer:index.adoc[developer] related information.
+
+This documentation provides xref:admin:index.adoc[admin] related information.
 
 == Release Life Cycle
 

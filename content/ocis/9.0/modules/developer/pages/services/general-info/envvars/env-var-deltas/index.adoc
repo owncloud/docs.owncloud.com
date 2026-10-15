@@ -1,0 +1,10 @@
+= Deltas Between Versions
+:toc: right
+
+== Introduction
+
+This section provides information about the handling of `added`, `removed` and `deprecated` environment variables between two major/minor versions.
+
+== Generation or Updating
+
+The creation of delta files are made via the link:https://github.com/owncloud/docs.owncloud.com/blob/main/ocis_helpers/README.md[ocis_helpers] which is fully integrated into the documentation process, but a manual task.

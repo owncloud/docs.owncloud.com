@@ -38,3 +38,24 @@ This applies to **any component** — whenever a new module is first introduced 
 
 The `webui` component uses `version: ~` (no version segment in URLs). Its entries in `llms.txt` correctly omit the version segment, e.g. `https://doc.owncloud.com/webui/index.html`.
 
+
+## UI Supplemental JavaScript
+
+Custom JavaScript lives in `ui/supplemental/js/` and is layered onto the stock Antora default UI at build time.
+
+### Click-to-zoom for images and diagrams (`medium-zoom-init.js`)
+
+`medium-zoom-init.js` wires click-to-zoom behaviour for the whole site:
+
+- **Regular images** (`div.imageblock img`, `span.image img`) — bound directly via `mediumZoom()` on page load.
+- **Mermaid diagrams** — handled separately via a `MutationObserver` + custom overlay (see below).
+
+**Why Mermaid needs special treatment:** `@sntke/antora-mermaid-extension` renders diagrams client-side as inline `<svg>` elements inside `div.mermaid.content`, asynchronously after the DOM is ready. `medium-zoom` v1.1.0 filters all targets through `tagName === "IMG"` and silently ignores anything else, so passing an `<svg>` node attaches nothing. Serialising the SVG to a blob URL and wrapping it in an `<img>` also fails because Mermaid's generated SVGs rely on inline `<style>` blocks that lose their document context when loaded as a standalone resource.
+
+**The fix:** a `MutationObserver` watches for `<svg>` nodes inserted into the container elements listed in `SVG_CONTAINER_CLASSES`. When one appears, a click handler is attached that opens a full-screen overlay containing a `cloneNode(true)` of the live SVG — no serialisation, all inline styles intact.
+
+**Extending to another diagram library:** if a new library also renders async `<svg>` children that are not zoomable on click, add its container CSS class to the `SVG_CONTAINER_CLASSES` array at the top of the observer block in `medium-zoom-init.js` — no other changes needed:
+
+```js
+var SVG_CONTAINER_CLASSES = ['mermaid', 'your-new-library-class']
+```

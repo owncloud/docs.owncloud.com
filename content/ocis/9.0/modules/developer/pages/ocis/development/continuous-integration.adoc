@@ -1,0 +1,57 @@
+= Continuous Integration
+:toc: right
+:toclevels: 3
+
+oCIS uses link:https://docs.github.com/en/actions[GitHub Actions,window=_blank] as its CI system. Workflow runs are visible in the link:https://github.com/owncloud/ocis/actions[Actions tab,window=_blank] of the repository, and the status of each run is reported directly on the pull request.
+
+== Workflow Files
+
+All workflows are defined as YAML files in the link:https://github.com/owncloud/ocis/tree/master/.github/workflows[`.github/workflows/`,window=_blank] directory of the repository. The following workflows are active:
+
+[cols="30%,70%",options="header"]
+|===
+| Workflow
+| Description
+
+| `acceptance-tests.yml`
+| Runs acceptance and API tests on every pull request. Automatically skips when only documentation files are changed.
+
+| `web-tests.yml`
+| Runs UI and web integration tests on pull requests and pushes to `master` and `stable-*` branches.
+
+| `check-licenses.yml`
+| Verifies REUSE license compliance on pull requests and pushes to `master` and `stable-*` branches.
+
+| `commit-message.yml`
+| Validates that pull request titles and commit messages follow the Conventional Commits format.
+
+| `deployment-test.yml`
+| Runs deployment smoke tests.
+
+| `k8s.yml`
+| Runs Kubernetes deployment tests.
+
+| `k6-load-test.yml`
+| Runs load tests using k6.
+
+| `release.yml`
+| Builds and publishes Docker images and binaries when a version tag (`v*`) is pushed.
+
+| `translation-sync.yml`
+| Synchronises translation strings with the translation platform.
+|===
+
+== Skipping CI
+
+GitHub Actions recognises the following keywords in a commit message or pull request title to skip all workflow runs:
+
+* `[skip ci]`
+* `[ci skip]`
+* `[no ci]`
+* `[skip actions]`
+
+Note that the acceptance test workflow additionally performs an automatic change detection step: if a pull request touches only documentation files, the test jobs are skipped without requiring a skip keyword.
+
+== Viewing Logs
+
+Workflow run logs are available in the link:https://github.com/owncloud/ocis/actions[Actions tab,window=_blank]. Individual job logs and artefacts can be downloaded from the summary page of each run.

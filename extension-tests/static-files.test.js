@@ -236,3 +236,24 @@ test('the medium-zoom vendor bundle synced from node_modules is published', (t) 
     )
   }
 })
+
+test('agent instruction files (AGENTS.md / CLAUDE.md) are not published', (t) => {
+  if (!fs.existsSync(PUBLIC)) {
+    t.skip('public/ not built (run `npm run antora` to enable)')
+    return
+  }
+  // AGENTS.md / CLAUDE.md files live beside the content (content/, content/ocis/, ui/)
+  // but outside every Antora start_path and outside ui/supplemental, so they must never
+  // reach the deployed site. Moving one into a version directory or ui/supplemental
+  // would publish it as a page or asset -- this guard fails loudly instead.
+  const found = []
+  const walk = (dir) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name)
+      if (entry.isDirectory()) walk(full)
+      else if (/^(agents|claude)(\.|$)/i.test(entry.name)) found.push(path.relative(PUBLIC, full))
+    }
+  }
+  walk(PUBLIC)
+  assert.deepEqual(found, [], `agent instruction files were published: ${found.join(', ')}`)
+})

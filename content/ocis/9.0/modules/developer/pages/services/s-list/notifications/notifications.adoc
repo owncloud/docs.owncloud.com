@@ -1,0 +1,16 @@
+= Notifications
+:toc: right
+:description: The notification service is responsible for sending emails to users informing them about events that happened.
+
+:service_name: notifications
+
+// compute required links as attributes
+include::partial$services/compute-links.adoc[]
+
+include::partial$services/admin-tip.adoc[]
+
+== Developer Readme
+
+// add a predefined text that uses the computed links
+include::partial$services/readme-link-text.adoc[]
+
