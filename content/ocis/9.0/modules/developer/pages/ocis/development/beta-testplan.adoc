@@ -49,7 +49,7 @@ Prerequisites:
 Documentation resources:
 
 * xref:ocis/deployment/ocis_ldap.adoc[configure ocis with LDAP]
-* xref:server:developer_manual:core/apis/ocs-share-api.adoc[sharing API is compatible to ownCloud 10 and ownCloud 11]
+* xref:server:developer_manual:core/apis/ocs-share-api.adoc[sharing API is compatible to ownCloud Classic]
 * xref:#webdav[webDav operations]
 
 [cols="3,2,1",options="header"]
@@ -97,7 +97,7 @@ Should be tried in various ways and in different environments
 
 Documentation resources:
 
-* xref:server:developer_manual:core/apis/ocs-share-api.adoc[sharing API is compatible to ownCloud 10 and ownCloud 11]
+* xref:server:developer_manual:core/apis/ocs-share-api.adoc[sharing API is compatible to ownCloud Classic]
 * xref:#webdav[webDav operations]
 
 [cols="3,2,1",options="header"]
@@ -615,7 +615,7 @@ Prerequisite:
 | Expected Result
 | Comment
 
-| use ocis as webDAV external storage in ownCloud 10
+| use ocis as webDAV external storage in ownCloud Classic
 | resource access works
 |
 

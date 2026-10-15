@@ -2,7 +2,7 @@
 :toc: right
 :toclevels: 3
 
-A _namespace_ is a set of paths with a common prefix. Depending on the endpoint you are talking to you will encounter a different kind of namespace: In ownCloud 10 all paths are considered relative to the users home. The CS3 API uses a global namespace and the _storage providers_ use a local namespace with paths relative to the storage providers root.
+A _namespace_ is a set of paths with a common prefix. Depending on the endpoint you are talking to you will encounter a different kind of namespace: In ownCloud Classic all paths are considered relative to the users home. The CS3 API uses a global namespace and the _storage providers_ use a local namespace with paths relative to the storage providers root.
 
 image::ocis/storage/namespaces.drawio.svg[,width=300]
 
@@ -38,7 +38,7 @@ The different paths in the namespaces need to be translated while passing xref:o
 
 [CAUTION]
 ====
-oCIS currently is configured to jail users into the CS3 `/home` namespace in the oc10 endpoints to mimic ownCloud 10. CernBox has been exposing a global namespace on `/webdav` for years already. The ocs service returns urls that are relative to the CS3 global namespace which makes both scenarios work, but only one of them at a time. Which is why the testsuite hiccups when trying to link:https://github.com/cs3org/reva/pull/1605[Allow full paths targets in reva#1605].
+oCIS currently is configured to jail users into the CS3 `/home` namespace in the oc10 endpoints to mimic ownCloud Classic. CernBox has been exposing a global namespace on `/webdav` for years already. The ocs service returns urls that are relative to the CS3 global namespace which makes both scenarios work, but only one of them at a time. Which is why the testsuite hiccups when trying to link:https://github.com/cs3org/reva/pull/1605[Allow full paths targets in reva#1605].
 ====
 
 [WARNING]
@@ -97,7 +97,7 @@ _@jfd: Should we split `/shares` into `/collaborations`, `/ocm` and `/links`? We
 
 == Browser URLs vs API URLs
 
-In ownCloud 10 you can not only create _public links_ but also _private links_. Both can be copy pasted into an email or chat to grant others access to a file. Most often though, end users will copy and paste the URL from their browsers location bar.
+In ownCloud Classic you can not only create _public links_ but also _private links_. Both can be copy pasted into an email or chat to grant others access to a file. Most often though, end users will copy and paste the URL from their browsers location bar.
 
 [cols="3,2",options="header"]
 |===

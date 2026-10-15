@@ -10,7 +10,7 @@ Welcome to oCIS, the modern file-sync and share platform, which is based on our 
 
 === The Idea of Federated Storage
 
-To create a truly federated storage architecture oCIS breaks down the old ownCloud 10 user specific namespace, which is assembled on the server side, and makes the individual parts accessible to clients as storage spaces and storage space registries.
+To create a truly federated storage architecture oCIS breaks down the old ownCloud Classic user specific namespace, which is assembled on the server side, and makes the individual parts accessible to clients as storage spaces and storage space registries.
 
 The diagram below shows the core concepts that are the foundation for the new architecture:
 
@@ -60,7 +60,7 @@ Interacting with oCIS involves a multitude af APIs. The server and all clients r
 
 === Acceptance Test Suite
 
-We run a huge link:https://github.com/owncloud/core/tree/master/tests[test suite], which originated in ownCloud 10 and continues to grow. A detailed description can be found in the developer docs for xref:ocis/development/testing.adoc[testing].
+We run a huge link:https://github.com/owncloud/core/tree/master/tests[test suite], which originated in ownCloud Classic and continues to grow. A detailed description can be found in the developer docs for xref:ocis/development/testing.adoc[testing].
 
 === Architecture Overview
 

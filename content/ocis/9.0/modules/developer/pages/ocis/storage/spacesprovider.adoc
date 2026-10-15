@@ -43,7 +43,7 @@ The ocdav service not only handles all WebDAV requests under `(remote.php/)(web)
 | Description
 | TODO
 
-6+| _ownCloud 10 / current ocis setup:_
+6+| _ownCloud Classic / current ocis setup:_
 
 | `status.php`
 | ocdav
