@@ -473,19 +473,27 @@ Both Collector configs live in `content/ocis/9.0/antora.yml` under `ext.collecto
 - **Removing a module** from any component → remove its entry from `llms.txt`.
 - **Adding a new component** (new product) → add a new section with the component's index URL.
 
-### Version pinning for prerelease components
+### Version resolution at build time
 
-All entries use the `latest` URL segment **unless** the target module exists only in a version that is still marked `prerelease: true` in its `antora.yml`. In that case the entry must use the explicit version number instead of `latest`, because the `latest` alias resolves to the most recent GA release — which may not have that module at all.
+`antora-extensions/llms-txt.js` runs at `sitePublished` and rewrites every `/<component>/latest/` segment in the generated `public/llms.txt` with the component's actual GA version number (the same version `latest-alias.js` mirrors). This means:
 
-Current example: the Infinite Scale Developer Documentation lives only in 9.0, which has `prerelease: true`. The `latest` alias resolves to 8.2 (no developer module), so the entry is pinned:
+- The template in `ui/supplemental/llms.txt` uses `latest` for all entries and is human-readable.
+- The published file always contains real version numbers that CI can validate against `public/`.
+- When the GA version rolls forward (e.g. 9.0 ships), the file updates automatically on the next build.
+
+### Prerelease-only modules
+
+If a module exists **only** in a prerelease version (e.g. the `developer` module was introduced in 9.0 while `latest` still points to 8.2), `latest` cannot be used — the GA release has no such module. In this case pin the URL to the explicit prerelease version in the template:
 
 ```
 https://doc.owncloud.com/ocis/9.0/developer/index.html
 ```
 
-**When to switch:** once `prerelease: true` is removed from the component version's `antora.yml` and `latest` moves to that version, replace the explicit version with `latest`.
+The extension leaves explicit version numbers untouched — it only resolves `latest` segments.
 
-This rule applies to **any component** — not just ocis. Whenever a new module is introduced in a prerelease version of any component, pin its `llms.txt` URL to that version number until GA.
+**When to switch:** once `prerelease: true` is removed from that version's `antora.yml` and `latest` moves to it, change the pinned version in the template to `latest`. The extension resolves it from that point on.
+
+This applies to **any component** — whenever a new module is first introduced in a prerelease version, pin its template URL until GA.
 
 ### Versionless components
 
