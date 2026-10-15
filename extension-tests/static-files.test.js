@@ -14,7 +14,7 @@ const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
 
-const { latestByComponent } = require('./latest-versions')
+const { latestByComponent, prereleaseVersionsByComponent } = require('./latest-versions')
 
 const ROOT = path.join(__dirname, '..')
 const PUBLIC = path.join(ROOT, 'public')
@@ -24,6 +24,7 @@ const PUBLIC = path.join(ROOT, 'public')
 // Pinned versions can go stale, so the guards below hold them against the
 // content tree and fail the build on the next release rollover.
 const LATEST_BY_COMPONENT = latestByComponent()
+const PRERELEASE_BY_COMPONENT = prereleaseVersionsByComponent()
 
 // Each multi-version component's `latest-*-version` attribute in
 // global-attributes.yml. The attribute names do not all follow the component name
@@ -148,6 +149,10 @@ test('every version pinned in llms.txt is the current release', (t) => {
     // version segment to check.
     const latest = LATEST_BY_COMPONENT[component]
     if (!latest || version === undefined) continue
+    // An explicit prerelease pin is intentional (the module only exists in that
+    // version) -- exempt it. It must be updated manually when the version reaches GA.
+    const prereleases = PRERELEASE_BY_COMPONENT[component]
+    if (prereleases && prereleases.has(version)) continue
     if (version !== latest) stale.push(`/${component}/${version}/ (current release is ${latest})`)
   }
   assert.deepEqual(

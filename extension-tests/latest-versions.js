@@ -94,4 +94,27 @@ function nextTargetByComponent () {
   return Object.assign(target, versionless)
 }
 
-module.exports = { latestByComponent, nextTargetByComponent }
+// Returns a map of component name -> Set of version strings that are marked
+// prerelease: true in their antora.yml. Used by static-files.test.js to allow
+// llms.txt entries that intentionally pin a prerelease version (e.g. a module
+// that only exists in the current prerelease and has no GA version yet).
+function prereleaseVersionsByComponent () {
+  const result = {}
+  for (const product of fs.readdirSync(CONTENT)) {
+    const productDir = path.join(CONTENT, product)
+    if (!fs.statSync(productDir).isDirectory()) continue
+    for (const entry of fs.readdirSync(productDir)) {
+      const descriptor = path.join(productDir, entry, 'antora.yml')
+      if (!fs.existsSync(descriptor)) continue
+      const yaml = fs.readFileSync(descriptor, 'utf8')
+      if (!/^prerelease:\s*true\s*$/m.test(yaml)) continue
+      const name = (yaml.match(/^name:\s*'?([^'\s]+)/m) || [])[1]
+      const version = (yaml.match(/^version:\s*'?([^'\s]+)/m) || [])[1]
+      if (!name || !version) continue
+      ;(result[name] = result[name] || new Set()).add(version)
+    }
+  }
+  return result
+}
+
+module.exports = { latestByComponent, nextTargetByComponent, prereleaseVersionsByComponent }
