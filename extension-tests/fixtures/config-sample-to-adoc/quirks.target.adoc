@@ -1,0 +1,8 @@
+= Quirks
+:toc: right
+
+Hand-written intro.
+
+// header end do not delete or edit this line
+
+stale generated content

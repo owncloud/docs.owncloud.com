@@ -91,6 +91,20 @@ antora:
       attributefile: ./global-attributes.yml
       enabled: true
     - ./antora-extensions/llms-txt.js
+    # Maintainer tool, off in every real build: regenerates the server config
+    # parameter pages from an owncloud/core checkout (replaces config-to-docs).
+    # To use it, check out the core branch matching the docs version, point the
+    # paths below at it and at that version's pages, and set enabled: true. See
+    # the header of the extension and content/server/AGENTS.md.
+    - require: ./antora-extensions/config-sample-to-adoc.js
+      enabled: false
+      pairs:
+        - source_path: ../core/config/config.sample.php
+          target_path: content/server/11.0/modules/admin_manual/pages/configuration/server/config_sample_php_parameters.adoc
+        - source_path: ../core/config/config.apps.sample.php
+          target_path: content/server/11.0/modules/admin_manual/pages/configuration/server/config_apps_sample_php_parameters.adoc
+      report_only: false
+      stop_after_processing: true
     - require: ./antora-extensions/sitemap-cleanup.js
       # Keep only each component's latest non-prerelease version in the sitemap
       # (the /…/latest/ redirect target). Real version URLs are published but
