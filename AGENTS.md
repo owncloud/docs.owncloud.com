@@ -76,11 +76,12 @@ Subdirectory `AGENTS.md` files are loaded on demand when working in that subtree
 
 * `content/AGENTS.md` -- AsciiDoc authoring rules (tables, images, lists, heading capitalisation), xref fixes, `doc.owncloud.com` link conversion, external link maintenance, xref link-text checks
 * `content/ocis/AGENTS.md` -- oCIS developer service pages, Antora Collector and Swagger UI extensions
+* `content/server/AGENTS.md` -- generated server config parameter pages (`config-sample-to-adoc`) and how to write the sample comments in core
 * `ui/AGENTS.md` -- `llms.txt` maintenance and supplemental UI JavaScript
 
 ## File Relationship: CLAUDE.md and AGENTS.md
 
-Every `CLAUDE.md` is a symlink to the `AGENTS.md` beside it (root, `content/`, `content/ocis/`, `ui/`). Both names are provided so that different AI tools find their expected filename — Claude Code reads `CLAUDE.md`, OpenAI Codex-based tools read `AGENTS.md`. **Always edit `AGENTS.md` directly**; `CLAUDE.md` reflects all changes automatically via the symlink. When adding a new subdirectory `AGENTS.md`, add the sibling `CLAUDE.md` symlink and list it under "Where the Other Rules Live".
+Every `CLAUDE.md` is a symlink to the `AGENTS.md` beside it (root, `content/`, `content/ocis/`, `content/server/`, `ui/`). Both names are provided so that different AI tools find their expected filename — Claude Code reads `CLAUDE.md`, OpenAI Codex-based tools read `AGENTS.md`. **Always edit `AGENTS.md` directly**; `CLAUDE.md` reflects all changes automatically via the symlink. When adding a new subdirectory `AGENTS.md`, add the sibling `CLAUDE.md` symlink and list it under "Where the Other Rules Live".
 
 Keep these files outside the Antora `start_paths` (never inside a `content/<product>/<version>/` directory, which is added and dropped over time) and outside `ui/supplemental/`, otherwise they would be published. `extension-tests/static-files.test.js` guards this.
 
