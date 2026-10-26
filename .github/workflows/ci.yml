@@ -63,6 +63,7 @@ jobs:
     # Only the deploy job publishes to GitHub Pages; the build, which runs on
     # pull requests, keeps the read-only token.
     permissions:
+      contents: read
       pages: write
       id-token: write
     environment:
