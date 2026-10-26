@@ -1,6 +1,7 @@
 = Development
 :toc: right
 :toclevels: 3
+:description: This section is a guide about the development of ownCloud Web core, apps and extensions. This includes tooling, conventions and the repo structure.
 
 This section is a guide about the development of ownCloud Web *core*, *apps* and *extensions*. This includes *tooling*, *conventions* and the *repo structure*.
 

@@ -1,6 +1,7 @@
 = Action Extensions
 :toc: right
 :toclevels: 3
+:description: Actions are one of the possible extension types. Registered actions get rendered in various places across the UI, depending on their scope and targets.
 
 == Action Extension Type
 

@@ -1,11 +1,12 @@
 = Users
 :toc: right
 :toclevels: 3
+:description: The Users API is implementing a subset of the functionality of the MS Graph User resource.
 
 
 == Users API
 
-The Users API is implementing a subset of the functionality of the link:https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0[MS Graph User resource] The JSON representation of a User handled by the Users API looks like this:
+The Users API is implementing a subset of the functionality of the link:https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0[MS Graph User resource]. The JSON representation of a User handled by the Users API looks like this:
 
 [source,json]
 ----

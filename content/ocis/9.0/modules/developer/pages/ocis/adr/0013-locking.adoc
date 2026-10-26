@@ -1,6 +1,7 @@
 = 13. Locking
 :toc: right
 :toclevels: 3
+:description: At the time of this writing no locking mechanisms exists in oCIS / REVA for both directories and files.
 
 - Status: accepted
 - Deciders: link:https://github.com/hodyroff[@hodyroff], link:https://github.com/pmaier1[@pmaier1], link:https://github.com/jojowein[@jojowein], link:https://github.com/dragotin[@dragotin], link:https://github.com/micbar[@micbar], link:https://github.com/tbsbdr[@tbsbdr], link:https://github.com/wkloucek[@wkloucek]

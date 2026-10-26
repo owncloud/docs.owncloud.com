@@ -1,5 +1,6 @@
 = Port Ranges
 :toc: right
+:description: oCIS services often need a port to expose their services to other services or the outside world.
 
 == Introduction
 

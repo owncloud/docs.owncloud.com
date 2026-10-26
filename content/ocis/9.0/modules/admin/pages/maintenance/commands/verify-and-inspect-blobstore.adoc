@@ -1,5 +1,6 @@
 = Verify and Inspect a Blobstore
 :toc: right
+:description: Verify and inspect the configured Blobstore without requiring direct access to the underlying storage system.
 
 Verify and inspect the configured Blobstore without requiring direct access to the underlying storage system.
 

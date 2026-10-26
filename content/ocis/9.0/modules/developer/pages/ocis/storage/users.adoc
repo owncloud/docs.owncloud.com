@@ -1,8 +1,9 @@
 = Users
 :toc: right
 :toclevels: 3
+:description: User and group provisioning in oCIS: users are identified by UUID internally while usernames are used in the WebDAV and OCS APIs.
 
-TODO add this to the storage overview? or is this a different part? That should be started as a separate service ? And documented elsewhere, e.g. in the accounts?
+// TODO add this to the storage overview? or is this a different part? That should be started as a separate service? And documented elsewhere, e.g. in the accounts?
 
 == User and Group Provisioning
 

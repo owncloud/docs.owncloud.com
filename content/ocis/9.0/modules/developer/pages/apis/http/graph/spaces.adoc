@@ -1,6 +1,7 @@
 = Spaces
 :toc: right
 :toclevels: 3
+:description: The Spaces API is implementing a subset of the functionality of the MS Graph Drives resource.
 
 == Spaces API
 

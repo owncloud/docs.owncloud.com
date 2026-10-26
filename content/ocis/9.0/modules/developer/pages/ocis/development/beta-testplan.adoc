@@ -1,6 +1,7 @@
 = Beta Testplan
 :toc: right
 :toclevels: 3
+:description: This document is supposed to give you some ideas how and what to test on ocis.
 
 == Beta Testing
 

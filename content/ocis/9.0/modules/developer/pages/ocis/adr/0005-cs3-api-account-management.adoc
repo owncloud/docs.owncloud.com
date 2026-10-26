@@ -1,12 +1,18 @@
 = 5. Account Management Through CS3 API
 :toc: right
 :toclevels: 3
+:description: What would be a more effective way of using network resources and handle account management within the oCIS-Reva ecosystem?
 
 * Status: proposed
 * Deciders: link:https://github.com/refs[@refs], link:https://github.com/butonic[@butonic], link:https://github.com/micbar[@micbar], link:https://github.com/dragotin[@dragotin], link:https://github.com/pmaier1[@pmaier1]
 * Date: 2021-04-12
 
 Technical Story: link:https://github.com/cs3org/cs3apis/pull/119[Write only management API for User and Group resources]
+
+[NOTE]
+====
+The direction of this ADR has been implemented: account management is exposed through the CS3 userprovider API, which is served by the `graph` service. The `accounts` service referenced in this ADR no longer exists in current oCIS versions (see xref:ocis/adr/0001-introduce-accounts-service.adoc[ADR-0001] and xref:ocis/adr/0002-persist-accounts-using-cs3-storage.adoc[ADR-0002]); user management is now provided by the `graph`, `idm` and `idp` services.
+====
 
 == Context and Problem Statement
 

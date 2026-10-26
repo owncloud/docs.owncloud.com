@@ -1,6 +1,7 @@
 = Folder View Extensions
 :toc: right
 :toclevels: 3
+:description: The folder view is one of the possible extension types. Registered folder view can be used to render multiple resources (folders, files, spaces) in the UI.
 
 == Folder View Extension Type
 

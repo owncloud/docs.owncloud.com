@@ -1,6 +1,7 @@
 = Invitation Flow
 :toc: right
 :toclevels: 3
+:description: Sequence diagram of the OCM invitation flow between two Infinite Scale instances.
 
 == OCM Invitation Flow
 

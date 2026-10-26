@@ -1,5 +1,6 @@
 = Clients
 :toc: right
 :toclevels: 3
+:description: Documentation for clients that work with oCIS: ownCloud Web and rclone.
 
 This Section describes clients for ocis.

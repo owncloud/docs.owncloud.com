@@ -1,4 +1,5 @@
 = Flow Documentation
 :toc: right
 :toclevels: 3
+:description: Sequence diagrams describing important oCIS flows like login, request handling and public uploads.
 

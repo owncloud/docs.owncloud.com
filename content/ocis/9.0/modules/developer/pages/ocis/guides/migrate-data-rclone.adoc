@@ -1,6 +1,7 @@
 = Migrate Data Using rclone
 :toc: right
 :toclevels: 3
+:description: People keep asking on how to migrate data from other cloud storage to Infinite Scale.
 
 People keep asking on how to migrate data from other cloud storage to Infinite Scale.
 

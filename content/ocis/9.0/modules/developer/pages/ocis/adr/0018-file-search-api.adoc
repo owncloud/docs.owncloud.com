@@ -1,6 +1,7 @@
 = 18. File Search API
 :toc: right
 :toclevels: 3
+:description: ADR 18: define a file search API so that files can be found based on certain search terms, using the WebDAV API.
 
 * Status: proposed
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/micbar[@micbar], link:https://github.com/dragotin[@dragotin], link:https://github.com/c0rby[@c0rby]

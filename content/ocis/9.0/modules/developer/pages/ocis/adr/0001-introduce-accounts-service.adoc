@@ -1,12 +1,18 @@
 = 1. Introduce an Accounts Service
 :toc: right
 :toclevels: 3
+:description: To attach metadata like shares to users ownCloud relies on persistent, non-reassignable, unique identifiers for users (and files).
 
 * Status: superseded by xref:ocis/adr/0003-external-user-management.adoc[ADR-0003]
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/felixboehm[@felixboehm], link:https://github.com/micbar[@micbar], link:https://github.com/pmaier1[@pmaier1]
 * Date: link:https://github.com/owncloud/ocis-accounts/pull/34/commits/2fd05e2b6fe2a47c687bd0c0bc5e1b5c48a585b2[2020-06-15]
 
 Technical Story: link:https://github.com/owncloud/ocis-accounts/pull/34[persist accounts]
+
+[NOTE]
+====
+The `accounts` service described here no longer exists in current oCIS versions (the `owncloud/ocis-accounts` repository is archived). User management is now provided by the `graph`, `idm` and `idp` services.
+====
 
 == Context and Problem Statement
 

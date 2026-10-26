@@ -1,6 +1,7 @@
 = 25. Distributed Search Index
 :toc: right
 :toclevels: 3
+:description: Search is currently implemented with blevesearch, which internally uses bbolt. bbolt writes to a local file, which prevents scaling out the service.
 
 * Status: draft
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/fschade[@fschade], link:https://github.com/aduffeck[@aduffeck]

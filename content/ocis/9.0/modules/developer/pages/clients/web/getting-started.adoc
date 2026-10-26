@@ -1,6 +1,7 @@
 = Getting Started
 :toc: right
 :toclevels: 3
+:description: The source code is hosted in the ocis repo in the web folder.
 
 == Source Code
 

@@ -1,6 +1,7 @@
 = Spaces Provider
 :toc: right
 :toclevels: 3
+:description: A storage provider manages resources identified by a reference by accessing a storage system with a storage driver.
 
 [WARNING]
 ====

@@ -2,8 +2,16 @@
 :toc: right
 :description: The Infinite Scale Settings service provides functionality for other services to register new settings as well as storing and retrieving the respective settings' values.
 :page-aliases: ROOT:deployment/services/s-list/settings.adoc
+:readingTime: 4
+:level: intermediate
+:lastUpdatedVersion: 9.0.0-rc.1
+:lastUpdatedDate: 2026-10-25
 
 :service_name: settings
+
+The settings service is the central store for Infinite Scale configuration values such as user profile settings, roles and permissions. Services register _settings bundles_ with it and read or write _setting values_ at runtime. This page explains how settings are managed, persisted and cached, and how to define custom roles.
+
+{readingTime} min read · Level: {level} · Last updated for oCIS {lastUpdatedVersion} on 25.10.2026
 
 == Introduction
 
@@ -21,15 +29,9 @@ The settings service is currently used for managing the:
 * possible user roles and their respective permissions,
 * assignment of roles to users.
 
-As an example, user profile settings that can be changed in the Web UI must be persistent.  
+As an example, user profile settings that can be changed in the Web UI must be persistent.
 
-The settings service supports two different backends for persisting the data. The backend can be set via the `SETTINGS_STORE_TYPE` environment variable. Supported values are:
-
-* `metadata`: The default. This backend persists the settings data via the `storage-system` service.
-* `filesystem`: This backend persists the settings data in a directory on the local filesystem.
-  The directory can be configured with `SETTINGS_DATA_PATH`. This backend is **not** suitable for running
-  multiple intances of the `settings` service in a scale-out deployment and should be therefore considered
-  deprecated.
+The settings service persists settings data via the `storage-system` service (the metadata store). The storage-system gateway is configured via `SETTINGS_STORAGE_GATEWAY_GRPC_ADDR` (alias `STORAGE_GATEWAY_GRPC_ADDR`). Current versions of Infinite Scale do not provide a local-filesystem persistence backend for the settings service, so the settings service must not be run in a scale-out deployment without a shared `storage-system` service.
 
 == Settings Management
 
@@ -41,7 +43,7 @@ Services can set or query Infinite Scale *setting values* of a user from setting
 
 == Service Accounts
 
-The settings service needs to know the IDs of service accounts but it doesn't need their secrets. Currently only one service account can be configured which has the admin role. This can be set with the `SETTINGS_SERVICE_ACCOUNT_ID_ADMIN` envvar, but it will also pick up the global `OCIS_SERVICE_ACCOUNT_ID` envvar. Also see the xref:{s-path}/auth-service.adoc[auth-service] service description for additional details.
+The settings service needs to know the IDs of service accounts but it doesn't need their secrets. The service account IDs can be set with the `SETTINGS_SERVICE_ACCOUNT_IDS` envvar, and the global `OCIS_SERVICE_ACCOUNT_ID` envvar is also picked up. Also see the xref:{s-path}/auth-service.adoc[auth-service] service description for additional details.
 
 // include common translations text
 :envvar_name: SETTINGS_TRANSLATION_PATH
@@ -89,7 +91,7 @@ To create custom roles:
 * Copy the role example to a `json` file.
 * Change `id`, `name`, and `displayName` according your requirements.
 * Copy the desired permissions from the `user-all-permissions` example to the `settings` array of the role.
-* Set the `SETTINGS_BUNDLE_PATH` environment variable to the path/json-file and (re)start Infinite Scale.
+* Set the `SETTINGS_BUNDLES_PATH` environment variable to the path/json-file and (re)start Infinite Scale.
 
 See the full https://owncloud.dev/services/settings/#custom-roles[Custom Roles] json example in the developer documentation for more details.
 
@@ -98,7 +100,7 @@ See the full https://owncloud.dev/services/settings/#custom-roles[Custom Roles] 
 // renders dependent on is_cache or is_store
 :is_cache: true
 
-When using `SETTINGS_STORE_TYPE=metadata`, the `settings` service caches the results of queries against the storage backend to provide faster responses. The content of this cache is independent of the cache used in the `storage-system` service as it caches directory listing and settings content stored in files.
+The `settings` service caches the results of queries against the storage backend to provide faster responses. The cache store is configured via `OCIS_CACHE_STORE` / `SETTINGS_CACHE_STORE` (see the partial below). The content of this cache is independent of the cache used in the `storage-system` service as it caches directory listing and settings content stored in files.
 
 // get the complete .adoc page but do not render any contained tag directive when found in the middle
 include::partial$multi-location/cache-store.adoc[tag=**]
@@ -110,3 +112,14 @@ include::partial$multi-location/event-bus.adoc[]
 == Configuration
 
 include::partial$deployment/services/env-and-yaml.adoc[tag=envvars-yaml]
+
+== FAQ
+
+=== Which Port Does the Settings Service Listen On?
+The settings service listens on HTTP port `9190` by default (gRPC on `9194`, debug on `9191`).
+
+=== Where Are Settings Stored?
+The settings service persists settings data via the `storage-system` service (the metadata store), configured via `SETTINGS_STORAGE_GATEWAY_GRPC_ADDR`. Current versions do not provide a local-filesystem persistence backend, so the settings service must not be run in a scale-out deployment without a shared `storage-system` service.
+
+=== How Do I Define Custom Roles?
+Set the `SETTINGS_BUNDLES_PATH` environment variable to a JSON file containing the role definition and restart Infinite Scale. See the _Custom Roles_ section above for the file format.

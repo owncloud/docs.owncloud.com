@@ -1,6 +1,7 @@
 = Testing with Ginkgo
 :toc: right
 :toclevels: 3
+:description: Write unit tests in oCIS using Ginkgo and Gomega and learn how to mock other microservices.
 
 In this section we try to enable developers to write tests in oCIS using Ginkgo and Gomega and explain how to mock other microservices to also cover some integration tests. The full documentation of the tools can be found on the link:https://onsi.github.io/ginkgo/[Ginkgo] and link:https://onsi.github.io/gomega/[Gomega] websites.
 

@@ -1,6 +1,7 @@
 = Translations
 :toc: right
 :toclevels: 3
+:description: Translations are essential for the web frontend.
 
 == Introduction
 

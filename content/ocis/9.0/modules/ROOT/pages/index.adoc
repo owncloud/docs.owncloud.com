@@ -1,9 +1,17 @@
 = The Infinite Scale Documentation
 :toc: right
 :toclevels: 2
-:description: Welcome to the Infinite Scale documentation. Infinite Scale is a data platform providing tools to integrate, organize, share and govern data and metadata.
+:description: Welcome to the ownCloud Infinite Scale (oCIS) 9.0 documentation: admin setup, configuration, services and developer guides.
+:readingTime: 2
+:level: beginner
+:lastUpdatedVersion: 9.0.0-rc.1
+:lastUpdatedDate: 2026-10-25
 
 include::admin:partial$multi-location/compose-version.adoc[]
+
+ownCloud Infinite Scale (oCIS) is a data platform for integrating, organizing, sharing and governing data and metadata. This documentation covers administration, deployment and configuration as well as developer resources for the 9.0 release. Choose the xref:admin:index.adoc[admin] or xref:developer:index.adoc[developer] section to get started.
+
+{readingTime} min read · Level: {level} · Last updated for oCIS {lastUpdatedVersion} on 25.10.2026
 
 == Introduction
 
@@ -22,3 +30,14 @@ IMPORTANT: Rolling releases are published in a cycle of 3 weeks. Due to this rel
 == End-User License Agreement (EULA)
 
 ownCloud provides an EULA to clarify, among various topics, who can use this software and which conditions apply to the groups of users defined. See the actual {compose_raw_url}{compose_version}/assets/End-User-License-Agreement-for-ownCloud-Infinite-Scale.pdf[EULA] for details.
+
+== FAQ
+
+=== What Is the Difference Between the Admin and Developer Documentation?
+The xref:admin:index.adoc[admin] documentation covers installing, configuring and operating Infinite Scale. The xref:developer:index.adoc[developer] documentation covers building, extending and contributing to oCIS.
+
+=== Where Do I Start as a New Administrator?
+Start with the xref:admin:prerequisites/prerequisites.adoc[prerequisites] and the xref:admin:deployment/general/general-info.adoc[general deployment information], then follow the xref:admin:deployment/index.adoc[deployment] guide for your chosen deployment type.
+
+=== Which oCIS Version Is This Documentation For?
+This documentation is verified against oCIS `9.0.0-rc.1`. See the xref:admin:deployment/services/env-var-changes.adoc[environment variable changes] page for differences from earlier versions.

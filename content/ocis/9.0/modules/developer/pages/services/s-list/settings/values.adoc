@@ -1,6 +1,7 @@
 = Settings Values
 :toc: right
 :toclevels: 3
+:description: A Settings Value is the value an authenticated user has chosen for a specific setting, defined in a settings bundle.
 
 A _Settings Value_ is the value an authenticated user has chosen for a specific setting, defined in a _settings bundle_.
 

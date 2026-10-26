@@ -1,91 +1,37 @@
 = Request Flow
 :toc: right
 :toclevels: 3
+:description: Sequence diagram of the general oCIS request flow, showing where authentication, user lookup and token minting happen.
 
 == Request Flow
 
-The following sequence diagram describes the general request flow. It shows where account provisioning and token minting are happening:
+The following sequence diagram describes the general request flow. It shows where authentication, user lookup and token minting are happening:
 
-[mermaid, width=400]
+[mermaid, width=600]
 ----
 sequenceDiagram
-    %% we have comments!! \o/
-    participant user as User
-    participant client as Client
-    participant proxy as ocis-proxy
-    participant idp as IdP
-    participant accounts as ocis-accounts
-    participant ldap as corporate LDAP server
+    autonumber
+    participant C as Client (Web / Desktop / Mobile)
+    participant P as proxy (:9200)
+    participant A as auth-bearer + idp
+    participant GR as graph (:9120)
+    participant D as ocdav (:9163)
+    participant G as gateway (:9142)
+    participant S as storage-users (:9157, driver ocis)
 
-    user->>+client: What is the content of my home?
-
-        client->>+proxy: PROPFIND  Bearer auth using oidc auth token
-        Note over client,proxy: What is in a bearer token?  The spec recommends opaque tokens.  Treat it as random byte noise.
-        Note over client,proxy: the proxy MUST authenticate users  using ocis-accounts because it needs  to decide where to send the request
-        %% Mention introspection endpoint for opaque tokens
-        %% idp uses jwt, so we can save a request
-        %% either way the token can be used to look up the sub and iss of the user
-
-            %% or is token check enough?
-            proxy->>+idp: GET /userinfo
-            alt userinfo succeeds
-
-                idp-->>proxy:  200 OK
-                Note over proxy,accounts: Content-Type: application/json{"sub": "248289761001","name": "Jane Doe","given_name": "Jane","family_name": "Doe","preferred_username": "j.doe","email": "janedoe@example.com","picture": "http://example.com/janedoe/me.jpg"}
-                %% see: https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse
-
-            else userinfo fails
-
-                idp-->>-proxy: 401 Unauthorized
-                Note over proxy,accounts: WWW-Authenticate: error="invalid_token",error_description="The Access Token expired"
-
-        proxy-->>client: 401 Unauthorized or 302 Found with redirect to idp
-        Note over client: start at login flow or refresh the token
-
-            end
-
-            proxy->>+accounts: TODO API call to exchange sub@iss with account UUID
-            Note over proxy,accounts: does not autoprovision users. They are explicitly provisioned later.
-
-            alt account exists or has been migrated
-
-                accounts-->>proxy: existing account UUID
-            else account does not exist
-
-                opt oc10 endpoint is configured
-                Note over proxy,oc10: Check if user exists in oc10
-                    proxy->>+oc10: GET /apps/graphapi/v1.0/users/&lt;uuid&gt;
-                    opt user exists in oc10
-                        oc10-->>-proxy: 200
-                        %% TODO auth using internal token
-                        proxy->>+oc10: PROPFIND
-                        Note over proxy,oc10: forward existing bearer auth
-                        oc10-->>-proxy: Multistatus response
-            proxy-->>client: Multistatus response
-    client-->>user: List of Files X, Y, Z ...
-                    end
-                end
-
-                Note over proxy,accounts: provision a new account including displayname, email and sub@iss  TODO only if the user is allowed to login, based on group  membership in the ldap server
-                proxy->>proxy: generate new uuid
-                proxy->>+accounts: TODO create account with new generated uuid
-                accounts-->>-proxy: OK / error
-
-            else account has been disabled
-
-                accounts-->>-proxy: account is disabled
-        proxy-->>client: 401 Unauthorized or 302 Found with redirect to idp
-        Note over client: start at login flow or refresh the token
-
-            end
-            proxy->>proxy: store uuid in context
-
-            %% what if oc10 does not support a certain request / API
-
-            proxy->>proxy: mint an internal jwt that includes the UUID and username using revas `x-access-token` header
-            proxy->>+reva: PROPFIND Token auth using internal JWT
-            reva-->>-proxy: Multistatus response
-        proxy-->>-client: Multistatus response
-
-    client-->>-user: List of Files X, Y, Z ...
+    C->>P: HTTPS WebDAV request (/dav/...) with bearer token
+    P->>A: validate bearer token (userinfo)
+    A-->>P: authenticated user (sub, iss)
+    P->>GR: look up user via CS3 userprovider
+    GR-->>P: user (UUID, username)
+    Note over P: mint x-access-token with user UUID and username
+    P->>D: forward request to ocdav
+    D->>G: CS3 request (Stat / List / Read)
+    G->>S: CS3 storage call
+    S-->>G: CS3 response
+    G-->>D: CS3 response
+    D-->>P: WebDAV response
+    P-->>C: HTTPS response
 ----
+
+NOTE: This diagram reflects oCIS 9.0. Earlier versions used an `accounts` service for user lookup and provisioning, which has been removed. User management is now provided by the `graph`, `idm` and `idp` services.

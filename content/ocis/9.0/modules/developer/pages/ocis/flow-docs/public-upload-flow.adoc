@@ -1,6 +1,7 @@
 = Public Upload Flow
 :toc: right
 :toclevels: 3
+:description: The following diagram describes the flow of requests
 
 == Public Upload Flow
 

@@ -2,8 +2,16 @@
 :toc: right
 :description: The Infinite Scale eventhistory service consumes all events from the configured event system like NATS, stores them and allows other services to retrieve them via an event ID.
 :page-aliases: ROOT:deployment/services/s-list/eventhistory.adoc
+:readingTime: 1
+:level: beginner
+:lastUpdatedVersion: 9.0.0-rc.1
+:lastUpdatedDate: 2026-10-25
 
 :service_name: eventhistory
+
+The `eventhistory` service consumes all events from the event system (NATS), stores them and lets other services retrieve them by event ID. It cannot run without an event system. This page lists the default port and prerequisites.
+
+{readingTime} min read · Level: {level} · Last updated for oCIS {lastUpdatedVersion} on 25.10.2026
 
 == Introduction
 
@@ -11,7 +19,7 @@
 
 == Default Values
 
-* The eventhistory service listens on port 9174 by default.
+* The eventhistory service listens on gRPC port 9274 by default.
 
 == Prerequisites
 
@@ -40,3 +48,14 @@ include::partial$multi-location/event-bus.adoc[]
 == Configuration
 
 include::partial$deployment/services/env-and-yaml.adoc[tag=envvars-yaml]
+
+== FAQ
+
+=== Which Port Does the Eventhistory Service Listen On?
+The `eventhistory` service listens on gRPC port `9274` by default.
+
+=== Can Eventhistory Run Without an Event System?
+No. Running the `eventhistory` service without an event system like NATS is not possible, because it consumes all events from the configured event system.
+
+=== How Do Other Services Retrieve Events?
+Other services call the `eventhistory` service via gRPC. The request must contain the event ID that should be retrieved.

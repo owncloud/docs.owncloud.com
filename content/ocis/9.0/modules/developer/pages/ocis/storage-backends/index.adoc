@@ -1,4 +1,5 @@
 = Storage Backends
 :toc: right
 :toclevels: 3
+:description: Storage backends for oCIS: the default decomposedfs, EOS and CephFS.
 

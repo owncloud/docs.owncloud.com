@@ -1,6 +1,7 @@
 = Deployment
 :toc: right
 :toclevels: 3
+:description: This section handles deployments and operations for admins and people who are interested in how versatile oCIS is.
 
 == Deployments Scenarios and Examples
 

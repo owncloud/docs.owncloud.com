@@ -1,6 +1,7 @@
 = License
 :toc: right
 :toclevels: 3
+:description: The source code of the project is licensed under the Apache 2.0 license. For the license of the used libraries you have to check the respective sources.
 
 // this generates a proper link to the actual version of the eula which can be ocis version dependent.
 include::admin:partial$multi-location/compose-version.adoc[]

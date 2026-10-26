@@ -3,6 +3,10 @@
 :toclevels: 4
 :description: This page gives you an overview of the architecture and the concepts behind Infinite Scale. Infinite Scale was designed from the beginning as a data platform providing tools to integrate, organize, share and govern data and metadata.
 :page-aliases: ROOT:architecture/architecture.adoc
+:readingTime: 11
+:level: intermediate
+:lastUpdatedVersion: 9.0.0-rc.1
+:lastUpdatedDate: 2026-10-25
 
 :c4-model-url: https://en.wikipedia.org/wiki/C4_model
 :suture-url: https://github.com/thejerf/suture
@@ -15,6 +19,10 @@
 :grpc-url: https://grpc.io/about/
 :ocis-pkg-url: https://github.com/owncloud/ocis/tree/master/ocis-pkg
 :go-micro-url: https://github.com/asim/go-micro
+
+This page explains the architecture and core concepts of Infinite Scale, including spaces, the microservice runtime and the request flow. It is for administrators and operators who want to understand how oCIS components interact before deploying or scaling an instance. You should be familiar with microservices and basic networking.
+
+{readingTime} min read · Level: {level} · Last updated for oCIS {lastUpdatedVersion} on 25.10.2026
 
 == Introduction
 
@@ -47,6 +55,37 @@ Use this link to download the xref:attachment$/architecture/infinite-scale-c4-mo
 image::architecture/c4-ocis-system-context.svg[Infinite Scale System Context,width=400]
 
 image::architecture/c4-ocis-system-container.svg[Infinite Scale Container View,width=400]
+
+== Request Flow
+
+The diagram below shows the default request flow for a file access request, verified against a running `v9.0.0-rc.1` instance. The xref:{s-path}/proxy.adoc[proxy] is the single entry point on port `9200`. It authenticates the request and routes it to the service responsible for the request path.
+
+[mermaid, width=600]
+-----
+sequenceDiagram
+    autonumber
+    participant C as Client (Web / Desktop / Mobile)
+    participant P as proxy (:9200)
+    participant A as auth-bearer + idp
+    participant D as ocdav (:9163)
+    participant G as gateway (:9142)
+    participant S as storage-users (:9157, driver ocis)
+    participant F as POSIX filesystem
+    C->>P: HTTPS WebDAV request (/dav/...)
+    P->>A: validate bearer token
+    A-->>P: authenticated user
+    P->>D: forward to ocdav (/dav/, /webdav/, /remote.php/)
+    D->>G: CS3 request (Stat / List / Read)
+    G->>S: CS3 storage call
+    S->>F: read metadata + blob
+    F-->>S: data
+    S-->>G: CS3 response
+    G-->>D: CS3 response
+    D-->>P: WebDAV response
+    P-->>C: HTTPS response
+-----
+
+NOTE: The proxy also routes the Libre Graph API (`/graph`), OCS (`/ocs`), and the Web UI (`/`) to their respective services. Authentication is always performed by the xref:{s-path}/auth-bearer.adoc[auth-bearer] service together with the xref:{s-path}/idp.adoc[idp] service (or an external Identity Provider).
 
 == Concepts
 
@@ -128,4 +167,131 @@ CS3 (Cloud Storage Services for Synchronization and Sharing) is based on {grpc-u
 
 ==== Protocol-Driven Development
 
-Interacting with Infinite Scale involves a multitude af APIs. The server and all clients rely on {oidc-url}[OpenID Connect] for authentication. The embedded LibreGraph Connect can be replaced with any other OpenID Connect Identity Provider. Clients use the {webdav-url}[WebDAV]-based https://github.com/cernbox/smashbox/blob/master/protocol/protocol.md[ownCloud sync protocol] to manage files and folders, Open Collaboration Services (OCS) to manage shares and https://tus.io/protocols/resumable-upload.html[TUS] to upload files in a resumable way. On the server side, REVA is the reference implementation of the https://github.com/cs3org/cs3apis[CS3APIS], which are defined using protocol buffers. By embedding Go-lang LDAP Authentication (GLAuth), Infinite Scale provides a read-only LDAP interface to make accounts, including guests, available to firewalls and other systems.
+Interacting with Infinite Scale involves a multitude of APIs. The server and all clients rely on {oidc-url}[OpenID Connect] for authentication. The embedded LibreGraph Connect can be replaced with any other OpenID Connect Identity Provider. Clients use the {webdav-url}[WebDAV]-based https://github.com/cernbox/smashbox/blob/master/protocol/protocol.md[ownCloud sync protocol] to manage files and folders, Open Collaboration Services (OCS) to manage shares and https://tus.io/protocols/resumable-upload.html[TUS] to upload files in a resumable way. On the server side, REVA is the reference implementation of the https://github.com/cs3org/cs3apis[CS3APIS], which are defined using protocol buffers. By embedding the xref:{s-path}/idm.adoc[IDM service] (based on LibreGraph Identity Management), Infinite Scale provides an LDAP interface to make accounts, including guests, available to firewalls and other systems.
+
+== Deployment Models
+
+Infinite Scale can be deployed as a **single binary** (`ocis server`), with **Docker Compose**, or on **Kubernetes** using the oCIS Helm chart. Because every option is an environment variable, the configuration is identical across deployment types. The deployment type mainly determines whether services can be scaled out and how they discover each other and exchange events.
+
+=== Service Discovery and Events
+
+By default, services register in a NATS JetStream key-value store (registry type `nats-js-kv`, set via `MICRO_REGISTRY`) and exchange events over the same NATS server (`OCIS_EVENTS_ENDPOINT`, default `127.0.0.1:9233`). In a single binary the embedded NATS server provides both. In a Compose or Helm deployment a shared NATS server provides both across all replicas.
+
+[mermaid, width=700]
+-----
+flowchart TB
+    subgraph SB["Single binary (ocis server)"]
+        direction TB
+        N1["embedded NATS (:9233)<br/>registry: nats-js-kv - events"]
+        P1["proxy"] --- N1
+        D1["ocdav"] --- N1
+        G1["gateway"] --- N1
+        S1["storage-users"] --- N1
+    end
+
+    subgraph DC["Docker Compose / Helm (Kubernetes)"]
+        direction TB
+        N2["shared NATS JetStream<br/>registry: nats-js-kv - events"]
+        P2["proxy (replicas)"] --- N2
+        D2["ocdav (replicas)"] --- N2
+        G2["gateway (replicas)"] --- N2
+        S2["storage-users (replicas)"] --- N2
+    end
+-----
+
+NOTE: The in-memory registry (`MICRO_REGISTRY=memory`) only works inside a single process and is intended for development, not for production or scale-out deployments.
+
+=== Storage Drivers
+
+The `storage-users` service supports different storage drivers, selected with `STORAGE_USERS_DRIVER`:
+
+[mermaid, width=600]
+-----
+flowchart LR
+    G["gateway"] --> SU["storage-users"]
+    SU -->|"driver: ocis (default)"| POSIX[("POSIX volume<br/>metadata + blobs")]
+    SU -->|"driver: s3ng"| S3[("S3 bucket (blobs)")]
+    SU -->|"driver: s3ng"| POSIX2[("POSIX volume (metadata)")]
+-----
+
+=== Configurable Components: Pro and Cons per Deployment Type
+
+The defaults below are identical for the single binary, Docker Compose and Helm deployments because configuration is environment-variable based. The deployment type only changes whether a component can scale out: a single binary cannot scale individual services, while Compose and Helm can scale replicas that share a registry and event bus.
+
+[width="100%",cols="~,~,~,~",options="header"]
+|===
+| Component / Option
+| Good for
+| Drawbacks
+| Default and when to use
+
+| Service registry: `nats-js-kv` (NATS JetStream key-value)
+| Distributed service discovery across replicas and nodes.
+| Needs a reachable NATS server; adds a lookup hop.
+| Default in all deployment types. Use everywhere except single-process development.
+
+| Service registry: `memory` (in-memory)
+| Zero configuration, no external dependency.
+| Only works within one process; no discovery across replicas.
+| Not a production default. Development and testing only.
+
+| Storage driver: `ocis` (POSIX / decomposedfs)
+| Simple, no external object store; metadata and blobs on a POSIX volume.
+| Scales with the filesystem; no native object-store redundancy.
+| Default in all deployment types. Use for small to medium deployments on POSIX storage.
+
+| Storage driver: `s3ng` (S3 blobs + POSIX metadata)
+| Blobs on scalable, redundant S3-compatible object storage.
+| Needs an S3 endpoint and credentials; metadata stays on POSIX.
+| Not a default. Use when S3 storage is configured, for large or geo-distributed deployments.
+
+| Storage driver: `owncloudsql`
+| Legacy ownCloud SQL storage.
+| Deprecated; not for new deployments.
+| Deprecated. Do not use for new deployments.
+
+| Cache store: `memory`
+| Best performance, no external dependency.
+| No persistence; lost on restart; per-instance only.
+| Default for caches. Use only where persistence and scale-out are not required.
+
+| Cache store: `nats-js-kv`
+| Shared, persistent cache across replicas.
+| Needs a reachable NATS server.
+| Default for persistent stores. Use for scale-out deployments.
+
+| Cache store: `redis-sentinel`
+| Shared, persistent, HA cache on Redis.
+| Extra Redis Sentinel infrastructure to operate.
+| Not a default. Use when a Redis Sentinel cluster is already available.
+
+| Cache store: `noop`
+| Disables caching entirely.
+| No caching benefit; higher load on backends.
+| Not a default. Use only for debugging.
+
+| Identity: embedded `idp` + `idm`
+| Zero-configuration OIDC and LDAP out of the box.
+| Limited functionality; for small installations and testing.
+| Default in all deployment types. Use for small environments.
+
+| Identity: external IdP (e.g. Keycloak) + LDAP
+| Enterprise features: 2FA, federation, user provisioning.
+| Additional components to operate and secure.
+| Not a default. Use for production and enterprise environments.
+
+|===
+
+== FAQ
+
+=== What Is the Single Entry Point for Client Requests?
+The xref:{s-path}/proxy.adoc[proxy] service on port `9200` is the single entry point. It terminates TLS, authenticates requests and routes them to the responsible backend service.
+
+=== How Do Services Find Each Other?
+Services register in a NATS JetStream key-value store (registry type `nats-js-kv`). See the xref:deployment/services/registry.adoc[Registry] page for details and the available registry types.
+
+=== Can I Scale Individual Services?
+Yes, in a Docker Compose or Kubernetes deployment you can run multiple replicas of a service. A single binary runs all services in one process and cannot scale individual services. See the xref:availability_scaling/availability_scaling.adoc[availability and scaling] page.
+
+=== Which Storage Driver Should I Use?
+Use the default `ocis` driver (POSIX / decomposedfs) for small to medium deployments. Use the `s3ng` driver when you want blobs on S3-compatible object storage. See the xref:deployment/storage/general-considerations.adoc[storage considerations] page.

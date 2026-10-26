@@ -1,5 +1,6 @@
 = oCIS with LDAP
 :toc: right
+:description: Example docker-compose deployment of oCIS with an OpenLDAP server and LDAP admin interface behind Traefik.
 
 == Overview
 

@@ -1,6 +1,7 @@
 = LibreGraph
 :toc: right
 :toclevels: 3
+:description: The LibreGraph API is a REST Api which is inspired by the Microsoft Graph API.
 
 The LibreGraph API is a REST Api which is inspired by the link:https://developer.microsoft.com/en-us/graph[Microsoft Graph API]. It tries to stay compliant with the Microsoft Graph API and aims to be the Next Generation Api in Infinite Scale where we want to support most of the features of the platform.
 The link:https://github.com/owncloud/libre-graph-api[API specification] is available in the OpenApi 3 standard and there are generated client and server link:https://github.com/owncloud/libre-graph-api#clients[SDKs] available. You can browse the API with the xref:apis/http/graph/swagger-ui.adoc[Swagger UI].

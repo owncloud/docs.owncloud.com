@@ -1,6 +1,7 @@
 = Namespaces
 :toc: right
 :toclevels: 3
+:description: A namespace is a set of paths with a common prefix.
 
 A _namespace_ is a set of paths with a common prefix. Depending on the endpoint you are talking to you will encounter a different kind of namespace: In ownCloud Classic all paths are considered relative to the users home. The CS3 API uses a global namespace and the _storage providers_ use a local namespace with paths relative to the storage providers root.
 

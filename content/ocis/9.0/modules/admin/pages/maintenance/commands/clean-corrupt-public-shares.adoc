@@ -1,5 +1,6 @@
 = Clean Corrupt Public Shares
 :toc: right
+:description: Detect and optionally delete corrupt public shares whose storage grants have no corresponding share-manager entry.
 
 Detect and optionally delete storage grants that have no corresponding share-manager entry.
 

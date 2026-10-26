@@ -1,5 +1,6 @@
 = Deltas Between Versions
 :toc: right
+:description: This section provides information about the handling of added, removed and deprecated environment variables between two major/minor versions.
 
 == Introduction
 

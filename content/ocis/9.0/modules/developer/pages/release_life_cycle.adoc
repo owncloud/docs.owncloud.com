@@ -1,6 +1,7 @@
 = Release Life Cycle
 :toc: right
 :toclevels: 3
+:description: Clarity and transparency about the scheduling, nature and support of Infinite Scale releases.
 
 This page is designed to provide clarity and transparency regarding the scheduling, nature, and support of our releases, ensuring you have all the information you need to stay updated and manage your deployments effectively. Find an overview of our plans for future enhancements and features here at: link:https://github.com/orgs/owncloud/projects/344[owncloud.com/roadmap,window=_blank].
 

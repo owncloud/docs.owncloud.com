@@ -1,6 +1,7 @@
 = Environment Variables
 :toc: right
 :toclevels: 3
+:description: Environment variables are an essential part of configuring services.
 
 Environment variables are an essential part of configuring services.
 

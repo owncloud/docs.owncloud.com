@@ -2,8 +2,16 @@
 :toc: right
 :description: The Infinite Scale Auth App service provides authentication for 3rd party apps.
 :page-aliases: ROOT:deployment/services/s-list/auth-app.adoc
+:readingTime: 5
+:level: intermediate
+:lastUpdatedVersion: 9.0.0-rc.1
+:lastUpdatedDate: 2026-10-25
 
 :service_name: auth-app
+
+The `auth-app` service issues tokens that let third-party apps authenticate against Infinite Scale without a user session. Tokens can be created, listed and deleted via the CLI, the REST API or the impersonation API. Because generating access tokens is security relevant, the service is not started automatically and must be enabled explicitly.
+
+{readingTime} min read · Level: {level} · Last updated for oCIS {lastUpdatedVersion} on 25.10.2026
 
 == Introduction
 
@@ -24,7 +32,7 @@ To enable `{service_name}`, you first must set `PROXY_ENABLE_APP_AUTH` to `true`
 
 == Default Values
 
-* Auth Basic listens on port 9245 by default.
+* Auth App listens on HTTP port 9247 by default (gRPC on 9246, debug on 9245).
 
 include::partial$deployment/services/auth-service-family.adoc[]
 
@@ -179,3 +187,14 @@ curl --request POST "https://<your host:9200>/auth-app/tokens?expiry=\{value}&us
 == Configuration
 
 include::partial$deployment/services/env-and-yaml.adoc[tag=envvars-yaml]
+
+== FAQ
+
+=== How Do I Start the Auth-App Service?
+The service is excluded from autostart because generating access tokens is security relevant. Add it with `OCIS_ADD_RUN_SERVICES=auth-app` (or start it explicitly on the command line) and set `PROXY_ENABLE_APP_AUTH=true` on the xref:{s-path}/proxy.adoc[proxy] service.
+
+=== How Do I Create an App Token?
+Use the CLI: `ocis auth-app create --user-name=${user} --expiration=${token_expiration}`. The default expiration is `72h`; valid time abbreviations are `h`, `m` and `s`. Alternatively, POST to the `/auth-app/tokens?expiry=72h` endpoint with an active bearer token, or use the impersonation API.
+
+=== Which Port Does the Auth-App Service Listen On?
+The `auth-app` service listens on HTTP port `9247` by default (gRPC on `9246`, debug on `9245`).

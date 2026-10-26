@@ -1,6 +1,7 @@
 = Running Tests
 :toc: right
 :toclevels: 3
+:description: In order to allow us to make changes quickly, often and with a high level of confidence, we heavily rely on tests within the web repository.
 
 == Introduction
 

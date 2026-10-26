@@ -1,6 +1,7 @@
 = Proposed Changes
 :toc: right
 :toclevels: 3
+:description: Some architectural changes still need to be clarified or changed. Maybe an ADR is in order for all of the below.
 
 Some architectural changes still need to be clarified or changed. Maybe an ADR is in order for all of the below.
 

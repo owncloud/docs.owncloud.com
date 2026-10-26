@@ -1,6 +1,7 @@
 = Create a New CLI Command
 :toc: right
 :toclevels: 3
+:description: Create a new CLI command for an oCIS service. Service commands are usually located in the service's pkg/command subfolder.
 
 
 [NOTE]

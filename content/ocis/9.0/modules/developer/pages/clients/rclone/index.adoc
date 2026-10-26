@@ -1,6 +1,7 @@
 = Rclone
 :toc: right
 :toclevels: 3
+:description: Use rclone to sync files between oCIS and other cloud storage over WebDAV, with basic auth or OpenID Connect.
 
 == About Rclone
 

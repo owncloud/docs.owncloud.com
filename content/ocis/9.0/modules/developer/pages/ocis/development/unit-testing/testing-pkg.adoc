@@ -1,6 +1,7 @@
 = Standard Library Testing
 :toc: right
 :toclevels: 3
+:description: To write a unit test for your package, create a file with the _test.go suffix.
 
 == Using the Standard Library
 

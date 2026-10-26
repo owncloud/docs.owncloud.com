@@ -1,6 +1,7 @@
 = Monitoring & Tracing
 :toc: right
 :toclevels: 3
+:description: Monitoring and tracing gives developers and admin insights into a complex system, in this case oCIS.
 
 Monitoring and tracing gives developers and admin insights into a complex system, in this case oCIS.
 

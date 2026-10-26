@@ -1,6 +1,7 @@
 = Continuous Integration
 :toc: right
 :toclevels: 3
+:description: oCIS uses GitHub Actions as its CI system.
 
 oCIS uses link:https://docs.github.com/en/actions[GitHub Actions,window=_blank] as its CI system. Workflow runs are visible in the link:https://github.com/owncloud/ocis/actions[Actions tab,window=_blank] of the repository, and the status of each run is reported directly on the pull request.
 

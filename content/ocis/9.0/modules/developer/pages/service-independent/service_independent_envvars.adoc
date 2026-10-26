@@ -1,6 +1,7 @@
 = Service Independent Envvars
 :toc: right
 :toclevels: 3
+:description: The following environment variables are service independent.
 
 The following environment variables are service independent. You will find the respective code in the `ocis-pkg/` directory. See the xref:admin:deployment/services/env-vars-special-scope.adoc[Admin Documentation - Environment Variables with Special Scopes] for a comprehensive list and explanation.
 

@@ -1,6 +1,7 @@
 = Add Translations
 :toc: right
 :toclevels: 3
+:description: Add translations to oCIS services: they are shown in the ownCloud Web UI and synced with Transifex daily.
 
 Services can have texts that need to be translated. These translations will be shown in the ownCloud Web UI. Compared to web, these translations:
 

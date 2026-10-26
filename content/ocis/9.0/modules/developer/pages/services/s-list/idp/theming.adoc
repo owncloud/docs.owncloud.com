@@ -1,6 +1,7 @@
 = Theming
 :toc: right
 :toclevels: 3
+:description: Our default IDP UI is built with the LibreGraph Connect React app.
 
 == Intro
 

@@ -1,6 +1,7 @@
 = Building From Source
 :toc: right
 :toclevels: 3
+:description: Build ownCloud Web from source: install dependencies with pnpm and run the build for Web and all apps.
 
 == Building ownCloud Web
 

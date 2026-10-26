@@ -1,6 +1,7 @@
 = cephfs
 :toc: right
 :toclevels: 3
+:description: Use CephFS as an oCIS storage backend: it supports recursive change time propagation for etag calculation.
 
 oCIS intends to make the aspects of existing storage systems available as transparently as possible, but the static sync algorithm of the desktop client relies on some form of recursive change time propagation on the server side to detect changes. While this can be bolted on top of existing file systems with inotify, the kernel audit or a fuse based overlay filesystem, a storage system that already implements this aspect is preferable. Aside from EOS, cephfs supports a recursive change time that oCIS can use to calculate an etag for the webdav API.
 

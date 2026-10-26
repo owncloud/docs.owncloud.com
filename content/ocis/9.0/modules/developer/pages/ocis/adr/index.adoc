@@ -1,6 +1,7 @@
 = Architecture Decisions
 :toc: right
 :toclevels: 3
+:description: oCIS documents architecture decisions using Markdown Architectural Decision Records (MADR) and manages them with adr-tools.
 
 oCIS is documenting architecture decisions using link:https://adr.github.io/madr/[Markdown Architectural Decision Records] (MADR), following link:https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions[Documenting Architecture Decisions by Michael Nygard].
 

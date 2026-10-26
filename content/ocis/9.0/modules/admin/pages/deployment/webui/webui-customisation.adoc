@@ -2,6 +2,14 @@
 :toc: right
 :description: The behavior of the embedded web frontend named ownCloud Web can be configured. This guide shows you how to do so.
 :page-aliases: ROOT:deployment/webui/webui-customisation.adoc, ROOT:deployment/webui/webui.adoc
+:readingTime: 4
+:level: intermediate
+:lastUpdatedVersion: 9.0.0-rc.1
+:lastUpdatedDate: 2026-10-25
+
+The embedded ownCloud Web frontend can be customized by replacing compiled web assets, overriding single assets like logos and registering custom web applications. This page explains the `WEB_ASSET_*` variables and how to load custom apps via `apps.yaml`. A restart of Infinite Scale is needed to load new applications or changes.
+
+{readingTime} min read · Level: {level} · Last updated for oCIS {lastUpdatedVersion} on 25.10.2026
 
 == Introduction
 
@@ -9,7 +17,7 @@
 
 == Custom Compiled Web Assets
 
-If you want to use your custom compiled web client assets instead of the embedded ones, then you can do that by setting the `WEB_ASSET_PATH` variable to point to your compiled files. See https://owncloud.dev/clients/web/getting-started/[ownCloud Web / Getting Started] and https://owncloud.dev/clients/web/backend-ocis/[ownCloud Web / Setup with oCIS] in the developer documentation for more details.
+If you want to use your custom compiled web client assets instead of the embedded ones, then you can do that by setting the `WEB_ASSET_CORE_PATH` variable to point to your compiled files. (Related variables: `WEB_ASSET_THEMES_PATH` for themes and `WEB_ASSET_APPS_PATH` for apps.) See https://owncloud.dev/clients/web/getting-started/[ownCloud Web / Getting Started] and https://owncloud.dev/clients/web/backend-ocis/[ownCloud Web / Setup with oCIS] in the developer documentation for more details.
 
 === Using Custom Assets
 
@@ -120,3 +128,14 @@ NOTE: A local provided configuration yaml will always override the shipped appli
 == Miscellaneous
 
 Please note that Infinite Scale, in particular the web service, needs a restart to load new applications or changes to the `apps.yaml` file.
+
+== FAQ
+
+=== How Do I Use My Own Compiled Web Assets?
+Set the `WEB_ASSET_CORE_PATH` variable to point to your compiled files. Related variables are `WEB_ASSET_THEMES_PATH` for themes and `WEB_ASSET_APPS_PATH` for apps.
+
+=== How Do I Override a Single Asset Like a Logo?
+Place the file in a custom structure under `WEB_ASSET_APPS_PATH/<app-name>/`, for example `WEB_ASSET_APPS_PATH/image-viewer-dfx/logo.png`. On loading the web app, custom assets defined this way overwrite the default ones.
+
+=== How Do I Configure or Disable a Web Application?
+Provide the configuration in the `apps.yaml` file inside `$OCIS_BASE_DATA_PATH/config/`. It is merged with the `config` field of the application manifest, and a locally provided configuration always overrides the shipped application manifest. Set `disabled: true` to prevent an application from being loaded. Infinite Scale needs a restart to load new applications or changes to the `apps.yaml` file.

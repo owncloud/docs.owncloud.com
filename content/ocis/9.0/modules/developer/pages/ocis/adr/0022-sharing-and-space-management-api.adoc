@@ -1,6 +1,7 @@
 = 22. Sharing and Space Management API
 :toc: right
 :toclevels: 3
+:description: In the early days of the rewrite of ownCloud it was an important goal to keep all important APIs compatible with ownCloud Classic.
 
 * Status: accepted
 * Deciders: link:https://github.com/JammingBen[@JammingBen] link:https://github.com/butonic[@butonic] link:https://github.com/theonering[@theonering] link:https://github.com/kobergj[@kobergj] link:https://github.com/micbar[@micbar]

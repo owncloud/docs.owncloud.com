@@ -1,6 +1,7 @@
 = Envvar Deprecation
 :toc: right
 :toclevels: 3
+:description: Sometimes it is necessary to deprecate an environment variable to align the naming with conventions or remove it completely.
 
 == Deprecating Environment Variables
 

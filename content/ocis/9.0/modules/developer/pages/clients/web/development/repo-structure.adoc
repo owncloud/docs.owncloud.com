@@ -1,6 +1,7 @@
 = Repo Structure and (Published) Packages
 :toc: right
 :toclevels: 3
+:description: From a developer's perspective, the most important parts of the ownCloud oCIS repository.
 
 == Repository Structure
 

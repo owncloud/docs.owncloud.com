@@ -1,6 +1,7 @@
 = Special Envvars
 :toc: right
 :toclevels: 3
+:description: Handling these envvars properly is very important for the automated doc process for both the developer and the admin docs!
 
 
 Handling these envvars properly is very important for the automated doc process for both the developer and the admin docs!

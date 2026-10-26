@@ -1,6 +1,7 @@
 = Build
 :toc: right
 :toclevels: 3
+:description: You only need to run the following command if you have changed protobuf definitions or the frontend part in one of the extensions.
 
 
 == Build Requirements

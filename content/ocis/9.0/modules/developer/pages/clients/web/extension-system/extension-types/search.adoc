@@ -1,6 +1,7 @@
 = Search Extensions
 :toc: right
 :toclevels: 3
+:description: One possible extension type is search.
 
 == Search Extensions
 

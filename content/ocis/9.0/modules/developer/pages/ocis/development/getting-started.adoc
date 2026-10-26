@@ -1,10 +1,11 @@
 = Getting Started
 :toc: right
 :toclevels: 3
+:description: We want contributions to oCIS and the creation of extensions to be as easy as possible.
 
 == Requirements
 
-We want contribution to oCIS and the creation of extensions to be as easy as possible.
+We want contributions to oCIS and the creation of extensions to be as easy as possible.
 So we are trying to reflect this in the tooling. It should be kept simple and quick to be set up.
 
 Besides standard development tools like git and a text editor, you need the following software for development:

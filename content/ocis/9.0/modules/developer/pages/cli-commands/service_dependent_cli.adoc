@@ -1,6 +1,7 @@
 = Service Dependent CLI
 :toc: right
 :toclevels: 3
+:description: This document describes ocis CLI commands that are embedded in a service.
 
 This document describes ocis CLI commands that are _embedded in a service_.
 

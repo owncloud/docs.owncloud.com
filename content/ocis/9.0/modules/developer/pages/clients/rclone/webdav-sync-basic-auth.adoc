@@ -1,6 +1,7 @@
 = WebDAV with Basic Authentication
 :toc: right
 :toclevels: 3
+:description: Sync files between rclone and oCIS over WebDAV using basic authentication.
 
 == WebDAV with Basic Authentication
 

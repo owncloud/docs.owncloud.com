@@ -1,6 +1,7 @@
 = Decomposed FS on NFS
 :toc: right
 :toclevels: 3
+:description: oCIS' default storage backend is the Decomposed FS.
 
 oCIS' default storage backend is the Decomposed FS. The Decomposed FS can be set up to run on a NFS share. That way the same storage can be provided over the network to other nodes running oCIS.
 

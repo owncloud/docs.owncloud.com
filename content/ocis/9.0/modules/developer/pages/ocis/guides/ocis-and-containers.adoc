@@ -1,6 +1,7 @@
 = oCIS and Containers
 :toc: right
 :toclevels: 3
+:description: Containers are more lightweight than VMs. It is easier to work with shared volumes and networks because they are isolated from the host system.
 
 == Cloud Native
 

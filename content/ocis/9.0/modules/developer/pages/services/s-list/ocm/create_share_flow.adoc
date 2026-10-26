@@ -1,6 +1,7 @@
 = Create Share Flow
 :toc: right
 :toclevels: 3
+:description: Sequence diagram of the OCM create share flow between two Infinite Scale instances.
 
 == OCM Create Share Flow
 

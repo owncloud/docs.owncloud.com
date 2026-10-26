@@ -1,6 +1,7 @@
 = WebDAV
 :toc: right
 :toclevels: 2
+:description: WebDAV is a set of methods, headers and content-types extending HTTP/1.1 for the management of resources.
 
 **Web D**istributed **A**uthoring and **V**ersioning (WebDAV) consists of a set of methods, headers, and content-types extending HTTP/1.1 for the management of resources and -properties, creation and management of resource collections, URL namespace manipulation, and resource locking (collision avoidance). WebDAV is one of the central APIs that ownCloud uses for handling file resources, metadata and locks.
 

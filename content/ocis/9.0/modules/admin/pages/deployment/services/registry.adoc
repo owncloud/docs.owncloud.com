@@ -1,7 +1,15 @@
 = Registry
 :toc: right
-:description: All services need to be able to communicate with each other. To do so, they register in a common registry.
+:description: How Infinite Scale services discover each other through a service registry, and which registry types (nats-js-kv, memory) are available.
 :page-aliases: ROOT:deployment/services/registry.adoc
+:readingTime: 3
+:level: intermediate
+:lastUpdatedVersion: 9.0.0-rc.1
+:lastUpdatedDate: 2026-10-25
+
+The registry lets all Infinite Scale services find and communicate with each other. This page explains the available registry types and when to use them. You should be familiar with the oCIS service architecture.
+
+{readingTime} min read · Level: {level} · Last updated for oCIS {lastUpdatedVersion} on 25.10.2026
 
 == Introduction
 
@@ -18,3 +26,48 @@ NOTE: If not running _built-in nats_, `MICRO_REGISTRY_ADDRESS` needs to be set t
 
 * *memory* +
 Setting the environment variable to memory starts an in-memory registry. This only works with the developer version of Infinite Scale.
+
+=== How the Registry Is Used
+
+Every service registers itself in the registry on startup and looks up the other services it needs to talk to. In a single binary, the embedded NATS server provides the registry. In a Docker Compose or Helm deployment, a shared NATS server provides the registry across all replicas.
+
+[mermaid, width=500]
+-----
+flowchart LR
+    subgraph Reg["Service registry (nats-js-kv)"]
+        R[("NATS JetStream key-value store")]
+    end
+    P["proxy"] -- "register / lookup" --- R
+    D["ocdav"] -- "register / lookup" --- R
+    G["gateway"] -- "register / lookup" --- R
+    S["storage-users"] -- "register / lookup" --- R
+-----
+
+=== Registry Options: Pro and Cons
+
+[width="100%",cols="~,~,~",options="header"]
+|===
+| Registry option | Good for | Drawbacks
+
+| `nats-js-kv` (NATS JetStream key-value)
+| Distributed discovery across replicas and nodes; required for scale-out.
+| Needs a reachable NATS server.
+
+| `memory` (in-memory)
+| Zero configuration, no external dependency.
+| Only works within one process; not for production or scale-out.
+
+|===
+
+Default in all deployment types is `nats-js-kv`. Use `memory` only for single-process development.
+
+== FAQ
+
+=== Which Registry Does Infinite Scale Use by Default?
+The default is `nats-js-kv`, a NATS JetStream key-value store. You only need to set `MICRO_REGISTRY_ADDRESS` when the NATS server is not the built-in one, which is the same address as `OCIS_EVENTS_ENDPOINT`.
+
+=== Can I Use mDNS, etcd or Consul as the Registry?
+No. Those registry types were deprecated and removed. If your configuration still sets `MICRO_REGISTRY` to `mdns`, `nats`, `etcd` or `consul`, switch to `nats-js-kv`. See the xref:migration/upgrading_4.0.0_5.0.0.adoc[migration notes].
+
+=== Does the Registry Work in a Single Binary Without Extra Setup?
+Yes. When you run `ocis server`, the embedded NATS server provides the registry automatically, so no extra configuration is needed.

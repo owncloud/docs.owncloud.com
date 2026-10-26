@@ -1,6 +1,7 @@
 = 24. MessagePack Metadata
 :toc: right
 :toclevels: 3
+:description: File metadata management is an important aspect for oCIS as a data platform.
 
 * Status: accepted
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/aduffeck[@aduffeck], link:https://github.com/micbar[@micbar], link:https://github.com/dragotin[@dragotin]

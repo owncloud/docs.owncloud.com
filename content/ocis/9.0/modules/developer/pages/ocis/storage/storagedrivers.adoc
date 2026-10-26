@@ -1,6 +1,7 @@
 = Storage Drivers
 :toc: right
 :toclevels: 3
+:description: Storage drivers map path and id based CS3 references to storage system specific references.
 
 A _storage driver_ implements access to a _storage system_:
 

@@ -1,6 +1,7 @@
 = Spaces Registry
 :toc: right
 :toclevels: 3
+:description: A storage spaces registry manages the namespace for a user so that clients can look up the spaces a user has access to.
 
 [WARNING]
 ====

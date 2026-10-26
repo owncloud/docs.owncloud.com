@@ -1,6 +1,7 @@
 = Left Sidebar Menu Item Extensions
 :toc: right
 :toclevels: 3
+:description: One possible extension type is left sidebar menu items.
 
 == Left Sidebar Menu Item Extension Type
 

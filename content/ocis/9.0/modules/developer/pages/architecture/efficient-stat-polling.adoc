@@ -1,6 +1,7 @@
 = Efficient Stat Polling
 :toc: right
 :toclevels: 3
+:description: How the fallback sync mechanism uses the ETag to decide which parts of a sync tree need to be checked with stat() calls.
 
 The fallback sync mechanism uses the ETag to determine which part of a sync tree needs to be checked by recursively descending into folders whose ETag has changed. The ETag can be calculated using a `stat()` call in the filesystem and we are going to explore how many `stat()` calls are necessary and how the number might be reduced.
 

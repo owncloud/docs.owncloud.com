@@ -1,6 +1,7 @@
 = Backup Considerations
 :toc: right
 :toclevels: 3
+:description: This small guide aims to shed some light on the internal Infinite Scale data structure.
 
 This small guide aims to shed some light on the internal Infinite Scale data structure. You can refer to it when you are trying to optimize your backups or if you are just curious about how Infinite Scale stores its data.
 

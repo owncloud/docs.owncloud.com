@@ -1,5 +1,6 @@
 = 11. WebUI URL Format
 :toc: right
+:description: When speaking about URLs we have to make a difference between browser URLs and API URLs.
 
 * Status: accepted
 * Deciders: link:https://github.com/refs[@refs], link:https://github.com/butonic[@butonic], link:https://github.com/micbar[@micbar], link:https://github.com/dragotin[@dragotin], link:https://github.com/hodyroff[@hodyroff], link:https://github.com/pmaier1[@pmaier1], link:https://github.com/fschade[@fschade], link:https://github.com/tbsbdr[@tbsbdr], link:https://github.com/kulmann[@kulmann]
