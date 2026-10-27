@@ -77,6 +77,18 @@ jobs:
           versions=0
           generated=0
 
+          # --branch takes a tag as well as a branch.
+          fetch_core() {
+            rm -rf ".core-$version"
+            # blob:none matters: a plain --depth 1 --sparse clone still transfers
+            # the whole tree's blobs (~30 MB), this is ~1.5 MB.
+            git -c advice.detachedHead=false clone --quiet --depth 1 --branch "$1" --filter=blob:none --sparse \
+              "$CORE_REPO" ".core-$version"
+            # --no-cone with explicit paths, because cone mode cannot select a
+            # single root file and version.php is needed for the check below.
+            git -C ".core-$version" sparse-checkout set --no-cone /config/ /version.php
+          }
+
           # Driven by the content directories themselves, so a new server
           # version cannot be added and silently left unchecked.
           for dir in content/server/*/; do
@@ -100,23 +112,31 @@ jobs:
             esac
 
             echo "::group::$version (core $ref)"
-            rm -rf ".core-$version"
-            # blob:none matters: a plain --depth 1 --sparse clone still transfers
-            # the whole tree's blobs (~30 MB), this is ~1.5 MB.
-            git clone --quiet --depth 1 --branch "$ref" --filter=blob:none --sparse \
-              "$CORE_REPO" ".core-$version"
-            # --no-cone with explicit paths, because cone mode cannot select a
-            # single root file and version.php is needed for the check below.
-            git -C ".core-$version" sparse-checkout set --no-cone /config/ /version.php
+            fetch_core "$ref"
 
-            # Only the version still in development legitimately has no branch of
-            # its own. Anything else falling back to master would be regenerated
-            # from the wrong source, so say so instead.
+            # Without a branch of its own, a version is either the one still in
+            # development on master, or a finished line that master has moved
+            # past - 11.0 once master became 11.1. A finished line gets no
+            # maintenance branch, so its last final release is the source.
+            # Anything else would be regenerated from the wrong source, so say
+            # so instead.
             if [ "$ref" = master ]; then
               core_version=$(sed -n 's/^$OC_VersionString = .\([0-9]*\.[0-9]*\).*/\1/p' ".core-$version/version.php")
               if [ "$core_version" != "$version" ]; then
-                echo "::error::core has no $version branch and master is $core_version, so there is no source for content/server/$version"
-                exit 1
+                # Same reasoning as above: a network failure must not read as
+                # "no tags". Pre-releases are excluded, and they also sort
+                # above their final release.
+                if ! tags=$(git ls-remote --tags --refs --sort=-version:refname "$CORE_REPO" "refs/tags/v$version.*"); then
+                  echo "::error::cannot reach owncloud/core to list the v$version.* tags"
+                  exit 1
+                fi
+                ref=$(sed -n "s|.*refs/tags/\(v${version//./\\.}\.[0-9][0-9]*\)$|\1|p" <<< "$tags" | head -n 1)
+                if [ -z "$ref" ]; then
+                  echo "::error::core has no $version branch, no v$version.N release and master is $core_version, so there is no source for content/server/$version"
+                  exit 1
+                fi
+                echo "master is $core_version, so $version is regenerated from its last release, $ref"
+                fetch_core "$ref"
               fi
             fi
 
@@ -205,8 +225,8 @@ jobs:
             echo "* **To change a page's introduction**, edit *above* the marker - that part is kept."
             echo "* **If core changed and the page is merely stale**, commit the regenerated page."
             echo
-            echo "To regenerate locally: clone core and config-to-docs, check out the core branch"
-            echo "matching the version, and run \`./ctd.sh\` in config-to-docs."
+            echo "To regenerate locally: clone core and config-to-docs, check out the core ref"
+            echo "named in this job's log for the version, and run \`./ctd.sh\` in config-to-docs."
             echo
             echo '```diff'
             cat "$RUNNER_TEMP/drift.diff"
