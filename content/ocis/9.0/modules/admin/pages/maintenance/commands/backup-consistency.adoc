@@ -1,4 +1,5 @@
 = Backup Consistency
+:description: Inspect the consistency of an Infinite Scale storage and list orphaned blobs, missing blobs, missing nodes and missing files.
 :page-aliases: ROOT:maintenance/b-r/backup-consistency.adoc
 
 The backup consistency command allows inspecting the consistency of an Infinite Scale storage:

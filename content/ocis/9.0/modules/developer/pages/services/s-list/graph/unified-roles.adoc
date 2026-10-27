@@ -1,6 +1,7 @@
 = Unified Roles
 :toc: right
 :toclevels: 3
+:description: Add unified roles to the graph service by editing the /pkg/conversions/role.go file in the reva repository.
 
 == Create a New Built-in Role
 

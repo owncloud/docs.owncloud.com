@@ -1,7 +1,15 @@
 = General Information
 :toc: right
-:description: This document covers general aspects of Infinite Scale like start modes, services, important minimum configuration etc. for a common understanding.
+:description: General Infinite Scale concepts: start modes, the embedded supervisor, managing and configuring services, and the base data directory.
 :page-aliases: ROOT:deployment/general/general-info.adoc
+:readingTime: 19
+:level: beginner
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
+
+This page covers the general concepts of Infinite Scale that apply regardless of how you deploy it: start modes, the embedded supervisor, how to manage and configure services, and where data is stored. It is for administrators setting up or operating an instance. We recommend reading it before you start a deployment.
+
+{readingTime} min read · Level: {level} · Last updated for oCIS {lastUpdatedVersion} on 25.10.2026
 
 == Introduction
 
@@ -721,3 +729,21 @@ include::partial$multi-location/idm-https-reverse-proxy.adoc[]
 == Maintenance Commands
 
 There are multiple commands available to maintain the Infinite Scale instance. See the xref:maintenance/commands/commands.adoc[Maintenance Commands] document for more details.
+
+== FAQ
+
+=== What Is the Difference Between Supervised and Unsupervised Services?
+
+Supervised services are started together by the embedded runtime with `ocis server` and share one process. Unsupervised services are started individually with `ocis <service-name> server` and run as separate processes that you manage yourself.
+
+=== How Do I Start Only a Subset of Services?
+
+Use the `OCIS_ADD_RUN_SERVICES` environment variable (to add services) or `OCIS_EXCLUDE_RUN_SERVICES` (to exclude services) when starting `ocis server`. See the xref:{s-path}/services_rules.adoc[Services Rules] page.
+
+=== Where Is the Infinite Scale Data Stored?
+
+In the base data directory, which defaults to `~/.ocis` (single binary) or `/var/lib/ocis` (container). See the Base Data Directory section above. Note that Infinite Scale does not use a database.
+
+=== Which Command Lists the Running Services?
+
+Run `ocis list` to list the services running in supervised mode. See the xref:maintenance/commands/commands.adoc[Maintenance Commands] page for all maintenance commands.

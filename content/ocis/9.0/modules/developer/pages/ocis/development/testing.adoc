@@ -1,6 +1,7 @@
 = Acceptance Testing
 :toc: right
 :toclevels: 3
+:description: To run tests in the test suite you have two options.
 
 To run tests in the test suite you have two options. You may go the easy way and just run the test suite in docker. But for some tasks you could also need to install the test suite natively, which requires a little more setup since PHP and some dependencies need to be installed.
 

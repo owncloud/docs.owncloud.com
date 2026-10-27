@@ -3,6 +3,10 @@
 :toclevels: 2
 :description: The prerequisites section gives an overview and background about minimum requirements with respect to hardware, virtualization, operating system and optional software to operate Infinite Scale successfully.
 :page-aliases: ROOT:prerequisites/prerequisites.adoc
+:readingTime: 13
+:level: beginner
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 :ext4_url: https://en.wikipedia.org/wiki/Ext4
 :btrfs_url: https://en.wikipedia.org/wiki/Btrfs
@@ -20,6 +24,10 @@
 :what_is_apache_url: https://www.apache.org/
 
 :messagepack: https://msgpack.org/index.html
+
+This page lists the hardware, operating system, filesystem and software prerequisites for running Infinite Scale. It is for administrators planning an installation. You should be familiar with basic Linux system administration.
+
+{readingTime} min read · Level: {level} · Last updated for oCIS {lastUpdatedVersion} on 25.10.2026
 
 == Introduction
 
@@ -234,12 +242,12 @@ Depending on the usecase, you can run Infinite Scale on:
 
 For _best performance_, _stability_, _support_, and _full functionality_ we officially support Infinite Scale running on the following Linux distributions:
 
-* Debian 10 and higher
-* Fedora 32 and higher
-* Red Hat Enterprise Linux 7.5 and higher including all 100% compatible derivatives
-* SUSE Linux Enterprise Server 12 with SP4/5 and SLES 15.x
-* openSUSE Leap 15.2 and higher
-* Ubuntu 20.04 and higher
+* Debian 12 and higher
+* Fedora 42 and higher
+* Red Hat Enterprise Linux 8 and higher including all 100% compatible derivatives
+* SUSE Linux Enterprise Server 15 and higher
+* openSUSE Leap 15.6 and higher
+* Ubuntu 22.04 LTS and higher
 
 == Usermanagement, Authorization and Authentication
 
@@ -372,3 +380,17 @@ Supported languages are:
 * German
 
 Additional languages may be contributed by the community but are not guaranteed to be complete.
+
+== FAQ
+
+=== What Are the Minimum Hardware Requirements?
+
+As a baseline, use a 64-bit CPU with at least 2 GB of RAM for a small test instance. See the Hardware section above; production sizing depends on your use case.
+
+=== Which Operating Systems Are Supported?
+
+See the Supported Operating Systems section above for the supported Linux distributions and their minimum versions.
+
+=== Do I Need a Database for Infinite Scale?
+
+No. Infinite Scale does not use a database. All data and metadata are stored on a POSIX-compliant filesystem. See the xref:deployment/general/general-info.adoc#base-data-directory[Base Data Directory] section in the general information.

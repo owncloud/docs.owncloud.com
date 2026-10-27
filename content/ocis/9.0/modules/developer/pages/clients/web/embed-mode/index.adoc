@@ -1,6 +1,7 @@
 = Embed Mode
 :toc: right
 :toclevels: 3
+:description: The ownCloud Web can be consumed by another application in a stripped down version called "Embed mode".
 
 The ownCloud Web can be consumed by another application in a stripped down version called "Embed mode". This mode is supposed to be used in the context of selecting or sharing resources.
 

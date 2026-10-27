@@ -2,8 +2,16 @@
 :toc: right
 :description: The Infinite Scale IDM service provides a minimal LDAP service for Infinite Scale. It is started as part of the runtime and serves as a central place for storing user and group information.
 :page-aliases: ROOT:deployment/services/s-list/idm.adoc
+:readingTime: 3
+:level: intermediate
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 :service_name: idm
+
+The IDM service provides a minimal LDAP server for Infinite Scale and is the central place for storing user and group information. It is based on LibreGraph Identity Management and is mainly targeted at small installations and testing. For larger setups or production environments, a full LDAP server or an external identity management solution is recommended.
+
+{readingTime} min read · Level: {level} · Last updated for oCIS {lastUpdatedVersion} on 25.10.2026
 
 == Introduction
 
@@ -33,7 +41,7 @@ Therefore the IDM service is **not** meant to replace a general purpose LDAP ser
 
 == Default Values
 
-* IDM listens on port 9325 by default.
+* IDM listens on port 9235 by default (LDAPS).
 * In the default configuration it only accepts TLS-protected connections (LDAPS).
 * The BaseDN of the LDAP tree is `o=libregraph-idm`.
 * IDM gives LDAP write permissions to a single user +
@@ -92,3 +100,17 @@ Extract the `idm_password` password to enter from the `ocis.yaml` config file wh
 == Configuration
 
 include::partial$deployment/services/env-and-yaml.adoc[tag=envvars-yaml]
+
+== FAQ
+
+=== Which Port Does the IDM Service Listen On?
+
+IDM listens on port `9235` (LDAPS) by default. In the default configuration it only accepts TLS-protected connections.
+
+=== Can IDM Replace My Existing LDAP Server?
+
+No. IDM is mainly targeted at small installations and testing. It only supports a subset of the LDAP operations (`BIND`, `SEARCH`, `ADD`, `MODIFY` and `DELETE`), does no LDAP schema verification and does not support features like 2FA. For larger setups or production environments, use a real LDAP server or an external identity management solution.
+
+=== Where Does IDM Store Its Data?
+
+IDM stores its data in a `boltdb` file `idm/ocis.boltdb` inside the Infinite Scale xref:deployment/general/general-info.adoc#base-data-directory[Base Data Directory].

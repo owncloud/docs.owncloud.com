@@ -1,5 +1,6 @@
 = Releasing Guide
 :toc: right
+:description: To prepare an oCIS production release, you must follow a specific sequence of steps in the correct order.
 
 To prepare an oCIS production release, you must follow a specific sequence of steps in the correct order.
 
@@ -14,7 +15,7 @@ Use these detailed copy/paste checklists for Jira when starting a new release.
 ** For Patch releases: `8.2.1`
 
 * The process differs slightly when creating a patch release only.
-* Changes applied to a `stable-8.2` branch valid for documentation will be processed to the `docs-stable-x.y` branch automatically after merging.
+* Changes applied to a `stable-9.0` branch valid for documentation will be processed to the `docs-stable-x.y` branch automatically after merging.
 ====
 
 === Steps for Major or Minor Releases
@@ -50,15 +51,15 @@ Backport changes to `master` and create other required stable branches, update c
 https://doc.owncloud.com/ocis/releasing_guide/releasing_guide.html
 
 * [ ] Start the Releasing Process
-  * [ ] Create a `stable-8.2` branch based on current `master`
+  * [ ] Create a `stable-9.0` branch based on current `master`
   * [ ] Inform documentation that the releasing process has started
 
 * [ ] Start the Release Candidates Phase
-  * [ ] Create a new feature branch based on `stable-8.2`
+  * [ ] Create a new feature branch based on `stable-9.0`
   * [ ] Move all changelog items from `unreleased` to `8.2.0-rc.1_2025-06-12`
   * [ ] Bump oCIS version in `ocis-pkg/version/version.go`
   * [ ] Bump oCIS version in `sonar-project.properties`
-  * [ ] Create PR with `[full-ci][k6-test]` against `stable-8.2`
+  * [ ] Create PR with `[full-ci][k6-test]` against `stable-9.0`
   * [ ] Get PR approved. **DO NOT MERGE YET**
   * [ ] Wait for pipeline to be green
   * [ ] Create tag: `git tag -s v8.2.0-rc.1 -m "Release 8.2.0-rc.1"`
@@ -71,11 +72,11 @@ https://doc.owncloud.com/ocis/releasing_guide/releasing_guide.html
   * [ ] All issues are fixed, RC phase has finished
 
 * [ ] Prepare Release
-  * [ ] Create a new feature branch based on `stable-8.2`
+  * [ ] Create a new feature branch based on `stable-9.0`
   * [ ] Move all changelog items from `8.2.0-rc.*` to `8.2.0_2025-04-01`
   * [ ] Bump oCIS version in `ocis-pkg/version/version.go`
   * [ ] Bump oCIS version in `sonar-project.properties`
-  * [ ] Create PR with `[full-ci][k6-test]` against `stable-8.2`
+  * [ ] Create PR with `[full-ci][k6-test]` against `stable-9.0`
   * [ ] Mark PR as **Draft** to avoid accidentially merging
   * [ ] Get PR approved. **DO NOT MERGE YET**\
   Info: merging will be done in step *Release the new Version*
@@ -102,12 +103,12 @@ https://doc.owncloud.com/ocis/releasing_guide/releasing_guide.html
   * [ ] Announce release in *Teams channel: oCIS*
 
 * [ ] Postprocessing and Finalization
-  * [ ] Backport `stable-8.2` to the master branch
-  * [ ] Create a `docs-stable-8.2` branch
-    * [ ] Create orphan branch: `git checkout --orphan docs-stable-8.2`
+  * [ ] Backport `stable-9.0` to the master branch
+  * [ ] Create a `docs-stable-9.0` branch
+    * [ ] Create orphan branch: `git checkout --orphan docs-stable-9.0`
     * [ ] Initial commit: `git commit --allow-empty -m "initial commit"`
     * [ ] Push it: `git push`
-  * [ ] Add `stable-8.2` to the nightly cron jobs in drone (`Settings` -> `Cron Jobs`)
+  * [ ] Add `stable-9.0` to the nightly cron jobs in drone (`Settings` -> `Cron Jobs`)
 ----
 
 === Steps for Patch Releases Only
@@ -139,11 +140,11 @@ Integrate all patches and set the final version
 https://doc.owncloud.com/ocis/releasing_guide/releasing_guide.html
 
 * [ ] Prepare Release
-  * [ ] Create a new feature branch based on `stable-8.2`
+  * [ ] Create a new feature branch based on `stable-9.0`
   * [ ] Move all changelog items from `unreleased` to `8.2.1_2026-07-01`
   * [ ] Bump oCIS version in `ocis-pkg/version/version.go`
   * [ ] Bump oCIS version in `sonar-project.properties`
-  * [ ] Create PR with `[full-ci][k6-test]` against `stable-8.2`
+  * [ ] Create PR with `[full-ci][k6-test]` against `stable-9.0`
   * [ ] Mark PR as **Draft** to avoid accidentially merging
   * [ ] Get PR approved **requires 2 approvals**, **DO NOT MERGE YET**\
   Info: merging will be done in step *Release the new Version*
@@ -176,7 +177,7 @@ https://doc.owncloud.com/ocis/releasing_guide/releasing_guide.html
 
 === Envvar Changes
 
-Follow the xref:services/general-info/envvars/new-release-process.adoc[Release Process for Envvars] documentation to update the required environment variable data. These changes _must_ be present in the appropriate `stable-8.2` branch and should be applied to the respective feature branch during the development cycle. This _avoids manually backporting_ to `stable-8.2` but may be required if changes go to master instead. Changes to envvars are typically found in the `docs` folder.
+Follow the xref:services/general-info/envvars/new-release-process.adoc[Release Process for Envvars] documentation to update the required environment variable data. These changes _must_ be present in the appropriate `stable-9.0` branch and should be applied to the respective feature branch during the development cycle. This _avoids manually backporting_ to `stable-9.0` but may be required if changes go to master instead. Changes to envvars are typically found in the `docs` folder.
 
 [WARNING]
 ====

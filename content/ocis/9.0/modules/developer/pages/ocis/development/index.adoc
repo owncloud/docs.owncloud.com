@@ -1,4 +1,5 @@
 = Development
 :toc: right
 :toclevels: 3
+:description: Developer documentation for building, testing, debugging and extending oCIS.
 

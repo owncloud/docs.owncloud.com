@@ -1,6 +1,7 @@
 = Unit Testing
 :toc: right
 :toclevels: 3
+:description: Go is a statically typed language, which makes it easy to write unit tests.
 
 Go is a statically typed language, which makes it easy to write unit tests. The Go standard library provides a `testing` package that allows you to write tests for your code. The testing package provides a framework for writing tests, and the `go test` command runs the tests. Other than that there are a lot of libraries and tools available to make testing easier.
 

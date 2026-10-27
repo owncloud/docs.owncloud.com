@@ -1,6 +1,7 @@
 = Discover oCIS with Docker
 :toc: right
 :toclevels: 3
+:description: Discover oCIS locally with Docker: copy the provided docker-compose.yml and start the stack.
 
 == Prerequisites
 

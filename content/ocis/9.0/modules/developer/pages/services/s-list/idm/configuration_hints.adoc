@@ -1,6 +1,7 @@
 = Configuration Hints
 :toc: right
 :toclevels: 3
+:description: By default IDM generates a self-signed certificate and key on first startup to be able to provide TLS protected services.
 
 == TLS Server Certificates
 

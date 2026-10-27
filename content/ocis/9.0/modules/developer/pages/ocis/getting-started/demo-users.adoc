@@ -1,6 +1,7 @@
 = Demo Users
 :toc: right
 :toclevels: 3
+:description: oCIS has the option to create demo users during the first startup. These enable you to do quick testing and developing.
 
 oCIS has the option to create demo users during the first startup. These enable you to do quick testing and developing.
 

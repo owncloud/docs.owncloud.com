@@ -1,5 +1,6 @@
 = 27. New Share Jail
 :toc: right
+:description: ADR 27: The oCIS share jail is a space that contains all accepted / synced shares of a user.
 
 * Status: draft
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/rhafer[@rhafer], link:https://github.com/dragotin[@dragotin]

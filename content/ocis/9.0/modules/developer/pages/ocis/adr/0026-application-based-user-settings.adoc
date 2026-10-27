@@ -1,5 +1,6 @@
 = 26. Application Based User Settings
 :toc: right
+:description: ADR 26: To share user settings across devices applications want to store user specific settings on the server.
 
 * Status: draft
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/fschade[@fschade], link:https://github.com/kulmann[@kulmann]

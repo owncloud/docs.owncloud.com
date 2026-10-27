@@ -1,6 +1,7 @@
 = Setup With oCIS
 :toc: right
 :toclevels: 3
+:description: Set up ownCloud Web for local development against an oCIS backend: clone the repo, install dependencies and run the web build.
 
 == Setting Up Web
 

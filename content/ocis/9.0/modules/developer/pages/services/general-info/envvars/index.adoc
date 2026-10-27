@@ -1,6 +1,7 @@
 = Environment Variables
 :toc: right
 :toclevels: 3
+:description: This section provides general information how to manage environment variables.
 
 == General Information
 

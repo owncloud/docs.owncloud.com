@@ -1,6 +1,7 @@
 = Tracing
 :toc: right
 :toclevels: 3
+:description: Enable request tracing in oCIS with Jaeger: follow these steps to get started.
 
 By default, we use link:https://www.jaegertracing.io[Jaeger] for request tracing within oCIS. You can follow these steps to get started:
 

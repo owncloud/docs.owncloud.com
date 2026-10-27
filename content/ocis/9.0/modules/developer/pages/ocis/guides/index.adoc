@@ -1,10 +1,11 @@
 = Guides
 :toc: right
 :toclevels: 3
+:description: These guides should extend the generic documentation and help admins to learn Infinite Scale through digestible "hands-on" sessions.
 
 == Step-by-Step Guides
 
-These guides should extend the generic documentation and help admins to learn Infinite Scale through digestable "hands-on" sessions.
+These guides should extend the generic documentation and help admins to learn Infinite Scale through digestible "hands-on" sessions.
 
 === Available Guides
 

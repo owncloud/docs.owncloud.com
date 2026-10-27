@@ -1,5 +1,6 @@
 = Envvar Naming Scopes
 :toc: right
+:description: The scope of an environment variable can be derived from its name.
 
 The scope of an environment variable can be derived from its name. Therefore, it is important to follow the correct naming scheme to enable easy and proper identification. This is important when either:
 

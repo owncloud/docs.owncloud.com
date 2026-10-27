@@ -1,6 +1,9 @@
 = Login Flow
 :toc: right
 :toclevels: 3
+:description: The following sequence diagram describes the openid connect auth code flow.
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 == Login Flow
 

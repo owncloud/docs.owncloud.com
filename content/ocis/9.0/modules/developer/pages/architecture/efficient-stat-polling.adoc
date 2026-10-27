@@ -1,6 +1,9 @@
 = Efficient Stat Polling
 :toc: right
 :toclevels: 3
+:description: How the fallback sync mechanism uses the ETag to decide which parts of a sync tree need to be checked with stat() calls.
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 The fallback sync mechanism uses the ETag to determine which part of a sync tree needs to be checked by recursively descending into folders whose ETag has changed. The ETag can be calculated using a `stat()` call in the filesystem and we are going to explore how many `stat()` calls are necessary and how the number might be reduced.
 
@@ -200,7 +203,9 @@ What can we do to reduce the number of stat calls to storage providers. Well, th
 This would reduce the number of necessary stat requests to active storages.
 
 === Active Share Node Cache Invalidation
+
 We can extend the lifetime of share ETag cache entries and only invalidate them when the root of the storage that contains them changes its ETag. That would reduce the number of stat requests to the number of active users.
 
 === Push Notifications
+
 We can further enhance this by sending push notifications when the root of a storage changes. Which is becoming increasingly necessary for mobile devices anyway.

@@ -1,6 +1,7 @@
 = Storage Registry Discovery
 :toc: right
 :toclevels: 3
+:description: In order for an oCIS client to access oCIS storage spaces for an End-User, the client needs to know where the oCIS instance is.
 
 == Introduction
 

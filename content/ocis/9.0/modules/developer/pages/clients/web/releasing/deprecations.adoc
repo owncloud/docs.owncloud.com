@@ -1,6 +1,7 @@
 = Deprecations and Migrations
 :toc: right
 :toclevels: 3
+:description: This guide tracks deprecations, planned removals, and migration paths for ownCloud Web.
 
 This guide tracks deprecations, planned removals, and migration paths for ownCloud Web. Developers should reference this guide when upgrading between major versions to ensure compatibility and adopt recommended practices.
 

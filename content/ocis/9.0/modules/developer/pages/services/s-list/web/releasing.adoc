@@ -1,6 +1,7 @@
 = Releasing
 :toc: right
 :toclevels: 3
+:description: The next generation Web Frontend is shipped as an oCIS Extension.
 
 == Releasing
 

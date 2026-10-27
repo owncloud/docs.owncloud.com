@@ -1,5 +1,6 @@
 = Cleanup Orphaned Grants
 :toc: right
+:description: Detect and optionally delete orphaned storage grants that have no corresponding share-manager entry.
 :page-aliases: ROOT:maintenance/b-r/cleanup-orphaned-grants.adoc
 
 Detect and optionally delete storage grants that have no corresponding share-manager entry.

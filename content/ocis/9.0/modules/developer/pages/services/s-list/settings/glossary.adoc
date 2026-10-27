@@ -1,6 +1,7 @@
 = Glossary
 :toc: right
 :toclevels: 3
+:description: In the context of this extension and oCIS in general, we are using the following terminology.
 
 In the context of this extension and oCIS in general, we are using the following terminology.
 

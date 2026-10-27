@@ -148,6 +148,23 @@ Some text:
 
 This applies to all list types: unordered (`*`), ordered (`.`), and description lists.
 
+## AsciiDoc Section Heading Spacing
+
+Every section heading (lines starting with one or more `=` followed by a space and text) must be followed by a blank line before its content. This has no effect on rendering but is required for readability of the source file.
+
+Exception: the document title at line 1 followed by document attributes (`:attr: value`) is the AsciiDoc header section — no blank line is needed or wanted there.
+
+```asciidoc
+// Wrong — heading immediately followed by content
+== My Section
+Some text here.
+
+// Correct
+== My Section
+
+Some text here.
+```
+
 ## AsciiDoc Section Heading Capitalisation
 
 All section headings (lines starting with one or more `=` followed by a space) must use **Associated Press (AP) title case**. Use https://headlinecapitalization.com/ (select "AP" style) as the reference tool when writing or reviewing headings.

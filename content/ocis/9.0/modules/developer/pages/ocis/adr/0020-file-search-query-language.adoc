@@ -1,6 +1,7 @@
 = 20. File Search Query Language
 :toc: right
 :toclevels: 3
+:description: ADR 20: From the users perspective, the interface to search is just a single form field where the user enters one or more search terms.
 
 * Status: accepted
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/micbar[@micbar], link:https://github.com/dragotin[@dragotin], link:https://github.com/c0rby[@c0rby], link:https://github.com/kulmann[@kulmann], link:https://github.com/felix-schwarz[@felix-schwarz], link:https://github.com/JammingBen[@JammingBen]

@@ -1,6 +1,7 @@
 = OIDC
 :toc: right
 :toclevels: 3
+:description: Infinite Scale has implemented OpenID Connect (OIDC) for authentication.
 
 Infinite Scale has implemented OpenID Connect (OIDC) for authentication.
 OIDC defines a discovery mechanism, called OpenID Connect Discovery,

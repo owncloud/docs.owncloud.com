@@ -1,6 +1,7 @@
 = gRPC
 :toc: right
 :toclevels: 3
+:description: gRPC is a modern open source high performance Remote Procedure Call (RPC) framework that can run in any environment.
 
 == Remote Procedure Calls
 

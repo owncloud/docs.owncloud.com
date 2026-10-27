@@ -1,6 +1,7 @@
 = Right Sidebar Panel Extensions
 :toc: right
 :toclevels: 3
+:description: The right sidebar is supposed to show information and make context specific actions available for single or multiple selected items.
 
 == Extension Type SideBarPanel
 

@@ -1,6 +1,7 @@
 = 19. File Search Index
 :toc: right
 :toclevels: 3
+:description: ADR 19: provide a file search index, implemented with Bleve Search and included in the single binary.
 
 * Status: accepted
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/micbar[@micbar], link:https://github.com/dragotin[@dragotin], link:https://github.com/c0rby[@c0rby]

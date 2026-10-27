@@ -1,6 +1,7 @@
 = Profiling
 :toc: right
 :toclevels: 3
+:description: The only way to enable the profiler currently is to explicitly select which areas to collect samples for.
 
 
 == 0. Prerequisites

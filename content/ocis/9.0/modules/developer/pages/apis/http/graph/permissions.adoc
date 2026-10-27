@@ -1,6 +1,7 @@
 = Permissions
 :toc: right
 :toclevels: 3
+:description: The Permissions API is implementing a subset of the functionality of the MS Graph Permission resource.
 
 == Permissions API
 

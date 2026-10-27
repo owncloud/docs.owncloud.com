@@ -1,6 +1,7 @@
 = Releasing
 :toc: right
 :toclevels: 3
+:description: ownCloud Web can be hosted standalone for a dedicated oCIS backend or bundled as part of oCIS.
 
 == Releasing ownCloud Web
 

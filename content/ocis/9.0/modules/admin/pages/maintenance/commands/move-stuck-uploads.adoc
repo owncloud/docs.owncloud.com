@@ -1,5 +1,6 @@
 = Move Stuck Uploads
 :toc: right
+:description: Detect and optionally move stuck uploads left behind when file metadata could not be moved to its final destination.
 :page-aliases: ROOT:maintenance/b-r/move-stuck-uploads.adoc
 
 Detect and optionally move stuck uploads.

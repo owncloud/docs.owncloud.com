@@ -1,4 +1,5 @@
 = Settings Bundles
+:description: A Settings Bundle is a collection of settings, uniquely identified by the key of the extension registering the bundle and the key of the bundle itself.
 
 A _Settings Bundle_ is a collection of settings, uniquely identified by the key of the extension registering the bundle and the key of the bundle itself. Its purpose is to let oCIS services define settings and make them available to users. They are dynamically rendered into forms, available in the frontend.
 

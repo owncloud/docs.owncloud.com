@@ -1,5 +1,6 @@
 = Debugging
 :toc: right
+:description: Debug oCIS services: attach a debugger to the processes forked by ocis server, or start services independently.
 
 == Debugging
 
@@ -21,29 +22,29 @@ ps ax | grep ocis
 
 12837 pts/1    Sl+    0:00 bin/ocis-debug server
 12845 pts/1    Sl     0:00 bin/ocis-debug graph
-12847 pts/1    Sl     0:00 bin/ocis-debug reva-auth-bearer
+12847 pts/1    Sl     0:00 bin/ocis-debug auth-bearer
 12849 pts/1    Sl     0:00 bin/ocis-debug ocs
-12850 pts/1    Sl     0:00 bin/ocis-debug reva-storage-oc-data
+12850 pts/1    Sl     0:00 bin/ocis-debug storage-shares
 12863 pts/1    Sl     0:00 bin/ocis-debug webdav
-12874 pts/1    Sl     0:00 bin/ocis-debug reva-frontend
-12897 pts/1    Sl     0:00 bin/ocis-debug reva-sharing
-12905 pts/1    Sl     0:00 bin/ocis-debug reva-gateway
-12912 pts/1    Sl     0:00 bin/ocis-debug reva-storage-home
-12920 pts/1    Sl     0:00 bin/ocis-debug reva-users
-12929 pts/1    Sl     0:00 bin/ocis-debug glauth
-12940 pts/1    Sl     0:00 bin/ocis-debug reva-storage-home-data
+12874 pts/1    Sl     0:00 bin/ocis-debug frontend
+12897 pts/1    Sl     0:00 bin/ocis-debug sharing
+12905 pts/1    Sl     0:00 bin/ocis-debug gateway
+12912 pts/1    Sl     0:00 bin/ocis-debug storage-users
+12920 pts/1    Sl     0:00 bin/ocis-debug users
+12929 pts/1    Sl     0:00 bin/ocis-debug idm
+12940 pts/1    Sl     0:00 bin/ocis-debug storage-publiclink
 12948 pts/1    Sl     0:00 bin/ocis-debug idp
 12952 pts/1    Sl     0:00 bin/ocis-debug proxy
 12961 pts/1    Sl     0:00 bin/ocis-debug thumbnails
-12971 pts/1    Sl     0:00 bin/ocis-debug reva-storage-oc
+12971 pts/1    Sl     0:00 bin/ocis-debug storage-system
 12981 pts/1    Sl     0:00 bin/ocis-debug web
-12993 pts/1    Sl     0:00 bin/ocis-debug api
-12998 pts/1    Sl     0:00 bin/ocis-debug registry
-13004 pts/1    Sl     0:00 bin/ocis-debug web
-13015 pts/1    Sl     0:00 bin/ocis-debug reva-auth-basic
+12993 pts/1    Sl     0:00 bin/ocis-debug search
+12998 pts/1    Sl     0:00 bin/ocis-debug nats
+13004 pts/1    Sl     0:00 bin/ocis-debug clientlog
+13015 pts/1    Sl     0:00 bin/ocis-debug auth-basic
 ----
 
-Then you can set a breakpoint in the service you need and attach to the process via processid. To debug the `reva-sharing` service the VS Code `launch.json` would look like this:
+Then you can set a breakpoint in the service you need and attach to the process via processid. To debug the `sharing` service the VS Code `launch.json` would look like this:
 
 [source,json]
 ----
@@ -68,30 +69,29 @@ Then you can set a breakpoint in the service you need and attach to the process 
 [source,bash]
 ----
 #/bin/sh
-LOG_LEVEL="debug"
+export OCIS_LOG_LEVEL="debug"
 
-bin/ocis --log-level=$LOG_LEVEL micro &
+bin/ocis nats &
 
-bin/ocis --log-level=$LOG_LEVEL glauth &
-bin/ocis --log-level=$LOG_LEVEL graph &
-#bin/ocis --log-level=$LOG_LEVEL hello &
-bin/ocis --log-level=$LOG_LEVEL idp &
-#bin/ocis --log-level=$LOG_LEVEL ocs &
-bin/ocis --log-level=$LOG_LEVEL web &
-bin/ocis --log-level=$LOG_LEVEL reva-auth-basic &
-bin/ocis --log-level=$LOG_LEVEL reva-auth-bearer &
-bin/ocis --log-level=$LOG_LEVEL reva-frontend &
-bin/ocis --log-level=$LOG_LEVEL reva-gateway &
-bin/ocis --log-level=$LOG_LEVEL reva-sharing &
-bin/ocis --log-level=$LOG_LEVEL reva-storage-home &
-bin/ocis --log-level=$LOG_LEVEL reva-storage-home-data &
-bin/ocis --log-level=$LOG_LEVEL reva-storage-oc &
-bin/ocis --log-level=$LOG_LEVEL reva-storage-oc-data &
-bin/ocis --log-level=$LOG_LEVEL reva-storage-root &
-bin/ocis --log-level=$LOG_LEVEL reva-users &
-#bin/ocis --log-level=$LOG_LEVEL webdav
+bin/ocis idm &
+bin/ocis graph &
+#bin/ocis hello &
+bin/ocis idp &
+#bin/ocis ocs &
+bin/ocis web &
+bin/ocis auth-basic &
+bin/ocis auth-bearer &
+bin/ocis frontend &
+bin/ocis gateway &
+bin/ocis sharing &
+bin/ocis storage-users &
+bin/ocis storage-shares &
+bin/ocis storage-publiclink &
+bin/ocis storage-system &
+bin/ocis users &
+#bin/ocis webdav
 
-bin/ocis --log-level=$LOG_LEVEL proxy &
+bin/ocis proxy &
 ----
 
 . Get the list of running processes:
@@ -102,26 +102,26 @@ ps ax | grep ocis
 
 12837 pts/1    Sl+    0:00 bin/ocis-debug server
 12845 pts/1    Sl     0:00 bin/ocis-debug graph
-12847 pts/1    Sl     0:00 bin/ocis-debug reva-auth-bearer
+12847 pts/1    Sl     0:00 bin/ocis-debug auth-bearer
 12849 pts/1    Sl     0:00 bin/ocis-debug ocs
-12850 pts/1    Sl     0:00 bin/ocis-debug reva-storage-oc-data
+12850 pts/1    Sl     0:00 bin/ocis-debug storage-shares
 12863 pts/1    Sl     0:00 bin/ocis-debug webdav
-12874 pts/1    Sl     0:00 bin/ocis-debug reva-frontend
-12897 pts/1    Sl     0:00 bin/ocis-debug reva-sharing
-12905 pts/1    Sl     0:00 bin/ocis-debug reva-gateway
-12912 pts/1    Sl     0:00 bin/ocis-debug reva-storage-home
-12920 pts/1    Sl     0:00 bin/ocis-debug reva-users
-12929 pts/1    Sl     0:00 bin/ocis-debug glauth
-12940 pts/1    Sl     0:00 bin/ocis-debug reva-storage-home-data
+12874 pts/1    Sl     0:00 bin/ocis-debug frontend
+12897 pts/1    Sl     0:00 bin/ocis-debug sharing
+12905 pts/1    Sl     0:00 bin/ocis-debug gateway
+12912 pts/1    Sl     0:00 bin/ocis-debug storage-users
+12920 pts/1    Sl     0:00 bin/ocis-debug users
+12929 pts/1    Sl     0:00 bin/ocis-debug idm
+12940 pts/1    Sl     0:00 bin/ocis-debug storage-publiclink
 12948 pts/1    Sl     0:00 bin/ocis-debug idp
 12952 pts/1    Sl     0:00 bin/ocis-debug proxy
 12961 pts/1    Sl     0:00 bin/ocis-debug thumbnails
-12971 pts/1    Sl     0:00 bin/ocis-debug reva-storage-oc
+12971 pts/1    Sl     0:00 bin/ocis-debug storage-system
 12981 pts/1    Sl     0:00 bin/ocis-debug web
-12993 pts/1    Sl     0:00 bin/ocis-debug api
-12998 pts/1    Sl     0:00 bin/ocis-debug registry
-13004 pts/1    Sl     0:00 bin/ocis-debug web
-13015 pts/1    Sl     0:00 bin/ocis-debug reva-auth-basic
+12993 pts/1    Sl     0:00 bin/ocis-debug search
+12998 pts/1    Sl     0:00 bin/ocis-debug nats
+13004 pts/1    Sl     0:00 bin/ocis-debug clientlog
+13015 pts/1    Sl     0:00 bin/ocis-debug auth-basic
 ----
 
 . Kill the service you want to start in debug mode:
@@ -131,7 +131,7 @@ ps ax | grep ocis
 kill 17628
 ----
 
-. Start the service you are interested in debug mode. When using make to build the binary there is already a `bin/ocis-debug` binary for you. When running an IDE tell it which service to start by providing the corresponding sub command, e.g. `bin\ocis-debug reva-frontend`.
+. Start the service you are interested in debug mode. When using make to build the binary there is already a `bin/ocis-debug` binary for you. When running an IDE tell it which service to start by providing the corresponding sub command, e.g. `bin/ocis-debug frontend`.
 
 === Debugging the oCIS in a Docker Container
 
@@ -271,13 +271,11 @@ Debug wherever the call trace leads you to ... good luck!
 
 You can either run and manage the services independently, or you can update the `go.mod` file and replace dependencies with your local version.
 
-To debug the reva frontend we need to add two replacements:
+To debug reva we need to add a replacement:
 
 ----
-// use the local ocis-reva repo
-replace github.com/owncloud/ocis-reva => ../ocis-reva
-// also use the local reva repo
-replace github.com/cs3org/reva => ../reva
+// use a local reva checkout
+replace github.com/owncloud/reva/v2 => ../reva
 ----
 
 NOTE: The username and password only work when basic auth is available. Otherwise you have to obtain a bearer token, e.g. by grabbing it from the browser.

@@ -1,5 +1,6 @@
 = PosixFS Storage Driver
 :toc: right
+:description: The Posix FS Storage Driver is a new storage driver for Infinite Scale.
 
 The Posix FS Storage Driver is a new storage driver for Infinite Scale.
 

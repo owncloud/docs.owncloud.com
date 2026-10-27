@@ -1,6 +1,7 @@
 = Authorization
 :toc: right
 :toclevels: 3
+:description: Infinite Scale supports three OIDC authentication methods: Authorization Code Flow, Implicit Flow and Hybrid Flow.
 
 In its default configuration, Infinite Scale supports three authentication methods as outlined on the link:https://openid.net/specs/openid-connect-core-1_0.html#rfc.section.3[OIDC official site]:
 

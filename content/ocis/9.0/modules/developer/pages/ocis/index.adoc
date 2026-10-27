@@ -1,6 +1,7 @@
 = oCIS - ownCloud Infinite Scale
 :toc: right
 :toclevels: 3
+:description: Welcome to oCIS, the modern file-sync and share platform, which is based on our knowledge and experience with the PHP based ownCloud server.
 
 image::ocis/infinite_scale.png[,width=300]
 

@@ -1,7 +1,8 @@
 = Continuous Deployment
 :toc: right
+:description: Continuously deployed oCIS example deployments, updated with every commit to master and every release.
 
-We are continuously deploying the following deployment examples. Every example is deployed in two flavors:
+We are continuously deploying the following deployment examples. Every example is deployed in three flavors:
 
 * Master: +
 Reflects the current master branch state of oCIS and will be updated with every commit to master

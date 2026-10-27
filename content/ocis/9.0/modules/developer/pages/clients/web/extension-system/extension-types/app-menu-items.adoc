@@ -1,6 +1,7 @@
 = Application Menu Item Extensions
 :toc: right
 :toclevels: 3
+:description: This extension type allows apps to register links to internal or external pages within the application switcher menu on the top left.
 
 == Extension Type AppMenuItem
 

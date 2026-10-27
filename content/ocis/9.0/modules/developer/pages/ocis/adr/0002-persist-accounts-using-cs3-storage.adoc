@@ -1,12 +1,18 @@
 = 2. Persist Accounts in a CS3 Storage
 :toc: right
 :toclevels: 3
+:description: ADR 2: To set up High Availability (HA) or a geo-replicated setup we need to persist accounts in a distributed way.
 
-* Status: accepted
+* Status: superseded
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/felixboehm[@felixboehm]
 * Date: 2020-08-21
 
 Technical Story: link:https://github.com/owncloud/ocis-accounts/pull/92[File system based indexing]
+
+[NOTE]
+====
+The `accounts` service this ADR refers to no longer exists in current oCIS versions (the `owncloud/ocis-accounts` repository is archived). User and group management is now handled by the `graph`, `idm` and `idp` services together with external LDAP / Keycloak. See xref:ocis/adr/0003-external-user-management.adoc[ADR-0003] and xref:ocis/adr/0017-allow-read-only-external-user-management.adoc[ADR-0017] for the external user management direction.
+====
 
 == Context and Problem Statement
 

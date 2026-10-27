@@ -1,5 +1,6 @@
 = Release Process for Envvars
 :toc: right
+:description: Release process for environment variables: steps to complete before a new release gets finally tagged.
 
 [IMPORTANT]
 ====

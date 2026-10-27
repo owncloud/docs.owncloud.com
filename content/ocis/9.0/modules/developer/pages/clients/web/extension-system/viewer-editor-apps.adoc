@@ -1,6 +1,7 @@
 = Viewer and Editor Apps
 :toc: right
 :toclevels: 3
+:description: ownCloud Web allows developers to implement apps for viewing and editing specific file types.
 
 == Viewer and Editor Apps
 

@@ -1,10 +1,11 @@
 = Metrics
 :toc: right
 :toclevels: 3
+:description: Every oCIS service provides Prometheus metrics on its debug endpoint, optionally secured with a debug token.
 
 == Metrics
 
-This service provides some link:https://prometheus.io/[Prometheus] metrics through the debug endpoint, you can optionally secure the metrics endpoint by some random token, which has to be configured either through the flag `--debug-token` or the environment variable `OCIS_DEBUG_TOKEN` mentioned above. By default, the metrics endpoint is bound to `\http://0.0.0.0:8001/metrics`.
+Every oCIS service provides some link:https://prometheus.io/[Prometheus] metrics through its debug endpoint. You can optionally secure the metrics endpoint with a token configured via the `<SERVICE>_DEBUG_TOKEN` environment variable (for example `SETTINGS_DEBUG_TOKEN`). By default, the metrics endpoint is bound to the debug address of the respective service (for example `http://127.0.0.1:9191/metrics` for the settings service, see `SETTINGS_DEBUG_ADDR`).
 
 * *go_gc_duration_seconds* +
  A summary of the GC invocation durations

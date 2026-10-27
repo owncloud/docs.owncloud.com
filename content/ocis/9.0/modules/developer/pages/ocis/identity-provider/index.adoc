@@ -1,6 +1,7 @@
 = Identity Provider
 :toc: right
 :toclevels: 3
+:description: oCIS provides out of the box a minimal OpenID Connect provider via the IDP service and a minimal LDAP service via the IDM service.
 
 == Overview
 

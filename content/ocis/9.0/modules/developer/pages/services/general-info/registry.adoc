@@ -1,6 +1,7 @@
 = Registry
 :toc: right
 :toclevels: 3
+:description: To be able to communicate with each other, services need to register in a common registry.
 
 To be able to communicate with each other, services need to register in a common registry.
 

@@ -1,6 +1,7 @@
 = Tooling
 :toc: right
 :toclevels: 3
+:description: Web is using pnpm as package manager and vite as build tool.
 
 == Packaging
 

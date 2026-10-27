@@ -2,8 +2,16 @@
 :toc: right
 :description: The NATS service is the event broker of the system. It distributes events among all other services and enables other services to communicate asynchronously.
 :page-aliases: ROOT:deployment/services/s-list/nats.adoc
+:readingTime: 2
+:level: intermediate
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 :service_name: nats
+
+The NATS service is the event broker of the system. Services publish events to it and consume them via consumer groups, which guarantees that each event is delivered exactly once per group. The built-in NATS server also provides the default `nats-js-kv` service registry.
+
+{readingTime} min read · Level: {level} · Last updated for oCIS {lastUpdatedVersion} on 25.10.2026
 
 == Introduction
 
@@ -15,7 +23,7 @@ Services can `Consume` events from the nats service by registering to a `Consume
 
 == Default Values
 
-* Thumbnails listens on port 9230 by default.
+* NATS listens on port 9233 by default (debug server on 9234).
 * The default location storing events is $OCIS_BASE_DATA_PATH/nats
 
 == Underlying Technology
@@ -41,3 +49,17 @@ Note that using TLS is highly recommended for production environments, especiall
 == Configuration
 
 include::partial$deployment/services/env-and-yaml.adoc[tag=envvars-yaml]
+
+== FAQ
+
+=== Which Port Does the NATS Service Listen On?
+
+NATS listens on port `9233` by default, with a debug server on `9234`.
+
+=== Where Are Events Stored?
+
+The built-in NATS stores events in `$OCIS_BASE_DATA_PATH/nats` by default. Set the `NATS_NATS_STORE_DIR` environment variable to use a different folder.
+
+=== How Do I Secure the NATS Connection With TLS?
+
+Set `NATS_TLS_CERT` and `NATS_TLS_KEY` to the certificate and key files and set `ENABLE_TLS` to `true`. Using TLS is highly recommended for production environments, especially when using container orchestration with Kubernetes.

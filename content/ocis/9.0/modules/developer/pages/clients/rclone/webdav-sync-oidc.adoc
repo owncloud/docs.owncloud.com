@@ -1,6 +1,7 @@
 = WebDAV with OpenID Connect
 :toc: right
 :toclevels: 3
+:description: Rclone itself is not able to open and maintain an OpenID Connect session.
 
 == WebDAV with OpenID Connect
 

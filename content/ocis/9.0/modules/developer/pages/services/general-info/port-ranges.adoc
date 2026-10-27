@@ -1,5 +1,6 @@
 = Port Ranges
 :toc: right
+:description: oCIS services often need a port to expose their services to other services or the outside world.
 
 == Introduction
 
@@ -60,7 +61,7 @@ We also suggest using the last port in your extensions' range as a debug/metrics
 | 9250-9254  | link:https://github.com/owncloud/ocis/tree/master/ocis/pkg/runtime[ocis server (runtime)]
 | 9255-9259  | xref:{dev-s-path}/postprocessing/postprocessing.adoc[postprocessing]
 | 9260-9264  | xref:{dev-s-path}/clientlog/clientlog.adoc[clientlog]
-| 9265-9269  | xref:{dev-s-path}/clientlog/clientlog.adoc[clientlog]
+| 9265-9269  | xref:{dev-s-path}/invitations/invitations.adoc[invitations]
 | 9270-9274  | xref:{dev-s-path}/eventhistory/eventhistory.adoc[eventhistory]
 | 9275-9279  | xref:{dev-s-path}/webfinger/webfinger.adoc[webfinger]
 | 9280-9284  | xref:{dev-s-path}/ocm/ocm.adoc[ocm]

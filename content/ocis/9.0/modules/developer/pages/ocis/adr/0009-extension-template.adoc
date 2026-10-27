@@ -1,6 +1,7 @@
 = 9. Extension Template
 :toc: right
 :toclevels: 3
+:description: ADR 9: We want to accelerate and simplify extension development by removing the necessity to type or copy the boilerplate code.
 
 * Status: proposed
 * Deciders: link:https://github.com/c0rby[@c0rby]

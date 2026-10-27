@@ -1,6 +1,7 @@
 = Terminology
 :toc: right
 :toclevels: 3
+:description: Terminology used throughout the oCIS storage documentation, the code and developer discussions.
 
 Communication is hard. And clear communication is even harder. You may encounter the following terms throughout the documentation, in the code or when talking to other developers. Just keep in mind that whenever you hear or read _storage_, that term needs to be clarified, because on its own it is too vague. PR welcome.
 

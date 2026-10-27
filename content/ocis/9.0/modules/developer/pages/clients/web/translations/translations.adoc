@@ -1,6 +1,7 @@
 = Working With Translations
 :toc: right
 :toclevels: 3
+:description: The translation setup is managed within each Packages folder that contains a translation source.
 
 == Translation Setup
 

@@ -2,6 +2,58 @@
 
 Agent guidelines specific to the oCIS component (developer service pages, Collector and Swagger UI). Applies to every oCIS version directory. Loaded on demand; repo-wide rules live in the root `AGENTS.md`, content-authoring rules in `content/AGENTS.md`.
 
+## Audit-Tracking Page Attributes
+
+Pages that contain content requiring periodic review (Mermaid diagrams, architecture descriptions, configuration examples) carry two tracking attributes in their document header:
+
+```asciidoc
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
+```
+
+The values are centralised in `content/ocis/<version>/antora.yml` under `ocis-audit-version` and `ocis-audit-date`. Update those two keys there — all pages pick up the new values automatically on the next build.
+
+### Placement rule
+
+Both attributes **must** live in the document header — the block of `:attr:` lines directly after the title, before the first blank line. A blank line before them ends the header section and changes how Antora processes the attributes.
+
+```asciidoc
+// Correct — consecutive, in the header
+= Page Title
+:toc: right
+:description: ...
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
+
+First paragraph...
+
+// Wrong — after a blank line, outside the header
+= Page Title
+:toc: right
+:description: ...
+
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
+```
+
+### When to bump the values in antora.yml
+
+Only bump `ocis-audit-version` and `ocis-audit-date` when you have verified that **all** content requiring review has been checked or updated for the new version — for example, that Mermaid diagrams, architecture descriptions and configuration examples are still accurate. Do **not** bump for purely mechanical edits (formatting, typo fixes) that do not involve a content review.
+
+## ADR Description Prefix
+
+Every ADR page under `pages/ocis/adr/` must have its `:description:` attribute start with `ADR <number>: ` (no leading zeros). This makes the description self-identifying in search results and metadata.
+
+```asciidoc
+// Correct
+:description: ADR 7: As one of the building blocks for Spaces in oCIS we plan to add an API...
+
+// Wrong — no prefix
+:description: As one of the building blocks for Spaces in oCIS we plan to add an API...
+```
+
+Exception: if a status note is needed (e.g. superseded), keep it after the number: `ADR 3 (superseded by ADR-0017): ...`
+
 ## Developer Service Pages
 
 The oCIS developer module (`content/ocis/<version>/modules/developer/`) has a specific structure and content rule for service pages.

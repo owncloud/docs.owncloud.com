@@ -1,6 +1,9 @@
 = Upload Processing
 :toc: right
 :toclevels: 3
+:description: Uploads are handled by a dedicated service that uses TUS.io for resumable uploads.
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 Uploads are handled by a dedicated service that uses TUS.io for resumable uploads. When all bytes have been transferred the upload is finalized by making the file available in file listings and for download.
 

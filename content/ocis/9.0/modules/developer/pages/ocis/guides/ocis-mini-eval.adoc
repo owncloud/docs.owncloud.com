@@ -1,6 +1,7 @@
 = Minimalistic Evaluation Guide for oCIS with Docker
 :toc: right
 :toclevels: 3
+:description: Minimalistic guide to evaluate oCIS locally with Docker. Only intended for quick evaluation on a local machine.
 
 
 _IMPORTANT_ This type of installation is _ONLY_ intended for a quick evaluation and to access the instance from your local machine using internal certificates only. We recommend using test data only for this evaluation.

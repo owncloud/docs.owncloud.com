@@ -1,5 +1,6 @@
 = Services Communication
 :toc: right
 :toclevels: 3
+:description: Diagram of the communication between the oCIS services.
 
 image::ocis/architecture/ocis-services-communication.drawio.svg[]

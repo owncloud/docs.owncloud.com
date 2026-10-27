@@ -1,6 +1,7 @@
 = oCIS CLI Commands
 :toc: right
 :toclevels: 3
+:description: CLI commands can either be embedded in a service or operate independently.
 
 CLI commands can either be embedded in a service or operate independently.
 

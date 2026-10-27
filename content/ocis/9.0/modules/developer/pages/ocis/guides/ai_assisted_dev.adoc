@@ -1,6 +1,7 @@
 = Building oCIS Web Extensions with AI-Assisted Development
 :toc: right
 :toclevels: 3
+:description: This guide demonstrates how to build Infinite Scale (oCIS) web extensions using AI-assisted development (sometimes called "vibe coding") with Claude AI.
 
 == Introduction
 

@@ -1,6 +1,7 @@
 = Getting Started
 :toc: right
 :toclevels: 3
+:description: We have an oCIS demo instance running on ocis.owncloud.com where you can get a first impression of it.
 
 
 == oCIS Online Demo

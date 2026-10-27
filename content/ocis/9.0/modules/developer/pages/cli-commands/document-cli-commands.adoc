@@ -1,6 +1,7 @@
 = Document CLI Commands
 :toc: right
 :toclevels: 3
+:description: Any CLI command that is added to Infinite Scale must be documented here in the dev docs and the admin docs.
 
 
 Any CLI command that is added to Infinite Scale must be documented here in the dev docs and the xref:admin:maintenance/commands/commands.adoc[admin docs]. Note that the admin docs primarily distinguish between online and offline commands because the structure of the documentation is different. Typically, any command documented in the developer documentation is integrated into the admin documentation and adapted according to the target audience. The description here is for developers; the admin docs are derived from it.

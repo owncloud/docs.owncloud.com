@@ -1,12 +1,32 @@
 = Deployment
 :toc: right
-:description: There are several deployment options for Infinite Scale available. Consider which one serves your purposes best. Generally speaking, you can decide between using containers or manually set up a regular server.
+:description: Overview of the Infinite Scale deployment options: single binary, Docker Compose and Kubernetes with the oCIS Helm chart.
 :page-aliases: ROOT:deployment/index.adoc
+:readingTime: 2
+:level: beginner
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
-{description}
+Infinite Scale can be deployed as a single binary, with Docker Compose, or on Kubernetes using the oCIS Helm chart. This page helps you choose the deployment option that fits your environment and points you to the right setup guides. No prior oCIS experience is required.
+
+{readingTime} min read · Level: {level} · Last updated for oCIS {lastUpdatedVersion} on 25.10.2026
 
 * The xref:deployment/general/general-info.adoc[General Info] section summarizes general and important information which is not dependent on the way that you install Infinite Scale. Any setup refers to this general information as prerequisite knowledge.
 
 * The next steps will likely be mounting a xref:deployment/storage/nfs.adoc[Network File System] and managing xref:deployment/services/services.adoc[Services].
 
 * xref:deployment/security/security.adoc[Securing Infinite Scale] should be a primary concern after you've set up your server.
+
+== FAQ
+
+=== Which Deployment Option Should I Choose?
+
+Use the **single binary** for a quick start or small installation. Use **Docker Compose** for a containerized single-node setup. Use **Kubernetes with the oCIS Helm chart** when you need to scale services across multiple nodes.
+
+=== Do the Configuration Options Differ Between Deployment Types?
+
+No. Infinite Scale is configured entirely through environment variables, so the same options apply to the single binary, Docker Compose and Helm deployments. The deployment type only changes how services are run and scaled. See xref:deployment/services/env-var-note.adoc[Notes for Environment Variables].
+
+=== Where Can I Find the List of Default Ports?
+
+See the xref:deployment/services/ports-used.adoc[Ports Used] page for the default port ranges of every service.

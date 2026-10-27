@@ -1,6 +1,7 @@
 = Custom Component Extensions
 :toc: right
 :toclevels: 3
+:description: CustomComponent extensions need to define one or multiple extensionPointIds as render target.
 
 == Extension Type CustomComponent
 

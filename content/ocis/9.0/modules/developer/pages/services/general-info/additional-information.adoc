@@ -1,6 +1,7 @@
 = Additional Information
 :toc: right
 :toclevels: 3
+:description: ocis is using grpc for inter-service communication.
 
 This section contains information on general topics
 

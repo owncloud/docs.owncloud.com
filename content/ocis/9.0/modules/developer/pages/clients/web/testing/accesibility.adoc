@@ -1,6 +1,7 @@
 = Accessibility
 :toc: right
 :toclevels: 3
+:description: Accessibility is a crucial aspect of web development. It ensures that web applications are usable by everyone, including people with disabilities.
 
 == Introduction
 

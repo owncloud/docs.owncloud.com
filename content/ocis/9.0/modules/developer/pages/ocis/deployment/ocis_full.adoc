@@ -1,6 +1,7 @@
 = Full Modular oCIS with WebOffice
 :toc: right
 :toclevels: 3
+:description: Example deployment of a full modular oCIS with Collabora or OnlyOffice behind Traefik as reverse proxy.
 
 == Overview
 

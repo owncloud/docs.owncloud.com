@@ -1,10 +1,11 @@
 = Spaces
 :toc: right
 :toclevels: 3
+:description: The OData specification allows for a myriad of ways of addressing an entity.
 
 == Editing a Storage Space
 
-The OData specification allows for a mirage of ways of addressing an entity. We will support addressing a Drive entity by its unique identifier, which is the one the graph-api returns when listing spaces, and its format is:
+The OData specification allows for a myriad of ways of addressing an entity. We will support addressing a Drive entity by its unique identifier, which is the one the graph-api returns when listing spaces, and its format is:
 
 [source,json]
 ----

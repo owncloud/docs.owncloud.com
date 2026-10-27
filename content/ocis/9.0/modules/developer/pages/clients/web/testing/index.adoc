@@ -1,5 +1,6 @@
 = Tests
 :toc: right
 :toclevels: 3
+:description: Guides on running different kinds of tests in ownCloud Web.
 
 Guides on running different kinds of tests in ownCloud Web.

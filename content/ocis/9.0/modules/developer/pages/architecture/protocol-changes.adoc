@@ -1,5 +1,8 @@
 = Protocol Changes
 :toc: right
+:description: The spaces concept allows clients to look up the space endpoints a user has access to and then do individual sync discoveries.
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 The spaces concept allows clients to look up the space endpoints a user has access to and then do individual sync discoveries. Technically, we introduce an indirection that allows clients to rely on server provided URLs instead of hardcoded `/webdav` or `/dav/files/\{username}` paths, that may change over time.
 

@@ -1,6 +1,7 @@
 = Theming
 :toc: right
 :toclevels: 3
+:description: By providing your own theme, you can customize the user experience for your own ownCloud installation.
 
 == Introduction
 

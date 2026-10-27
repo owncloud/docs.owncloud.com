@@ -1,6 +1,7 @@
 = Basic Remote Setup
 :toc: right
 :toclevels: 3
+:description: The default configuration of the oCIS binary and the owncloud/ocis docker image assume, that you access oCIS on localhost.
 
 The default configuration of the oCIS binary and the `owncloud/ocis` docker image assume, that you access oCIS on `localhost`. This enables you to do quick testing and development without any configuration.
 

@@ -1,6 +1,7 @@
 = LDAP - Active Directory
 :toc: right
 :toclevels: 3
+:description: oCIS can be configured using Active Directory as identity provider.
 
 == Overview
 
