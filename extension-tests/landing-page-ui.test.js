@@ -142,7 +142,7 @@ test('the landing page menu mirrors the product structure', (t) => {
   const expected = [
     {
       href: 'index.html',
-      text: 'Releases',
+      text: 'Releases by Product',
       children: [
         {
           href: null,
