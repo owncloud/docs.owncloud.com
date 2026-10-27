@@ -39,6 +39,16 @@ This applies to **any component** — whenever a new module is first introduced 
 The `webui` component uses `version: ~` (no version segment in URLs). Its entries in `llms.txt` correctly omit the version segment, e.g. `https://doc.owncloud.com/webui/index.html`.
 
 
+## UI Supplemental CSS
+
+Custom stylesheets live in `ui/supplemental/css/` and are linked from `ui/supplemental/partials/head-styles.hbs`. Link new sheets **after** `owncloud.css`, so equal-specificity rules win on source order and the brand custom properties (`--oc-navy`, `--oc-link`, ...) are available.
+
+### Landing page layout (`landing-page.css`)
+
+`content/main/modules/ROOT/pages/index.adoc` sets `:role: landing-page`. The custom `layouts/default.hbs` copies the page role onto the body element (`<body class="article landing-page">`), and every rule in `landing-page.css` is scoped to `body.landing-page`, so the compact card grid, the getting-started card row, and the inline version chips apply to the landing page only. All layout rules are wrapped in `@media screen`; print keeps the stock stacked layout.
+
+To give another page its own scoped styles: set `:role: <name>` in the page header and scope the rules to `body.<name>`. `extension-tests/landing-page-ui.test.js` guards the role, the stylesheet link, and the scoping.
+
 ## UI Supplemental JavaScript
 
 Custom JavaScript lives in `ui/supplemental/js/` and is layered onto the stock Antora default UI at build time.

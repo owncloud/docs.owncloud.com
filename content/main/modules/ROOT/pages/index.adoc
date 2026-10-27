@@ -3,6 +3,9 @@
 :toc: right
 :toclevels: 3
 :page-aliases: next@docs::index.adoc, next@docs_main::index.adoc
+// the landing-page role lands on <body> (see ui/supplemental/layouts/default.hbs)
+// and scopes ui/supplemental/css/landing-page.css to this page
+:role: landing-page
 
 Welcome to the official ownCloud documentation. This page links to the documentation of every ownCloud product — ownCloud Infinite Scale (oCIS), ownCloud Classic, the desktop and mobile apps, and the ownCloud web interfaces — including all available versions of each.
 

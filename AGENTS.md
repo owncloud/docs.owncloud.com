@@ -76,7 +76,7 @@ Subdirectory `AGENTS.md` files are loaded on demand when working in that subtree
 
 * `content/AGENTS.md` -- AsciiDoc authoring rules (tables, images, lists, heading capitalisation), xref fixes, `doc.owncloud.com` link conversion, external link maintenance, xref link-text checks
 * `content/ocis/AGENTS.md` -- oCIS developer service pages, Antora Collector and Swagger UI extensions
-* `ui/AGENTS.md` -- `llms.txt` maintenance and supplemental UI JavaScript
+* `ui/AGENTS.md` -- `llms.txt` maintenance and supplemental UI JavaScript/CSS
 
 ## File Relationship: CLAUDE.md and AGENTS.md
 
