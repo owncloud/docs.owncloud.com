@@ -26,6 +26,31 @@ function builtOrSkip (t, rel) {
   return fs.readFileSync(p, 'utf8')
 }
 
+// Parse the rendered nav menu into a tree of { href, text, children } nodes,
+// using the data-depth attributes the Antora UI emits on each .nav-item.
+function navTree (navHtml) {
+  const roots = []
+  const stack = []
+  for (const chunk of navHtml.split('<li class="nav-item').slice(1)) {
+    const depth = Number(chunk.match(/data-depth="(\d+)"/)[1])
+    const own = chunk.slice(chunk.indexOf('>') + 1)
+    const childList = own.indexOf('<ul class="nav-list">')
+    const ownContent = childList === -1 ? own : own.slice(0, childList)
+    const link = ownContent.match(/<a class="nav-link" href="([^"]+)">([^<]*)<\/a>/)
+    const text = ownContent.match(/<span class="nav-text">([^<]*)<\/span>/)
+    const node = {
+      href: link ? link[1] : null,
+      text: (link ? link[2] : text ? text[1] : '').replace(/&amp;/g, '&'),
+      children: [],
+    }
+    while (stack.length && stack[stack.length - 1].depth >= depth) stack.pop()
+    if (stack.length) stack[stack.length - 1].node.children.push(node)
+    else roots.push(node)
+    stack.push({ node, depth })
+  }
+  return roots
+}
+
 test('the landing page sets the landing-page role and links its stylesheet', (t) => {
   const html = builtOrSkip(t, 'index.html')
   if (html == null) return
@@ -104,54 +129,97 @@ test('the landing page has no table of contents', (t) => {
   assert.ok(!html.includes('<div id="toc"'), 'landing page renders an inline TOC')
 })
 
-test('the landing page menu is renamed and regrouped by product', (t) => {
+test('the landing page menu mirrors the product structure', (t) => {
   const html = builtOrSkip(t, 'index.html')
   if (html == null) return
   const navMatch = html.match(/<nav class="nav-menu">[\s\S]*?<\/nav>/)
   assert.ok(navMatch, 'landing page has no nav menu')
-  const nav = navMatch[0]
-
-  // renamed top item (the release-notes subtree under it is kept)
-  assert.ok(nav.includes('<a class="nav-link" href="index.html">Release Notes</a>'), 'nav item is not renamed to Release Notes')
-  assert.ok(!nav.includes('>Overview</a>'), 'nav still has the old Overview item')
-  assert.ok(nav.includes('<span class="nav-text">Server Releases</span>'), 'release-notes subtree lost its Server Releases group')
-  assert.ok(nav.includes('How to Contribute'), 'release-notes subtree lost How to Contribute')
-
-  // product groups
-  for (const group of ['oCIS', 'Classic', 'Apps &amp; Clients']) {
-    assert.ok(nav.includes(`<span class="nav-text">${group}</span>`), `nav is missing the ${group} group`)
-  }
-
-  // product items link to the latest stable version of each component
   const latest = latestByComponent()
-  const expected = {
-    'oCIS Server': `ocis/${latest.ocis}/index.html`,
-    'oCIS Web Client': 'webui/index.html',
-    'Classic Server': `server/${latest.server}/index.html`,
-    'Classic Web': `server/${latest.server}/classic_ui/index.html`,
-    'Desktop Client': `desktop/${latest.desktop}/index.html`,
-    'Android App': `android/${latest.android}/index.html`,
-    'iOS App': `ios-app/${latest['ios-app']}/index.html`,
-  }
-  const missing = []
-  for (const [label, href] of Object.entries(expected)) {
-    if (!nav.includes(`<a class="nav-link" href="${href}">${label}</a>`)) missing.push(`${label} -> ${href}`)
-  }
-  assert.deepEqual(missing, [], 'nav is missing product items')
-
-  // MCP Server is a placeholder: present as text, without a link
-  assert.ok(nav.includes('<span class="nav-text">MCP Server (coming soon)</span>'), 'nav is missing the MCP Server placeholder')
-
-  // the old flat product labels are gone
-  const gone = ['Web Infinite Scale', 'Web ownCloud Classic', '>Mobile App for Android</a>', '>Mobile App for iOS</a>', '>Desktop App</a>']
-  const stale = gone.filter((label) => nav.includes(label))
-  assert.deepEqual(stale, [], 'nav still has old product labels')
+  // The trailing untitled list (How to Contribute) is wrapped by Antora's nav
+  // builder in an empty parent item; that parent's list is the depth-0 first
+  // child, so the stock CSS gives it margin 0 and the entry renders at
+  // top-level indentation.
+  const expected = [
+    {
+      href: 'index.html',
+      text: 'Release Notes',
+      children: [
+        {
+          href: null,
+          text: 'oCIS',
+          children: [
+            { href: 'ocis_releases.html', text: 'Infinite Scale Releases', children: [] },
+            { href: 'ocis_release_notes.html', text: 'Infinite Scale Release Notes', children: [] },
+          ],
+        },
+        {
+          href: null,
+          text: 'Classic',
+          children: [
+            { href: 'server_releases.html', text: 'ownCloud Classic Releases', children: [] },
+            { href: 'server_release_notes.html', text: 'ownCloud Classic Release Notes', children: [] },
+          ],
+        },
+        {
+          href: null,
+          text: 'Apps & Clients',
+          children: [
+            { href: 'desktop_release_notes.html', text: 'Desktop App Release Notes', children: [] },
+            { href: 'ios_release_notes.html', text: 'iOS App Release Notes', children: [] },
+            { href: 'android_release_notes.html', text: 'Android App Release Notes', children: [] },
+          ],
+        },
+      ],
+    },
+    {
+      href: null,
+      text: 'Documentation by Product',
+      children: [
+        {
+          href: null,
+          text: 'oCIS',
+          children: [
+            { href: `ocis/${latest.ocis}/index.html`, text: 'oCIS Server', children: [] },
+            { href: 'webui/index.html', text: 'oCIS Web Client', children: [] },
+            { href: null, text: 'MCP Server (coming soon)', children: [] },
+          ],
+        },
+        {
+          href: null,
+          text: 'Classic',
+          children: [
+            { href: `server/${latest.server}/index.html`, text: 'Classic Server', children: [] },
+            { href: `server/${latest.server}/classic_ui/index.html`, text: 'Classic Web', children: [] },
+          ],
+        },
+        {
+          href: null,
+          text: 'Apps & Clients',
+          children: [
+            { href: `desktop/${latest.desktop}/index.html`, text: 'Desktop Client', children: [] },
+            { href: `android/${latest.android}/index.html`, text: 'Android App', children: [] },
+            { href: `ios-app/${latest['ios-app']}/index.html`, text: 'iOS App', children: [] },
+          ],
+        },
+      ],
+    },
+    {
+      href: null,
+      text: '',
+      children: [{ href: 'how_to_contribute.html', text: 'How to Contribute', children: [] }],
+    },
+  ]
+  const tree = navTree(navMatch[0])
+  assert.deepEqual(tree, expected, 'nav menu does not mirror the product structure')
 
   // every nav link target exists in the built site (hrefs are site-root relative)
   const unresolved = []
-  for (const match of nav.matchAll(/<a class="nav-link" href="([^"]+)">/g)) {
-    if (!fs.existsSync(path.join(PUBLIC, match[1]))) unresolved.push(match[1])
-  }
+  const collect = (nodes) =>
+    nodes.forEach((node) => {
+      if (node.href && !fs.existsSync(path.join(PUBLIC, node.href))) unresolved.push(node.href)
+      collect(node.children)
+    })
+  collect(tree)
   assert.deepEqual(unresolved, [], 'nav links to pages missing from public/')
 })
 
