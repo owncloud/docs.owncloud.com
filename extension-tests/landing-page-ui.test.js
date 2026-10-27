@@ -142,31 +142,31 @@ test('the landing page menu mirrors the product structure', (t) => {
   const expected = [
     {
       href: 'index.html',
-      text: 'Release Notes',
+      text: 'Releases',
       children: [
         {
           href: null,
           text: 'oCIS',
           children: [
-            { href: 'ocis_releases.html', text: 'Infinite Scale Releases', children: [] },
-            { href: 'ocis_release_notes.html', text: 'Infinite Scale Release Notes', children: [] },
+            { href: 'ocis_releases.html', text: 'Releases', children: [] },
+            { href: 'ocis_release_notes.html', text: 'Release Notes', children: [] },
           ],
         },
         {
           href: null,
           text: 'Classic',
           children: [
-            { href: 'server_releases.html', text: 'ownCloud Classic Releases', children: [] },
-            { href: 'server_release_notes.html', text: 'ownCloud Classic Release Notes', children: [] },
+            { href: 'server_releases.html', text: 'Releases', children: [] },
+            { href: 'server_release_notes.html', text: 'Release Notes', children: [] },
           ],
         },
         {
           href: null,
           text: 'Apps & Clients',
           children: [
-            { href: 'desktop_release_notes.html', text: 'Desktop App Release Notes', children: [] },
-            { href: 'ios_release_notes.html', text: 'iOS App Release Notes', children: [] },
-            { href: 'android_release_notes.html', text: 'Android App Release Notes', children: [] },
+            { href: 'desktop_release_notes.html', text: 'Desktop App', children: [] },
+            { href: 'ios_release_notes.html', text: 'iOS App', children: [] },
+            { href: 'android_release_notes.html', text: 'Android App', children: [] },
           ],
         },
       ],

@@ -1,14 +1,14 @@
-.xref:index.adoc[Release Notes]
+.xref:index.adoc[Releases]
 * oCIS
-** xref:ocis_releases.adoc[Infinite Scale Releases]
-** xref:ocis_release_notes.adoc[Infinite Scale Release Notes]
+** xref:ocis_releases.adoc[Releases]
+** xref:ocis_release_notes.adoc[Release Notes]
 * Classic
-** xref:server_releases.adoc[ownCloud Classic Releases]
-** xref:server_release_notes.adoc[ownCloud Classic Release Notes]
+** xref:server_releases.adoc[Releases]
+** xref:server_release_notes.adoc[Release Notes]
 * Apps & Clients
-** xref:desktop_release_notes.adoc[Desktop App Release Notes]
-** xref:ios_release_notes.adoc[iOS App Release Notes]
-** xref:android_release_notes.adoc[Android App Release Notes]
+** xref:desktop_release_notes.adoc[Desktop App]
+** xref:ios_release_notes.adoc[iOS App]
+** xref:android_release_notes.adoc[Android App]
 
 // note, atm we cant include an existing component navigation via e.g.,
 // include::{latest-server-version}@server:ROOT:nav$partials/nav-server.adoc

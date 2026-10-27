@@ -20,7 +20,7 @@ Welcome to the official ownCloud documentation. This page links to the documenta
 
 === ownCloud Infinite Scale (oCIS)
 
-ownCloud Infinite Scale (oCIS) is ownCloud's cloud-native, microservices-based platform for file sync and share, deployable as a single binary, with Docker Compose, or on Kubernetes, without external dependencies like PHP or a database. The documentation serves administrators who deploy and operate oCIS and developers who extend it, covering spaces, security, and the bundled ownCloud Web.
+ownCloud Infinite Scale (oCIS) is ownCloud's cloud-native, microservices-based platform for file sync and share, deployable as a single binary, with Docker Compose, or on Kubernetes; these docs serve the administrators who deploy and operate it and the developers who extend it.
 
 xref:ocis:ROOT:index.adoc[Open the Infinite Scale documentation] for the latest stable release, or choose a version:
 
@@ -28,7 +28,7 @@ include::partial$generated-versions-ocis.adoc[]
 
 === ownCloud Classic (Server)
 
-ownCloud Classic is the open source, LAMP-stack-based ownCloud server for file sync and share that you install and control in your own environment, keeping your data on your own infrastructure. The documentation serves administrators who install, configure, and operate an ownCloud Classic server and developers who write apps for it.
+ownCloud Classic is the open source, LAMP-stack-based file sync and share server that you install and control on your own infrastructure; these docs serve the administrators who run it and the developers who write apps for it.
 
 xref:server:ROOT:index.adoc[Open the ownCloud Classic documentation] for the latest stable release, or choose a version:
 
@@ -36,7 +36,7 @@ include::partial$generated-versions-server.adoc[]
 
 === Desktop App
 
-The ownCloud desktop app syncs files between your computer and ownCloud Infinite Scale or ownCloud Classic, with per-space sync connections for Infinite Scale. The documentation is for users who install, configure, and use the desktop app.
+The ownCloud desktop app syncs files between your computer and ownCloud Infinite Scale or ownCloud Classic, with per-space sync connections for Infinite Scale; these docs cover installing, configuring, and using it.
 
 xref:desktop:ROOT:index.adoc[Open the Desktop App documentation] for the latest stable release, or choose a version:
 
@@ -44,7 +44,7 @@ include::partial$generated-versions-desktop.adoc[]
 
 === Mobile App for Android
 
-The ownCloud mobile app for Android brings your files and Infinite Scale spaces to Android devices, with support for both ownCloud Infinite Scale and ownCloud Classic. The documentation covers installing, configuring, and using the app.
+The ownCloud mobile app for Android brings your files and Infinite Scale spaces to Android devices, supporting both ownCloud Infinite Scale and ownCloud Classic; these docs cover installing, configuring, and using it.
 
 xref:android:ROOT:index.adoc[Open the Android app documentation] for the latest stable release, or choose a version:
 
@@ -52,7 +52,7 @@ include::partial$generated-versions-android.adoc[]
 
 === Mobile App for iOS
 
-The ownCloud mobile app for iOS brings your files and Infinite Scale spaces to iPhone and iPad, with support for both ownCloud Infinite Scale and ownCloud Classic. The documentation covers installing, configuring, and using the app.
+The ownCloud mobile app for iOS brings your files and Infinite Scale spaces to iPhone and iPad, supporting both ownCloud Infinite Scale and ownCloud Classic; these docs cover installing, configuring, and using it.
 
 xref:ios-app:ROOT:index.adoc[Open the iOS app documentation] for the latest stable release, or choose a version:
 
@@ -60,6 +60,6 @@ include::partial$generated-versions-ios-app.adoc[]
 
 === ownCloud Web
 
-ownCloud Web is the modern web interface bundled with ownCloud Infinite Scale, built with Vue.js and customizable to your corporate identity. The documentation covers using the ownCloud web user interfaces in the browser, for administrators and users.
+ownCloud Web is the modern, Vue.js-based web interface bundled with ownCloud Infinite Scale and customizable to your corporate identity; these docs cover using it in the browser.
 
 xref:webui:ROOT:index.adoc[Open the ownCloud Web documentation].
