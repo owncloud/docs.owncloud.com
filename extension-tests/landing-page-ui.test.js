@@ -12,6 +12,8 @@ const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('path')
 
+const { latestByComponent } = require('./latest-versions')
+
 const ROOT = path.join(__dirname, '..')
 const PUBLIC = path.join(ROOT, 'public')
 
@@ -82,5 +84,90 @@ test('the landing page source sets the role and the head partial links the style
   assert.ok(
     fs.existsSync(path.join(ROOT, 'ui/supplemental/css/landing-page.css')),
     'ui/supplemental/css/landing-page.css is missing'
+  )
+})
+
+test('the landing page has no table of contents', (t) => {
+  // source guard: no :toc: attribute (also catches a future global toc attribute)
+  const page = fs.readFileSync(path.join(ROOT, 'content/main/modules/ROOT/pages/index.adoc'), 'utf8')
+  assert.ok(!/^:toc:/m.test(page), 'index.adoc sets a :toc: attribute')
+  // the stock UI builds the sidebar/embedded TOC client-side from the headings,
+  // so the stylesheet must hide both aside types on this page
+  const css = fs.readFileSync(path.join(ROOT, 'ui/supplemental/css/landing-page.css'), 'utf8')
+  assert.ok(
+    /body\.landing-page aside\.toc\.sidebar,[\s\S]*?body\.landing-page aside\.toc\.embedded \{\s*display: none/.test(css),
+    'landing-page.css does not hide aside.toc.sidebar / aside.toc.embedded'
+  )
+  // build guard: no inline AsciiDoc TOC in the rendered page
+  const html = builtOrSkip(t, 'index.html')
+  if (html == null) return
+  assert.ok(!html.includes('<div id="toc"'), 'landing page renders an inline TOC')
+})
+
+test('the landing page menu is renamed and regrouped by product', (t) => {
+  const html = builtOrSkip(t, 'index.html')
+  if (html == null) return
+  const navMatch = html.match(/<nav class="nav-menu">[\s\S]*?<\/nav>/)
+  assert.ok(navMatch, 'landing page has no nav menu')
+  const nav = navMatch[0]
+
+  // renamed top item (the release-notes subtree under it is kept)
+  assert.ok(nav.includes('<a class="nav-link" href="index.html">Release Notes</a>'), 'nav item is not renamed to Release Notes')
+  assert.ok(!nav.includes('>Overview</a>'), 'nav still has the old Overview item')
+  assert.ok(nav.includes('<span class="nav-text">Server Releases</span>'), 'release-notes subtree lost its Server Releases group')
+  assert.ok(nav.includes('How to Contribute'), 'release-notes subtree lost How to Contribute')
+
+  // product groups
+  for (const group of ['oCIS', 'Classic', 'Apps &amp; Clients']) {
+    assert.ok(nav.includes(`<span class="nav-text">${group}</span>`), `nav is missing the ${group} group`)
+  }
+
+  // product items link to the latest stable version of each component
+  const latest = latestByComponent()
+  const expected = {
+    'oCIS Server': `ocis/${latest.ocis}/index.html`,
+    'oCIS Web Client': 'webui/index.html',
+    'Classic Server': `server/${latest.server}/index.html`,
+    'Classic Web': `server/${latest.server}/classic_ui/index.html`,
+    'Desktop Client': `desktop/${latest.desktop}/index.html`,
+    'Android App': `android/${latest.android}/index.html`,
+    'iOS App': `ios-app/${latest['ios-app']}/index.html`,
+  }
+  const missing = []
+  for (const [label, href] of Object.entries(expected)) {
+    if (!nav.includes(`<a class="nav-link" href="${href}">${label}</a>`)) missing.push(`${label} -> ${href}`)
+  }
+  assert.deepEqual(missing, [], 'nav is missing product items')
+
+  // MCP Server is a placeholder: present as text, without a link
+  assert.ok(nav.includes('<span class="nav-text">MCP Server (coming soon)</span>'), 'nav is missing the MCP Server placeholder')
+
+  // the old flat product labels are gone
+  const gone = ['Web Infinite Scale', 'Web ownCloud Classic', '>Mobile App for Android</a>', '>Mobile App for iOS</a>', '>Desktop App</a>']
+  const stale = gone.filter((label) => nav.includes(label))
+  assert.deepEqual(stale, [], 'nav still has old product labels')
+
+  // every nav link target exists in the built site (hrefs are site-root relative)
+  const unresolved = []
+  for (const match of nav.matchAll(/<a class="nav-link" href="([^"]+)">/g)) {
+    if (!fs.existsSync(path.join(PUBLIC, match[1]))) unresolved.push(match[1])
+  }
+  assert.deepEqual(unresolved, [], 'nav links to pages missing from public/')
+})
+
+test('the landing page expands its navigation on startup via nav-expand.js', (t) => {
+  const script = path.join(ROOT, 'ui/supplemental/js/nav-expand.js')
+  assert.ok(fs.existsSync(script), 'ui/supplemental/js/nav-expand.js is missing')
+  const source = fs.readFileSync(script, 'utf8')
+  assert.ok(source.includes('landing-page'), 'nav-expand.js is not scoped to the landing page')
+  assert.ok(source.includes('is-active'), 'nav-expand.js does not expand via the stock is-active mechanism')
+  const footer = fs.readFileSync(path.join(ROOT, 'ui/supplemental/partials/footer-scripts.hbs'), 'utf8')
+  assert.ok(footer.includes('js/nav-expand.js'), 'footer-scripts.hbs does not load nav-expand.js')
+  const html = builtOrSkip(t, 'index.html')
+  if (html == null) return
+  assert.ok(html.includes('js/nav-expand.js'), 'landing page does not load nav-expand.js')
+  assert.ok(
+    fs.existsSync(path.join(PUBLIC, 'assets/js/nav-expand.js')),
+    'assets/js/nav-expand.js was not published'
   )
 })

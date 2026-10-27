@@ -1,7 +1,5 @@
 = ownCloud Documentation
 :description: Official documentation for ownCloud Infinite Scale (oCIS), ownCloud Classic, and the ownCloud desktop and mobile apps for file sync and share.
-:toc: right
-:toclevels: 3
 :page-aliases: next@docs::index.adoc, next@docs_main::index.adoc
 // the landing-page role lands on <body> (see ui/supplemental/layouts/default.hbs)
 // and scopes ui/supplemental/css/landing-page.css to this page

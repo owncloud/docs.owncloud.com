@@ -45,6 +45,16 @@
     margin-top: 1.1rem;
   }
 
+  /* No table of contents on the landing page. Dropping the :toc: attribute only
+     removes the inline AsciiDoc TOC; the stock UI then builds a sidebar TOC from
+     the page headings client-side (the toc routine in site.js) and clones it
+     into an embedded in-body copy for narrow screens. Hide both, scoped to this
+     page -- the sidebar would otherwise also reserve its 9rem column at >= 1024px. */
+  body.landing-page aside.toc.sidebar,
+  body.landing-page aside.toc.embedded {
+    display: none;
+  }
+
   /* Getting-started highlights: drop the admonition icon and grey content box,
      turn the three bullets into an equal-width card row. */
   body.landing-page #get-started + .sectionbody .admonitionblock {
