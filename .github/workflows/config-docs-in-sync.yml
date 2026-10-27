@@ -44,12 +44,15 @@ jobs:
     steps:
       - name: Checkout docs
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Checkout config-to-docs
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: owncloud/config-to-docs
           path: .config-to-docs
+          persist-credentials: false
           # Deliberately unpinned. This check asks "do the committed pages match
           # what a maintainer running ctd.sh today would produce", so it has to
           # track the current generator. The composer deps below are pinned

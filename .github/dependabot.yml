@@ -12,6 +12,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 5
     # `include: scope` makes Dependabot append the scope itself -> chore(deps):
     # for runtime deps and chore(deps-dev): for dev deps. The scope must NOT be
