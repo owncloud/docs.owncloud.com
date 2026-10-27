@@ -22,7 +22,7 @@
 
 ## Overview
 
-- [ownCloud Documentation Overview](https://doc.owncloud.com/index.html): Entry page linking the documentation of every ownCloud product.
+- [ownCloud Documentation](https://doc.owncloud.com/index.html): Entry page linking the documentation of every ownCloud product.
 
 ## Infinite Scale
 

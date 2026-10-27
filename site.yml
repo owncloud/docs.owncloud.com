@@ -90,6 +90,9 @@ antora:
     - require: ./antora-extensions/load-global-site-attributes.js
       attributefile: ./global-attributes.yml
       enabled: true
+    # Generates the per-component version lists included by the landing page
+    # (content/main/modules/ROOT/pages/index.adoc) from the content catalog.
+    - ./antora-extensions/landing-versions.js
     - ./antora-extensions/llms-txt.js
     - require: ./antora-extensions/sitemap-cleanup.js
       # Keep only each component's latest non-prerelease version in the sitemap
