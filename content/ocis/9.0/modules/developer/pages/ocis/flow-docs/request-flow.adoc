@@ -2,6 +2,8 @@
 :toc: right
 :toclevels: 3
 :description: Sequence diagram of the general oCIS request flow, showing where authentication, user lookup and token minting happen.
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 == Request Flow
 

@@ -4,8 +4,8 @@
 :description: Welcome to the ownCloud Infinite Scale (oCIS) 9.0 documentation: admin setup, configuration, services and developer guides.
 :readingTime: 2
 :level: beginner
-:lastUpdatedVersion: 9.0.0-rc.1
-:lastUpdatedDate: 2026-10-25
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 include::admin:partial$multi-location/compose-version.adoc[]
 
@@ -34,10 +34,13 @@ ownCloud provides an EULA to clarify, among various topics, who can use this sof
 == FAQ
 
 === What Is the Difference Between the Admin and Developer Documentation?
+
 The xref:admin:index.adoc[admin] documentation covers installing, configuring and operating Infinite Scale. The xref:developer:index.adoc[developer] documentation covers building, extending and contributing to oCIS.
 
 === Where Do I Start as a New Administrator?
+
 Start with the xref:admin:prerequisites/prerequisites.adoc[prerequisites] and the xref:admin:deployment/general/general-info.adoc[general deployment information], then follow the xref:admin:deployment/index.adoc[deployment] guide for your chosen deployment type.
 
 === Which oCIS Version Is This Documentation For?
+
 This documentation is verified against oCIS `9.0.0-rc.1`. See the xref:admin:deployment/services/env-var-changes.adoc[environment variable changes] page for differences from earlier versions.

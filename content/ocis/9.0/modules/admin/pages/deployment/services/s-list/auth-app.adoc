@@ -4,8 +4,8 @@
 :page-aliases: ROOT:deployment/services/s-list/auth-app.adoc
 :readingTime: 5
 :level: intermediate
-:lastUpdatedVersion: 9.0.0-rc.1
-:lastUpdatedDate: 2026-10-25
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 :service_name: auth-app
 
@@ -191,10 +191,13 @@ include::partial$deployment/services/env-and-yaml.adoc[tag=envvars-yaml]
 == FAQ
 
 === How Do I Start the Auth-App Service?
+
 The service is excluded from autostart because generating access tokens is security relevant. Add it with `OCIS_ADD_RUN_SERVICES=auth-app` (or start it explicitly on the command line) and set `PROXY_ENABLE_APP_AUTH=true` on the xref:{s-path}/proxy.adoc[proxy] service.
 
 === How Do I Create an App Token?
+
 Use the CLI: `ocis auth-app create --user-name=${user} --expiration=${token_expiration}`. The default expiration is `72h`; valid time abbreviations are `h`, `m` and `s`. Alternatively, POST to the `/auth-app/tokens?expiry=72h` endpoint with an active bearer token, or use the impersonation API.
 
 === Which Port Does the Auth-App Service Listen On?
+
 The `auth-app` service listens on HTTP port `9247` by default (gRPC on `9246`, debug on `9245`).

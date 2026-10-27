@@ -4,8 +4,8 @@
 :page-aliases: ROOT:deployment/services/registry.adoc
 :readingTime: 3
 :level: intermediate
-:lastUpdatedVersion: 9.0.0-rc.1
-:lastUpdatedDate: 2026-10-25
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 The registry lets all Infinite Scale services find and communicate with each other. This page explains the available registry types and when to use them. You should be familiar with the oCIS service architecture.
 
@@ -64,10 +64,13 @@ Default in all deployment types is `nats-js-kv`. Use `memory` only for single-pr
 == FAQ
 
 === Which Registry Does Infinite Scale Use by Default?
+
 The default is `nats-js-kv`, a NATS JetStream key-value store. You only need to set `MICRO_REGISTRY_ADDRESS` when the NATS server is not the built-in one, which is the same address as `OCIS_EVENTS_ENDPOINT`.
 
 === Can I Use mDNS, etcd or Consul as the Registry?
+
 No. Those registry types were deprecated and removed. If your configuration still sets `MICRO_REGISTRY` to `mdns`, `nats`, `etcd` or `consul`, switch to `nats-js-kv`. See the xref:migration/upgrading_4.0.0_5.0.0.adoc[migration notes].
 
 === Does the Registry Work in a Single Binary Without Extra Setup?
+
 Yes. When you run `ocis server`, the embedded NATS server provides the registry automatically, so no extra configuration is needed.

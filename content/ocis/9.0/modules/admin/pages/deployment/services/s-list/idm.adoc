@@ -4,8 +4,8 @@
 :page-aliases: ROOT:deployment/services/s-list/idm.adoc
 :readingTime: 3
 :level: intermediate
-:lastUpdatedVersion: 9.0.0-rc.1
-:lastUpdatedDate: 2026-10-25
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 :service_name: idm
 
@@ -104,10 +104,13 @@ include::partial$deployment/services/env-and-yaml.adoc[tag=envvars-yaml]
 == FAQ
 
 === Which Port Does the IDM Service Listen On?
+
 IDM listens on port `9235` (LDAPS) by default. In the default configuration it only accepts TLS-protected connections.
 
 === Can IDM Replace My Existing LDAP Server?
+
 No. IDM is mainly targeted at small installations and testing. It only supports a subset of the LDAP operations (`BIND`, `SEARCH`, `ADD`, `MODIFY` and `DELETE`), does no LDAP schema verification and does not support features like 2FA. For larger setups or production environments, use a real LDAP server or an external identity management solution.
 
 === Where Does IDM Store Its Data?
+
 IDM stores its data in a `boltdb` file `idm/ocis.boltdb` inside the Infinite Scale xref:deployment/general/general-info.adoc#base-data-directory[Base Data Directory].

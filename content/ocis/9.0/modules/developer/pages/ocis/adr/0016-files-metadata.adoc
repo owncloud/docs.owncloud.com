@@ -1,7 +1,7 @@
 = 16. Storage for Files Metadata
 :toc: right
 :toclevels: 3
-:description: In addition to the file content we need to store metadata which is attached to a file.
+:description: ADR 16: In addition to the file content we need to store metadata which is attached to a file.
 
 * Status: superseded by xref:ocis/adr/0024-msgpack-metadata.adoc[ADR-0024]
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/dragotin[@dragotin], link:https://github.com/micbar[@micbar], link:https://github.com/c0rby[@c0rby]

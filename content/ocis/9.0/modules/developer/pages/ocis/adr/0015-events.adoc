@@ -1,7 +1,7 @@
 = 15. oCIS Event System
 :toc: right
 :toclevels: 3
-:description: To be able to implement simple, flexible and independent inter service communication there is the idea to implement an event system in oCIS.
+:description: ADR 15: To be able to implement simple, flexible and independent inter service communication there is the idea to implement an event system in oCIS.
 
 * Status: proposed
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/micbar[@micbar], link:https://github.com/dragotin[@dragotin], link:https://github.com/c0rby[@c0rby], link:https://github.com/wkloucek[@wkloucek]

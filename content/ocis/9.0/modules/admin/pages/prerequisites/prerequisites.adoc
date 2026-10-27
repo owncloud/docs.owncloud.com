@@ -5,8 +5,8 @@
 :page-aliases: ROOT:prerequisites/prerequisites.adoc
 :readingTime: 13
 :level: beginner
-:lastUpdatedVersion: 9.0.0-rc.1
-:lastUpdatedDate: 2026-10-25
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 :ext4_url: https://en.wikipedia.org/wiki/Ext4
 :btrfs_url: https://en.wikipedia.org/wiki/Btrfs
@@ -384,10 +384,13 @@ Additional languages may be contributed by the community but are not guaranteed 
 == FAQ
 
 === What Are the Minimum Hardware Requirements?
+
 As a baseline, use a 64-bit CPU with at least 2 GB of RAM for a small test instance. See the Hardware section above; production sizing depends on your use case.
 
 === Which Operating Systems Are Supported?
+
 See the Supported Operating Systems section above for the supported Linux distributions and their minimum versions.
 
 === Do I Need a Database for Infinite Scale?
+
 No. Infinite Scale does not use a database. All data and metadata are stored on a POSIX-compliant filesystem. See the xref:deployment/general/general-info.adoc#base-data-directory[Base Data Directory] section in the general information.

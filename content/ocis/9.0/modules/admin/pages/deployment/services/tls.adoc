@@ -4,8 +4,8 @@
 :page-aliases: ROOT:deployment/services/tls.adoc
 :readingTime: 5
 :level: advanced
-:lastUpdatedVersion: 9.0.0-rc.1
-:lastUpdatedDate: 2026-10-25
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 Infinite Scale provides TLS for internal service-to-service communication as well as for communication with users and external services like SMTP, WOPI, LDAP and the HTTP frontend. This page describes the environment variables for gRPC, HTTP backends, the event bus, the Graph API and the proxy. Managing certificates is not in scope of this document.
 
@@ -184,13 +184,17 @@ Path/File for the root CA certificate used to validate the server’s TLS certif
 == FAQ
 
 === How Do I Enable TLS for gRPC Service-to-Service Communication?
+
 Set `OCIS_GRPC_TLS_ENABLED` to `true` (global scope) and configure the server certificate and key via `OCIS_GRPC_TLS_CERTIFICATE` and `OCIS_GRPC_TLS_KEY`. If no certificate is set, a temporary self-signed server certificate is generated, which clients can accept with `OCIS_GRPC_CLIENT_TLS_MODE=insecure`. Set the client TLS mode to `on` to enable transport security including server certificate verification.
 
 === How Do I Enable TLS for the HTTP Services?
+
 Set `OCIS_HTTP_TLS_ENABLED` to `true` and configure the server certificate and key via `OCIS_HTTP_TLS_CERTIFICATE` and `OCIS_HTTP_TLS_KEY`. If no certificate is set, a temporary self-signed server certificate is generated, which the proxy can accept with `PROXY_INSECURE_BACKENDS=true`.
 
 === Which Services Do Not Support TLS for Service-to-Service Communication?
+
 The xref:{s-path}/frontend.adoc[frontend] and the xref:{s-path}/ocdav.adoc[ocdav] service currently do not provide TLS for service-to-service communication. TLS will be added to them in a future release.
 
 === How Do I Secure the Event Bus (NATS) Connection?
+
 Enable TLS for the connection to the events broker with `OCIS_EVENTS_ENABLE_TLS` and configure the NATS listener certificate via `NATS_TLS_CERT` and `NATS_TLS_KEY`. Use `OCIS_INSECURE` to skip the client certificate verification during the TLS handshake.

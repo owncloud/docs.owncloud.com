@@ -4,8 +4,8 @@
 :page-aliases: ROOT:deployment/services/s-list/auth-bearer.adoc
 :readingTime: 1
 :level: beginner
-:lastUpdatedVersion: 9.0.0-rc.1
-:lastUpdatedDate: 2026-10-25
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 :service_name: auth-bearer
 
@@ -41,10 +41,13 @@ include::partial$deployment/services/env-and-yaml.adoc[tag=envvars-yaml]
 == FAQ
 
 === Which Port Does the Auth-Bearer Service Listen On?
+
 The `auth-bearer` service listens on gRPC port `9148` by default.
 
 === Can I Use an External Identity Provider?
+
 Yes. A default Infinite Scale deployment starts the built-in xref:{s-path}/idp.adoc[OpenID Connect identity provider], but you can configure an external one as well.
 
 === Can I Scale the Auth-Bearer Service?
+
 Yes. The service has no persistence or caching of its own and the xref:{s-path}/proxy.adoc[proxy] caches verified bearer tokens, so multiple instances can be started without further configuration. Note that the `auth` registry used by the xref:{s-path}/gateway.adoc[gateway] service currently uses a single instance of the service; to use more than one auth provider per deployment, scale the gateway.

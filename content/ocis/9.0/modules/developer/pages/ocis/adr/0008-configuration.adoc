@@ -1,7 +1,7 @@
 = 8. Configuration
 :toc: right
 :toclevels: 3
-:description: An issue arises in point 2, in the sense that configuration file refers to a single file containing the value for the env variable.
+:description: ADR 8: An issue arises in point 2, in the sense that configuration file refers to a single file containing the value for the env variable.
 
 * Status: proposed
 * Deciders: link:https://github.com/refs[@refs], link:https://github.com/butonic[@butonic], link:https://github.com/micbar[@micbar], link:https://github.com/dragotin[@dragotin], link:https://github.com/pmaier1[@pmaier1]
@@ -25,6 +25,7 @@ An issue arises in point 2, in the sense that configuration file refers to a sin
 Because we solely rely on link:https://github.com/owncloud/ocis/blob/master/ocis-pkg/config/config.go[structured configuration] we need a way to modify values in this struct using the provided means urfave/cli gives us (flags, env variables, config files and default value), but since we have different modes of operation (supervised Vs. unsupervised) we have to define a clear line.
 
 === Decision Drivers
+
 * Improve experience for the end user.
 * Improve experience for developers.
 * Sane defaults.

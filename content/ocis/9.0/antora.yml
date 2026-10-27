@@ -9,6 +9,19 @@ nav:
 
 asciidoc:
   attributes:
+    # Audit-tracking attributes: every page that was reviewed or updated for this
+    # version carries `:lastUpdatedVersion: {ocis-audit-version}` and
+    # `:lastUpdatedDate: {ocis-audit-date}` in its header. Centralising the values
+    # here means a single edit covers all pages at once.
+    #
+    # Update these values when you have verified that ALL content that requires a
+    # review has been checked or updated — for example, that Mermaid diagrams,
+    # architecture descriptions and configuration examples are still accurate for
+    # the new version. Do NOT bump these values for purely mechanical edits
+    # (formatting, typo fixes) that do not involve a content review.
+    ocis-audit-version: '9.0.0-rc.1'
+    ocis-audit-date: '2026-10-25'
+
     # used to define the include path for services without trailing /
     # note that any changes of this path also need adjustment in
     # https://github.com/owncloud/ocis-charts/tree/master/charts/ocis/docs

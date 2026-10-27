@@ -1,7 +1,7 @@
 = 17. Allow Read Only External User Management
 :toc: right
 :toclevels: 3
-:description: oCIS needs to be integrated with various external Authentication and Identity Management Systems.
+:description: ADR 17: oCIS needs to be integrated with various external Authentication and Identity Management Systems.
 
 * Status: proposed
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/micbar[@micbar], link:https://github.com/rhafer[@rhafer]

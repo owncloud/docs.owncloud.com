@@ -2,6 +2,8 @@
 :toc: right
 :toclevels: 3
 :description: In the architecture part of the documentation we collect useful developer documentation on different aspects of the architecture.
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 In the architecture part of the documentation we collect useful developer documentation on different aspects of the architecture. We are using mermaid.js to collaborate on the necessary diagrams.
 

@@ -4,8 +4,8 @@
 :page-aliases: ROOT:deployment/services/s-list/eventhistory.adoc
 :readingTime: 1
 :level: beginner
-:lastUpdatedVersion: 9.0.0-rc.1
-:lastUpdatedDate: 2026-10-25
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 :service_name: eventhistory
 
@@ -52,10 +52,13 @@ include::partial$deployment/services/env-and-yaml.adoc[tag=envvars-yaml]
 == FAQ
 
 === Which Port Does the Eventhistory Service Listen On?
+
 The `eventhistory` service listens on gRPC port `9274` by default.
 
 === Can Eventhistory Run Without an Event System?
+
 No. Running the `eventhistory` service without an event system like NATS is not possible, because it consumes all events from the configured event system.
 
 === How Do Other Services Retrieve Events?
+
 Other services call the `eventhistory` service via gRPC. The request must contain the event ID that should be retrieved.

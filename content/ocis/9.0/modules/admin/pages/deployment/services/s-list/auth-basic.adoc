@@ -4,8 +4,8 @@
 :page-aliases: ROOT:deployment/services/s-list/auth-basic.adoc
 :readingTime: 2
 :level: intermediate
-:lastUpdatedVersion: 9.0.0-rc.1
-:lastUpdatedDate: 2026-10-25
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 :service_name: auth-basic
 
@@ -54,10 +54,13 @@ include::partial$deployment/services/env-and-yaml.adoc[tag=envvars-yaml]
 == FAQ
 
 === How Do I Enable Basic Authentication?
+
 Set `PROXY_ENABLE_BASIC_AUTH` to `true` on the xref:{s-path}/proxy.adoc[proxy] service. Clients then authenticate by sending an HTTP Basic `Authorization` header; only HTTP basic auth requests involve the `auth-basic` service.
 
 === Which Auth Manager Should I Use?
+
 `"ldap"` is the recommended auth manager for production and testing environments. `"owncloudsql"` is also supported but not recommended. Select the manager with the `AUTH_BASIC_AUTH_MANAGER` environment variable.
 
 === Does Basic Authentication Support Cookies?
+
 No. The basic authentication implementation does not support cookies and is therefore not intended to be used for benchmarks.

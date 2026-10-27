@@ -1,6 +1,6 @@
 = 7. Open Graph API for oCIS File Spaces
 :toc: right
-:description: As one of the building blocks for Spaces in oCIS we plan to add an API that returns information about available spaces.
+:description: ADR 7: As one of the building blocks for Spaces in oCIS we plan to add an API that returns information about available spaces.
 
 * Status: accepted
 * Deciders: link:https://github.com/butonic[@butonic], link:https://github.com/micbar[@micbar], link:https://github.com/dragotin[@dragotin], link:https://github.com/hodyroff[@hodyroff], link:https://github.com/pmaier1[@pmaier1]

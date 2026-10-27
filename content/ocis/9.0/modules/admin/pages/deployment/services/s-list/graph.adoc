@@ -2,6 +2,8 @@
 :toc: right
 :description: The graph service provides the Graph API which is a RESTful web API used to access Infinite Scale resources.
 :page-aliases: ROOT:deployment/services/s-list/graph.adoc
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 :service_name: graph
 

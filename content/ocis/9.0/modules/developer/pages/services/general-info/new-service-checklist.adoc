@@ -2,6 +2,8 @@
 :toc: right
 :toclevels: 3
 :description: When a new service gets introduced, this checklist is a good starting point for things that need to be completed before the service gets published.
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 When a new service gets introduced, this checklist is a good starting point for things that need to be completed before the service gets published (merged). This list is without claim of completeness or correct sort order.
 

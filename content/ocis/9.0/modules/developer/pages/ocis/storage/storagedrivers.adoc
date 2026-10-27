@@ -21,6 +21,7 @@ While the _storage provider_ is responsible for managing the tree, file up- and 
 ====
 
 == Storage Aspects
+
 A lot of different storage technologies exist, ranging from general purpose file systems with POSIX semantics to software defined storage with multiple APIs. Choosing any of them is making a tradeoff decision. Or, if a storage technology is already in place it automatically predetermines the capabilities that can be made available. _Not all storage systems are created equal._
 
 Unfortunately, no POSIX filesystem natively supports all storage aspects that ownCloud Classic requires:

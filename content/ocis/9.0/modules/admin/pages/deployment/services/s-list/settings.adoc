@@ -4,8 +4,8 @@
 :page-aliases: ROOT:deployment/services/s-list/settings.adoc
 :readingTime: 4
 :level: intermediate
-:lastUpdatedVersion: 9.0.0-rc.1
-:lastUpdatedDate: 2026-10-25
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 :service_name: settings
 
@@ -116,10 +116,13 @@ include::partial$deployment/services/env-and-yaml.adoc[tag=envvars-yaml]
 == FAQ
 
 === Which Port Does the Settings Service Listen On?
+
 The settings service listens on HTTP port `9190` by default (gRPC on `9194`, debug on `9191`).
 
 === Where Are Settings Stored?
+
 The settings service persists settings data via the `storage-system` service (the metadata store), configured via `SETTINGS_STORAGE_GATEWAY_GRPC_ADDR`. Current versions do not provide a local-filesystem persistence backend, so the settings service must not be run in a scale-out deployment without a shared `storage-system` service.
 
 === How Do I Define Custom Roles?
+
 Set the `SETTINGS_BUNDLES_PATH` environment variable to a JSON file containing the role definition and restart Infinite Scale. See the _Custom Roles_ section above for the file format.

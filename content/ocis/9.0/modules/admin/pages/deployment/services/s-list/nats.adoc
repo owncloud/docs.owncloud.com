@@ -4,8 +4,8 @@
 :page-aliases: ROOT:deployment/services/s-list/nats.adoc
 :readingTime: 2
 :level: intermediate
-:lastUpdatedVersion: 9.0.0-rc.1
-:lastUpdatedDate: 2026-10-25
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 :service_name: nats
 
@@ -53,10 +53,13 @@ include::partial$deployment/services/env-and-yaml.adoc[tag=envvars-yaml]
 == FAQ
 
 === Which Port Does the NATS Service Listen On?
+
 NATS listens on port `9233` by default, with a debug server on `9234`.
 
 === Where Are Events Stored?
+
 The built-in NATS stores events in `$OCIS_BASE_DATA_PATH/nats` by default. Set the `NATS_NATS_STORE_DIR` environment variable to use a different folder.
 
 === How Do I Secure the NATS Connection With TLS?
+
 Set `NATS_TLS_CERT` and `NATS_TLS_KEY` to the certificate and key files and set `ENABLE_TLS` to `true`. Using TLS is highly recommended for production environments, especially when using container orchestration with Kubernetes.

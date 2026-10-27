@@ -5,8 +5,8 @@
 :page-aliases: ROOT:architecture/architecture.adoc
 :readingTime: 11
 :level: intermediate
-:lastUpdatedVersion: 9.0.0-rc.1
-:lastUpdatedDate: 2026-10-25
+:lastUpdatedVersion: {ocis-audit-version}
+:lastUpdatedDate: {ocis-audit-date}
 
 :c4-model-url: https://en.wikipedia.org/wiki/C4_model
 :suture-url: https://github.com/thejerf/suture
@@ -285,13 +285,17 @@ The defaults below are identical for the single binary, Docker Compose and Helm 
 == FAQ
 
 === What Is the Single Entry Point for Client Requests?
+
 The xref:{s-path}/proxy.adoc[proxy] service on port `9200` is the single entry point. It terminates TLS, authenticates requests and routes them to the responsible backend service.
 
 === How Do Services Find Each Other?
+
 Services register in a NATS JetStream key-value store (registry type `nats-js-kv`). See the xref:deployment/services/registry.adoc[Registry] page for details and the available registry types.
 
 === Can I Scale Individual Services?
+
 Yes, in a Docker Compose or Kubernetes deployment you can run multiple replicas of a service. A single binary runs all services in one process and cannot scale individual services. See the xref:availability_scaling/availability_scaling.adoc[availability and scaling] page.
 
 === Which Storage Driver Should I Use?
+
 Use the default `ocis` driver (POSIX / decomposedfs) for small to medium deployments. Use the `s3ng` driver when you want blobs on S3-compatible object storage. See the xref:deployment/storage/general-considerations.adoc[storage considerations] page.
