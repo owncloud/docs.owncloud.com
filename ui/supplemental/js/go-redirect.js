@@ -18,11 +18,10 @@
  * path (a file literally named `go.php` would be served as
  * application/x-httpd-php, i.e. downloaded, so a static stub does NOT work).
  * This script is loaded from the page <head> on EVERY page; it is a no-op
- * except when the current path ends in `go.php`, in which case it reproduces
- * the original redirector against the current Antora page layout.
- *
- * It also handles the site-level `go?to=<key>` links that ownCloud Web emits
- * (see SITE_MAPPING), which likewise fall through to the 404 page.
+ * except when the current path ends in `go.php` (reproducing the original
+ * redirector against the current Antora page layout) or is the site-level
+ * `go` endpoint that ownCloud Web links to (see SITE_MAPPING), which likewise
+ * falls through to the 404 page.
  *
  * The key -> target map is derived from the `:page-aliases: go/<key>.adoc`
  * stubs the docs already generate (the maintained source of truth), plus the
@@ -126,6 +125,18 @@
     return 'index.html'
   }
 
+  // Landing page for an unknown site-level key. A `webui-*` key that Web ships
+  // before SITE_MAPPING is updated lands on the Web docs instead of the site
+  // landing page. Relative to the site root.
+  function siteFallbackFor (key) {
+    return /^webui-/.test(key) ? 'webui/index.html' : 'index.html'
+  }
+
+  // Return map[key], or fallback(key) when the key is not mapped.
+  function lookup (map, fallback, key) {
+    return Object.prototype.hasOwnProperty.call(map, key) ? map[key] : fallback(key)
+  }
+
   /**
    * Return the value of the `to` query parameter, or '' when absent.
    *
@@ -153,25 +164,32 @@
   }
 
   /**
-   * Given the current location's pathname and query string, return the URL to
-   * redirect a legacy `go.php?to=<key>` or a site-level `go?to=<key>` request
-   * to, or null when it is neither (so callers leave the page untouched).
+   * Resolve a site-level `go?to=<key>` request, or return null when the path
+   * is not the site-level endpoint. Only `/go` directly under the site root
+   * matches, optionally behind a single project-pages prefix
+   * (e.g. "/owncloud-docs-monorepo/go"); a nested `.../latest/go` does not.
    *
-   * @param {string} pathname e.g. "/server/latest/go.php" or "/go"
+   * @param {string} pathname e.g. "/go"
+   * @param {string} search   e.g. "?to=webui-users-sharing"
+   * @returns {string|null} the redirect target, relative to the site, or null
+   */
+  function resolveSiteGo (pathname, search) {
+    if (!/^(\/[^/]+)?\/go$/.test(pathname)) return null
+
+    var siteRoot = pathname.replace(/go$/, '') // keeps trailing slash
+    return siteRoot + lookup(SITE_MAPPING, siteFallbackFor, parseKey(search))
+  }
+
+  /**
+   * Given the current location's pathname and query string, return the URL to
+   * redirect a legacy `go.php?to=<key>` request to, or null when this is not a
+   * go.php request (so callers leave the page untouched).
+   *
+   * @param {string} pathname e.g. "/server/latest/go.php"
    * @param {string} search   e.g. "?to=admin-sharing"
    * @returns {string|null} the redirect target, relative to the site, or null
    */
   function resolveGoPhp (pathname, search) {
-    // Site-level endpoint: a path segment named "go", resolved against the
-    // site root (the path up to `go`, so a project-pages prefix is kept).
-    if (/\/go$/.test(pathname)) {
-      var siteKey = parseKey(search)
-      var siteTarget = Object.prototype.hasOwnProperty.call(SITE_MAPPING, siteKey)
-        ? SITE_MAPPING[siteKey]
-        : 'index.html'
-      return pathname.replace(/go$/, '') + siteTarget
-    }
-
     // Only act on the exact legacy endpoint: a path segment named "go.php".
     if (!/\/go\.php$/.test(pathname)) return null
 
@@ -184,26 +202,34 @@
       return PUBLISHED_VERSIONS.indexOf(version) === -1 ? pre + 'latest' + post : m
     })
 
-    var key = parseKey(search)
+    return versionRoot + lookup(MAPPING, fallbackFor, parseKey(search))
+  }
 
-    var target = Object.prototype.hasOwnProperty.call(MAPPING, key)
-      ? MAPPING[key]
-      : fallbackFor(key)
-
-    return versionRoot + target
+  /**
+   * Return the redirect target for either endpoint, or null for any other page.
+   *
+   * @param {string} pathname
+   * @param {string} search
+   * @returns {string|null}
+   */
+  function resolve (pathname, search) {
+    return resolveSiteGo(pathname, search) || resolveGoPhp(pathname, search)
   }
 
   // Export for the browser (auto-redirect) and for tests (Node/CommonJS).
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
+      resolve: resolve,
+      resolveSiteGo: resolveSiteGo,
       resolveGoPhp: resolveGoPhp,
       MAPPING: MAPPING,
       SITE_MAPPING: SITE_MAPPING,
       fallbackFor: fallbackFor,
+      siteFallbackFor: siteFallbackFor,
       PUBLISHED_VERSIONS: PUBLISHED_VERSIONS
     }
   } else if (root && root.location) {
-    var to = resolveGoPhp(root.location.pathname, root.location.search)
+    var to = resolve(root.location.pathname, root.location.search)
     if (to) root.location.replace(to)
   }
 })(typeof window !== 'undefined' ? window : this)
