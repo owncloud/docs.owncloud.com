@@ -5,7 +5,7 @@ const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
 
-const { resolveGoPhp, MAPPING, fallbackFor, PUBLISHED_VERSIONS } = require('../ui/supplemental/js/go-redirect.js')
+const { resolveGoPhp, MAPPING, SITE_MAPPING, fallbackFor, PUBLISHED_VERSIONS } = require('../ui/supplemental/js/go-redirect.js')
 
 const PREFIX = '/owncloud-docs-monorepo/server/latest/'
 
@@ -96,6 +96,30 @@ test('a value containing = is preserved (not truncated at the first =)', () => {
   assert.equal(resolveGoPhp(PREFIX + 'go.php', '?to=admin-x=y'), PREFIX + 'index.html')
 })
 
+test('a site-level go?to= key redirects relative to the site root', () => {
+  // ownCloud Web emits https://doc.owncloud.com/go?to=<key> (no .php, no version).
+  assert.equal(
+    resolveGoPhp('/go', '?to=webui-users-sharing'),
+    '/webui/owncloud_web/web_for_users.html#sharing'
+  )
+  assert.equal(
+    resolveGoPhp('/owncloud-docs-monorepo/go', '?to=webui-users-sharing'),
+    '/owncloud-docs-monorepo/webui/owncloud_web/web_for_users.html#sharing'
+  )
+})
+
+test('an unknown or missing site-level key falls back to the site root', () => {
+  assert.equal(resolveGoPhp('/go', '?to=webui-nope'), '/index.html')
+  assert.equal(resolveGoPhp('/go', ''), '/index.html')
+  // Server keys are not resolved at the site level.
+  assert.equal(resolveGoPhp('/go', '?to=admin-sharing'), '/index.html')
+})
+
+test('paths merely ending in "go" are not the site-level endpoint', () => {
+  assert.equal(resolveGoPhp('/cargo', '?to=webui-users-sharing'), null)
+  assert.equal(resolveGoPhp('/go/', '?to=webui-users-sharing'), null)
+})
+
 test('fallbackFor returns the version-root entrypoint for any key', () => {
   assert.equal(fallbackFor('admin-x'), 'index.html')
   assert.equal(fallbackFor('developer-x'), 'index.html')
@@ -137,4 +161,18 @@ test('every mapped target exists in the built server/latest site', (t) => {
   // The unknown-key fallback landing must exist too.
   if (!fs.existsSync(path.join(base, fallbackFor('')))) missing.push(`(fallback) ${fallbackFor('')}`)
   assert.deepEqual(missing, [], 'mapped go.php targets missing from the build:\n' + missing.join('\n'))
+})
+
+// Guard against page moves for the site-level map (anchors are not checked).
+test('every site-level mapped target exists in the built site', (t) => {
+  const base = path.join(__dirname, '..', 'public')
+  if (!fs.existsSync(base)) {
+    t.skip('public not built (run `npm run antora` to enable)')
+    return
+  }
+  const missing = []
+  for (const [key, target] of Object.entries(SITE_MAPPING)) {
+    if (!fs.existsSync(path.join(base, target.split('#')[0]))) missing.push(`${key} -> ${target}`)
+  }
+  assert.deepEqual(missing, [], 'mapped go targets missing from the build:\n' + missing.join('\n'))
 })

@@ -21,6 +21,9 @@
  * except when the current path ends in `go.php`, in which case it reproduces
  * the original redirector against the current Antora page layout.
  *
+ * It also handles the site-level `go?to=<key>` links that ownCloud Web emits
+ * (see SITE_MAPPING), which likewise fall through to the 404 page.
+ *
  * The key -> target map is derived from the `:page-aliases: go/<key>.adoc`
  * stubs the docs already generate (the maintained source of truth), plus the
  * keys core requests that had no alias yet. Targets are relative to the
@@ -102,6 +105,17 @@
     'user-webdav': 'classic_ui/files/access_webdav.html'
   }
 
+  // key -> path relative to the site root, for links that are not tied to a
+  // server version. ownCloud Web (oCIS) links its contextual help as
+  //
+  //     https://doc.owncloud.com/go?to=<key>
+  //
+  // i.e. a root-level `go` without `.php` and without a version segment. Every
+  // released oCIS keeps emitting these, so the targets are maintained here.
+  var SITE_MAPPING = {
+    'webui-users-sharing': 'webui/owncloud_web/web_for_users.html#sharing'
+  }
+
   // Landing page for an unknown/mistyped key. The original go.php split the
   // fallback by key prefix (admin_manual / developer_manual / user_manual), but
   // those manuals have since been reorganized and an unknown key has no better
@@ -113,15 +127,51 @@
   }
 
   /**
-   * Given the current location's pathname and query string, return the URL to
-   * redirect a legacy `go.php?to=<key>` request to, or null when this is not a
-   * go.php request (so callers leave the page untouched).
+   * Return the value of the `to` query parameter, or '' when absent.
    *
-   * @param {string} pathname e.g. "/server/latest/go.php"
+   * @param {string} search e.g. "?to=admin-sharing"
+   * @returns {string}
+   */
+  function parseKey (search) {
+    // URLSearchParams handles '+', percent-decoding, and values containing
+    // '='; it never throws on a malformed escape (unlike a bare
+    // decodeURIComponent), so a garbage query degrades to the fallback landing
+    // rather than an uncaught exception that leaves the 404 visible.
+    if (typeof URLSearchParams !== 'undefined') {
+      return new URLSearchParams(search || '').get('to') || ''
+    }
+    // Fallback for very old engines without URLSearchParams (e.g. IE).
+    var params = (search || '').replace(/^\?/, '').split('&')
+    for (var i = 0; i < params.length; i++) {
+      var eq = params[i].indexOf('=')
+      if (params[i].slice(0, eq === -1 ? params[i].length : eq) === 'to') {
+        var raw = (eq === -1 ? '' : params[i].slice(eq + 1)).replace(/\+/g, ' ')
+        try { return decodeURIComponent(raw) } catch (e) { return raw }
+      }
+    }
+    return ''
+  }
+
+  /**
+   * Given the current location's pathname and query string, return the URL to
+   * redirect a legacy `go.php?to=<key>` or a site-level `go?to=<key>` request
+   * to, or null when it is neither (so callers leave the page untouched).
+   *
+   * @param {string} pathname e.g. "/server/latest/go.php" or "/go"
    * @param {string} search   e.g. "?to=admin-sharing"
    * @returns {string|null} the redirect target, relative to the site, or null
    */
   function resolveGoPhp (pathname, search) {
+    // Site-level endpoint: a path segment named "go", resolved against the
+    // site root (the path up to `go`, so a project-pages prefix is kept).
+    if (/\/go$/.test(pathname)) {
+      var siteKey = parseKey(search)
+      var siteTarget = Object.prototype.hasOwnProperty.call(SITE_MAPPING, siteKey)
+        ? SITE_MAPPING[siteKey]
+        : 'index.html'
+      return pathname.replace(/go$/, '') + siteTarget
+    }
+
     // Only act on the exact legacy endpoint: a path segment named "go.php".
     if (!/\/go\.php$/.test(pathname)) return null
 
@@ -134,25 +184,7 @@
       return PUBLISHED_VERSIONS.indexOf(version) === -1 ? pre + 'latest' + post : m
     })
 
-    // Parse the `to` key. URLSearchParams handles '+', percent-decoding, and
-    // values containing '='; it never throws on a malformed escape (unlike a
-    // bare decodeURIComponent), so a garbage query degrades to the fallback
-    // landing rather than an uncaught exception that leaves the 404 visible.
-    var key = ''
-    if (typeof URLSearchParams !== 'undefined') {
-      key = new URLSearchParams(search || '').get('to') || ''
-    } else {
-      // Fallback for very old engines without URLSearchParams (e.g. IE).
-      var params = (search || '').replace(/^\?/, '').split('&')
-      for (var i = 0; i < params.length; i++) {
-        var eq = params[i].indexOf('=')
-        if (params[i].slice(0, eq === -1 ? params[i].length : eq) === 'to') {
-          var raw = (eq === -1 ? '' : params[i].slice(eq + 1)).replace(/\+/g, ' ')
-          try { key = decodeURIComponent(raw) } catch (e) { key = raw }
-          break
-        }
-      }
-    }
+    var key = parseKey(search)
 
     var target = Object.prototype.hasOwnProperty.call(MAPPING, key)
       ? MAPPING[key]
@@ -166,6 +198,7 @@
     module.exports = {
       resolveGoPhp: resolveGoPhp,
       MAPPING: MAPPING,
+      SITE_MAPPING: SITE_MAPPING,
       fallbackFor: fallbackFor,
       PUBLISHED_VERSIONS: PUBLISHED_VERSIONS
     }
