@@ -196,7 +196,7 @@ The service is excluded from autostart because generating access tokens is secur
 
 === How Do I Create an App Token?
 
-Use the CLI: `ocis auth-app create --user-name=${user} --expiration=${token_expiration}`. The default expiration is `72h`; valid time abbreviations are `h`, `m` and `s`. Alternatively, POST to the `/auth-app/tokens?expiry=72h` endpoint with an active bearer token, or use the impersonation API.
+Use the CLI: `ocis auth-app create --user-name=$\{user} --expiration=$\{token_expiration}`. The default expiration is `72h`; valid time abbreviations are `h`, `m` and `s`. Alternatively, POST to the `/auth-app/tokens?expiry=72h` endpoint with an active bearer token, or use the impersonation API.
 
 === Which Port Does the Auth-App Service Listen On?
 

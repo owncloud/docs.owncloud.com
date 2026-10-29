@@ -11,9 +11,9 @@ Welcome to the official ownCloud documentation. This page links to the documenta
 
 [TIP]
 ====
-* *Get started with oCIS* — run your first ownCloud Infinite Scale server with the step-by-step xref:9.0@ocis:admin:depl-examples/ubuntu-compose/ubuntu-compose-prod.adoc[Install Infinite Scale on a Server] guide.
-* *Community and support* — ask questions and meet other ownCloud users at https://join.owncloud.com[join.owncloud.com], the community hub for GitHub, GitHub Discussions, Matrix, and social channels.
-* *oCIS Field Guide* — explore https://owncloud.dev/ocis-field-guide/[owncloud.dev/ocis-field-guide], a visual guide to the ownCloud Web interface with automatically re-captured walkthroughs.
+* *Get started with oCIS* — run your first ownCloud Infinite Scale server with the step-by-step xref:ocis:admin:depl-examples/ubuntu-compose/ubuntu-compose-prod.adoc[Install Infinite Scale on a Server] guide.
+* *Community and support* — ask questions and meet other ownCloud users at https://join.owncloud.com[join.owncloud.com, window=_blank], the community hub for GitHub, GitHub Discussions, Matrix, and social channels.
+* *oCIS Field Guide* — explore https://owncloud.dev/ocis-field-guide/[owncloud.dev/ocis-field-guide, window=_blank], a visual guide to the ownCloud Web interface with automatically re-captured walkthroughs.
 ====
 
 == Documentation by Product
@@ -24,6 +24,7 @@ ownCloud Infinite Scale (oCIS) is ownCloud's cloud-native, microservices-based p
 
 xref:ocis:ROOT:index.adoc[Open the Infinite Scale documentation] for the latest stable release, or choose a version:
 
+// injected by ‎antora-extensions/landing-versions.js
 include::partial$generated-versions-ocis.adoc[]
 
 === ownCloud Classic (Server)
@@ -32,6 +33,7 @@ ownCloud Classic is the open source, LAMP-stack-based file sync and share server
 
 xref:server:ROOT:index.adoc[Open the ownCloud Classic documentation] for the latest stable release, or choose a version:
 
+// injected by ‎antora-extensions/landing-versions.js
 include::partial$generated-versions-server.adoc[]
 
 === Desktop App
@@ -40,6 +42,7 @@ The ownCloud desktop app syncs files between your computer and ownCloud Infinite
 
 xref:desktop:ROOT:index.adoc[Open the Desktop App documentation] for the latest stable release, or choose a version:
 
+// injected by ‎antora-extensions/landing-versions.js
 include::partial$generated-versions-desktop.adoc[]
 
 === Mobile App for Android
@@ -48,6 +51,7 @@ The ownCloud mobile app for Android brings your files and Infinite Scale spaces 
 
 xref:android:ROOT:index.adoc[Open the Android app documentation] for the latest stable release, or choose a version:
 
+// injected by ‎antora-extensions/landing-versions.js
 include::partial$generated-versions-android.adoc[]
 
 === Mobile App for iOS
@@ -56,6 +60,7 @@ The ownCloud mobile app for iOS brings your files and Infinite Scale spaces to i
 
 xref:ios-app:ROOT:index.adoc[Open the iOS app documentation] for the latest stable release, or choose a version:
 
+// injected by ‎antora-extensions/landing-versions.js
 include::partial$generated-versions-ios-app.adoc[]
 
 === ownCloud Web

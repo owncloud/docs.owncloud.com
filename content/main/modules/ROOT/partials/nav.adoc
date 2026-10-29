@@ -2,9 +2,11 @@
 * oCIS
 ** xref:ocis_releases.adoc[Releases]
 ** xref:ocis_release_notes.adoc[Release Notes]
+
 * Classic
 ** xref:server_releases.adoc[Releases]
 ** xref:server_release_notes.adoc[Release Notes]
+
 * Apps & Clients
 ** xref:desktop_release_notes.adoc[Desktop App]
 ** xref:ios_release_notes.adoc[iOS App]
@@ -23,17 +25,18 @@
 ** xref:{latest-ocis-version}@ocis:ROOT:index.adoc[oCIS Server]
 ** xref:webui:ROOT:index.adoc[oCIS Web Client]
 ** MCP Server (coming soon)
+
 * Classic
 ** xref:{latest-server-version}@server:ROOT:index.adoc[Classic Server]
 ** xref:{latest-server-version}@server:classic_ui:index.adoc[Classic Web]
+
 * Apps & Clients
 ** xref:{latest-desktop-version}@desktop:ROOT:index.adoc[Desktop Client]
 ** xref:{latest-android-version}@android:ROOT:index.adoc[Android App]
 ** xref:{latest-ios-version}@ios-app:ROOT:index.adoc[iOS App]
 
-// an empty comment block terminates the list above, so that How to Contribute
+// {empty} terminates the list above, so that 'How to Contribute'
 // starts a fresh top-level list instead of merging into Documentation by Product
-////
-////
+{empty}
 
 * xref:how_to_contribute.adoc[How to Contribute]
