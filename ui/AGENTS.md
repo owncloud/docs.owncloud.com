@@ -39,9 +39,25 @@ This applies to **any component** — whenever a new module is first introduced 
 The `webui` component uses `version: ~` (no version segment in URLs). Its entries in `llms.txt` correctly omit the version segment, e.g. `https://doc.owncloud.com/webui/index.html`.
 
 
+## UI Supplemental CSS
+
+Custom stylesheets live in `ui/supplemental/css/` and are linked from `ui/supplemental/partials/head-styles.hbs`. Link new sheets **after** `owncloud.css`, so equal-specificity rules win on source order and the brand custom properties (`--oc-navy`, `--oc-link`, ...) are available.
+
+### Landing page layout (`landing-page.css`)
+
+`content/main/modules/ROOT/pages/index.adoc` sets `:role: landing-page`. The custom `layouts/default.hbs` copies the page role onto the body element (`<body class="article landing-page">`), and every rule in `landing-page.css` is scoped to `body.landing-page`, so the compact card grid, the getting-started card row, and the inline version chips apply to the landing page only. All layout rules are wrapped in `@media screen`; print keeps the stock stacked layout.
+
+The landing page has **no table of contents**: it sets no `:toc:` attribute (which removes the inline AsciiDoc TOC), and `landing-page.css` hides `aside.toc.sidebar` and `aside.toc.embedded` — the stock UI otherwise builds the sidebar TOC client-side from the page headings and clones it into an embedded in-body copy (see the toc routine in the stock `site.js`). Do not add `:toc:` to the page without also removing those two rules.
+
+To give another page its own scoped styles: set `:role: <name>` in the page header and scope the rules to `body.<name>`. `extension-tests/landing-page-ui.test.js` guards the role, the stylesheet link, and the scoping.
+
 ## UI Supplemental JavaScript
 
-Custom JavaScript lives in `ui/supplemental/js/` and is layered onto the stock Antora default UI at build time.
+Custom JavaScript lives in `ui/supplemental/js/` and is layered onto the stock Antora default UI at build time (linked from `ui/supplemental/partials/footer-scripts.hbs`).
+
+### Expand the landing page navigation on startup (`nav-expand.js`)
+
+The stock `site.js` expands only the branch of the current page: it adds `is-active` to the ancestors of `.is-current-page`, and the stock CSS hides an item's children unless the item has `is-active`. On the landing page that leaves the product groups (oCIS / Classic / Apps & Clients in `content/main/modules/ROOT/partials/nav.adoc`) collapsed. `nav-expand.js` adds `is-active` to every `.nav-item` once the DOM is ready, scoped to `body.landing-page` via the page's `:role: landing-page` attribute; other components keep the stock behavior (their nav trees are large). The per-item toggles and the expand/collapse-all button keep working, since removing `is-active` collapses an item again.
 
 ### Click-to-zoom for images and diagrams (`medium-zoom-init.js`)
 

@@ -1,4 +1,7 @@
 <script id="site-script" src="{{{uiRootPath}}}/js/site.js" data-ui-root-path="{{{uiRootPath}}}"></script>
+{{!-- Expand the full left navigation on the landing page at startup (the stock
+      UI expands only the current page's branch). Scoped via body.landing-page. --}}
+<script src="{{{uiRootPath}}}/js/nav-expand.js"></script>
 <script async src="{{{uiRootPath}}}/js/vendor/highlight.js"></script>
 {{!-- Pagefind Component UI: self-registers the web components used in the navbar
       (<pagefind-modal-trigger> / <pagefind-modal>). Must load as a module. --}}
