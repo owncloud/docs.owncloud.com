@@ -115,8 +115,9 @@ test('the landing page highlights the getting-started resources', (t) => {
   const html = builtOrSkip(t, 'index.html')
   if (html == null) return
   const missing = []
+  const ocisLatest = latestByComponent().ocis
   const expected = [
-    'ocis/9.0/admin/depl-examples/ubuntu-compose/ubuntu-compose-prod.html',
+    `ocis/${ocisLatest}/admin/depl-examples/ubuntu-compose/ubuntu-compose-prod.html`,
     'https://join.owncloud.com',
     'https://owncloud.dev/ocis-field-guide/',
   ]
