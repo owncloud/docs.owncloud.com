@@ -165,18 +165,21 @@
 
   /**
    * Resolve a site-level `go?to=<key>` request, or return null when the path
-   * is not the site-level endpoint. Only `/go` directly under the site root
-   * matches, optionally behind a single project-pages prefix
-   * (e.g. "/owncloud-docs-monorepo/go"); a nested `.../latest/go` does not.
+   * is not the site-level endpoint. Only `go` (or `go/`) directly under the
+   * site root matches; `/webui/go` or `/server/latest/go` do not.
    *
    * @param {string} pathname e.g. "/go"
    * @param {string} search   e.g. "?to=webui-users-sharing"
-   * @returns {string|null} the redirect target, relative to the site, or null
+   * @param {string} [siteRoot] the site's root path with a trailing slash,
+   *   e.g. "/" in production or "/owncloud-docs-monorepo/" for a subpath
+   *   build. Defaults to "/".
+   * @returns {string|null} the root-absolute redirect target (including
+   *   siteRoot), or null
    */
-  function resolveSiteGo (pathname, search) {
-    if (!/^(\/[^/]+)?\/go$/.test(pathname)) return null
+  function resolveSiteGo (pathname, search, siteRoot) {
+    siteRoot = siteRoot || '/'
+    if (pathname !== siteRoot + 'go' && pathname !== siteRoot + 'go/') return null
 
-    var siteRoot = pathname.replace(/go$/, '') // keeps trailing slash
     return siteRoot + lookup(SITE_MAPPING, siteFallbackFor, parseKey(search))
   }
 
@@ -187,7 +190,7 @@
    *
    * @param {string} pathname e.g. "/server/latest/go.php"
    * @param {string} search   e.g. "?to=admin-sharing"
-   * @returns {string|null} the redirect target, relative to the site, or null
+   * @returns {string|null} the root-absolute redirect target, or null
    */
   function resolveGoPhp (pathname, search) {
     // Only act on the exact legacy endpoint: a path segment named "go.php".
@@ -210,10 +213,18 @@
    *
    * @param {string} pathname
    * @param {string} search
+   * @param {string} [siteRoot] see resolveSiteGo
    * @returns {string|null}
    */
-  function resolve (pathname, search) {
-    return resolveSiteGo(pathname, search) || resolveGoPhp(pathname, search)
+  function resolve (pathname, search, siteRoot) {
+    return resolveSiteGo(pathname, search, siteRoot) || resolveGoPhp(pathname, search)
+  }
+
+  // Site root path rendered by Antora on this <script> tag as
+  // data-site-root="{{site.path}}/": "/" in production, "/<subpath>/" when the
+  // site is built for a subpath. Falls back to "/" if the attribute is absent.
+  function siteRootOf (script) {
+    return (script && script.getAttribute && script.getAttribute('data-site-root')) || '/'
   }
 
   // Export for the browser (auto-redirect) and for tests (Node/CommonJS).
@@ -225,11 +236,16 @@
       MAPPING: MAPPING,
       SITE_MAPPING: SITE_MAPPING,
       fallbackFor: fallbackFor,
+      siteRootOf: siteRootOf,
       siteFallbackFor: siteFallbackFor,
       PUBLISHED_VERSIONS: PUBLISHED_VERSIONS
     }
   } else if (root && root.location) {
-    var to = resolve(root.location.pathname, root.location.search)
+    var to = resolve(
+      root.location.pathname,
+      root.location.search,
+      siteRootOf(root.document && root.document.currentScript)
+    )
     if (to) root.location.replace(to)
   }
 })(typeof window !== 'undefined' ? window : this)

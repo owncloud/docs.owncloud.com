@@ -8,6 +8,7 @@
           page. ownCloud Web likewise links to the site-level /go?to=<key>.
           This script runs in <head> on every page and is a no-op unless the
           path is one of these endpoints, in which case it redirects to the
-          mapped page BEFORE the 404 body renders (no visible flash). See
-          js/go-redirect.js. --}}
-    <script src="{{{uiRootPath}}}/js/go-redirect.js"></script>
+          mapped page BEFORE the 404 body renders (no visible flash).
+          data-site-root tells the script where the site-level /go lives
+          (site.path is '' in production). See js/go-redirect.js. --}}
+    <script src="{{{uiRootPath}}}/js/go-redirect.js" data-site-root="{{{site.path}}}/"></script>
