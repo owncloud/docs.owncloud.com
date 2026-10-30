@@ -270,14 +270,14 @@ IMPORTANT: If the app is enabled but either not or incorrectly configured, it wi
 
 [IMPORTANT]
 ====
-In both daemon modes (TCP and Unix socket), the Anti-Virus app checks that it is talking to a ClamAV daemon before every scan by sending the `PING` and `VERSION` commands to `clamd`. Both commands must be enabled, otherwise all uploads are rejected and the log shows `Unexpected response to version: COMMAND UNAVAILABLE`. Make sure the `EnableVersionCommand` option is not disabled in `/etc/clamav/clamd.conf`:
+Since Anti-Virus 1.2.3, in both daemon modes (TCP and Unix socket), the app checks that it is talking to a ClamAV daemon before every scan by sending the `PING` and `VERSION` commands to `clamd`. `PING` is always available, but `VERSION` can be disabled. If it is, uploads are rejected and the log shows `Unexpected response to version: COMMAND UNAVAILABLE`. Make sure the `EnableVersionCommand` option is not disabled in the `clamd` configuration on the host or container running ClamAV, for example `/etc/clamav/clamd.conf` on Debian/Ubuntu or `/etc/clamd.d/scan.conf` on RHEL-based systems:
 
 [source,plaintext]
 ----
 EnableVersionCommand yes
 ----
 
-Restart the daemon after changing the option:
+Restart `clamd` after changing the option, for example on Debian/Ubuntu:
 
 [source,bash]
 ----
