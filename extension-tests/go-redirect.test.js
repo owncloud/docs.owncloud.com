@@ -5,7 +5,7 @@ const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
 
-const { resolveGoPhp, MAPPING, fallbackFor, PUBLISHED_VERSIONS } = require('../ui/supplemental/js/go-redirect.js')
+const { resolve, resolveSiteGo, resolveGoPhp, MAPPING, SITE_MAPPING, fallbackFor, siteFallbackFor, siteRootOf, PUBLISHED_VERSIONS } = require('../ui/supplemental/js/go-redirect.js')
 
 const PREFIX = '/owncloud-docs-monorepo/server/latest/'
 
@@ -96,6 +96,71 @@ test('a value containing = is preserved (not truncated at the first =)', () => {
   assert.equal(resolveGoPhp(PREFIX + 'go.php', '?to=admin-x=y'), PREFIX + 'index.html')
 })
 
+test('a site-level go?to= key redirects relative to the site root', () => {
+  // ownCloud Web emits https://doc.owncloud.com/go?to=<key> (no .php, no version).
+  assert.equal(
+    resolveSiteGo('/go', '?to=webui-users-sharing'),
+    '/webui/owncloud_web/web_for_users.html#sharing'
+  )
+  // A trailing slash (e.g. from a normalising proxy) is accepted too.
+  assert.equal(
+    resolveSiteGo('/go/', '?to=webui-users-sharing'),
+    '/webui/owncloud_web/web_for_users.html#sharing'
+  )
+})
+
+test('a subpath build resolves against its site root', () => {
+  const root = '/owncloud-docs-monorepo/'
+  assert.equal(
+    resolveSiteGo(root + 'go', '?to=webui-users-sharing', root),
+    root + 'webui/owncloud_web/web_for_users.html#sharing'
+  )
+  // Without the matching site root, the subpath is not the endpoint.
+  assert.equal(resolveSiteGo(root + 'go', '?to=webui-users-sharing'), null)
+})
+
+test('an unknown webui-* key falls back to the Web docs', () => {
+  assert.equal(resolveSiteGo('/go', '?to=webui-nope'), '/webui/index.html')
+})
+
+test('an unknown or missing site-level key falls back to the site root', () => {
+  assert.equal(resolveSiteGo('/go', ''), '/index.html')
+  assert.equal(resolveSiteGo('/go', '?to=totally-unknown'), '/index.html')
+  // Server keys are not resolved at the site level.
+  assert.equal(resolveSiteGo('/go', '?to=admin-sharing'), '/index.html')
+})
+
+test('only the site-level go endpoint matches, not a nested or similar path', () => {
+  // A component-named segment is not a site prefix on a site without one.
+  for (const p of ['/webui/go', '/server/go', '/ocis/go', '/server/latest/go']) {
+    assert.equal(resolveSiteGo(p, '?to=webui-users-sharing'), null, p)
+  }
+  assert.equal(
+    resolveSiteGo('/owncloud-docs-monorepo/server/latest/go', '?to=webui-users-sharing', '/owncloud-docs-monorepo/'),
+    null
+  )
+  assert.equal(resolveSiteGo('/cargo', '?to=webui-users-sharing'), null)
+  assert.equal(resolveSiteGo(PREFIX + 'go.php', '?to=admin-sharing'), null)
+})
+
+test('resolve dispatches to the matching endpoint and ignores other pages', () => {
+  assert.equal(resolve('/go', '?to=webui-users-sharing'), '/webui/owncloud_web/web_for_users.html#sharing')
+  assert.equal(
+    resolve(PREFIX + 'go.php', '?to=admin-sharing'),
+    PREFIX + 'admin_manual/configuration/files/file_sharing_configuration.html'
+  )
+  assert.equal(resolve('/webui/go', '?to=webui-users-sharing'), null)
+  assert.equal(resolve('/webui/owncloud_web/web_for_users.html', ''), null)
+})
+
+test('siteRootOf reads data-site-root and defaults to "/"', () => {
+  const script = (value) => ({ getAttribute: (name) => (name === 'data-site-root' ? value : null) })
+  assert.equal(siteRootOf(script('/')), '/')
+  assert.equal(siteRootOf(script('/owncloud-docs-monorepo/')), '/owncloud-docs-monorepo/')
+  assert.equal(siteRootOf(script(null)), '/')
+  assert.equal(siteRootOf(null), '/')
+})
+
 test('fallbackFor returns the version-root entrypoint for any key', () => {
   assert.equal(fallbackFor('admin-x'), 'index.html')
   assert.equal(fallbackFor('developer-x'), 'index.html')
@@ -122,6 +187,26 @@ test('PUBLISHED_VERSIONS matches the built server version segments', (t) => {
   )
 })
 
+// Collect mapped targets (and fallback landings) missing from a built tree.
+// With `anchors`, a #fragment must also be the id of a section heading on the
+// target page, since released clients deep-link to it.
+function missingTargets (base, map, fallbacks, { anchors = false } = {}) {
+  const missing = []
+  for (const [key, target] of Object.entries(map)) {
+    const [page, anchor] = target.split('#')
+    const file = path.join(base, page)
+    if (!fs.existsSync(file)) {
+      missing.push(`${key} -> ${target}`)
+    } else if (anchors && anchor && !new RegExp(`<h[1-6] id="${anchor}"`).test(fs.readFileSync(file, 'utf8'))) {
+      missing.push(`${key} -> ${target} (no section heading with id="${anchor}")`)
+    }
+  }
+  for (const landing of fallbacks) {
+    if (!fs.existsSync(path.join(base, landing))) missing.push(`(fallback) ${landing}`)
+  }
+  return missing
+}
+
 // Guard against page moves: every mapped target must exist in the built site.
 // Skips automatically when the site has not been built yet.
 test('every mapped target exists in the built server/latest site', (t) => {
@@ -130,11 +215,18 @@ test('every mapped target exists in the built server/latest site', (t) => {
     t.skip('public/server/latest not built (run `npm run antora` to enable)')
     return
   }
-  const missing = []
-  for (const [key, target] of Object.entries(MAPPING)) {
-    if (!fs.existsSync(path.join(base, target))) missing.push(`${key} -> ${target}`)
-  }
-  // The unknown-key fallback landing must exist too.
-  if (!fs.existsSync(path.join(base, fallbackFor('')))) missing.push(`(fallback) ${fallbackFor('')}`)
+  const missing = missingTargets(base, MAPPING, [fallbackFor('')])
   assert.deepEqual(missing, [], 'mapped go.php targets missing from the build:\n' + missing.join('\n'))
+})
+
+// Guard against page moves for the site-level map, including the #anchor of
+// each target. The fallback landings must exist too.
+test('every site-level mapped target and anchor exists in the built site', (t) => {
+  const base = path.join(__dirname, '..', 'public')
+  if (!fs.existsSync(base)) {
+    t.skip('public not built (run `npm run antora` to enable)')
+    return
+  }
+  const missing = missingTargets(base, SITE_MAPPING, [siteFallbackFor(''), siteFallbackFor('webui-x')], { anchors: true })
+  assert.deepEqual(missing, [], 'mapped go targets missing from the build:\n' + missing.join('\n'))
 })

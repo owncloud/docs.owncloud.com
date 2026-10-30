@@ -18,8 +18,10 @@
  * path (a file literally named `go.php` would be served as
  * application/x-httpd-php, i.e. downloaded, so a static stub does NOT work).
  * This script is loaded from the page <head> on EVERY page; it is a no-op
- * except when the current path ends in `go.php`, in which case it reproduces
- * the original redirector against the current Antora page layout.
+ * except when the current path ends in `go.php` (reproducing the original
+ * redirector against the current Antora page layout) or is the site-level
+ * `go` endpoint that ownCloud Web links to (see SITE_MAPPING), which likewise
+ * falls through to the 404 page.
  *
  * The key -> target map is derived from the `:page-aliases: go/<key>.adoc`
  * stubs the docs already generate (the maintained source of truth), plus the
@@ -102,6 +104,17 @@
     'user-webdav': 'classic_ui/files/access_webdav.html'
   }
 
+  // key -> path relative to the site root, for links that are not tied to a
+  // server version. ownCloud Web (oCIS) links its contextual help as
+  //
+  //     https://doc.owncloud.com/go?to=<key>
+  //
+  // i.e. a root-level `go` without `.php` and without a version segment. Every
+  // released oCIS keeps emitting these, so the targets are maintained here.
+  var SITE_MAPPING = {
+    'webui-users-sharing': 'webui/owncloud_web/web_for_users.html#sharing'
+  }
+
   // Landing page for an unknown/mistyped key. The original go.php split the
   // fallback by key prefix (admin_manual / developer_manual / user_manual), but
   // those manuals have since been reorganized and an unknown key has no better
@@ -112,6 +125,64 @@
     return 'index.html'
   }
 
+  // Landing page for an unknown site-level key. A `webui-*` key that Web ships
+  // before SITE_MAPPING is updated lands on the Web docs instead of the site
+  // landing page. Relative to the site root.
+  function siteFallbackFor (key) {
+    return /^webui-/.test(key) ? 'webui/index.html' : 'index.html'
+  }
+
+  // Return map[key], or fallback(key) when the key is not mapped.
+  function lookup (map, fallback, key) {
+    return Object.prototype.hasOwnProperty.call(map, key) ? map[key] : fallback(key)
+  }
+
+  /**
+   * Return the value of the `to` query parameter, or '' when absent.
+   *
+   * @param {string} search e.g. "?to=admin-sharing"
+   * @returns {string}
+   */
+  function parseKey (search) {
+    // URLSearchParams handles '+', percent-decoding, and values containing
+    // '='; it never throws on a malformed escape (unlike a bare
+    // decodeURIComponent), so a garbage query degrades to the fallback landing
+    // rather than an uncaught exception that leaves the 404 visible.
+    if (typeof URLSearchParams !== 'undefined') {
+      return new URLSearchParams(search || '').get('to') || ''
+    }
+    // Fallback for very old engines without URLSearchParams (e.g. IE).
+    var params = (search || '').replace(/^\?/, '').split('&')
+    for (var i = 0; i < params.length; i++) {
+      var eq = params[i].indexOf('=')
+      if (params[i].slice(0, eq === -1 ? params[i].length : eq) === 'to') {
+        var raw = (eq === -1 ? '' : params[i].slice(eq + 1)).replace(/\+/g, ' ')
+        try { return decodeURIComponent(raw) } catch (e) { return raw }
+      }
+    }
+    return ''
+  }
+
+  /**
+   * Resolve a site-level `go?to=<key>` request, or return null when the path
+   * is not the site-level endpoint. Only `go` (or `go/`) directly under the
+   * site root matches; `/webui/go` or `/server/latest/go` do not.
+   *
+   * @param {string} pathname e.g. "/go"
+   * @param {string} search   e.g. "?to=webui-users-sharing"
+   * @param {string} [siteRoot] the site's root path with a trailing slash,
+   *   e.g. "/" in production or "/owncloud-docs-monorepo/" for a subpath
+   *   build. Defaults to "/".
+   * @returns {string|null} the root-absolute redirect target (including
+   *   siteRoot), or null
+   */
+  function resolveSiteGo (pathname, search, siteRoot) {
+    siteRoot = siteRoot || '/'
+    if (pathname !== siteRoot + 'go' && pathname !== siteRoot + 'go/') return null
+
+    return siteRoot + lookup(SITE_MAPPING, siteFallbackFor, parseKey(search))
+  }
+
   /**
    * Given the current location's pathname and query string, return the URL to
    * redirect a legacy `go.php?to=<key>` request to, or null when this is not a
@@ -119,7 +190,7 @@
    *
    * @param {string} pathname e.g. "/server/latest/go.php"
    * @param {string} search   e.g. "?to=admin-sharing"
-   * @returns {string|null} the redirect target, relative to the site, or null
+   * @returns {string|null} the root-absolute redirect target, or null
    */
   function resolveGoPhp (pathname, search) {
     // Only act on the exact legacy endpoint: a path segment named "go.php".
@@ -134,43 +205,47 @@
       return PUBLISHED_VERSIONS.indexOf(version) === -1 ? pre + 'latest' + post : m
     })
 
-    // Parse the `to` key. URLSearchParams handles '+', percent-decoding, and
-    // values containing '='; it never throws on a malformed escape (unlike a
-    // bare decodeURIComponent), so a garbage query degrades to the fallback
-    // landing rather than an uncaught exception that leaves the 404 visible.
-    var key = ''
-    if (typeof URLSearchParams !== 'undefined') {
-      key = new URLSearchParams(search || '').get('to') || ''
-    } else {
-      // Fallback for very old engines without URLSearchParams (e.g. IE).
-      var params = (search || '').replace(/^\?/, '').split('&')
-      for (var i = 0; i < params.length; i++) {
-        var eq = params[i].indexOf('=')
-        if (params[i].slice(0, eq === -1 ? params[i].length : eq) === 'to') {
-          var raw = (eq === -1 ? '' : params[i].slice(eq + 1)).replace(/\+/g, ' ')
-          try { key = decodeURIComponent(raw) } catch (e) { key = raw }
-          break
-        }
-      }
-    }
+    return versionRoot + lookup(MAPPING, fallbackFor, parseKey(search))
+  }
 
-    var target = Object.prototype.hasOwnProperty.call(MAPPING, key)
-      ? MAPPING[key]
-      : fallbackFor(key)
+  /**
+   * Return the redirect target for either endpoint, or null for any other page.
+   *
+   * @param {string} pathname
+   * @param {string} search
+   * @param {string} [siteRoot] see resolveSiteGo
+   * @returns {string|null}
+   */
+  function resolve (pathname, search, siteRoot) {
+    return resolveSiteGo(pathname, search, siteRoot) || resolveGoPhp(pathname, search)
+  }
 
-    return versionRoot + target
+  // Site root path rendered by Antora on this <script> tag as
+  // data-site-root="{{site.path}}/": "/" in production, "/<subpath>/" when the
+  // site is built for a subpath. Falls back to "/" if the attribute is absent.
+  function siteRootOf (script) {
+    return (script && script.getAttribute && script.getAttribute('data-site-root')) || '/'
   }
 
   // Export for the browser (auto-redirect) and for tests (Node/CommonJS).
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
+      resolve: resolve,
+      resolveSiteGo: resolveSiteGo,
       resolveGoPhp: resolveGoPhp,
       MAPPING: MAPPING,
+      SITE_MAPPING: SITE_MAPPING,
       fallbackFor: fallbackFor,
+      siteRootOf: siteRootOf,
+      siteFallbackFor: siteFallbackFor,
       PUBLISHED_VERSIONS: PUBLISHED_VERSIONS
     }
   } else if (root && root.location) {
-    var to = resolveGoPhp(root.location.pathname, root.location.search)
+    var to = resolve(
+      root.location.pathname,
+      root.location.search,
+      siteRootOf(root.document && root.document.currentScript)
+    )
     if (to) root.location.replace(to)
   }
 })(typeof window !== 'undefined' ? window : this)
