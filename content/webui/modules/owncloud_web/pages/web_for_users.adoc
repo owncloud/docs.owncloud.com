@@ -6,6 +6,10 @@
 IMPORTANT: the build of this file is referenced by the web UI via code. It MUST be available under:
 https://doc.owncloud.com/webui/next/owncloud_web/web_for_users.html
 If this file gets relocated or renamed, a page alias must be added to make it available under the above link again!
+
+Released web clients also deep-link to the `#sharing` anchor of the `=== Sharing` section below, via
+SITE_MAPPING in ui/supplemental/js/go-redirect.js (https://doc.owncloud.com/go?to=webui-users-sharing).
+If that heading is renamed or this file is moved, update SITE_MAPPING accordingly.
 ////
 
 == Introduction
