@@ -277,12 +277,21 @@ Since Anti-Virus 1.2.3, in both daemon modes (TCP and Unix socket), the app chec
 EnableVersionCommand yes
 ----
 
-Restart `clamd` after changing the option, for example on Debian/Ubuntu:
+Restart `clamd` after changing the option. On Debian/Ubuntu:
 
 [source,bash]
 ----
 sudo systemctl restart clamav-daemon
 ----
+
+On RHEL-based systems:
+
+[source,bash]
+----
+sudo systemctl restart clamd@scan
+----
+
+When ClamAV runs in a container, change the option in the container's `clamd.conf` and restart the container.
 ====
 
 ClamAV can be configured in the following two ways:
