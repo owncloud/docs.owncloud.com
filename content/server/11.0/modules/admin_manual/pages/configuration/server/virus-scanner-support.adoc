@@ -268,6 +268,32 @@ NOTE: Avoid any multiples of 10 to better distribute the load on the ClamAV viru
 
 IMPORTANT: If the app is enabled but either not or incorrectly configured, it will *strictly reject all uploads* for the whole instance!
 
+[IMPORTANT]
+====
+Since Anti-Virus 1.2.3, in both daemon modes (TCP and Unix socket), the app checks that it is talking to a ClamAV daemon before every scan by sending the `PING` and `VERSION` commands to `clamd`. `PING` is always available, but `VERSION` can be disabled. If it is, uploads are rejected and the log shows `Unexpected response to version: COMMAND UNAVAILABLE`. Make sure the `EnableVersionCommand` option is not disabled in the `clamd` configuration on the host or container running ClamAV, for example `/etc/clamav/clamd.conf` on Debian/Ubuntu or `/etc/clamd.d/scan.conf` on RHEL-based systems:
+
+[source,plaintext]
+----
+EnableVersionCommand yes
+----
+
+Restart `clamd` after changing the option. On Debian/Ubuntu:
+
+[source,bash]
+----
+sudo systemctl restart clamav-daemon
+----
+
+On RHEL-based systems:
+
+[source,bash]
+----
+sudo systemctl restart clamd@scan
+----
+
+When ClamAV runs in a container, change the option in the container's `clamd.conf` and restart the container.
+====
+
 ClamAV can be configured in the following two ways:
 
 . xref:configure-the-anti-virus-app-using-gui[By using the Antivirus Configuration panel]
