@@ -29,6 +29,12 @@
   "overrides": {
     "asciidoctor-opal-runtime": {
       "glob": "~10.4"
+    },
+    "@antora/collector-extension": {
+      "js-yaml": "~4.3.2"
+    },
+    "@opendevise/antora-swagger-ui-extension": {
+      "js-yaml": "~4.3.2"
     }
   }
 }
