@@ -83,6 +83,7 @@
 ***** xref:admin_manual:configuration/server/logging/request_tracing.adoc[Request Tracing]
 **** xref:admin_manual:configuration/server/reverse_proxy_configuration.adoc[Reverse Proxy Configuration]
 **** xref:admin_manual:configuration/server/security/index.adoc[Security]
+***** xref:admin_manual:configuration/server/security/account_lockout.adoc[Account Lockout]
 ***** xref:admin_manual:configuration/server/security/brute_force_protection.adoc[Brute-Force Protection]
 ***** xref:admin_manual:configuration/server/security/oauth2.adoc[OAuth2]
 ***** xref:admin_manual:configuration/server/security/password_policy.adoc[Password policy]

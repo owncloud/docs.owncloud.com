@@ -68,7 +68,7 @@ Running `occ` with no options lists all commands and options, like this example 
 [source,docker,subs="attributes+"]
 ----
 {occ-command-example-prefix-docker}
-ownCloud version 11.0.0
+ownCloud version 11.1.0
 
 Usage:
  command [options] [arguments]
@@ -107,7 +107,7 @@ Display your ownCloud version:
 [source,docker,subs="attributes+"]
 ----
 {occ-command-example-prefix-docker} -V
-  ownCloud version 11.0.0
+  ownCloud version 11.1.0
 ----
 
 Query your ownCloud server status:
@@ -116,8 +116,8 @@ Query your ownCloud server status:
 ----
 {occ-command-example-prefix-docker} status
   - installed: true
-  - version: 11.0.0.0
-  - versionstring: 11.0.0
+  - version: 11.1.0.1
+  - versionstring: 11.1.0
   - edition: Community
 ----
 
@@ -128,7 +128,7 @@ The default is plain text, but it can also be `json`:
 [source,docker,subs="attributes+"]
 ----
 {occ-command-example-prefix-docker} status --output=json
-{"installed":true,"version":"11.0.0.0","versionstring":"11.0.0","edition":""}
+{"installed":true,"version":"11.1.0.1","versionstring":"11.1.0","edition":""}
 ----
 
 or `json_pretty`:
@@ -138,8 +138,8 @@ or `json_pretty`:
 {occ-command-example-prefix-docker} status --output=json_pretty
 {
    "installed": true,
-   "version": "11.0.0.0",
-   "versionstring": "11.0.0",
+   "version": "11.1.0.1",
+   "versionstring": "11.1.0",
    "edition": "Community"
 }
 ----

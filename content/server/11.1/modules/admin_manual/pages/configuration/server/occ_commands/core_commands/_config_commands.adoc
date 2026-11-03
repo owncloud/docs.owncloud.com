@@ -344,7 +344,7 @@ the command will exit with 1.
 [source,docker,subs="attributes+"]
 ----
 {occ-command-example-prefix-docker} config:system:get version
-11.0.0.0
+11.1.0.1
 ----
 
 == config:system:set
