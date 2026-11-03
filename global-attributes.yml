@@ -27,10 +27,10 @@
     latest-docs-version: 'next'
     previous-docs-version: 'next'
 #   server
-    latest-server-version: '11.0'
-    latest-server-download-version: '11.0.1'
+    latest-server-version: '11.1'
+    latest-server-download-version: '11.1.0'
     previous-server-version: '10.16'
-    current-server-version: '11.0'
+    current-server-version: '11.1'
     oc-changelog-url: 'https://owncloud.com/changelog/server/'
     oc-install-package-url: 'https://download.owncloud.com/server/stable/?sort=time&order=asc'
     oc-examples-server-url: 'https://owncloud.install.com/owncloud'

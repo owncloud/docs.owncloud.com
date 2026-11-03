@@ -1,0 +1,278 @@
+= Publishing in the ownCloud Marketplace
+:toc: right
+:marketplace-repo-url: https://github.com/owncloud/marketplace
+:description: The ownCloud Marketplace is a Git-based catalog. You publish an app by opening a pull request that adds your app's package to the repository.
+
+== The ownCloud Marketplace
+
+{description}
+
+The {oc-marketplace-url}[ownCloud Marketplace] is a *backend-free catalog*: there is
+no server, no database, and no upload form. The Git repository at
+{marketplace-repo-url}[owncloud/marketplace] is the single source of truth.
+Continuous integration validates every submission, and once a pull request is merged
+the catalog, its JSON API, and the website are regenerated and deployed automatically.
+
+image:app/marketplace-home.png[The ownCloud Marketplace catalog]
+
+Every ownCloud instance ships with the xref:app/fundamentals/market_app.adoc[Market app],
+which reads this public catalog and lets administrators install and update apps directly
+from a running ownCloud instance.
+
+[NOTE]
+====
+This page describes publishing *ownCloud Classic apps*. The same marketplace also hosts
+ownCloud Infinite Scale (oCIS) web extensions, which follow a separate submission
+process documented in the {marketplace-repo-url}/blob/main/CONTRIBUTING.md[marketplace
+repository].
+====
+
+== Before You Publish: Sign Your App
+
+Starting with ownCloud 11, app code signing is mandatory: an unsigned or
+invalidly-signed app is blocked when it is installed, updated, or enabled on the
+server. Sign your app with `ocsign` before you package it — otherwise it will not run
+on ownCloud 11 and later, regardless of how it is distributed.
+
+See xref:developer_manual:app/advanced/code_signing.adoc[Code Signing] for the full
+signing procedure.
+
+[IMPORTANT]
+====
+Any change to the app after signing invalidates the signature. Remove any files you do
+not want to ship *before* signing, then package the signed app into the
+`package.tar.gz` you submit.
+====
+
+== Package Your App
+
+The `package.tar.gz` is a gzip-compressed tarball with a *single top-level directory
+named after your app id*, containing only the files needed to run the app in
+production:
+
+[source]
+----
+package.tar.gz
+└── <app-id>/
+    ├── appinfo/
+    │   ├── info.xml
+    │   └── signature.json   # written by ocsign
+    ├── lib/
+    ├── templates/
+    ├── css/
+    ├── js/
+    └── …                    # only runtime files
+----
+
+Ship *only* the code and assets the app needs at runtime. Leave development and
+tooling files out of the tarball, for example:
+
+* `tests/` and test fixtures
+* `composer.json`, `composer.lock`, and `vendor-bin/`
+* `.github/`, CI config, and Git metadata (`.git/`, `.gitignore`)
+* linter and static-analysis config (`.php-cs-fixer.dist.php`, `phpcs.xml`,
+`phpstan.neon`, `.phan/`)
+* contributor docs such as `CODE_OF_CONDUCT.md` and `agents.md`
+
+The order matters, because signing covers exactly the files present at signing time:
+
+. Assemble a clean copy of the app that contains only the runtime files (install
+production dependencies with `composer install --no-dev` if your app uses Composer).
+. Sign that copy with `ocsign` — this writes `appinfo/signature.json` into it (see
+xref:developer_manual:app/advanced/code_signing.adoc[Code Signing]).
+. Create the tarball from the parent directory so the app id is the top-level entry:
++
+[source,console]
+----
+tar -czf package.tar.gz -C build/dist <app-id>
+----
+
+TIP: The xref:attachment$/core/Makefile.example[example `Makefile`] shipped with the
+developer manual automates this: its `dist` target runs `composer install --no-dev`,
+copies only the runtime source directories into `build/dist/<app-id>/`, and produces the
+tarball with the layout shown above.
+
+== The Submission Workflow
+
+Publishing an app is a single pull request that adds one file to the marketplace
+repository:
+
+[source]
+----
+apps/<app-id>/releases/<version>/package.tar.gz
+----
+
+* `<app-id>` must exactly match the `<id>` element in your app's `appinfo/info.xml`.
+* `<version>` must exactly match the `<version>` element in the same `info.xml`.
+
+All app metadata — name, summary, description, category, author, license, screenshots,
+and dependencies — is read from the `appinfo/info.xml` *inside* the tarball. There is
+no form to fill in. See xref:app/fundamentals/info.adoc[Application Metadata] for the
+complete list of `info.xml` fields.
+
+Optionally, add a changelog next to the package:
+
+[source]
+----
+apps/<app-id>/releases/<version>/CHANGELOG.md
+----
+
+To publish, follow these steps:
+
+. Fork {marketplace-repo-url}[owncloud/marketplace] and create a branch.
+. Add your signed `package.tar.gz` at the path above. App tarballs are stored via
+https://git-lfs.com/[Git LFS].
+. Commit with your commits *PGP/GPG signed* and carrying a DCO `Signed-off-by` line:
++
+[source,console]
+----
+git commit -s -S -m "Publish <app-id> <version>"
+----
+. Open a pull request. Use the repository's pull request template and complete the
+checklist for an *app* submission.
+. CI validates the submission (see below). A maintainer reviews and merges it.
+. On merge to `main`, the catalog, API, and website are regenerated and deployed
+automatically. Your app then appears in the marketplace and in the Market app.
+
+=== What CI Validates
+
+The validation workflow checks that:
+
+* the path components `<app-id>` and `<version>` match the `<id>` and `<version>` in
+`info.xml`;
+* the `info.xml` is schema-valid;
+* every commit carries a DCO `Signed-off-by` line *and* a valid PGP/GPG signature;
+* at least one `<category>` is one of the xref:_app_categories[supported categories]
+(unsupported category values are dropped; a release is rejected only when *none* of its
+categories are supported);
+* the release is *new* — see immutability below.
+
+=== Releases Are Immutable
+
+Once a release is merged, its `package.tar.gz` can never be modified or deleted. To ship
+a fix or a new build, submit a *new version* with a new `<version>` directory. There is
+no concept of overwriting or replacing a published release.
+
+== App Categories
+
+Assign your app to one or more categories with the `<category>` element in `info.xml`:
+
+[source,xml]
+----
+<category>security</category>
+----
+
+The following categories are supported:
+
+* automation
+* collaboration
+* customization
+* files
+* games
+* integration
+* multimedia
+* pim
+* productivity
+* security
+* storage
+* tools
+
+Category values are matched case-insensitively. Any `<category>` value outside this set
+is dropped during validation; if none of an app's categories are supported, the release
+is rejected.
+
+NOTE: For a complete reference of the `<category>` element and the other `info.xml`
+fields, see xref:app/fundamentals/info.adoc[Application Metadata].
+
+== Publisher Page (Optional)
+
+Publishers can have an opt-in public page at `{oc-marketplace-url}/publishers/<slug>`
+that lists their apps together with a logo, description, website link, and aggregate
+download statistics. To set one up, open a pull request that adds a publisher directory
+to the marketplace repository:
+
+[source]
+----
+publishers/<slug>/
+├── publisher.json   # publisher metadata
+└── logo.png         # optional logo (PNG/JPEG/WebP)
+----
+
+The `<slug>` is the URL segment of the page and must equal the folder name. A page is
+generated only when `publisher.json` sets `enabled: true`. Every app id you claim in
+`publisher.json` must exist in the catalog and must not already be claimed by another
+publisher. See the {marketplace-repo-url}/blob/main/CONTRIBUTING.md[contributing guide]
+for the full field reference.
+
+== App Guidelines
+
+The following guidelines help ensure your app is high quality and safe for users.
+
+=== Legal and Security
+
+* Apps can not use `ownCloud` in their name.
+* Irregular and unannounced security audits of apps can and will take place.
+* If any indication of malicious intent or bad faith is found, the developer(s) in
+question can count on a minimum two-year ban from any ownCloud infrastructure.
+* Malicious intent includes deliberate spying on users by leaking user data to a
+third-party system or adding a back door (like a hard-coded user account) to ownCloud.
+An unintentional security bug that gets fixed in time won't be considered bad faith.
+* Apps do not violate any laws; they have to comply with copyright and trademark law.
+* App authors have to respond in a timely manner to security concerns and not make
+ownCloud more vulnerable to attack.
+
+Distributing malicious or illegal applications can have legal consequences including,
+but not limited to, ownCloud or affected users taking legal action.
+
+=== Technical
+
+* Apps can only use the public ownCloud API.
+* At the time of the release of an app, it can only be configured to be compatible with
+the latest ownCloud release +1.
+* Apps should not cause ownCloud to break, consume excessive memory, or slow ownCloud
+down.
+* Apps should not hamper the functionality of ownCloud unless that is explicitly the
+goal of the app.
+
+=== Providing Information
+
+The metadata in your `info.xml` should provide a professional and informative look and
+feel. Consider the following:
+
+* The *title* (`<name>`) of your app can be up to 50 characters. Provide a unique name
+that makes it easy for users to identify the product. Do not include your developer
+and/or company name in the title.
+* The *summary* of your app can be up to 90 characters. Provide a short description.
+This is displayed below the product titles.
+* The *description* of your app can be up to 4000 characters and supports Markdown
+formatting. It should ideally provide all the necessary information about your app —
+especially the information necessary to convince the user to download and use it. Don't
+get lost in technical details. Explain in simple, yet precise, steps what the user will
+get, focusing on the benefits your app offers.
+
+=== Images
+
+* Provide meaningful images to your users.
+* For best results, images should be 1400px wide and use a rough aspect ratio of 2:1.
+* The first image provided in your app's `info.xml` is used as the preview image and is
+displayed in the top area of your marketplace app page.
+
+=== Respect the Users
+
+* Apps have to follow design and HTML/CSS layout guidelines.
+* Apps correctly clean up after themselves on uninstall and correctly handle upgrades
+and downgrades.
+* Apps communicate their intended purpose and active features, including features
+introduced through updates.
+* Apps respect the users' choices and do not make unexpected changes, or limit users'
+ability to revert them. For example, they do not remove other apps or disable settings.
+* Apps must respect user privacy. If user data is sent anywhere, this must be explained
+and be kept to the minimum required for the functioning of the app. Use proper security
+measures when needed.
+
+== Disclaimer
+
+ownCloud reserves the right to block and/or delete any app which does not comply with
+the ownCloud quality standards. Additionally, we reserve the right to ban publishers who
+attempt to publish malicious code. This does not depend on whether it happens
+intentionally or not.

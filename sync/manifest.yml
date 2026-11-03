@@ -51,6 +51,7 @@ repos:
       - { branch: '10.16', dest: content/server/10.16 }
       # no 11.0 release branch upstream yet -- master still is the 11.0 line
       - { branch: master,  dest: content/server/11.0 }
+      # content/server/11.1 was copied from 11.0 after the mirror was retired; it has no upstream branch
 
   - name: docs-ocis
     url: https://github.com/owncloud/docs-ocis.git

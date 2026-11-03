@@ -1,0 +1,27 @@
+= The Market App
+:keywords: ownCloud Marketplace, ownCloud Market, apps
+:description: Here you will find out all you need to know about working with ownCloud's Market app.
+
+== Browse and Install Apps From the Market App
+
+{description} The Market app lets you browse the {oc-marketplace-url}[ownCloud Marketplace]
+and install apps directly from your running ownCloud instance. Open it by clicking the
+Market app icon in the top-level ownCloud navigation menu.
+
+image:apps/market/top-level-navigation-bar-highlighting-the-market-app.png[The Market app in the ownCloud top-level navigation menu]
+
+The marketplace catalog is public, so there is no account to create and nothing to log
+in to — the Market app reads the catalog directly. Browse or search the available apps,
+click an app to view its details, and click btn:[Install] to download, install, and
+enable it.
+
+image:apps/market/market-app.png[The Market app showing the ownCloud Marketplace catalog]
+
+Use the categories in the left-hand navigation to filter the catalog, or the search box
+to find an app by name.
+
+NOTE: If your ownCloud instance runs in a protected environment (DMZ) without internet
+access, the Market app cannot reach the marketplace. In that case, download apps manually
+from the {oc-marketplace-url}[ownCloud Marketplace] and install them by hand. See
+xref:admin_manual:installation/apps/apps_management_installation.adoc[Installing and
+Managing Apps].
