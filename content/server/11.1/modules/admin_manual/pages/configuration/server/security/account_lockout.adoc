@@ -6,12 +6,12 @@
 
 {description} The lockout is enabled by default and slows down online password guessing against a single account. It applies to every login with a user name and a password: the web login form, WebDAV with basic authentication and the OCS API.
 
-* Only accounts of the built-in user backend are locked. Accounts provided by LDAP/AD or an OpenID Connect provider are left to the policy of that identity provider.
+* Only accounts of the built-in user backend are locked. Accounts of an external user backend such as LDAP/AD are left to the policy of that backend. Accounts auto-provisioned by the OpenID Connect app belong to the built-in backend, so failed password attempts against them are counted.
 * A lockout always expires on its own, no administrative action is needed. An account is never disabled permanently.
 * A successful login resets the counter of failed attempts immediately.
 * Clients which authenticate with a valid app password or an OAuth2 token are not affected and keep working while the account is locked.
-* While an account is locked, every login attempt for it is refused with a message telling the user how long to wait, even if the password is correct.
-* Login names which do not belong to any account are counted and locked in the same way. The response therefore does not reveal which user names exist.
+* While an account is locked, every password login for it is refused, even if the password is correct. The login form and WebDAV tell the user how long to wait, other endpoints such as the OCS API report the refusal like a wrong password.
+* Login names which do not belong to any account are counted and locked in the same way as local accounts, so the lockout does not tell apart local accounts from unknown names.
 
 The lockout is independent of the xref:configuration/server/security/brute_force_protection.adoc[Brute-Force Protection] app, which bans the originating IP address. Both can be used together.
 
@@ -53,4 +53,4 @@ An administrator can lift a lockout before it expires with the xref:configuratio
 {occ-command-example-prefix-docker} user:unlock <login>
 ----
 
-`<login>` is the user name or email address the user logs in with. The command also resets the counter of failed attempts, and it works while the lockout is disabled.
+`<login>` is the user name or email address the user logs in with. An email address shared by several accounts is not resolved to an account, use the user name in that case. The command also resets the counter of failed attempts, and it works while the lockout is disabled.

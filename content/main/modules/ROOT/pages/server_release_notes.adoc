@@ -28,10 +28,6 @@ Dear ownCloud administrator, find below the changes and known issues in ownCloud
 * *Local accounts are temporarily locked after repeated failed logins*: https://github.com/owncloud/core/pull/41805[#41805], https://github.com/owncloud/core/pull/41936[#41936] +
 The lockout is enabled by default: after 5 failed password attempts an account of the built-in user backend is locked for 10 minutes. It is configured with the `account_lockout.*` keys in `config.php`, and `occ user:unlock` lifts a lockout early. See xref:11.1@server:admin_manual:configuration/server/security/account_lockout.adoc[Account Lockout] for details.
 
-== Changes in 10.16.7
-
-Dear ownCloud administrator, find below the changes and known issues in ownCloud Classic 10.16.7 that need your attention. You can also read the {oc-changelog-url}[full ownCloud Classic changelog] for further details on what has changed.
-
 == Changes in 11.0.1
 
 Dear ownCloud administrator, find below the changes and known issues in ownCloud Classic 11.0.1 that need your attention. You can also read the {oc-changelog-url}[full ownCloud Classic changelog] for further details on what has changed.
@@ -108,6 +104,10 @@ Files whose names end in extensions such as `.jpg`, `.png`, `.svg` or `.json` co
 * Do not crash on malformed translations: https://github.com/owncloud/core/issues/41720[#41720]
 * Reject non-numeric avatar crop coordinates and fix the avatar cropper: https://github.com/owncloud/core/issues/41723[#41723]
 * Add missing space to mail footer signature delimiter: https://github.com/owncloud/core/issues/41364[#41364]
+
+== Changes in 10.16.7
+
+Dear ownCloud administrator, find below the changes and known issues in ownCloud Classic 10.16.7 that need your attention. You can also read the {oc-changelog-url}[full ownCloud Classic changelog] for further details on what has changed.
 
 == Changes in 10.16.6
 
