@@ -1,0 +1,5 @@
+= Integration
+
+This section is dedicated to integrating ownCloud with other products.
+
+- xref:configuration/integration/splunk.adoc[ownCloud App for Splunk]

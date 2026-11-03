@@ -1,0 +1,203 @@
+= Example Setup Using Microsoft Azure
+:toc: right
+:toclevels: 2
+:ms-azure-ad: Microsoft Azure Active Directory (Azure AD)
+:login-azure-url: https://portal.azure.com/#home
+:openid-connect-frontchannel-logout-url: https://openid.net/specs/openid-connect-frontchannel-1_0.html
+:ms-configure-openid-settings-url: https://docs.microsoft.com/en-us/powerapps/maker/portals/configure/configure-openid-settings
+:ms-ad-redir-url: https://docs.microsoft.com/en-us/azure/active-directory/develop/reply-url#prefer-127001-over-localhost
+
+== Introduction
+
+{ms-azure-ad} is Microsoft’s multi-tenant cloud-based directory and identity management service. This document describes how to integrate Microsoft Azure Active Directory (Azure AD) as an identity provider (IdP) by configuring OpenID Connect (OIDC) in both Single Sign‑On and Azure AD.
+
+== Setup and Configuration
+
+The sections below will explain these areas and provide configuration examples using {ms-azure-ad} as the external Identity Provider.
+
+=== Configure Microsoft Azure AD
+
+Follow these steps to configure Microsoft Azure AD for use with OpenID Connect (OIDC):
+
+. Login to {login-azure-url}[Azure].
++
+image:configuration/user/oidc/ms-azure-ad/login-with-ms-azure.png[width=200]
+
+. Go to menu:Manage Azure Active Directory[].
++
+image:configuration/user/oidc/ms-azure-ad/select-manag-azure-ad.png[width=350]
+
+. Then go to menu:Properties[Tenant ID] and note your [#tenant-id]#`tenant ID`# for later use.
++
+image:configuration/user/oidc/ms-azure-ad/portal-tenant-id-ms-azure-ad.png[width=350]
+
+. Then go to menu:App registrations[New registration].
++
+image:configuration/user/oidc/ms-azure-ad/new-registration-ms-azure-ad.png[width=350]
+
+. Provide all required information.
++
+image:configuration/user/oidc/ms-azure-ad/provide-required-information-ms-azure-ad.png[width=350]
+
+. Go to menu:Authentication[Add a platform] and select btn:[Web] in Configure Platforms.
++
+image:configuration/user/oidc/ms-azure-ad/setup-web-application-ms-azure-ad.png[width=350]
+
+. Go to menu:Authentication[Configure Web > Redirect URI] and setup your btn:[Redirect URI].
++
+image:configuration/user/oidc/ms-azure-ad/setup-redirect-url-ms-azure-ad.png[width=350]
+
+. Go to menu:Certificates & secrets[Add a client secret] and setup the [#client-secret]#`client secret`# for your app.
++
+image:configuration/user/oidc/ms-azure-ad/setup-client-secret-ms-azure-ad.png[width=350]
+
+. Go to menu:Token configuration[Add optional claim] and setup the claims.
++
+image:configuration/user/oidc/ms-azure-ad/setup-claims-ms-azure-ad.png[width=350]
+
+. Go to menu:API permissions[Configured permissions > Add a permission] and add delegated permissions.
++
+image:configuration/user/oidc/ms-azure-ad/graph-permission-ms-azure-ad.png[width=350]
+
+. On the same page, do not forget to set menu:Grant admin consent[] to all permissions.
++
+image:configuration/user/oidc/ms-azure-ad/admin-consent-ms-azure-ad.png[width=350]
+
+. Go to menu:Expose an API[Set the App ID URI] and set the btn:[Application ID URI].
++
+image:configuration/user/oidc/ms-azure-ad/app-id-uri-ms-azure-ad.png[width=350]
+
+. Then on the same page:
+.. menu:Add a scope[Scope name] give the scope a meaningful name like *owncloud* and
+.. menu:Add a scope[Who can consent] allow *Admins and users* to consent. You will see the full api  [#api-scope]#`scope name`# below your entered scope name.
++
+image:configuration/user/oidc/ms-azure-ad/scope-consent-ms-azure-ad.png[width=350]
+
+. You get the [#client-id]#`CLIENT-ID`# after you have completed the Microsoft Azure setup process. On the following screen, you find an overview of most settings made. You can get there by clicking on menu:Overview[].
++
+image:configuration/user/oidc/ms-azure-ad/overview-screen-ms-azure.png[width=350]
+
+=== Microsoft Azure AD and RedirectURI
+
+When it comes to use `127.0.0.1` instead of `localhost` as Redirect URI, the task is not straight forward. Microsoft has an own documentation for this describing a workaround, see {ms-ad-redir-url}[Prefer 127.0.0.1 over localhost]. In summary, you have to select in your app menu:Manifest[Manage], then search for `replyUrlsWithType` and either add a new entry with `127.0.0.1` or modify an existing one.
+
+image:configuration/user/oidc/ms-azure-ad/ms-azure-manifest.png[width=350]
+
+=== Configure ownCloud Classic
+
+To set up ownCloud Classic to work with OpenID Connect, you have to:
+
+1. Install the {oc-marketplace-url}/apps/openidconnect[OpenID Connect App].
+2. Configure `config.php`.
+3. Set up service discovery.
+
+TIP: It is recommended to first figure out all configurations on a test system and to bring it to the production system once it's proven to work. Enabling the OpenID Connect App on the production system should be the last step in this process as it will then advertise OpenID Connect to all clients.
+
+==== List of OpenID Connect config.php Parameters
+
+Follow this link to read more about the
+xref:configuration/server/config_apps_sample_php_parameters.adoc#app-openid-connect-oidc[OIDC config.php parameters] available to configure OpenID Connect on ownCloud Classic.
+
+==== Example Setup
+
+The example snippet below can be added to the environment variables. Both environment variables listed below need to be added. The example assumes that login users have already been created in ownCloud.
+
+Use these links to see the corresponding configuration section for: 
+
+* xref:tenant-id[YOUR-DIRECTORY-TENANT-ID]
+* xref:client-secret[YOUR-CLIENT-SECRET]
+* xref:api-scope[YOUR-APPLICATION-ID-SCOPE-URI/owncloud]
+* xref:client-id[YOUR-CLIENT-ID]
+
+The following environment variables are used as templates. They must be adapted according to the classic key scheme shown one step below.
+
+[source,.env]
+----
+OWNCLOUD_HTTP_COOKIE_SAMESITE=None
+OWNCLOUD_OPENID_CONNECT={"provider-url":"https://idp.example.net","client-id":"...","client-secret":"...","loginButtonName":"OpenID Connect"}
+----
+
+[source,php]
+----
+'http.cookie.samesite' => 'None',
+
+'openid-connect' => [
+    'auto-provision' => ['enabled' => false],
+    'provider-url' => 'https://login.microsoftonline.com/YOUR-DIRECTORY-TENANT-ID/v2.0/',
+    'client-id' => 'YOUR-CLIENT-ID',
+    'client-secret' => 'YOUR-CLIENT-SECRET',
+    'loginButtonName' => 'Azure AD',
+    'autoRedirectOnLoginPage' => false,
+    'scopes' => [
+        'openid',
+        'api://YOUR-APPLICATION-ID-SCOPE-URI/owncloud',
+        'profile', 'email', 'offline_access',
+    ],
+    'mode' => 'email',
+    'search-attribute' => 'unique_name',
+    'use-access-token-payload-for-user-info' => true,
+],
+----
+
+[NOTE]
+====
+Which token version your app registration issues decides what ends up in the access token's
+`aud` (audience) claim. It is not part of the screens above, but the `requestedAccessTokenVersion`
+property in menu:Manage[Manifest]:
+
+* `null` or `1` - the default - issues v1.0 tokens, whose `aud` is the *Application ID URI* you
+  set under menu:Expose an API[], `api://YOUR-APPLICATION-ID-SCOPE-URI` below.
+* `2` issues v2.0 tokens, whose `aud` is the application's *client id*.
+
+Which of the two works depends on the openidconnect version, and for v1.0 tokens that difference
+decides whether the setup functions at all:
+
+* On openidconnect *2.4.1*, the current release for ownCloud 11, only `aud` identifies ownCloud, so
+  a registration issuing *v1.0 tokens cannot authenticate*: the login succeeds and the next request
+  logs the user out again. Set `requestedAccessTokenVersion` to `2`, or wait for 2.4.2. v2.0 tokens
+  work as they are.
+* On openidconnect *2.4.2*, in preparation, both work without further configuration, because the
+  claim naming the client is accepted too - `appid` for v1.0 tokens, `azp` for v2.0. To have the
+  audience enforced instead, add the matching value:
+
+[source,php]
+----
+'openid-connect' => [
+    // ...
+    // v1.0 tokens (the default): the Application ID URI exactly as set under
+    // "Expose an API" - note this is the App ID URI itself, without the /owncloud scope
+    'audience' => 'api://YOUR-APPLICATION-ID-SCOPE-URI',
+    // v2.0 tokens: the client id
+    // 'audience' => 'YOUR-CLIENT-ID',
+],
+----
+
+Take the value from menu:Expose an API[Application ID URI] verbatim: setting `audience` also
+switches off the claim that names the client - `appid` in v1.0 tokens, `azp` in v2.0 - so a value
+that does not match exactly rejects every access token. Decode one access token and read its `ver` claim to see which version your tenant issues.
+See
+xref:configuration/user/oidc/oidc.adoc#access-token-audience[Access Token Audience] for the
+details and for the openidconnect versions this applies to.
+====
+
+If you want to let ownCloud create users which are not present during a OIDC authentication, replace +
+`'auto-provision' => ['enabled' => false],` with:
+
+[source,php]
+----
+    'auto-provision' => [
+        'enabled' => true,
+        'email-claim' => 'email',
+        'display-name-claim' => 'name',
+    ],
+----
+
+=== Use oAuth2 authentication for ownCloud Desktop and Mobile Clients
+
+To allow the ownCloud clients (ownCloud Web, Desktop, Android and iOS) to interact with the ownCloud Classic server, you have to install and enable the oAuth2 app. Please see the xref:configuration/server/security/oauth2.adoc[Open Authentication (OAuth2)] for more details. In this setup, your ownCloud Clients will work without extra hassles, but please be advised that the ownCloud Classic server is acting as identity provider for the clients and you will not be able to delete those clients directly from your identity management solution.
+
+=== Register ownCloud Desktop and Mobile Clients with Azure AD
+
+To allow the ownCloud clients (ownCloud Web, Desktop, Android and iOS) to interact directly with the identity provider, you have to register them as clients.
+
+Only branded ownCloud desktop and mobile clients can be registered with Azure AD, because they need to be built with customized `scope` and `prompt` parameters. As prerequisite, an ownCloud full branding subscription is needed. For more details get in touch with {oc-support-url}[ownCloud Support].

@@ -1,0 +1,56 @@
+= Account Lockout
+:toc: right
+:description: ownCloud temporarily locks a local account after too many failed password attempts.
+
+== Introduction
+
+{description} The lockout is enabled by default and slows down online password guessing against a single account. It applies to every login with a user name and a password: the web login form, WebDAV with basic authentication and the OCS API.
+
+* Failed attempts are counted per login name. Accounts of the built-in user backend are locked. Accounts of an external user backend such as LDAP/AD are left to the policy of that backend, but only when the login name is their ownCloud user name. A login name the external backend accepts in addition, such as the email address or `sAMAccountName` when the internal user name is a UUID, is not an ownCloud user name, so it is counted and locked like a login name which does not belong to any account. Accounts auto-provisioned by the OpenID Connect app belong to the built-in backend, so failed password attempts against them are counted.
+* A lockout always expires on its own, no administrative action is needed. An account is never disabled permanently.
+* A successful login resets the counter of the user name. A successful login with the email address resets the counter of the email address as well, a successful login with the user name does not.
+* Clients which authenticate with a valid app password or an OAuth2 token are not affected and keep working while the account is locked.
+* While an account is locked, every password login for it is refused, even if the password is correct. The login form and WebDAV tell the user how long to wait, other endpoints such as the OCS API report the refusal like a wrong password.
+* Login names which do not belong to any account are counted and locked in the same way as local accounts, so the lockout does not tell apart local accounts from unknown names.
+
+The lockout is independent of the xref:configuration/server/security/brute_force_protection.adoc[Brute-Force Protection] app, which bans the originating IP address. Both can be used together.
+
+== Configuration
+
+The lockout is configured in `config.php` with the following keys. They are described in detail in the xref:configuration/server/config_sample_php_parameters.adoc[config.php parameters].
+
+[width="100%",cols="35%,15%,50%",options="header"]
+|===
+| Key
+| Default
+| Description
+
+| `account_lockout.enabled`
+| `true`
+| Enables or disables the lockout.
+
+| `account_lockout.max_attempts`
+| `5`
+| Number of failed password attempts which triggers the lockout.
+
+| `account_lockout.duration`
+| `600`
+| How long an account stays locked, in seconds. Keep this short, at most `1800` (30 minutes).
+
+| `account_lockout.attempt_window`
+| `900`
+| Seconds of inactivity after which the counter of failed attempts is forgotten. The window restarts with every failure, so failures less than this far apart keep adding up, however long the whole series takes.
+|===
+
+WARNING: Anybody who knows a user name can keep that account locked by repeatedly submitting wrong passwords for it. This is inherent to any lockout. Where it matters more than online password guessing, shorten `account_lockout.duration` or disable the lockout.
+
+== Unlocking an Account
+
+An administrator can lift a lockout before it expires with the xref:configuration/server/occ_command.adoc#unlocking-a-user[occ user:unlock] command:
+
+[source,docker,subs="attributes+"]
+----
+{occ-command-example-prefix-docker} user:unlock <login>
+----
+
+`<login>` is the user name or email address the user logs in with. An email address shared by several accounts is not resolved to an account, use the user name in that case. The command also resets the counter of failed attempts, and it works while the lockout is disabled.

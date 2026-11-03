@@ -5,6 +5,7 @@
 :description: Dear ownCloud Classic administrator, find below the changes and known issues in ownCloud Classic that need your attention.
 :page-aliases: {latest-server-version}@server:admin_manual:whats_new_admin.adoc, \
 {latest-server-version}@server:ROOT:server_release_notes.adoc, \
+11.0@server:admin_manual:whats_new_admin.adoc, 11.0@server:ROOT:server_release_notes.adoc, \
 next@docs::server_release_notes.adoc, next@docs_main::server_release_notes.adoc
 
 :server-10_2-avatar-change-url: https://github.com/owncloud/core/issues/35311
@@ -16,6 +17,18 @@ next@docs::server_release_notes.adoc, next@docs_main::server_release_notes.adoc
 
 toc::[]
 
+
+== Changes in 11.1.0
+
+Dear ownCloud administrator, find below the changes and known issues in ownCloud Classic 11.1.0 that need your attention. You can also read the {oc-changelog-url}[full ownCloud Classic changelog] for further details on what has changed.
+
+[discrete]
+=== Changes
+
+* *Local accounts are temporarily locked after repeated failed logins*: https://github.com/owncloud/core/pull/41805[#41805], https://github.com/owncloud/core/pull/41936[#41936] +
+The lockout is enabled by default: after 5 failed password attempts an account of the built-in user backend is locked for 10 minutes. It is configured with the `account_lockout.*` keys in `config.php`, and `occ user:unlock` lifts a lockout early. See xref:11.1@server:admin_manual:configuration/server/security/account_lockout.adoc[Account Lockout] for details.
+* *The signature of every installed app package is verified*: https://github.com/owncloud/core/pull/41955[#41955] +
+Where code signing is enforced, an app without a signature is only installed or updated when it is listed in `integrity.ignore.missing.app.signature`. An app archive must contain exactly one app folder, named after the app id in its `info.xml`.
 
 == Changes in 11.0.1
 
@@ -93,6 +106,16 @@ Files whose names end in extensions such as `.jpg`, `.png`, `.svg` or `.json` co
 * Do not crash on malformed translations: https://github.com/owncloud/core/issues/41720[#41720]
 * Reject non-numeric avatar crop coordinates and fix the avatar cropper: https://github.com/owncloud/core/issues/41723[#41723]
 * Add missing space to mail footer signature delimiter: https://github.com/owncloud/core/issues/41364[#41364]
+
+== Changes in 10.16.7
+
+Dear ownCloud administrator, find below the changes and known issues in ownCloud Classic 10.16.7 that need your attention. You can also read the {oc-changelog-url}[full ownCloud Classic changelog] for further details on what has changed.
+
+[discrete]
+=== Changes
+
+* *The signature of every installed app package is verified*: https://github.com/owncloud/core/pull/41959[#41959] +
+Where code signing is enforced, an app without a signature is only installed or updated when it is listed in `integrity.ignore.missing.app.signature`. An app archive must contain exactly one app folder, named after the app id in its `info.xml`.
 
 == Changes in 10.16.6
 

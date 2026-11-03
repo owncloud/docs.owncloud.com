@@ -53,7 +53,7 @@
   // the sitemap keep-set both derive `latest` automatically from
   // component.latest. The unit tests fail the build if this list drifts from
   // the published server segments.
-  var PUBLISHED_VERSIONS = ['10.16', '11.0', 'latest', 'next']
+  var PUBLISHED_VERSIONS = ['10.16', '11.0', '11.1', 'latest', 'next']
 
   // key -> path relative to the version root (…/server/<version>/).
   var MAPPING = {

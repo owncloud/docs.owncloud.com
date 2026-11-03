@@ -1,6 +1,7 @@
 = Installing with Docker
 :toc: right
 :description: ownCloud can be installed using the official ownCloud Docker image.
+:docker-image-version: 11.0.1
 :page-aliases: enterprise/installation/install.adoc, \
 installation/index.adoc, \
 installation/source_installation.adoc, \
@@ -64,10 +65,10 @@ For testing purposes or a quick hands-on to get familiar with the look and feel,
 
 [source,docker,subs="attributes+"]
 ----
-docker run --rm --name oc-eval -d -p{std-port-http}:{std-port-http} owncloud/server:{latest-server-download-version}
+docker run --rm --name oc-eval -d -p{std-port-http}:{std-port-http} owncloud/server:{docker-image-version}
 ----
 
-This starts a docker container with the name "oc-eval" in the background (option `-d`). `owncloud/server:{latest-server-download-version}` is the docker image downloaded from Docker Hub. Always name an explicit version tag, see the note on the `OWNCLOUD_IMAGE` setting below. If you don't start the container with option `-d`, the logs will be displayed in the shell. If you are running it in the background as in the example above, you can display the logs with the command:
+This starts a docker container with the name "oc-eval" in the background (option `-d`). `owncloud/server:{docker-image-version}` is the docker image downloaded from Docker Hub. Always name an explicit version tag, see the note on the `OWNCLOUD_IMAGE` setting below. If you don't start the container with option `-d`, the logs will be displayed in the shell. If you are running it in the background as in the example above, you can display the logs with the command:
 
 [source,docker]
 ----
@@ -156,7 +157,7 @@ Only a few settings are required, these are:
 | `OWNCLOUD_IMAGE`
 | The ownCloud version. +
 Always use an explicit version, never `latest`.
-a| `{latest-server-download-version}`
+a| `{docker-image-version}`
 
 | `OWNCLOUD_DOMAIN` *^1^*
 a| Only for use with a single ownCloud domain +
@@ -205,7 +206,7 @@ a| xref:{config-sample}#override-cli-url[OWNCLOUD_OVERWRITE_CLI_URL]
 [NOTE]
 ====
 * `OWNCLOUD_IMAGE` +
-Pin this to a full version like `{latest-server-download-version}`. Do not use the `latest` tag: it does not track the newest ownCloud Classic release, and there are no rolling major or minor tags either. Using an explicit version also means you decide when an upgrade happens, rather than a container restart deciding it for you.
+Pin this to a full version like `{docker-image-version}`. Do not use the `latest` tag: it does not track the newest ownCloud Classic release, and there are no rolling major or minor tags either. Using an explicit version also means you decide when an upgrade happens, rather than a container restart deciding it for you.
 
 * `ADMIN_USERNAME` and `ADMIN_PASSWORD` +
 The values will not change between deploys even if you change them in the `.env` file. +

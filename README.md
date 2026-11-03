@@ -154,7 +154,7 @@ Four bits of bookkeeping remain:
 | Product | Versions (folder) | Notes |
 |---------|-------------------|-------|
 | main | — | ROOT landing component (versionless) |
-| server | 11.0, 10.16 | no 11.0 branch upstream yet; master is the 11.0 line and is `latest` |
+| server | 11.1, 11.0, 10.16 | 11.1 is `latest`, copied from 11.0 (never imported); 11.0 was imported from master |
 | ocis | 8.3 (dev), 8.2, 8.1, 8.0, 7.3 | master→8.3 (prerelease); 8.2 branch is `latest` |
 | webui | — | single rolling component (versionless) |
 | desktop | 7.2 (dev), 7.1, 6.0, 5.3 | master→7.2 (prerelease); 7.1 branch is `latest` |
