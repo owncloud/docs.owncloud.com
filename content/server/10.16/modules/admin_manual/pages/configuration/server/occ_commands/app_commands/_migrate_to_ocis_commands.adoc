@@ -1,6 +1,6 @@
 = Migrate to oCIS
 
-The _Migrate to oCIS_ app is not available on the ownCloud marketplace. If you plan a migration, get in touch with {oc-support-url}[ownCloud support] for more details.
+The _Migrate to oCIS_ app is available on the {oc-marketplace-url}/apps/migrate_to_ocis[ownCloud Marketplace]. If you plan a migration, get in touch with {oc-support-url}[ownCloud support] for more details.
 
 See the xref:maintenance/migrating_to_ocis.adoc[Migrating to ownCloud Infinite Scale] documentation for the sequence and details of the migration.
 

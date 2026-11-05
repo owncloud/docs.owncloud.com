@@ -1,7 +1,6 @@
 = ownCloud Roles
 :toc: right
 :toclevels: 1
-:collabora-online-app-url: {oc-marketplace-url}/apps/richdocuments
 
 :description: ownCloud provides several roles a user can have. This description gives an overview of these roles.
 
@@ -20,7 +19,7 @@
 * Has no use of clients.
 * Quota is that of the sharer.
 * Permissions are those granted by the sharer for specific content, e.g., _view-only_, _edit_, and _File Drop_.
-* Can only use file and viewer apps, such as PDF Viewer and {collabora-online-app-url}[Collabora Online].
+* Can only use file and viewer apps, such as PDF Viewer and xref:enterprise/collaboration/collabora_secure_view.adoc[Collabora Online].
 
 == Guest
 
