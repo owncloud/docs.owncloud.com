@@ -17,6 +17,8 @@
 
 The {search_elastic-app-url}[Full Text Search] app integrates full text search into ownCloud, powered by Elasticsearch. This document describes how to setup the ownCloud part of the Full Text Search app.
 
+NOTE: The Full Text Search app (`search_elastic`) is not bundled with ownCloud. Download it from its {search_elastic-app-url}[GitHub releases page] and install it manually as described in xref:installation/apps_management_installation.adoc#installing-apps-manually[Installing Apps Manually].
+
 == Prerequisites
 
 . A fully functioning {elastic-search-url}[Elasticsearch Server 7]. Follow the {elastic-search-install-url}[Installation and Upgrade Guide] for your environment.
