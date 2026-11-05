@@ -6,7 +6,7 @@
 
 :elastic-search-url: https://www.elastic.co/elasticsearch/
 :elastic-search-install-url: https://www.elastic.co/guide/en/elastic-stack/7.17/index.html
-:search_elastic-app-url: {oc-marketplace-url}/apps/search_elastic 
+:search_elastic-app-url: https://github.com/owncloud/search_elastic/releases
 :simple-query-string-query-url: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html
 :ingest-url: https://www.elastic.co/guide/en/elasticsearch/plugins/current/ingest-attachment.html
 :create-api-key-url: https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html#security-api-create-api-key

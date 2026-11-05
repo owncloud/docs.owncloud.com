@@ -22,8 +22,8 @@ To get this working, you need to install and/or configure the following componen
 . Microsoft Azure Active Directory
 
 . ownCloud apps:
-.. {oc-marketplace-url}/apps/openidconnect[OpenID Connect]
-.. {oc-marketplace-url}/apps/msteamsbridge[MS-Teams Bridge App]
+.. xref:configuration/user/oidc/oidc.adoc[OpenID Connect]
+.. MS-Teams Bridge App
 
 . The custom app(s) you have generated with {msteams-generator-url}[ownCloud Generator for Admins]
 
@@ -32,7 +32,7 @@ To get this working, you need to install and/or configure the following componen
 === Option 2 "Standard": With Basic Authentication and ownCloud Standard Edition
 
 . ownCloud apps:
-.. {oc-marketplace-url}/apps/openidconnect[OpenID Connect]
+.. xref:configuration/user/oidc/oidc.adoc[OpenID Connect]
 . The custom Microsoft Teams app(s) you have generated with the {msteams-generator-url}[ownCloud Generator for Admins]
 . Microsoft Teams
 
@@ -46,7 +46,7 @@ Assuming you have an ownCloud server version 10.7 or higher already running in y
 
 . Install and enable the MS-Teams Bridge app, minimum required version: v1.0.0.
 
-. Install and enable the {oc-marketplace-url}/apps/openidconnect[OpenID Connect] app from the ownCloud marketplace, minimum required version: v2.0.0.
+. Install and enable the xref:configuration/user/oidc/oidc.adoc[OpenID Connect] app, minimum required version: v2.0.0.
 
 === Configure the MS-Teams Bridge App
 

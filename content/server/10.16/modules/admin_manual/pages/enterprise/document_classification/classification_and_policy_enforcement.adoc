@@ -105,7 +105,7 @@ Microsoft Office can be extended with the {novapath_url}[NovaPath] addon, to pro
 Currently Microsoft Office formats (_docx_, _dotx_, _xlsx_, _xltx_, _pptx_, _ppsx_ and _potx_) are supported
 LibreOffice provides an integrated classification manager (TSCP).
 
-To use automated classification based on document metadata, install and enable the {oc-marketplace-url}/apps/files_classifier[Document Classification] extension. The configuration depends on the tools and the classification framework in use.
+To use automated classification based on document metadata, install and enable the Document Classification extension. The configuration depends on the tools and the classification framework in use.
 
 Administrators can find examples and generalized configuration instructions below.
 
@@ -113,7 +113,7 @@ Administrators can find examples and generalized configuration instructions belo
 
 IMPORTANT: For several file types, the classification relies on the installation of `exiftool`. For details see below.
 
-PDF and several Image formats like JPEG, PNG, HEIC support EXIF metadata. See the documentation for a full list of https://exiftool.org/#supported[supported file formats] of exiftool. Support for EXIF was added in version 1.5.0 of the {oc-marketplace-url}/app/files_classifier[Files Classifier app]. Please note that the feature requires the installation of exiftool. 
+PDF and several Image formats like JPEG, PNG, HEIC support EXIF metadata. See the documentation for a full list of https://exiftool.org/#supported[supported file formats] of exiftool. Support for EXIF was added in version 1.5.0 of the Files Classifier app. Please note that the feature requires the installation of exiftool. 
 
 [source,bash]
 ----
@@ -294,7 +294,7 @@ The following sections illustrate the available policies and explain how they ca
 === Feature Policies
 
 Feature policies are restrictions that prevent users from using a feature or force them to use it in a certain way.
-They are provided by the {oc-marketplace-url}/apps/files_classifier[Document Classification] extension, which currently supports the following policies:
+They are provided by the Document Classification extension, which currently supports the following policies:
 
 - xref:prevent-upload[Prevent Upload]
 - xref:prevent-link-sharing[Prevent Link Sharing]

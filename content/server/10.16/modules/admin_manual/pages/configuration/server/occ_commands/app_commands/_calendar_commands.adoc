@@ -1,5 +1,5 @@
 = Calendar
 
-Marketplace URL: {oc-marketplace-url}/apps/calendar[Calendar]
+Included in the complete tarball and the Docker image, see xref:installation/apps_supported.adoc[Supported Apps in ownCloud].
 
 For commands for managing the calendar, please see the DAV Command section in the occ core command set.

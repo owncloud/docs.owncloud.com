@@ -7,7 +7,7 @@
 
 == Introduction
 
-The {oc-marketplace-url}/apps/admin_audit[Auditing] app is an Enterprise only app and available on the marketplace. It traces user and admin actions, in particular the following events:
+The Auditing app is included in the complete tarball and the Docker image. It traces user and admin actions, in particular the following events:
 
 * Login and logout events of users
 * File system operations (create / delete / move; including actions on the trash bin and versioning)
@@ -25,7 +25,7 @@ TIP: You may also want to check out the {splunk-url}[_ownCloud App for Splunk_].
 
 == Installation and Enabling
 
-Download the {oc-marketplace-url}/apps/admin_audit[Auditing] app from the marketplace and enable it in the ownCloud app settings.
+Enable the Auditing app in the ownCloud app settings.
 
 .Figure 1 Auditing
 image:enterprise/logging/admin_auditing.png[Auditing]

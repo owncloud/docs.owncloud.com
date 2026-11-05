@@ -1,6 +1,6 @@
 = Windows Network Drive (WND)
 
-Marketplace URL: {oc-marketplace-url}/apps/windows_network_drive[External Storage: Windows Network Drives]
+Included in the complete tarball and the Docker image, see xref:installation/apps_supported.adoc[Supported Apps in ownCloud].
 
 Integrate Windows and Samba/CIFS shared network drives as external storages. For details please see the
 xref:enterprise/external_storage/windows-network-drive_configuration.adoc[Windows Network Drive (WND)] documentation.

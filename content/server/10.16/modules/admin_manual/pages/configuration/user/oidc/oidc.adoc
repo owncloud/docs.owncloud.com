@@ -51,7 +51,7 @@ Setting up ownCloud Classic to work with OpenID Connect requires a couple of com
 
 - An external identity provider configured to work with the ownCloud components
 - A distributed memcache setup - such as Redis or Memcached - is required to operate this app. Follow the xref:configuration/server/caching_configuration.adoc[caching documentation] on how to set it up.
-- The {oc-marketplace-url}/apps/openidconnect[OpenID Connect App] installed on ownCloud Classic
+- The OpenID Connect App installed on ownCloud Classic
 - Configuration settings in `config.php` on ownCloud Classic
 +
 * `'http.cookie.samesite' \=> 'None',`

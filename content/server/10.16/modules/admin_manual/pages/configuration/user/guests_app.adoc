@@ -13,7 +13,7 @@ NOTE: Guest users do not have storage space and can only work on content that is
 
 == Installation
 
-Install and enable the {oc-marketplace-url}/apps/guests[Guests] app if not already installed with your bundle. The Guests app requires the email settings to be configured in your ownCloud setup, because you need to be able to invite your guests by email.
+Enable the Guests app, which is included in the complete tarball and the Docker image. The Guests app requires the email settings to be configured in your ownCloud setup, because you need to be able to invite your guests by email.
 
 == Configuration
 

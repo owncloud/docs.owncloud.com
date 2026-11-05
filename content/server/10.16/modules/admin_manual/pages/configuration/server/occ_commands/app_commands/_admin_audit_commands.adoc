@@ -1,6 +1,6 @@
 = Auditing
 
-Marketplace URL: {oc-marketplace-url}/apps/admin_audit[Auditing]
+Included in the complete tarball and the Docker image, see xref:installation/apps_supported.adoc[Supported Apps in ownCloud].
 
 Tracks various activities and actions of your users and admins. For details, please see the
 xref:enterprise/logging/admin_audit.adoc[Auditing] documentation.

@@ -1,6 +1,6 @@
 = Collabora Online / Secure View
 
-Marketplace URL: {oc-marketplace-url}/apps/richdocuments[Collabora Online]
+Included in the complete tarball and the Docker image, see xref:installation/apps_supported.adoc[Supported Apps in ownCloud].
 
 Collabora Online allows you to work with all kinds of collabora office documents inside ownCloud for improved productivity. For details, see the
 xref:enterprise/collaboration/collabora_secure_view.adoc[Collabora Online / Secure View] documentation.

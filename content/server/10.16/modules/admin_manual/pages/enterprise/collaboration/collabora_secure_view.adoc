@@ -74,8 +74,8 @@ image:enterprise/collaboration/access-denied.png[Access denied to a document whe
 To make sure that the secure view feature is deployed securely and cannot be circumvented, it is important to disable the following extensions:
 
 * {oc-marketplace-url}/apps/onlyoffice[ONLYOFFICE]
-* {oc-marketplace-url}/apps/wopi[Microsoft Office Online]
-* {oc-marketplace-url}/apps/files_texteditor[Text editor]
+* xref:enterprise/collaboration/msoffice-wopi-integration.adoc[Microsoft Office Online]
+* Text editor
 
 Additionally, you might want to _disable public link sharing_ via menu:Settings[Admin > Sharing > Allow users to share via link] so that users cannot accidentally share files publicly without secure view protection.
 

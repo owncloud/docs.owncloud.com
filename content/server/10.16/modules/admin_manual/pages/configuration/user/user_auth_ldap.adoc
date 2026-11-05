@@ -34,7 +34,7 @@ The LDAP application supports:
 
 == Configuration
 
-First, install the {oc-marketplace-url}/apps/user_ldap[LDAP Integration] app. Then, go to your Admin page to configure it. The LDAP configuration panel has four tabs. A correctly completed first tab ("Server") is mandatory to access the other tabs. A green indicator light appears when the configuration is correct. Hover your cursor over the fields to see some pop-up tooltips.
+First, install the LDAP Integration app. Then, go to your Admin page to configure it. The LDAP configuration panel has four tabs. A correctly completed first tab ("Server") is mandatory to access the other tabs. A green indicator light appears when the configuration is correct. Hover your cursor over the fields to see some pop-up tooltips.
 
 === Server Tab
 

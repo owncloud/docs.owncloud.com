@@ -50,7 +50,7 @@ NOTE: Restoring files restores the backup copy for *all users*, including the us
 
 === Sharing Files with Guest Users
 
-Users can also share files and folders with guest users. To do so, your ownCloud administrator will need to have installed the {oc-marketplace-url}/apps/guests[Guest application].
+Users can also share files and folders with guest users. To do so, your ownCloud administrator will need to have enabled the xref:admin_manual:configuration/user/guests_app.adoc[Guests app].
 
 If it’s already installed, in the `**User and Groups**` field of the `**Sharing**` panel type the email address of a user who is not already a user in your ownCloud installation. Note that the ownCloud admin can exclude domains. A popup with the suffix `(guest)` will appear as in the screenshot below.
 

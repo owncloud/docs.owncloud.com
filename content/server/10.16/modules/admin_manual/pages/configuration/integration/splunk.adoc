@@ -19,16 +19,16 @@ To set up the _ownCloud App for Splunk_, a number of prerequisites have to be fu
 
 * ownCloud Classic has a minimum version of 10.5.
 * Splunk has a minimum version of 7.2.
-* The {oc-marketplace-url}/apps/metrics[_Metrics App_] is installed, configured and enabled on ownCloud Classic.
-* The {oc-marketplace-url}/apps/admin_audit[_Auditing App_] is installed, configured and enabled on ownCloud Classic.
+* The xref:enterprise/reporting/metrics.adoc[_Metrics App_] is installed, configured and enabled on ownCloud Classic.
+* The xref:enterprise/logging/admin_audit.adoc[_Auditing App_] is installed, configured and enabled on ownCloud Classic.
 * Both components of the _ownCloud App for Splunk_ , the app and the add-on, are installed and configured. See below for further information on these components.
 
 == Setup & Configuration
 === ownCloud
 
-. Install and set up the {oc-marketplace-url}/apps/admin_audit[_Auditing App_] as xref:enterprise/logging/admin_audit.adoc[documented]. Take note of the log file paths (owncloud.log and admin_audit.log) as those will be required in the Splunk configuration below.
+. Enable and set up the _Auditing App_ as xref:enterprise/logging/admin_audit.adoc[documented]. Take note of the log file paths (owncloud.log and admin_audit.log) as those will be required in the Splunk configuration below.
 
-. Install and set up the {oc-marketplace-url}/apps/metrics[_Metrics App_] as xref:enterprise/reporting/metrics.adoc[documented]. Take special care to set the Metrics API key as it will be required in the Splunk configuration below.
+. Enable and set up the _Metrics App_ as xref:enterprise/reporting/metrics.adoc[documented]. Take special care to set the Metrics API key as it will be required in the Splunk configuration below.
 
 === Splunk
 

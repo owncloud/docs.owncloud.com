@@ -6,6 +6,8 @@
 
 {description}
 
+NOTE: Amazon S3 external storage requires the External Storage: S3 app (`files_external_s3`). The app is not bundled with ownCloud. Download it from its https://github.com/owncloud/files_external_s3/releases[GitHub releases page].
+
 == Configuration
 
 To connect your Amazon S3 buckets to ownCloud, you will need:
