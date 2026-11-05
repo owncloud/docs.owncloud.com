@@ -29,6 +29,7 @@ reva:
     mode: ""
     cacert: ""
 grpc_client_tls: null
+grpc_client_options: null
 role_quotas: {}
 policies:
 - name: ocis
@@ -120,6 +121,10 @@ policies:
     service: com.owncloud.web.invitations
   - endpoint: /graph/
     service: com.owncloud.web.graph
+  - endpoint: /vault/graph/v1beta1/extensions/org.libregraph/activities
+    service: com.owncloud.web.activitylog
+  - endpoint: /vault/graph/v1.0/invitations
+    service: com.owncloud.web.invitations
   - endpoint: /vault/graph/
     service: com.owncloud.web.graph
   - endpoint: /api/v0/settings
@@ -232,4 +237,5 @@ multi_instance:
   member_claim: ""
   guest_claim: ""
   guest_role: ""
+  guest_role_mapping: []
 enable_vault_mode: false

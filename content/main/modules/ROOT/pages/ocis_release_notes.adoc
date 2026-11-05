@@ -8,6 +8,7 @@
 :release-types-url: https://owncloud.dev/ocis/release_roadmap/#release-types
 :release-roadmap-url: https://owncloud.dev/ocis/release_roadmap/#dates
 :ocis-releases-url: https://github.com/owncloud/ocis/releases/tag
+// do not remove the web-releases-url attribute until all references in this page are gone.
 :web-releases-url: https://github.com/owncloud/web/releases/tag
 
 {description} Also see our {release-roadmap-url}[release roadmap] for additional information.
@@ -15,6 +16,16 @@
 {empty} +
 
 toc::[]
+
+== Infinite Scale 8.2.0 (Production) - Ebadi
+
+Please find the most important changes described here or refer to the changelog for a complete list of changes:
+
+* Infinite Scale: {ocis-releases-url}/v8.2.0[Changes in 8.2.0, window=_blank]
+* Web: Please note that, from this Infinite Scale release onwards, the WebUI is integrated into the ocis repository. This means that there will only be one combined changelog, and the WebUI version shown will most likely be removed in a subsequent release.
+
+[discrete]
+=== Summary of Notable Changes
 
 == Infinite Scale 8.1.0 (Production) - Daledda
 

@@ -120,28 +120,6 @@ drivers:
     lock_cycle_duration_factor: 30
     max_concurrency: 5
     disable_versioning: false
-  owncloudsql:
-    root: /var/lib/ocis/storage/owncloud
-    share_folder: /Shares
-    user_layout: '{{.Username}}'
-    upload_info_dir: /var/lib/ocis/storage/uploadinfo
-    db_username: owncloud
-    db_password: owncloud
-    db_host: ""
-    db_port: 3306
-    db_name: owncloud
-    users_provider_endpoint: com.owncloud.api.users
-  posix:
-    root: /var/lib/ocis/storage/users
-    personalspacepath_template: users/{{.User.Username}}
-    generalspacepath_template: projects/{{.SpaceId}}
-    permissions_endpoint: com.owncloud.api.settings
-    async_uploads: true
-    scan_debounce_delay: 1s
-    use_space_groups: false
-    watch_type: ""
-    watch_path: ""
-    watch_folder_kafka_hosts: ""
 data_server_url: http://localhost:9158/data
 data_gateway_url: https://localhost:9200/data
 transfer_expires: 86400

@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-27-22]
+[#deprecation-note-2026-11-05-13-25-14]
 [caption=]
 .Deprecation notes for the search service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -422,6 +422,17 @@ a| [subs=-attributes]
 ++true ++
 a| [subs=-attributes]
 Defines if stop words should be cleaned or not. See the documentation for more details.
+
+a|`SEARCH_EXTRACTOR_MAX_CONSECUTIVE_FAILURES` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++int ++
+a| [subs=-attributes]
+++5 ++
+a| [subs=-attributes]
+Abort a space (re)index walk after this many files in a row fail content extraction, which usually means the extraction service is down. Files that cannot be resolved at all are logged and skipped without counting towards this limit. Set to 0 to never abort.
 
 a|`SEARCH_CONTENT_EXTRACTION_SIZE_LIMIT` +
 

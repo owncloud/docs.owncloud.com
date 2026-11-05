@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-30-54]
+[#deprecation-note-2026-11-05-13-26-45]
 [caption=]
 .Deprecation notes for the storage-system service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -381,7 +381,7 @@ a|`OCIS_CACHE_ENABLE_TLS` +
 `STORAGE_SYSTEM_CACHE_ENABLE_TLS` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -393,7 +393,7 @@ a|`OCIS_CACHE_TLS_INSECURE` +
 `STORAGE_SYSTEM_CACHE_TLS_INSECURE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -405,7 +405,7 @@ a|`OCIS_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 `STORAGE_SYSTEM_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]

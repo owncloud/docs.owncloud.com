@@ -13,14 +13,6 @@
     
     
 
-a| `GRPC_MAX_CONNECTION_AGE` +
-a| [subs=-attributes]
-++Duration ++
-a| [subs=-attributes]
-++9223372036854775807 ++
-a| [subs=-attributes]
-++Timeout for GRPC connections. After timeout, a new connection will be established automatically. The default value is in ns and is about 2.5 mio h. ++
-
 a| `MICRO_LOG_LEVEL` +
 a| [subs=-attributes]
 ++string ++
@@ -111,7 +103,6 @@ a| [subs=-attributes]
 ++false ++
 a| [subs=-attributes]
 ++Insecure TLS mode is only allowed in development environments with OCIS_INSECURE=true ++
-    
     
     
     

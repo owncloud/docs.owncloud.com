@@ -29,6 +29,7 @@ reva:
     mode: ""
     cacert: ""
 grpc_client_tls: null
+grpc_client_options: null
 role_quotas: {}
 policies:
 - name: ocis

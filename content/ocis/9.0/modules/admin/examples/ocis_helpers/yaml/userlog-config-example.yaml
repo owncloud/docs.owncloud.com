@@ -38,11 +38,12 @@ http:
     cert: ""
     key: ""
 grpc_client_tls: null
+grpc_client_options: null
 token_manager:
   jwt_secret: ""
 reva_gateway: com.owncloud.api.gateway
 translation_path: ""
-default_language: ""
+default_language: en
 events:
   endpoint: 127.0.0.1:9233
   cluster: ocis-cluster

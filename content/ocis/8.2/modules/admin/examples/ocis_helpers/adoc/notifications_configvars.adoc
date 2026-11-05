@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-30-54]
+[#deprecation-note-2026-11-05-13-26-45]
 [caption=]
 .Deprecation notes for the notifications service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -386,7 +386,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
-++ ++
+++en ++
 a| [subs=-attributes]
 The default language used by services and the WebUI. If not defined, English will be used as default. See the documentation for more details.
 
@@ -422,6 +422,39 @@ a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
 Path/File name for the root CA certificate (in PEM format) used to validate TLS server certificates of the go-micro based grpc services.
+
+a|`OCIS_GRPC_MAX_RECEIVED_MESSAGE_SIZE` +
+
+a| [subs=-attributes]
+++pre5.0 ++
+a| [subs=-attributes]
+++int ++
+a| [subs=-attributes]
+++0 ++
+a| [subs=-attributes]
+The maximum body size for grpc requests. Defaults to '10240000' bytes (10MB). Note that large values can potentially hide errors but may lead to network timeouts. Should only be changed temporarily to regain access for large folders with 25.000+ files to copy out data.
+
+a|`GRPC_CLIENT_KEEPALIVE_TIME` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++Duration ++
+a| [subs=-attributes]
+++0s ++
+a| [subs=-attributes]
+How long a grpc client connection with an ongoing request may stay silent before the server is pinged to check whether it is still answering. Set a duration like '20s' to enable detection of unresponsive peers. Leaving it unset, or at '0', sends no pings at all, which is grpc's own default. Values below '10s' are raised to '10s' by grpc. Make sure to include the unit suffix, a bare number is not a valid duration.
+
+a|`GRPC_CLIENT_KEEPALIVE_TIMEOUT` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++Duration ++
+a| [subs=-attributes]
+++0s ++
+a| [subs=-attributes]
+How long a grpc client waits for the answer to a keepalive ping before it considers the connection dead and fails all requests on it. Defaults to '10s'. Has no effect unless GRPC_CLIENT_KEEPALIVE_TIME is set. See GRPC_CLIENT_KEEPALIVE_TIME.
 
 a|`OCIS_SERVICE_ACCOUNT_ID` +
 `NOTIFICATIONS_SERVICE_ACCOUNT_ID` +
@@ -533,7 +566,7 @@ a|`OCIS_PERSISTENT_STORE_ENABLE_TLS` +
 `NOTIFICATIONS_STORE_ENABLE_TLS` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -545,7 +578,7 @@ a|`OCIS_PERSISTENT_STORE_TLS_INSECURE` +
 `NOTIFICATIONS_STORE_TLS_INSECURE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -557,7 +590,7 @@ a|`OCIS_PERSISTENT_STORE_TLS_ROOT_CA_CERTIFICATE` +
 `NOTIFICATIONS_STORE_TLS_ROOT_CA_CERTIFICATE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]

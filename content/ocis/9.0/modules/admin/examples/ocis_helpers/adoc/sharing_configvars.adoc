@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-27-22]
+[#deprecation-note-2026-11-05-13-25-14]
 [caption=]
 .Deprecation notes for the sharing service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -343,7 +343,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++jsoncs3 ++
 a| [subs=-attributes]
-Driver to be used to persist shares. Supported values are 'jsoncs3', 'json', 'cs3' (deprecated) and 'owncloudsql'.
+Driver to be used to persist shares. Supported values are 'jsoncs3', 'json' and 'cs3' (deprecated).
 
 a|`SHARING_USER_JSONCS3_PROVIDER_ADDR` +
 
@@ -472,72 +472,6 @@ a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
 API key for the STORAGE-SYSTEM system user.
-
-a|`SHARING_USER_OWNCLOUDSQL_DB_USERNAME` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++string ++
-a| [subs=-attributes]
-++owncloud ++
-a| [subs=-attributes]
-Username for the database.
-
-a|`SHARING_USER_OWNCLOUDSQL_DB_PASSWORD` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++string ++
-a| [subs=-attributes]
-++ ++
-a| [subs=-attributes]
-Password for the database.
-
-a|`SHARING_USER_OWNCLOUDSQL_DB_HOST` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++string ++
-a| [subs=-attributes]
-++mysql ++
-a| [subs=-attributes]
-Hostname or IP of the database server.
-
-a|`SHARING_USER_OWNCLOUDSQL_DB_PORT` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++int ++
-a| [subs=-attributes]
-++3306 ++
-a| [subs=-attributes]
-Port that the database server is listening on.
-
-a|`SHARING_USER_OWNCLOUDSQL_DB_NAME` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++string ++
-a| [subs=-attributes]
-++owncloud ++
-a| [subs=-attributes]
-Name of the database to be used.
-
-a|`SHARING_USER_OWNCLOUDSQL_USER_STORAGE_MOUNT_ID` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++string ++
-a| [subs=-attributes]
-++ ++
-a| [subs=-attributes]
-Mount ID of the ownCloudSQL users storage for mapping ownCloud 10 shares.
 
 a|`SHARING_PUBLIC_DRIVER` +
 
@@ -678,6 +612,30 @@ a| [subs=-attributes]
 ++true ++
 a| [subs=-attributes]
 Set this to true if you want to enforce passwords on all public shares.
+
+a|`OCIS_SHARING_ENABLE_EXPIRED_SHARES_CLEANUP` +
+`SHARING_ENABLE_EXPIRED_SHARES_CLEANUP` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++bool ++
+a| [subs=-attributes]
+++true ++
+a| [subs=-attributes]
+Enable the periodic removal of expired public shares. When disabled, expired shares are still hidden from listings but never actually deleted.
+
+a|`OCIS_SHARING_JANITOR_RUN_INTERVAL` +
+`SHARING_JANITOR_RUN_INTERVAL` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++int ++
+a| [subs=-attributes]
+++3600 ++
+a| [subs=-attributes]
+Interval in seconds between two runs of the janitor that permanently deletes expired public shares. Defaults to '3600' (1 hour). Only relevant when OCIS_SHARING_ENABLE_EXPIRED_SHARES_CLEANUP is enabled.
 
 a|`OCIS_ENABLE_USER_SHARING` +
 

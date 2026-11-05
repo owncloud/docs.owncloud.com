@@ -56,14 +56,14 @@ auth_providers:
     user_member_attribute: ""
     user_guest_attribute: ""
     user_schema:
-      id: ownclouduuid
+      id: ownCloudUUID
       id_is_octet_string: false
       mail: mail
-      display_name: displayname
+      display_name: displayName
       user_name: uid
       user_enabled: ownCloudUserEnabled
     group_schema:
-      id: ownclouduuid
+      id: ownCloudUUID
       id_is_octet_string: false
       mail: mail
       display_name: cn
@@ -72,13 +72,3 @@ auth_providers:
     pool_enabled: false
     pool_size: 5
     pool_checkout_timeout: 30s
-  owncloudsql:
-    db_username: owncloud
-    db_password: ""
-    db_host: mysql
-    db_port: 3306
-    db_name: owncloud
-    idp: https://localhost:9200
-    nobody: 90
-    join_username: false
-    join_owncloud_uuid: false
