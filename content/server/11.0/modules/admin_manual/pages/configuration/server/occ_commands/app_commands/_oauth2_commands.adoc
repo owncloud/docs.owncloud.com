@@ -1,6 +1,6 @@
 = OAuth2
 
-Not bundled, download it from the https://github.com/owncloud/oauth2/releases[GitHub releases page], see xref:installation/apps/apps_supported.adoc[Supported Apps in ownCloud].
+Included in the complete tarball and the Docker image, see xref:installation/apps/apps_supported.adoc[Supported Apps in ownCloud].
 
 Use these commands to configure OAuth2 clients via the OAuth2 app:
 

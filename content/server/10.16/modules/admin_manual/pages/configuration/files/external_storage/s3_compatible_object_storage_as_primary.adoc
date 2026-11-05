@@ -14,7 +14,7 @@
 
 NOTE: Even if the ownCloud log file is stored in an alternate location (by changing the location in `config.php`), `owncloud/data` may still be required for backward compatibility with some apps.
 
-That said, Object Storage Support (`objectstore`) is still available, but the S3 Primary Object Storage app is the preferred and only supported way to provide S3 storage support as primary storage. ownCloud provides consulting for migrations from `objectstore` -> `files_primary_s3`.
+The older Object Storage Support app (`objectstore`) is archived and no longer maintained. The S3 Primary Object Storage app is the only supported way to provide S3 storage support as primary storage. ownCloud provides consulting for migrations from `objectstore` -> `files_primary_s3`.
 
 [NOTE]
 ====

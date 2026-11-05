@@ -60,7 +60,7 @@ image:configuration/server/security/oauth2-workflow-diagram.png[]
 
 == The OAuth2 App
 
-OAuth2 support is available in ownCloud via the OAuth2 application, which is available from its https://github.com/owncloud/oauth2/releases[GitHub releases page]. The app aims to:
+OAuth2 support is available in ownCloud via the OAuth2 application, which is included in the complete tarball and the Docker image. The app aims to:
 
 . Connect ownCloud clients (both desktop and mobile) in a standardized and secure way.
 . Make 3rd party software integrations easier by providing an unified authorization interface.
@@ -77,7 +77,7 @@ See the xref:installation/manual_installation/manual_installation.adoc[Detailed 
 
 === Installation
 
-To install the application, download the OAuth2 app from its https://github.com/owncloud/oauth2/releases[GitHub releases page] and extract it to the ownCloud `apps` directory.
+The OAuth2 app is included in the complete tarball and the Docker image. Enable it before use.
 
 === Basic Configuration
 

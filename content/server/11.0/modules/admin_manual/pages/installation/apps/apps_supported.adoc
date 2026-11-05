@@ -86,10 +86,12 @@ Requires External Storage
 * xref:enterprise/collaboration/msoffice-wopi-integration.adoc[Microsoft Office Online]
 * xref:maintenance/migrating_to_ocis.adoc[Migrate to oCIS]
 * Notes
+* xref:configuration/server/security/oauth2.adoc[OAuth2]
 * xref:configuration/user/oidc/oidc.adoc[OpenID Connect]
 * ownCloud Enterprise Theme
 * xref:configuration/server/security/password_policy.adoc[Password Policy]
 * xref:enterprise/security/ransomware-protection.adoc[Ransomware Protection]
+* xref:configuration/files/external_storage/s3_compatible_object_storage_as_primary.adoc[S3 Primary Object Storage]
 * xref:enterprise/user_management/user_auth_shibboleth.adoc[SAML/Shibboleth User Backend]
 * xref:configuration/user/user_auth_twofactor.adoc[Two-Factor TOTP]
 * xref:configuration/user/user_auth_ldap.adoc[User LDAP]
@@ -105,7 +107,3 @@ No release for ownCloud 11 is available yet.
 No release for ownCloud 11 is available yet.
 * xref:enterprise/authentication/kerberos.adoc[Kerberos] +
 Contact {oc-support-url}[ownCloud support] to obtain it.
-* xref:configuration/server/security/oauth2.adoc[OAuth2] +
-https://github.com/owncloud/oauth2/releases[oauth2 releases]
-* xref:configuration/files/external_storage/s3_compatible_object_storage_as_primary.adoc[S3 Primary Object Storage] +
-https://github.com/owncloud/files_primary_s3/releases[files_primary_s3 releases]

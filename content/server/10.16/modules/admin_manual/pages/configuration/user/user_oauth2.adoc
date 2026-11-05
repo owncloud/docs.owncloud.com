@@ -20,4 +20,4 @@ When using OAuth2 a unique access token is generated for each device or third pa
 
 == The OAuth2 App
 
-OAuth2 functionality is available in ownCloud via the xref:configuration/server/security/oauth2.adoc[OAuth2] application, which is available from its https://github.com/owncloud/oauth2/releases[GitHub releases page]. For more information on how to set it up, see section xref:configuration/server/security/oauth2.adoc[Open Authentication (OAuth2)]
+OAuth2 functionality is available in ownCloud via the xref:configuration/server/security/oauth2.adoc[OAuth2] application, which is included in the complete tarball and the Docker image. For more information on how to set it up, see section xref:configuration/server/security/oauth2.adoc[Open Authentication (OAuth2)]

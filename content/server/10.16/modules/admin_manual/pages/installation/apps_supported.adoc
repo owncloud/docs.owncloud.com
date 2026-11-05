@@ -73,11 +73,13 @@ NOTE: Before Files Media Viewer 1.0.4, the _Gallery_ and _Files VideoPlayer_ app
 * xref:enterprise/external_storage/ldap_home_connector_configuration.adoc[LDAP Home Connector]
 * xref:enterprise/reporting/metrics.adoc[Metrics]
 * xref:enterprise/collaboration/msoffice-wopi-integration.adoc[Microsoft Office Online]
+* xref:configuration/server/security/oauth2.adoc[OAuth2]
 * xref:configuration/user/oidc/oidc.adoc[OpenID Connect]
 * ownCloud Enterprise Theme
 * ownCloud Web
 * xref:configuration/server/security/password_policy.adoc[Password Policy]
 * xref:enterprise/security/ransomware-protection.adoc[Ransomware Protection]
+* xref:configuration/files/external_storage/s3_compatible_object_storage_as_primary.adoc[S3 Primary Object Storage]
 * xref:enterprise/user_management/user_auth_shibboleth.adoc[SAML/Shibboleth User Backend]
 * Template Editor
 * xref:configuration/user/user_auth_ldap.adoc[User LDAP]
@@ -95,9 +97,5 @@ https://github.com/owncloud/brute_force_protection/releases[brute_force_protecti
 https://github.com/owncloud/files_external_s3/releases[files_external_s3 releases]
 * xref:configuration/general_topics/search.adoc[Full Text Search] +
 https://github.com/owncloud/search_elastic/releases[search_elastic releases]
-* xref:configuration/server/security/oauth2.adoc[OAuth2] +
-https://github.com/owncloud/oauth2/releases[oauth2 releases]
-* xref:configuration/files/external_storage/s3_compatible_object_storage_as_primary.adoc[S3 Primary Object Storage] +
-https://github.com/owncloud/files_primary_s3/releases[files_primary_s3 releases]
 * xref:configuration/user/user_auth_twofactor.adoc[Two-Factor TOTP] +
 {oc-marketplace-url}/apps/twofactor_totp[ownCloud Marketplace]

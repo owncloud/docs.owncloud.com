@@ -1,6 +1,6 @@
 = Market
 
-Included in the complete tarball and the Docker image, see xref:installation/apps_supported.adoc[Supported Apps in ownCloud].
+Marketplace URL: {oc-marketplace-url}/apps/market[Market]
 
 The `market` commands _install_, _uninstall_, _list_, and _upgrade_ applications from the ownCloud Marketplace.
 
