@@ -11,7 +11,7 @@ The apps on this page are no longer distributed through the ownCloud Marketplace
 
 The official ownCloud Docker image is built from the complete tarball, so it contains all of them.
 
-A few apps are not bundled at all. They are listed under xref:available-separately[Available Separately] and are downloaded from their GitHub releases page, where a release for this version exists.
+A few apps are not bundled at all. They are listed under xref:available-separately[Available Separately] and are downloaded from their GitHub releases page or obtained from ownCloud support.
 
 Apps without a link are self-explanatory.
 
@@ -97,14 +97,14 @@ Requires External Storage
 
 == Available Separately
 
-These apps are not part of any tarball. Where a release is available, download it from the app's GitHub releases page and install it manually as described in xref:installation/apps/apps_management_installation.adoc#installing-apps-manually[Installing Apps Manually].
+These apps are not part of any tarball. Where a public release is available, download it from the app's GitHub releases page and install it manually as described in xref:installation/apps/apps_management_installation.adoc#installing-apps-manually[Installing Apps Manually].
 
 * xref:configuration/files/external_storage/amazons3.adoc[External Storage: S3] +
 No release for ownCloud 11 is available yet.
 * xref:configuration/general_topics/search.adoc[Full Text Search] +
 No release for ownCloud 11 is available yet.
 * xref:enterprise/authentication/kerberos.adoc[Kerberos] +
-https://github.com/owncloud/kerberos/releases[kerberos releases]
+Contact {oc-support-url}[ownCloud support] to obtain it.
 * xref:configuration/server/security/oauth2.adoc[OAuth2] +
 https://github.com/owncloud/oauth2/releases[oauth2 releases]
 * xref:configuration/files/external_storage/s3_compatible_object_storage_as_primary.adoc[S3 Primary Object Storage] +
