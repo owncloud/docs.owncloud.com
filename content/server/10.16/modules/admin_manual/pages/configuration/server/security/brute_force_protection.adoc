@@ -2,6 +2,8 @@
 
 The Brute-Force Protection extension allows administrators to specify a maximum number of unsuccessful user account login attempts. This protection not only covers login via browser but also password protected shares. On reaching the unsuccessful login limit, ownCloud temporarily bans further login attempts to those user accounts from the originating IP address. The time frame of the ban is configurable by ownCloud administrators.
 
+NOTE: The Brute-Force Protection app (`brute_force_protection`) is not bundled with ownCloud. Download it from its https://github.com/owncloud/brute_force_protection/releases[GitHub releases page] and install it manually as described in xref:installation/apps_management_installation.adoc#installing-apps-manually[Installing Apps Manually].
+
 To configure this app in the web interface, navigate to `admin -> settings -> admin/security`.
 
 image:configuration/server/security/brute-force-protection.png[Brute-Force Protection]

@@ -2,7 +2,7 @@
 
 :description: If you want to mount an FTP storage, ownCloud provides an app to do so.
 
-{description} Please install the {oc-marketplace-url}/apps/files_external_ftp[FTP Storage Support] app from the ownCloud Marketplace.
+{description} The FTP Storage Support app (`files_external_ftp`) is included in the complete tarball and the Docker image. Enable it before use.
 
 
 image::configuration/files/external_storage/ftp_storage_support.png[The ownCloud FTP Storage Support App,width=350]

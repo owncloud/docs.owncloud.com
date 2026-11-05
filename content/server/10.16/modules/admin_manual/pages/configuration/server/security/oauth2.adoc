@@ -3,7 +3,6 @@
 :mod_headers-url: http://httpd.apache.org/docs/current/mod/mod_headers.html
 :mod_rewrite-url: http://httpd.apache.org/docs/current/mod/mod_rewrite.html
 :oauth2-user-auth-url: https://oauth.net/articles/authentication/
-:shibboleth-app-url: {oc-marketplace-url}/apps/user_shibboleth
 :official-oauth2-rfc-url: https://datatracker.ietf.org/doc/html/rfc6749#section-10
 :official-client-registration-rfc-url: https://tools.ietf.org/html/rfc6749#section-2
 :official-authorization-request-rfc-url: https://tools.ietf.org/html/rfc6749#section-4.1.1
@@ -61,7 +60,7 @@ image:configuration/server/security/oauth2-workflow-diagram.png[]
 
 == The OAuth2 App
 
-OAuth2 support is available in ownCloud via the {oc-marketplace-url}/apps/oauth2[OAuth2] application which is available from the ownCloud Marketplace. The app aims to:
+OAuth2 support is available in ownCloud via the OAuth2 application, which is included in the complete tarball and the Docker image. The app aims to:
 
 . Connect ownCloud clients (both desktop and mobile) in a standardized and secure way.
 . Make 3rd party software integrations easier by providing an unified authorization interface.
@@ -78,7 +77,7 @@ See the xref:installation/manual_installation/manual_installation.adoc[Detailed 
 
 === Installation
 
-To install the application, download the {oc-marketplace-url}/apps/oauth2[OAuth2 app] from the marketplace to the ownCloud `app` directory or use the Market app.
+The OAuth2 app is included in the complete tarball and the Docker image. Enable it before use.
 
 === Basic Configuration
 
@@ -226,7 +225,7 @@ check out this {stackoverflow-url}[answer on StackOverflow].
 
 === Limitations
 
-- Since the app does not handle user passwords, only master key encryption works (similar to the {shibboleth-app-url}[Shibboleth app]).
+- Since the app does not handle user passwords, only master key encryption works (similar to the xref:enterprise/user_management/user_auth_shibboleth.adoc[Shibboleth app]).
 - Clients cannot migrate accounts from Basic Authorization to OAuth2, if they are currently using the `user_ldap` backend.
 - It is not possible to explicitly end user sessions when using OAuth2. Have a read through {oauth2-user-auth-url}[User Authentication with OAuth 2.0] to find out more.
 

@@ -2,51 +2,100 @@
 :toc: right
 :toclevels: 1
 
-== AGPL Apps
+== Introduction
 
-* {oc-marketplace-url}/apps/activity[Activity]
-* {oc-marketplace-url}/apps/files_antivirus[Anti-Virus]
+Most apps on this page are no longer distributed through the ownCloud Marketplace. They ship with ownCloud itself:
+
+* The *standard* tarball contains the core apps and the apps listed under xref:included-in-every-tarball[Included in Every Tarball].
+* The *complete* tarball additionally contains the apps listed under xref:included-in-the-complete-tarball[Included in the Complete Tarball].
+
+The official ownCloud Docker image is built from the complete tarball, so it contains all of them.
+
+A few apps are not bundled at all. They are listed under xref:available-separately[Available Separately] and are downloaded from their GitHub releases page, or from the ownCloud Marketplace where noted.
+
+Apps without a link are self-explanatory.
+
+== Core Apps
+
+These apps are part of ownCloud core.
+
 * Collaborative Tags
 * Comments
-* xref:configuration/files/encryption/encryption_configuration.adoc[Encryption]
-* xref:configuration/server/external_sites.adoc[External Sites]
 * xref:configuration/files/external_storage/index.adoc[External Storage]
 * xref:configuration/files/federated_cloud_sharing_configuration.adoc[Federated File Sharing] (allows file sharing across ownCloud instances)
 * Federation (allows username auto-complete across ownCloud instances)
 * Files (cannot be disabled)
-* xref:installation/apps/mediaviewer/index.adoc[Files Media Viewer]
-+
-NOTE: Before Files Media Viewer 1.0.4, the _Gallery_ and _Files VideoPlayer_ apps need to be **uninstalled before installing** the Media Viewer app. Starting with Files Media Viewer 1.0.4, the _Gallery_ and _Files VideoPlayer_ apps need to be **disabled before using** the Files Media Viewer app.
-* {oc-marketplace-url}/apps/pdf[Files PDF Viewer]
 * xref:configuration/files/file_sharing_configuration.adoc[Files Sharing]
-* {oc-marketplace-url}/apps/files_texteditor[Files TextEditor]
 * xref:configuration/files/trashbin_options.adoc[Files Trashbin]
 * xref:configuration/files/file_versioning.adoc[Files Versions]
-* First Run Wizard
-* {oc-marketplace-url}/apps/search_elastic[Full Text Search]
-* xref:configuration/user/guests_app.adoc[Guests]
-* {oc-marketplace-url}/apps/impersonate[Impersonate]
-* Notifications
-* {oc-marketplace-url}/apps/openidconnect[OpenID Connect]
 * xref:configuration/files/external_storage/webdav.adoc[ownCloud WebDAV Endpoint] (handles old and new webdav endpoints)
 * xref:configuration/user/user_provisioning_api.adoc[Provisioning API]
 * Update Notifications
+
+== Included in Every Tarball
+
+* xref:enterprise/reporting/config_report.adoc[Config Report]
+* xref:configuration/files/encryption/encryption_configuration.adoc[Encryption]
+* Example Files (the default files of a new user's home folder)
+* xref:configuration/server/external_sites.adoc[External Sites]
+* xref:installation/apps/mediaviewer/index.adoc[Files Media Viewer]
++
+NOTE: Before Files Media Viewer 1.0.4, the _Gallery_ and _Files VideoPlayer_ apps need to be **uninstalled before installing** the Media Viewer app. Starting with Files Media Viewer 1.0.4, the _Gallery_ and _Files VideoPlayer_ apps need to be **disabled before using** the Files Media Viewer app.
+* First Run Wizard
+* xref:installation/apps_management_installation.adoc[Market]
+* Notifications
+* xref:maintenance/upgrading/upgrade.adoc[Updater]
 * xref:configuration/user/user_auth_ftp_smb_imap.adoc[User External]
-* {oc-marketplace-url}/apps/user_ldap[User LDAP]
 
-== Enterprise-Only Apps
+== Included in the Complete Tarball
 
-* {oc-marketplace-url}/apps/admin_audit[Auditing]
-* {oc-marketplace-url}/apps/files_classifier[Document Classification]
-* {oc-marketplace-url}/apps/files_ldap_home[LDAP Home Connector]
-* {oc-marketplace-url}/apps/firewall[File Firewall]
-* {oc-marketplace-url}/apps/objectstore[Object Storage Support]
-* {oc-marketplace-url}/apps/password_policy[Password Policy]
-* {oc-marketplace-url}/apps/ransomware_protection[Ransomware Protection]
-* {oc-marketplace-url}/apps/sharepoint[External Storage: SharePoint]
-* {oc-marketplace-url}/apps/systemtags_management[Collaborative Tags Management]
-* {oc-marketplace-url}/apps/user_shibboleth[SAML/Shibboleth User Backend]
-* {oc-marketplace-url}/apps/windows_network_drive[Windows Network Drives (requires External Storage)]
-* {oc-marketplace-url}/apps/wopi[Microsoft Office Online]
-* {oc-marketplace-url}/apps/workflow[Workflows]
-* {oc-marketplace-url}/themes/theme-enterprise[ownCloud X Enterprise Theme]
+* xref:configuration/server/activity_configuration.adoc[Activity]
+* Announcement Center
+* xref:configuration/server/virus-scanner-support.adoc[Anti-Virus]
+* xref:enterprise/logging/admin_audit.adoc[Auditing]
+* xref:enterprise/file_management/files_tagging.adoc[Collaborative Tags Management]
+* xref:configuration/user/custom_groups_app.adoc[Custom Groups]
+* Diagnostics
+* xref:enterprise/document_classification/classification_and_policy_enforcement.adoc[Document Classification]
+* Draw.io
+* xref:configuration/files/external_storage/dropbox.adoc[External Storage: Dropbox]
+* xref:configuration/files/external_storage/ftp.adoc[External Storage: FTP]
+* xref:enterprise/external_storage/sharepoint-integration_configuration.adoc[External Storage: SharePoint]
+* xref:enterprise/external_storage/windows-network-drive_configuration.adoc[External Storage: Windows Network Drives] (requires External Storage)
+* xref:enterprise/firewall/file_firewall.adoc[File Firewall]
+* xref:enterprise/file_management/files_lifecycle.adoc[File Lifecycle Management]
+* Files PDF Viewer
+* Files TextEditor
+* Graph API
+* xref:configuration/user/guests_app.adoc[Guests]
+* xref:configuration/general_topics/impersonate_users.adoc[Impersonate]
+* xref:enterprise/authentication/kerberos.adoc[Kerberos]
+* xref:enterprise/external_storage/ldap_home_connector_configuration.adoc[LDAP Home Connector]
+* xref:enterprise/reporting/metrics.adoc[Metrics]
+* xref:enterprise/collaboration/msoffice-wopi-integration.adoc[Microsoft Office Online]
+* xref:configuration/server/security/oauth2.adoc[OAuth2]
+* xref:configuration/user/oidc/oidc.adoc[OpenID Connect]
+* ownCloud Enterprise Theme
+* ownCloud Web
+* xref:configuration/server/security/password_policy.adoc[Password Policy]
+* xref:enterprise/security/ransomware-protection.adoc[Ransomware Protection]
+* xref:configuration/files/external_storage/s3_compatible_object_storage_as_primary.adoc[S3 Primary Object Storage]
+* xref:enterprise/user_management/user_auth_shibboleth.adoc[SAML/Shibboleth User Backend]
+* Template Editor
+* xref:configuration/user/user_auth_ldap.adoc[User LDAP]
+* xref:enterprise/file_management/files_tagging.adoc[Workflows]
+
+== Available Separately
+
+These apps are not part of any tarball. Download them from the app's GitHub releases page and install them manually as described in xref:installation/apps_management_installation.adoc#installing-apps-manually[Installing Apps Manually], or install them with the Market app where noted.
+
+* xref:configuration/server/security/brute_force_protection.adoc[Brute-Force Protection] +
+https://github.com/owncloud/brute_force_protection/releases[brute_force_protection releases]
+* xref:enterprise/collaboration/collabora_secure_view.adoc[Collabora Online / Secure View] +
+{oc-marketplace-url}/apps/richdocuments[ownCloud Marketplace]
+* xref:configuration/files/external_storage/amazons3.adoc[External Storage: S3] +
+https://github.com/owncloud/files_external_s3/releases[files_external_s3 releases]
+* xref:configuration/general_topics/search.adoc[Full Text Search] +
+https://github.com/owncloud/search_elastic/releases[search_elastic releases]
+* xref:configuration/user/user_auth_twofactor.adoc[Two-Factor TOTP] +
+{oc-marketplace-url}/apps/twofactor_totp[ownCloud Marketplace]

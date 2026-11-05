@@ -6,7 +6,7 @@
 
 == Introduction
 
-{description} The ability to do so is a feature delivered via an ownCloud app called {oc-marketplace-url}/apps/impersonate[Impersonate].
+{description} The ability to do so is a feature delivered via an ownCloud app called Impersonate.
 
 == Limitations
 

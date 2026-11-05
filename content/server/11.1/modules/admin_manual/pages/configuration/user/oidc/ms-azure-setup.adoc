@@ -87,7 +87,7 @@ image:configuration/user/oidc/ms-azure-ad/ms-azure-manifest.png[width=350]
 
 To set up ownCloud Classic to work with OpenID Connect, you have to:
 
-1. Install the {oc-marketplace-url}/apps/openidconnect[OpenID Connect App].
+1. Enable the xref:configuration/user/oidc/oidc.adoc[OpenID Connect App].
 2. Configure `config.php`.
 3. Set up service discovery.
 

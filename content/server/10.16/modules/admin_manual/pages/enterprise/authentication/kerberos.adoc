@@ -208,7 +208,7 @@ Create a DNS record for the public FQDN of the ownCloud instance (`<FQDN>`).
 This option can also be used if you have only one web site but want to keep the servers hostname and website address distinct.
 // https://imatviyenko.github.io/blog/2018/09/11/Apache-AD-kerberos
 
-* Download the ownCloud Kerberos app from the {oc-marketplace-url}/apps/kerberos[Marketplace,window=_blank] and enabe it with:
+* The ownCloud Kerberos app is included in the complete tarball and the Docker image. Enable it with:
 +
 [source.bash,subs="attributes+"]
 ----

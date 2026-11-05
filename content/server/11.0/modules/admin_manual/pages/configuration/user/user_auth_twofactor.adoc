@@ -57,5 +57,5 @@ In case a user loses access to the second factor, e.g. by breaking or losing the
 
 === Manage Secrets
 
-If owncloud's {oc-marketplace-url}/apps/twofactor_totp[2-Factor Authentication] is used, the admin can manage
+If owncloud's 2-Factor Authentication app is used, the admin can manage
 the secrets via xref:configuration/server/occ_command.adoc#two-factor-totp[Two-Factor TOTP occ commands].

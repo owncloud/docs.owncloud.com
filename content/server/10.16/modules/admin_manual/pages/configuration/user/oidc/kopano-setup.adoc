@@ -35,7 +35,7 @@ TIP: Kopano Konnect can be set up via Docker. Images are available on Docker Hub
 
 To set up ownCloud Classic to work with OpenID Connect, you have to:
 
-1. Install the {oc-marketplace-url}/apps/openidconnect[OpenID Connect App]
+1. Install the xref:configuration/user/oidc/oidc.adoc[OpenID Connect App]
 2. Configure `config.php`
 3. Set up service discovery
 

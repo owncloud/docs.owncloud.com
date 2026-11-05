@@ -16,11 +16,11 @@ Depending on the desired level of enforcement, the extension provides two polici
 - xref:soft-policy[Soft policy]: Users can restore files in self-service
 - xref:hard-policy[Hard policy]: Only administrators or group administrators can restore files on request
 
-Users can view the lifecycle status for a file and see when the file is scheduled for archiving or deletion. All lifecycle events of a file are displayed transparently. They can be tracked for individual files as well as for a whole user account using the {oc-marketplace-url}/apps/activity[Activity] stream.
+Users can view the lifecycle status for a file and see when the file is scheduled for archiving or deletion. All lifecycle events of a file are displayed transparently. They can be tracked for individual files as well as for a whole user account using the xref:configuration/server/activity_configuration.adoc[Activity] stream.
 
 image:apps/files_lifecycle/file-lifecycle-events.png[File Lifecycle Events, width=250]
 
-To stay informed, users can also receive regular Activity summaries by email. For auditing purposes, the extension integrates with the {oc-marketplace-url}/apps/admin_audit[Auditing] app to provide all events of interest in the logs.
+To stay informed, users can also receive regular Activity summaries by email. For auditing purposes, the extension integrates with the xref:enterprise/logging/admin_audit.adoc[Auditing] app to provide all events of interest in the logs.
 
 == Setup & Configuration
 
@@ -179,7 +179,7 @@ To enable the user interface components again, this config value needs to be rem
 
 == Audit Events
 
-During archiving, restoring and expiration, Audit events are emitted. Logging those to the `audit.log` requires the minimum version 2.0.0 of the {oc-marketplace-url}/apps/admin_audit[Auditing] app.
+During archiving, restoring and expiration, Audit events are emitted. Logging those to the `audit.log` requires the minimum version 2.0.0 of the xref:enterprise/logging/admin_audit.adoc[Auditing] app.
 
 == Further Notes about Archived Files
 

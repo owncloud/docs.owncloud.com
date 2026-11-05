@@ -1,6 +1,5 @@
 = Migrating User Key Encryption to Master Key Encryption
 :toc: right
-:announcementcenter_url: {oc-marketplace-url}/apps/announcementcenter
 :page-aliases: maintenance/encryption/index.adoc
 
 == Introduction
@@ -20,7 +19,7 @@ The decryption workflow described here will only work with the following pre-con
 
 Please see xref:configuration/files/encryption/encryption_configuration.adoc#enable-users-file-recovery-keys[How To Enable Users File Recovery Keys] for more details.
 
-NOTE: A notification to the users (e.g. through the {announcementcenter_url}[announcement app])
+NOTE: A notification to the users (e.g. through the Announcement Center app)
 prior to the migration process is recommended, as the instance will not be available during this task.
 
 == Steps to Migrate from User Key-based to Master Key-based Encryption

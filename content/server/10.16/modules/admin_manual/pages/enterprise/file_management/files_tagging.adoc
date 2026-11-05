@@ -4,7 +4,7 @@
 
 == Introduction
 
-The {oc-marketplace-url}/apps/workflow[Workflow App] enables admins to specify rules and conditions (file size, file mimetype, group membership and more) to automatically assign tags to uploaded files. Based on those tags automated file operations ('Workflow actions') like File Retention (automated file retention periods) can be conducted. The app has three parts:
+The Workflow App enables admins to specify rules and conditions (file size, file mimetype, group membership and more) to automatically assign tags to uploaded files. Based on those tags automated file operations ('Workflow actions') like File Retention (automated file retention periods) can be conducted. The app has three parts:
 
 * Tag Manager
 * Automatic Tagging
@@ -16,7 +16,7 @@ in the ownCloud User manual to learn how to apply and filter tags on files.
 
 == Tag Manager
 
-TIP: To use tag management, administrators need to install and enable the {oc-marketplace-url}/apps/systemtags_management[Collaborative Tags Management] app.
+TIP: To use tag management, administrators need to install and enable the Collaborative Tags Management app.
 
 The Tag Manager is used for creating new tags, editing existing tags, and deleting tags. Tags may be marked as *Visible*, *Static*, *Restricted*, or *Invisible*.
 

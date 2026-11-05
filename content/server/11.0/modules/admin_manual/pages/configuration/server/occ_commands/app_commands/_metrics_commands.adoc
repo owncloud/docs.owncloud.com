@@ -1,6 +1,6 @@
 = Metrics
 
-Marketplace URL: {oc-marketplace-url}/apps/metrics[Metrics]
+Included in the complete tarball and the Docker image, see xref:installation/apps/apps_supported.adoc[Supported Apps in ownCloud].
 
 Monitoring and reporting of ownCloud Classic. For details please see the
 xref:enterprise/reporting/metrics.adoc[Metrics] documentation.

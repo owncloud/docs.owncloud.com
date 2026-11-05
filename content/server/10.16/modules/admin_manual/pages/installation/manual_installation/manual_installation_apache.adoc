@@ -51,7 +51,7 @@ sudo a2enmod mime
 sudo a2enmod unique_id
 ----
 +
-NOTE: If you want to use the {oc-marketplace-url}/apps/oauth2[OAuth2 app], then {mod_headers_url}[mod_headers] must be installed and enabled.
+NOTE: If you want to use the xref:configuration/server/security/oauth2.adoc[OAuth2 app], then {mod_headers_url}[mod_headers] must be installed and enabled.
 
 * You must disable any server-configured authentication for ownCloud since it uses basic authentication internally for DAV services. If you have turned on authentication on a parent folder (e.g. via an `AuthType Basic` directive), you can disable the authentication specifically for the ownCloud entry. As in the above example configuration file, add the following line in the `Directory` section:
 +

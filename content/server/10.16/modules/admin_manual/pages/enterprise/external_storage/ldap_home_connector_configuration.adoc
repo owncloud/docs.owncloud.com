@@ -3,7 +3,7 @@
 
 == Introduction
 
-The {oc-marketplace-url}/apps/files_ldap_home[LDAP Home Connector] app enables you to configure your ownCloud server to display your users’ Windows home directories on the ownCloud Files pages view, just like any other folder.
+The LDAP Home Connector app enables you to configure your ownCloud server to display your users’ Windows home directories on the ownCloud Files pages view, just like any other folder.
 
 Typically, Windows home directories are stored on a network server in a root folder, such as Home, which then contains individual folders for each user.
 
@@ -71,9 +71,9 @@ image:enterprise/external_storage/ldap-home-connector/ldap-home-connector-diagra
 The following prerequisites are required:
 
 * Mounting cifs is available on the server where ownCloud is installed
-* The {oc-marketplace-url}/apps/user_ldap[LDAP Integration] app is enabled and has a working LDAP/Active Directory configuration in ownCloud.
+* The xref:configuration/user/user_auth_ldap.adoc[LDAP Integration] app is enabled and has a working LDAP/Active Directory configuration in ownCloud.
 
-* The {oc-marketplace-url}/apps/files_ldap_home[LDAP Home Connector] app is installed.
+* The LDAP Home Connector app is installed.
 
 == Configuration
 

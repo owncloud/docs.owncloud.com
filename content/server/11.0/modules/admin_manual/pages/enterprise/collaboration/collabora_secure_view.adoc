@@ -45,7 +45,7 @@ If a file or folder has been shared multiple times to different groups with diff
 == Prerequisites
 
 * _Enterprise Edition_
-* {oc-marketplace-url}/apps/richdocuments[ownCloud Collabora Online] app version *2.2.0* or above
+* ownCloud Collabora Online app version *2.2.0* or above
 * Collabora Online Server *4.0.10* or above, set up and integrated
 
 == Configure ownCloud for Collabora Online / Secure View

@@ -1,6 +1,6 @@
 = OAuth2
 
-Marketplace URL: {oc-marketplace-url}/apps/oauth2[OAuth2]
+Included in the complete tarball and the Docker image, see xref:installation/apps/apps_supported.adoc[Supported Apps in ownCloud].
 
 Use these commands to configure OAuth2 clients via the OAuth2 app:
 
