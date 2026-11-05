@@ -1,6 +1,6 @@
 = SAML/SSO Shibboleth Integration (Enterprise Edition only)
 
-Marketplace URL: {oc-marketplace-url}/apps/user_shibboleth[SAML/SSO Integration]
+Included in the complete tarball and the Docker image, see xref:installation/apps/apps_supported.adoc[Supported Apps in ownCloud].
 
 `shibboleth:mode` sets your Shibboleth mode to `notactive`, `autoprovision`, or `ssoonly`
 

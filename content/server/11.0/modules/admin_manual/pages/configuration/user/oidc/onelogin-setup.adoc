@@ -47,7 +47,7 @@ image:configuration/user/oidc/onelogin/onelogin-oidc-sso.png[width=350]
 
 These are the generic steps to set up ownCloud Classic to work with OpenID Connect, for details see the sections below:
 
-1. Install the {oc-marketplace-url}/apps/openidconnect[OpenID Connect App].
+1. Enable the xref:configuration/user/oidc/oidc.adoc[OpenID Connect App].
 2. Configure `config.php`.
 3. Set up service discovery.
 

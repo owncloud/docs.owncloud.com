@@ -1,6 +1,6 @@
 = Anti-Virus
 
-Marketplace URL: {oc-marketplace-url}/apps/files_antivirus[Anti-Virus]
+Included in the complete tarball and the Docker image, see xref:installation/apps/apps_supported.adoc[Supported Apps in ownCloud].
 
 Use these commands to configure the Anti-Virus app.
 Parametrisation must be done with the `occ config` command set.

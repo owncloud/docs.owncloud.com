@@ -1,6 +1,6 @@
 = LDAP Integration
 
-Marketplace URL: {oc-marketplace-url}/apps/user_ldap[LDAP Integration]
+Included in the complete tarball and the Docker image, see xref:installation/apps/apps_supported.adoc[Supported Apps in ownCloud].
 
 [source,plaintext]
 ----

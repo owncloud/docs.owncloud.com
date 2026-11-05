@@ -2,7 +2,7 @@
 
 Commands to configure Amazon S3 compatible object storages as the primary ownCloud storage location.
 
-Marketplace URL: {oc-marketplace-url}/apps/files_primary_s3[S3 Primary Object Storage]
+Not bundled, download it from the https://github.com/owncloud/files_primary_s3/releases[GitHub releases page], see xref:installation/apps/apps_supported.adoc[Supported Apps in ownCloud].
 
 == List objects, buckets or versions of an object
 
