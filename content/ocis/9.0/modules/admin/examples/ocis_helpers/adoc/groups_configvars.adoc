@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-27-22]
+[#deprecation-note-2026-11-05-13-25-14]
 [caption=]
 .Deprecation notes for the groups service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -259,7 +259,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++ldap ++
 a| [subs=-attributes]
-The driver which should be used by the groups service. Supported values are 'ldap' and 'owncloudsql'.
+The driver which should be used by the groups service. Supported value is 'ldap'.
 
 a|`OCIS_LDAP_URI` +
 `GROUPS_LDAP_URI` +
@@ -487,7 +487,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
-The master instance ID for multi-instance setups. When set, LDAP user filters are enhanced to also match users belonging to the master instance.
+The master instance ID for multi-instance setups. When set, LDAP user filters are enhanced to also match users belonging to the master instance. Also set 'user_filter'. Without an explicit 'user_filter', this instance resolves every user in the shared LDAP directory.
 
 a|`OCIS_LDAP_USER_MEMBER_ATTRIBUTE` +
 
@@ -519,7 +519,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
-++ownclouduuid ++
+++ownCloudUUID ++
 a| [subs=-attributes]
 LDAP Attribute to use as the unique id for users. This should be a stable globally unique id like a UUID.
 
@@ -555,7 +555,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
-++displayname ++
+++displayName ++
 a| [subs=-attributes]
 LDAP Attribute to use for the displayname of users.
 
@@ -579,7 +579,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
-++ownclouduuid ++
+++ownCloudUUID ++
 a| [subs=-attributes]
 LDAP Attribute to use as the unique id for groups. This should be a stable globally unique ID like a UUID.
 
@@ -678,115 +678,5 @@ a| [subs=-attributes]
 ++30s ++
 a| [subs=-attributes]
 Maximum time to wait for a pooled LDAP connection to become available once the pool is exhausted. Defaults to 30s when unset or <= 0. See the Environment Variable Types description for more details.
-
-a|`GROUPS_OWNCLOUDSQL_DB_USERNAME` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++string ++
-a| [subs=-attributes]
-++owncloud ++
-a| [subs=-attributes]
-Database user to use for authenticating with the owncloud database.
-
-a|`GROUPS_OWNCLOUDSQL_DB_PASSWORD` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++string ++
-a| [subs=-attributes]
-++ ++
-a| [subs=-attributes]
-Password for the database user.
-
-a|`GROUPS_OWNCLOUDSQL_DB_HOST` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++string ++
-a| [subs=-attributes]
-++mysql ++
-a| [subs=-attributes]
-Hostname of the database server.
-
-a|`GROUPS_OWNCLOUDSQL_DB_PORT` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++int ++
-a| [subs=-attributes]
-++3306 ++
-a| [subs=-attributes]
-Network port to use for the database connection.
-
-a|`GROUPS_OWNCLOUDSQL_DB_NAME` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++string ++
-a| [subs=-attributes]
-++owncloud ++
-a| [subs=-attributes]
-Name of the owncloud database.
-
-a|`GROUPS_OWNCLOUDSQL_IDP` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++string ++
-a| [subs=-attributes]
-++https://localhost:9200 ++
-a| [subs=-attributes]
-The identity provider value to set in the userids of the CS3 user objects for users returned by this user provider.
-
-a|`GROUPS_OWNCLOUDSQL_NOBODY` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++int64 ++
-a| [subs=-attributes]
-++90 ++
-a| [subs=-attributes]
-Fallback number if no numeric UID and GID properties are provided.
-
-a|`GROUPS_OWNCLOUDSQL_JOIN_USERNAME` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++bool ++
-a| [subs=-attributes]
-++false ++
-a| [subs=-attributes]
-Join the user properties table to read usernames.
-
-a|`GROUPS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++bool ++
-a| [subs=-attributes]
-++false ++
-a| [subs=-attributes]
-Join the user properties table to read user IDs.
-
-a|`GROUPS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++bool ++
-a| [subs=-attributes]
-++false ++
-a| [subs=-attributes]
-Allow 'medial search' when searching for users instead of just doing a prefix search. This allows finding 'Alice' when searching for 'lic'.
 |===
 

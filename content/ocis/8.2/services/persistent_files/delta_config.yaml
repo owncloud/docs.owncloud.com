@@ -43,4 +43,4 @@ defaultExcludePattern:
 # it is therefore highly recommended to use the dryrun flag first.
 extraExcludePattern:
 #  - ""
-  - "8.3.0"
+  - "9.0.0"

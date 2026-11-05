@@ -52,13 +52,6 @@ user_sharing_drivers:
     system_user_id: ""
     system_user_idp: internal
     system_user_api_key: ""
-  owncloudsql:
-    db_username: owncloud
-    db_password: ""
-    db_host: mysql
-    db_port: 3306
-    db_name: owncloud
-    user_storage_mount_id: ""
 public_sharing_driver: jsoncs3
 public_sharing_drivers:
   json:
@@ -76,6 +69,7 @@ public_sharing_drivers:
 public_sharing_writeableshare_must_have_password: false
 public_sharing_share_must_have_password: true
 enable_expired_shares_cleanup: true
+janitor_run_interval: 3600
 enable_user_sharing: true
 enable_public_sharing: true
 password_policy:

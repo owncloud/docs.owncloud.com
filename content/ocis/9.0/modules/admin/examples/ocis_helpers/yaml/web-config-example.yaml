@@ -87,6 +87,7 @@ web:
     - files
     - search
     - text-editor
+    - mermaid-editor
     - pdf-viewer
     - external
     - admin-settings

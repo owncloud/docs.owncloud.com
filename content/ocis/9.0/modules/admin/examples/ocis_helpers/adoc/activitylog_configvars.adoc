@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-27-22]
+[#deprecation-note-2026-11-05-13-25-14]
 [caption=]
 .Deprecation notes for the activitylog service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -334,7 +334,7 @@ a|`OCIS_PERSISTENT_STORE_ENABLE_TLS` +
 `ACTIVITYLOG_STORE_ENABLE_TLS` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -346,7 +346,7 @@ a|`OCIS_PERSISTENT_STORE_TLS_INSECURE` +
 `ACTIVITYLOG_STORE_TLS_INSECURE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -358,7 +358,7 @@ a|`OCIS_PERSISTENT_STORE_TLS_ROOT_CA_CERTIFICATE` +
 `ACTIVITYLOG_STORE_TLS_ROOT_CA_CERTIFICATE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]

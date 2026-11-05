@@ -71,6 +71,7 @@ reva:
 token_manager:
   jwt_secret: ""
 grpc_client_tls: null
+grpc_client_options: null
 application:
   id: ""
   displayname: ownCloud Infinite Scale
@@ -83,7 +84,7 @@ spaces:
   groups_cache_ttl: 60000000000
   storage_users_address: com.owncloud.api.storage-users
   storage_users_vault_address: com.owncloud.api.storage-users-vault
-  default_language: ""
+  default_language: en
   translation_path: ""
 identity:
   backend: ldap
@@ -108,10 +109,16 @@ identity:
     user_search_scope: sub
     user_filter: ""
     user_objectclass: inetOrgPerson
+    user_additional_objectclasses: []
     user_mail_attribute: mail
     user_displayname_attribute: displayName
     user_name_attribute: uid
-    user_id_attribute: owncloudUUID
+    user_surname_attribute: sn
+    user_search_attributes:
+    - onPremisesSamAccountName
+    - displayName
+    - mail
+    user_id_attribute: ownCloudUUID
     user_id_is_octet_string: false
     user_type_attribute: ownCloudUserType
     user_enabled_attribute: ownCloudUserEnabled
@@ -126,7 +133,7 @@ identity:
     group_additional_objectclasses: []
     group_name_attribute: cn
     group_member_attribute: member
-    group_id_attribute: owncloudUUID
+    group_id_attribute: ownCloudUUID
     group_id_is_octet_string: false
     education_resources_enabled: false
     educationconfig:
@@ -185,8 +192,10 @@ multi_instance:
   instanceid: ""
   master_id: ""
   query_regexp: ""
+  guest_role_mapping: []
 validation:
   max_tag_length: 100
   max_image_file_size: 50MB
 enable_vault_mode: false
+default_vault_share_expiration_days: 30
 enable_user_sharing: true

@@ -2,11 +2,11 @@
 // if the generated adoc file is used outside tabs, it renders correctly depending on the attribute set.
 // if inside, you need to also use the xxx_deprecation.adoc file. attributes can't be defined inside tabs.
 
-:show-deprecation: false
+:show-deprecation: true
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-27-22]
+[#deprecation-note-2026-11-05-13-25-14]
 [caption=]
 .Deprecation notes for the proxy service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -15,6 +15,11 @@ ifeval::[{show-deprecation} == true]
 | Deprecation Version
 | Removal Version
 | Deprecation Replacement
+
+| The global variable OCIS_CACHE_DATABASE is deprecated and will be removed in a future release. Please use local variable PROXY_OIDC_USERINFO_CACHE_DATABASE instead.
+| 
+| 
+| 
 |===
 
 {empty} +
@@ -353,9 +358,10 @@ a| [subs=-attributes]
 A list of nodes to access the configured store. This has no effect when 'memory' store is configured. Note that the behaviour how nodes are used is dependent on the library of the configured store. See the Environment Variable Types description for more details.
 
 a|`OCIS_CACHE_DATABASE` +
-
+`PROXY_OIDC_USERINFO_CACHE_DATABASE` +
+xref:deprecation-note-2026-11-05-13-25-14[Deprecation Note]
 a| [subs=-attributes]
-++pre5.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
@@ -426,7 +432,7 @@ a|`OCIS_CACHE_ENABLE_TLS` +
 `PROXY_OIDC_USERINFO_CACHE_ENABLE_TLS` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -438,7 +444,7 @@ a|`OCIS_CACHE_TLS_INSECURE` +
 `PROXY_OIDC_USERINFO_CACHE_TLS_INSECURE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -450,7 +456,7 @@ a|`OCIS_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 `PROXY_OIDC_USERINFO_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
@@ -646,7 +652,7 @@ a|`OCIS_CACHE_ENABLE_TLS` +
 `PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_ENABLE_TLS` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -658,7 +664,7 @@ a|`OCIS_CACHE_TLS_INSECURE` +
 `PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_TLS_INSECURE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -670,7 +676,7 @@ a|`OCIS_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 `PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_TLS_ROOT_CA_CERTIFICATE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
@@ -1070,6 +1076,17 @@ a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
 The role that should be assigned to a guest user
+
+a|`OCIS_MULTI_INSTANCE_GUEST_ROLE_MAPPING` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++[]string ++
+a| [subs=-attributes]
+++[] ++
+a| [subs=-attributes]
+(Optional) Mapping of PROXY_ROLE_ASSIGNMENT_OIDC_CLAIM values to the role a guest gets instead of OCIS_MULTI_INSTANCE_GUEST_ROLE. Example: 'spaceadmin:user-light-vault'. A claim value is an exact string or a regular expression that must match the full claim value, the same as the claim_value of the role mapping. Escape regex metacharacters such as '.' in an exact string. The first match wins. Role names must not contain a colon. Only applies to the 'oidc' role assignment driver.
 
 a|`OCIS_ENABLE_VAULT_MODE` +
 `PROXY_ENABLE_VAULT_MODE` +
