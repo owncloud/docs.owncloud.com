@@ -47,6 +47,7 @@ http:
     - Cache-Control
     allow_credentials: true
 grpc_client_tls: null
+grpc_client_options: null
 thumbnail:
   resolutions:
   - 16x16

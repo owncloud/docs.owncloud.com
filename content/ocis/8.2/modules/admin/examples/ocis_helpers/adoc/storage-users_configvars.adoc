@@ -2,11 +2,11 @@
 // if the generated adoc file is used outside tabs, it renders correctly depending on the attribute set.
 // if inside, you need to also use the xxx_deprecation.adoc file. attributes can't be defined inside tabs.
 
-:show-deprecation: false
+:show-deprecation: true
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-30-54]
+[#deprecation-note-2026-11-05-13-26-45]
 [caption=]
 .Deprecation notes for the storage-users service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -15,6 +15,101 @@ ifeval::[{show-deprecation} == true]
 | Deprecation Version
 | Removal Version
 | Deprecation Replacement
+
+| STORAGE_USERS_OWNCLOUDSQL_DATADIR is deprecated because the owncloudsql driver is deprecated.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_OWNCLOUDSQL_SHARE_FOLDER is deprecated because the owncloudsql driver is deprecated.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_OWNCLOUDSQL_LAYOUT is deprecated because the owncloudsql driver is deprecated.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_OWNCLOUDSQL_UPLOADINFO_DIR is deprecated because the owncloudsql driver is deprecated.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_OWNCLOUDSQL_DB_USERNAME is deprecated because the owncloudsql driver is deprecated.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_OWNCLOUDSQL_DB_PASSWORD is deprecated because the owncloudsql driver is deprecated.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql driver is deprecated.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql driver is deprecated.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql driver is deprecated.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_OWNCLOUDSQL_USERS_PROVIDER_ENDPOINT is deprecated because the owncloudsql driver is deprecated.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_POSIX_ROOT is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_POSIX_PERSONAL_SPACE_PATH_TEMPLATE is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_POSIX_GENERAL_SPACE_PATH_TEMPLATE is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_POSIX_SCAN_DEBOUNCE_DELAY is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_POSIX_USE_SPACE_GROUPS is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_POSIX_WATCH_TYPE is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_POSIX_WATCH_PATH is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+| 8.2.0
+| 9.0.0
+| 
+
+| STORAGE_USERS_POSIX_WATCH_FOLDER_KAFKA_BROKERS is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+| 8.2.0
+| 9.0.0
+| 
 |===
 
 {empty} +
@@ -836,7 +931,7 @@ a| [subs=-attributes]
 Disables versioning of files. When set to true, new uploads with the same filename will overwrite existing files instead of creating a new version.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_DATADIR` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -847,7 +942,7 @@ a| [subs=-attributes]
 The directory where the filesystem storage will store SQL migration data. If not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/owncloud.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_SHARE_FOLDER` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -858,7 +953,7 @@ a| [subs=-attributes]
 Name of the folder jailing all shares.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_LAYOUT` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -869,7 +964,7 @@ a| [subs=-attributes]
 Path layout to use to navigate into a users folder in an owncloud data directory
 
 a|`STORAGE_USERS_OWNCLOUDSQL_UPLOADINFO_DIR` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -880,7 +975,7 @@ a| [subs=-attributes]
 The directory where the filesystem will store uploads temporarily. If not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/uploadinfo.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_DB_USERNAME` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -891,7 +986,7 @@ a| [subs=-attributes]
 Username for the database.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_DB_PASSWORD` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -902,7 +997,7 @@ a| [subs=-attributes]
 Password for the database.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_DB_HOST` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -913,7 +1008,7 @@ a| [subs=-attributes]
 Hostname or IP of the database server.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_DB_PORT` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -924,7 +1019,7 @@ a| [subs=-attributes]
 Port that the database server is listening on.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_DB_NAME` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -935,7 +1030,7 @@ a| [subs=-attributes]
 Name of the database to be used.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_USERS_PROVIDER_ENDPOINT` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -946,7 +1041,7 @@ a| [subs=-attributes]
 Endpoint of the users provider.
 
 a|`STORAGE_USERS_POSIX_ROOT` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -957,7 +1052,7 @@ a| [subs=-attributes]
 The directory where the filesystem storage will store its data. If not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/users.
 
 a|`STORAGE_USERS_POSIX_PERSONAL_SPACE_PATH_TEMPLATE` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -968,7 +1063,7 @@ a| [subs=-attributes]
 Template string to construct the paths of the personal space roots.
 
 a|`STORAGE_USERS_POSIX_GENERAL_SPACE_PATH_TEMPLATE` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -980,7 +1075,7 @@ Template string to construct the paths of the projects space roots.
 
 a|`STORAGE_USERS_PERMISSION_ENDPOINT` +
 `STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -1002,7 +1097,7 @@ a| [subs=-attributes]
 Enable asynchronous file uploads.
 
 a|`STORAGE_USERS_POSIX_SCAN_DEBOUNCE_DELAY` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -1013,7 +1108,7 @@ a| [subs=-attributes]
 The time in milliseconds to wait before scanning the filesystem for changes after a change has been detected.
 
 a|`STORAGE_USERS_POSIX_USE_SPACE_GROUPS` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -1024,7 +1119,7 @@ a| [subs=-attributes]
 Use space groups to manage permissions on spaces.
 
 a|`STORAGE_USERS_POSIX_WATCH_TYPE` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -1035,7 +1130,7 @@ a| [subs=-attributes]
 Type of the watcher to use for getting notified about changes to the filesystem. Currently available options are 'inotifywait' (default), 'gpfswatchfolder' and 'gpfsfileauditlogging'.
 
 a|`STORAGE_USERS_POSIX_WATCH_PATH` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -1046,7 +1141,7 @@ a| [subs=-attributes]
 Path to the watch directory/file. Only applies to the 'gpfsfileauditlogging' and 'inotifywait' watcher, in which case it is the path of the file audit log file/base directory to watch.
 
 a|`STORAGE_USERS_POSIX_WATCH_FOLDER_KAFKA_BROKERS` +
-
+xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -1282,7 +1377,7 @@ a|`OCIS_CACHE_ENABLE_TLS` +
 `STORAGE_USERS_FILEMETADATA_CACHE_ENABLE_TLS` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -1294,7 +1389,7 @@ a|`OCIS_CACHE_TLS_INSECURE` +
 `STORAGE_USERS_FILEMETADATA_CACHE_TLS_INSECURE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -1306,7 +1401,7 @@ a|`OCIS_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 `STORAGE_USERS_FILEMETADATA_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
@@ -1401,7 +1496,7 @@ a|`OCIS_CACHE_ENABLE_TLS` +
 `STORAGE_USERS_ID_CACHE_ENABLE_TLS` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -1413,7 +1508,7 @@ a|`OCIS_CACHE_TLS_INSECURE` +
 `STORAGE_USERS_ID_CACHE_TLS_INSECURE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -1425,7 +1520,7 @@ a|`OCIS_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 `STORAGE_USERS_ID_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]

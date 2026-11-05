@@ -28,6 +28,10 @@ The subfolders in `services` (see [Folder Structure](#folder-structure)) are the
          * [For the Docs Prerelease Version](#for-the-docs-prerelease-version)
          * [For any Other Version](#for-any-other-version)
    * [Envvar Delta File Creation](#envvar-delta-file-creation)
+   * [Troubleshooting](#troubleshooting)
+      * [Out-of-Scope introductionVersion in the deltas Task](#out-of-scope-introductionversion-in-the-deltas-task)
+      * [Broken Table Row in the deprecated File](#broken-table-row-in-the-deprecated-file)
+      * [Regenerating a Single Delta File Without Overwriting the Others](#regenerating-a-single-delta-file-without-overwriting-the-others)
    * [Development](#development)
 
 ## Prerequisites
@@ -239,7 +243,7 @@ If the `extended_vars.yaml` file has been corrupted or accidentally deleted, it 
 ## Helper Usage
 
 * Please note that the `ocis_helper` directory is part of the repo and generally available for all ocis versions to be processed.
-* **IMPORTANT**: The version **folders** that you are working on must be the same in both the documentation and the ocis repository. **DO NOT MIX VERSION BRANCHES**.\
+* **IMPORTANT**: The version **folders** that you are working on must be the same in both the documentation and the **branches** in the ocis repository. **DO NOT MIX VERSIONS**.\
 Examples:
    ```
    docs      ocis
@@ -250,7 +254,7 @@ Examples:
    8.3       stable-8.2   WRONG
    ```
 
-**First switch to the relevant branches in both repos. The versions must match!**
+**First switch to the relevant branch in the ocis repo and use the version as option in the `ocis_helpers` command. The versions must match!**
 
 As there may be changes to Go dependencies during development or between versions, updating the Go dependencies may be necessary. When running `ocis_helpers <version> <task>`, you will be notified by the following message: `go: updates to go.mod needed; to update it`. Run `go mod tidy` to update the dependencies for this version. These changes are tracked and must be committed and merged for that version. This is one of the reasons why versions must match.
 
@@ -350,6 +354,61 @@ To create the `added, deprecated and removed` environment variables adoc files f
 * Before merging the changes, run the copy task and **mandatory** do a docs build to ensure that all changes are correctly rendered.
 
 **Note that on any consecutive script run, any manual changes made are overwritten. You need to re-apply them!**
+
+## Troubleshooting
+
+### Out-of-Scope introductionVersion in the deltas Task
+
+**When:** The `deltas` task reports one or more environment variables as out-of-scope, for example:
+
+```
+This additional out-of-scope envvars have been found in 9.0.0.
+They may require fixing in ocis or extra excluded here:
+
+GATEWAY_PROVIDER_CACHE_DATABASE 9.0
+```
+
+**Why:** The `introductionVersion` stored in the `env_vars.yaml` file for the target version does not match the `toVersion` set in `delta_config.yaml`. A common cause is that the ocis source used an informal two-part version string (e.g. `9.0`) instead of the required three-part SemVer (e.g. `9.0.0`) at the time the `services` task was last run.
+
+**Fix:**
+
+1. Verify the correct `introductionVersion` for the affected envvar in the oCIS repo (search in `services/*/pkg/config/`). If the value is wrong (e.g. `9.0` instead of `9.0.0`), create a fix PR against the relevant ocis stable branch, merge it, and rebase your local ocis branch. Note that the same fix may need to be applied to other branches as well, such as `master`, to keep them consistent.
+
+2. With the corrected oCIS branch checked out locally, run `ocis_helpers <version> services`. The `services` task will regenerate `env_vars.yaml` and report any `introductionVersion` changes it detects:
+
+   ```
+   The introductionVersion of the following envvars changed in .../env_vars.yaml:
+
+     GATEWAY_PROVIDER_CACHE_DATABASE                              "9.0"  ->  "9.0.0"
+
+   Update these introductionVersion changes in .../env_vars.yaml? [Y/n]:
+   ```
+
+   Confirm with `Y` (the default) to accept the updated values.
+
+3. Re-run `ocis_helpers <version> deltas`. The corrected envvars now carry the expected `introductionVersion` and appear in the added table instead of being reported as out-of-scope.
+
+### Broken Table Row in the deprecated File
+
+**When:** A global envvar (starting with `OCIS_`) in the deprecated output file renders as a broken table row — one entry spills across multiple cells.
+
+**Why:** Global envvars can be deprecated by more than one service, each supplying its own `deprecationInfo` text. These texts are stored concatenated with ` | ` as a separator. An unescaped `|` inside a table cell is interpreted by AsciiDoc as a cell boundary, which shifts all following cells and breaks the row layout.
+
+**Fix:** This is handled automatically by the `deltas` task since the introduction of pipe-guarding on the `deprecationInfo` field. The cell is truncated at the first unescaped `|` and the affected envvar is printed as a warning on the console so the shortened text can be reviewed. If you see this in an existing generated file, simply re-run the `deltas` task (or just the `deprecated` sub-task — see below) to regenerate it with the corrected output.
+
+### Regenerating a Single Delta File Without Overwriting the Others
+
+The `deltas` task accepts an optional sub-task argument to regenerate only one of the three output files:
+
+```bash
+./ocis_helpers <version> deltas added
+./ocis_helpers <version> deltas removed
+./ocis_helpers <version> deltas deprecated
+```
+
+When a sub-task is given, only that file is written; the other two files on disk are left untouched. This is useful when you have already manually post-processed one or more of the files (grouping entries, fixing service name placeholders) and only need to fix a single file without losing your edits.
+
+Without a sub-task argument all three files are regenerated, which is the default behaviour.
 
 ## Development
 

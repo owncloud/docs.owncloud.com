@@ -117,7 +117,19 @@ func main() {
 		case "extended":
 			RenderRogueEnvs()
 		case "deltas":
-			RenderEnvVarDeltas(isDryrun)
+			subTask := ""
+			if len(positionalArgs) > 2 {
+				subTask = positionalArgs[2]
+				switch subTask {
+				case "added", "removed", "deprecated":
+					// valid
+				default:
+					fmt.Fprintf(os.Stderr, "Unknown deltas sub-task %q — valid values: added, removed, deprecated\n\n", subTask)
+					printUsage()
+					exitCleanly(1)
+				}
+			}
+			RenderEnvVarDeltas(isDryrun, subTask)
 		case "copy":
 			CopyToExamples()
 		case "cleanup_s":
@@ -428,6 +440,7 @@ func printUsage() {
 	fmt.Printf("  rogue:     create/update the extended_vars.yaml file\n")
 	fmt.Printf("  extended:  generate extended_configvars table\n")
 	fmt.Printf("  deltas:    generate the added, deprecated and removed envvar tables\n")
+	fmt.Printf("             optional sub-task: added | removed | deprecated  (regenerates only that file, others on disk are untouched)\n")
 	fmt.Printf("  copy:      copy the subfolders of %s to %s except 'persistent_files'\n", services_dir, examples_dir)
 	fmt.Printf("  cleanup_s: cleanup folders in %s except 'persistent_files'. run services, extended, deltas to recreate\n", services_dir)
 	fmt.Printf("  cleanup_h: remove the folder %s. folder contents is build relevant for antora\n\n", examples_dir)

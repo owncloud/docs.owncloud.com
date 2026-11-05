@@ -1,17 +1,12 @@
 // # Removed Variables between oCIS 8.1.0 and oCIS 8.2.0
 // commenting the headline to make it better includable
 
-// table created per 2026.09.10
+// table created per 2026.11.04
 // the table should be recreated/updated on source () changes
 
 [width="100%",cols="~,~,~,~",options="header"]
 |===
 | Service | Variable | Description | Default
-
-| xref:deployment/services/env-vars-special-scope.adoc[Special Scope Envvars]
-| OCIS_LDAP_INSTANCE_MAPPER_CACHE_TTL
-| Max TTL in seconds for the LDAP instance mapper cache. Requires OCIS_MULTI_INSTANCE_ENABLED.
-| 60000000000
 
 | xref:{s-path}/graph.adoc[Graph]
 | GRAPH_MAX_IMAGE_FILE_SIZE
