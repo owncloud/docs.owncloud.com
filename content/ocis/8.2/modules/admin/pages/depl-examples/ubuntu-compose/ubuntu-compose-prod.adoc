@@ -75,6 +75,8 @@ Note that this guide expects:
 
 * You have at least shell access and can ssh to your host from another machine on your network. You may need `sudo` permissions for some steps later in the setup.
 
+* Your server does not have an existing reverse-proxy or other service running on ports 80 and/or 443.
+
 // deployment specific text, this is for local server, alternatively use the commented ones below for hetzner
 
 :text_1:
