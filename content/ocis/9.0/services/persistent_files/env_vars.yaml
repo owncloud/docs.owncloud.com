@@ -208,7 +208,7 @@ ACTIVITYLOG_STORE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the store. Only applies when store
     type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -239,7 +239,7 @@ ACTIVITYLOG_STORE_TLS_INSECURE:
   type: bool
   description: Disable TLS certificate verification for the store connection. Only
     applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -249,7 +249,7 @@ ACTIVITYLOG_STORE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the store TLS connection.
     Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -823,7 +823,7 @@ APP_PROVIDER_WOPI_DISABLE_CHAT:
   deprecationInfo: ""
 APP_PROVIDER_WOPI_FOLDER_URL_BASE_URL:
   name: OCIS_URL;APP_PROVIDER_WOPI_FOLDER_URL_BASE_URL
-  defaultValue: https://localhost:9200/
+  defaultValue: https://localhost:9200
   type: string
   description: Base url to navigate back from the app to the containing folder in
     the file list.
@@ -1653,7 +1653,7 @@ AUTH_BASIC_LDAP_GROUP_SCHEMA_GROUPNAME:
   deprecationInfo: ""
 AUTH_BASIC_LDAP_GROUP_SCHEMA_ID:
   name: OCIS_LDAP_GROUP_SCHEMA_ID;AUTH_BASIC_LDAP_GROUP_SCHEMA_ID
-  defaultValue: ownclouduuid
+  defaultValue: ownCloudUUID
   type: string
   description: LDAP Attribute to use as the unique id for groups. This should be a
     stable globally unique id (e.g. a UUID).
@@ -1830,7 +1830,7 @@ AUTH_BASIC_LDAP_USER_OBJECTCLASS:
   deprecationInfo: ""
 AUTH_BASIC_LDAP_USER_SCHEMA_DISPLAYNAME:
   name: OCIS_LDAP_USER_SCHEMA_DISPLAYNAME;AUTH_BASIC_LDAP_USER_SCHEMA_DISPLAYNAME
-  defaultValue: displayname
+  defaultValue: displayName
   type: string
   description: LDAP Attribute to use for the displayname of users.
   introductionVersion: pre5.0
@@ -1839,7 +1839,7 @@ AUTH_BASIC_LDAP_USER_SCHEMA_DISPLAYNAME:
   deprecationInfo: ""
 AUTH_BASIC_LDAP_USER_SCHEMA_ID:
   name: OCIS_LDAP_USER_SCHEMA_ID;AUTH_BASIC_LDAP_USER_SCHEMA_ID
-  defaultValue: ownclouduuid
+  defaultValue: ownCloudUUID
   type: string
   description: LDAP Attribute to use as the unique ID for users. This should be a
     stable globally unique ID like a UUID.
@@ -3044,7 +3044,7 @@ COLLABORATION_STORE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the store. Only applies when store
     type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -3075,7 +3075,7 @@ COLLABORATION_STORE_TLS_INSECURE:
   type: bool
   description: Disable TLS certificate verification for the store connection. Only
     applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -3085,7 +3085,7 @@ COLLABORATION_STORE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the store TLS connection.
     Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -3422,7 +3422,7 @@ EVENTHISTORY_STORE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the store. Only applies when store
     type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -3452,8 +3452,10 @@ EVENTHISTORY_STORE_TLS_INSECURE:
   defaultValue: "false"
   type: bool
   description: Disable TLS certificate verification for the store connection. Only
-    applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+    applies when store type 'nats-js-kv' is configured. Do not enable this in production
+    because it disables authentication of the NATS server. Use it only for testing
+    with self-signed certificates.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -3463,7 +3465,7 @@ EVENTHISTORY_STORE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the store TLS connection.
     Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -3714,6 +3716,18 @@ FRONTEND_DEFAULT_UPLOAD_PROTOCOL:
   description: The default upload protocol to use in clients. Currently only 'tus'
     is available. See the developer API documentation for more details about TUS.
   introductionVersion: pre5.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+FRONTEND_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS:
+  name: OCIS_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS;FRONTEND_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS
+  defaultValue: "30"
+  type: int
+  description: The default expiration, in days, applied to a vault user or group share
+    created without an explicit expiration date. Reported via the vault capability
+    so clients can reflect the admin-configured value. Must match the graph service's
+    GRAPH_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -4416,6 +4430,17 @@ GATEWAY_PROVIDER_CACHE_AUTH_USERNAME:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+GATEWAY_PROVIDER_CACHE_DATABASE:
+  name: OCIS_CACHE_DATABASE;GATEWAY_PROVIDER_CACHE_DATABASE
+  defaultValue: cache-providers
+  type: string
+  description: The database name the configured store should use.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: The global variable OCIS_CACHE_DATABASE is deprecated and will
+    be removed in a future release. Please use local variable GATEWAY_PROVIDER_CACHE_DATABASE
+    instead.
 GATEWAY_PROVIDER_CACHE_DISABLE_PERSISTENCE:
   name: OCIS_CACHE_DISABLE_PERSISTENCE;GATEWAY_PROVIDER_CACHE_DISABLE_PERSISTENCE
   defaultValue: "false"
@@ -4432,7 +4457,7 @@ GATEWAY_PROVIDER_CACHE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the cache store. Only applies when
     store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -4463,8 +4488,10 @@ GATEWAY_PROVIDER_CACHE_TLS_INSECURE:
   defaultValue: "false"
   type: bool
   description: Disable TLS certificate verification for the cache store connection.
-    Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+    Only applies when store type 'nats-js-kv' is configured. Do not enable this in
+    production because it disables authentication of the NATS server. Use it only
+    for testing with self-signed certificates.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -4474,7 +4501,7 @@ GATEWAY_PROVIDER_CACHE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the cache store TLS
     connection. Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -4733,7 +4760,7 @@ GRAPH_CACHE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the cache store. Only applies when
     store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -4783,7 +4810,7 @@ GRAPH_CACHE_TLS_INSECURE:
   type: bool
   description: Disable TLS certificate verification for the cache store connection.
     Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -4793,7 +4820,7 @@ GRAPH_CACHE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the cache store TLS
     connection. Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -4886,6 +4913,16 @@ GRAPH_DEBUG_ZPAGES:
   description: Enables zpages, which can be used for collecting and viewing in-memory
     traces.
   introductionVersion: pre5.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+GRAPH_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS:
+  name: OCIS_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS;GRAPH_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS
+  defaultValue: "30"
+  type: int
+  description: The default expiration, in days, applied to a vault user or group share
+    created without an explicit expiration date. Space memberships are exempt.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -5215,7 +5252,7 @@ GRAPH_LDAP_GROUP_FILTER:
   deprecationInfo: ""
 GRAPH_LDAP_GROUP_ID_ATTRIBUTE:
   name: OCIS_LDAP_GROUP_SCHEMA_ID;GRAPH_LDAP_GROUP_ID_ATTRIBUTE
-  defaultValue: owncloudUUID
+  defaultValue: ownCloudUUID
   type: string
   description: LDAP Attribute to use as the unique id for groups. This should be a
     stable globally unique ID like a UUID.
@@ -5494,6 +5531,17 @@ GRAPH_LDAP_URI:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+GRAPH_LDAP_USER_ADDITIONAL_OBJECTCLASSES:
+  name: OCIS_LDAP_USER_ADDITIONAL_OBJECTCLASSES;GRAPH_LDAP_USER_ADDITIONAL_OBJECTCLASSES
+  defaultValue: '[]'
+  type: '[]string'
+  description: Additional object classes to set when creating new users (e.g. to allow
+    a custom surname attribute). The default classes 'inetOrgPerson', 'organizationalPerson',
+    'person', 'top' and 'ownCloudUser' are always included.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 GRAPH_LDAP_USER_BASE_DN:
   name: OCIS_LDAP_USER_BASE_DN;GRAPH_LDAP_USER_BASE_DN
   defaultValue: ou=users,o=libregraph-idm
@@ -5570,6 +5618,28 @@ GRAPH_LDAP_USER_SCOPE:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+GRAPH_LDAP_USER_SEARCH_ATTRIBUTES:
+  name: GRAPH_LDAP_USER_SEARCH_ATTRIBUTES
+  defaultValue: '[onPremisesSamAccountName displayName mail]'
+  type: '[]string'
+  description: The user attributes to match against when searching for users via the
+    Graph API. Does not affect the legacy OCS sharees search, which always matches
+    on username, display name, and mail. Accepts the logical names 'onPremisesSamAccountName',
+    'displayName', 'surname', 'mail' (case-insensitive), or any other LDAP attribute
+    name directly.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+GRAPH_LDAP_USER_SURNAME_ATTRIBUTE:
+  name: OCIS_LDAP_USER_SCHEMA_SURNAME;GRAPH_LDAP_USER_SURNAME_ATTRIBUTE
+  defaultValue: sn
+  type: string
+  description: LDAP Attribute to use for the surname of users.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 GRAPH_LDAP_USER_TYPE_ATTRIBUTE:
   name: OCIS_LDAP_USER_SCHEMA_USER_TYPE;GRAPH_LDAP_USER_TYPE_ATTRIBUTE
   defaultValue: ownCloudUserType
@@ -5582,7 +5652,7 @@ GRAPH_LDAP_USER_TYPE_ATTRIBUTE:
   deprecationInfo: ""
 GRAPH_LDAP_USER_UID_ATTRIBUTE:
   name: OCIS_LDAP_USER_SCHEMA_ID;GRAPH_LDAP_USER_UID_ATTRIBUTE
-  defaultValue: owncloudUUID
+  defaultValue: ownCloudUUID
   type: string
   description: LDAP Attribute to use as the unique ID for users. This should be a
     stable globally unique ID like a UUID.
@@ -5645,7 +5715,7 @@ GRAPH_MAX_IMAGE_FILE_SIZE:
     thumbnails service, otherwise images between the two values are accepted but cannot
     be rendered. Usable common abbreviations: [KB, KiB, MB, MiB, GB, GiB, TB, TiB,
     PB, PiB, EB, EiB], example: 2GB. Set to 0 to not limit the file size.'
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -5868,8 +5938,8 @@ GROUPS_DRIVER:
   name: GROUPS_DRIVER
   defaultValue: ldap
   type: string
-  description: The driver which should be used by the groups service. Supported values
-    are 'ldap' and 'owncloudsql'.
+  description: The driver which should be used by the groups service. Supported value
+    is 'ldap'.
   introductionVersion: pre5.0
   deprecationVersion: ""
   removalVersion: ""
@@ -5990,7 +6060,7 @@ GROUPS_LDAP_GROUP_SCHEMA_GROUPNAME:
   deprecationInfo: ""
 GROUPS_LDAP_GROUP_SCHEMA_ID:
   name: OCIS_LDAP_GROUP_SCHEMA_ID;GROUPS_LDAP_GROUP_SCHEMA_ID
-  defaultValue: ownclouduuid
+  defaultValue: ownCloudUUID
   type: string
   description: LDAP Attribute to use as the unique id for groups. This should be a
     stable globally unique ID like a UUID.
@@ -6160,7 +6230,7 @@ GROUPS_LDAP_USER_OBJECTCLASS:
   deprecationInfo: ""
 GROUPS_LDAP_USER_SCHEMA_DISPLAYNAME:
   name: OCIS_LDAP_USER_SCHEMA_DISPLAYNAME;GROUPS_LDAP_USER_SCHEMA_DISPLAYNAME
-  defaultValue: displayname
+  defaultValue: displayName
   type: string
   description: LDAP Attribute to use for the displayname of users.
   introductionVersion: pre5.0
@@ -6169,7 +6239,7 @@ GROUPS_LDAP_USER_SCHEMA_DISPLAYNAME:
   deprecationInfo: ""
 GROUPS_LDAP_USER_SCHEMA_ID:
   name: OCIS_LDAP_USER_SCHEMA_ID;GROUPS_LDAP_USER_SCHEMA_ID
-  defaultValue: ownclouduuid
+  defaultValue: ownCloudUUID
   type: string
   description: LDAP Attribute to use as the unique id for users. This should be a
     stable globally unique id like a UUID.
@@ -6393,6 +6463,31 @@ GROUPS_TRACING_TYPE:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+GRPC_CLIENT_KEEPALIVE_TIME:
+  name: GRPC_CLIENT_KEEPALIVE_TIME
+  defaultValue: 0s
+  type: Duration
+  description: How long a grpc client connection with an ongoing request may stay
+    silent before the server is pinged to check whether it is still answering. Set
+    a duration like '20s' to enable detection of unresponsive peers. Leaving it unset,
+    or at '0', sends no pings at all, which is grpc's own default. Values below '10s'
+    are raised to '10s' by grpc. Make sure to include the unit suffix, a bare number
+    is not a valid duration.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+GRPC_CLIENT_KEEPALIVE_TIMEOUT:
+  name: GRPC_CLIENT_KEEPALIVE_TIMEOUT
+  defaultValue: 0s
+  type: Duration
+  description: How long a grpc client waits for the answer to a keepalive ping before
+    it considers the connection dead and fails all requests on it. Defaults to '10s'.
+    Has no effect unless GRPC_CLIENT_KEEPALIVE_TIME is set. See GRPC_CLIENT_KEEPALIVE_TIME.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 IDM_ADMIN_PASSWORD:
   name: IDM_ADMIN_PASSWORD
   defaultValue: ""
@@ -6415,10 +6510,10 @@ IDM_ADMIN_USER_ID:
   removalVersion: ""
   deprecationInfo: ""
 IDM_CREATE_DEMO_USERS:
-  name: IDM_CREATE_DEMO_USERS
+  name: SETTINGS_SETUP_DEFAULT_ASSIGNMENTS;IDM_CREATE_DEMO_USERS
   defaultValue: "false"
   type: bool
-  description: Flag to enable or disable the creation of the demo users.
+  description: The default role assignments the demo users should be setup.
   introductionVersion: pre5.0
   deprecationVersion: ""
   removalVersion: ""
@@ -7260,7 +7355,7 @@ INVITATIONS_KEYCLOAK_EXECUTE_ACTIONS:
     guests via the execute-actions email. Values are passed to Keycloak as-is. Defaults
     to 'UPDATE_PASSWORD,VERIFY_EMAIL'. See the Environment Variable Types description
     for more details.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -7874,7 +7969,7 @@ NOTIFICATIONS_STORE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the store. Only applies when store
     type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -7904,8 +7999,10 @@ NOTIFICATIONS_STORE_TLS_INSECURE:
   defaultValue: "false"
   type: bool
   description: Disable TLS certificate verification for the store connection. Only
-    applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+    applies when store type 'nats-js-kv' is configured. Do not enable this in production
+    because it disables authentication of the NATS server. Use it only for testing
+    with self-signed certificates.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -7915,7 +8012,7 @@ NOTIFICATIONS_STORE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the store TLS connection.
     Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -8081,6 +8178,17 @@ OCDAV_DEBUG_ZPAGES:
   description: Enables zpages, which can be used for collecting and viewing in-memory
     traces.
   introductionVersion: pre5.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+OCDAV_DISABLE_PROPFIND_PUBLIC_LINK_RESOLUTION:
+  name: OCDAV_DISABLE_PROPFIND_PUBLIC_LINK_RESOLUTION
+  defaultValue: "false"
+  type: bool
+  description: Disable the resolution of public link shares when answering PROPFIND
+    requests. When disabled, the oc:share-type property will not be populated with
+    public link share information, which can reduce load on services for large collections.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -8358,7 +8466,7 @@ OCIS_CACHE_AUTH_USERNAME:
   deprecationInfo: The use of OCIS_CACHE_AUTH_USERNAME in the frontend service is
     deprecated because the OCS API is deprecated OCS API is deprecated
 OCIS_CACHE_DATABASE:
-  name: OCIS_CACHE_DATABASE
+  name: OCIS_CACHE_DATABASE;GATEWAY_PROVIDER_CACHE_DATABASE;PROXY_OIDC_USERINFO_CACHE_DATABASE;SETTINGS_CACHE_DATABASE;STORAGE_SYSTEM_CACHE_DATABASE;STORAGE_USERS_FILEMETADATA_CACHE_DATABASE;STORAGE_USERS_ID_CACHE_DATABASE
   defaultValue: cache-stat | cache-userinfo | storage-system | cache-providers | settings-cache
     | storage-users | ids-storage-users
   type: string
@@ -8367,7 +8475,19 @@ OCIS_CACHE_DATABASE:
   deprecationVersion: 7.0.0
   removalVersion: '%%NEXT_PRODUCTION_VERSION%%'
   deprecationInfo: The use of OCIS_CACHE_DATABASE in the frontend service is deprecated
-    because the OCS API is deprecated
+    because the OCS API is deprecated | The global variable OCIS_CACHE_DATABASE is
+    deprecated and will be removed in a future release. Please use local variable
+    SETTINGS_CACHE_DATABASE instead. | The global variable OCIS_CACHE_DATABASE is
+    deprecated and will be removed in a future release. Please use local variable
+    STORAGE_SYSTEM_CACHE_DATABASE instead. | The global variable OCIS_CACHE_DATABASE
+    is deprecated and will be removed in a future release. Please use local variable
+    STORAGE_USERS_FILEMETADATA_CACHE_DATABASE instead. | The global variable OCIS_CACHE_DATABASE
+    is deprecated and will be removed in a future release. Please use local variable
+    STORAGE_USERS_ID_CACHE_DATABASE instead. | The global variable OCIS_CACHE_DATABASE
+    is deprecated and will be removed in a future release. Please use local variable
+    GATEWAY_PROVIDER_CACHE_DATABASE instead. | The global variable OCIS_CACHE_DATABASE
+    is deprecated and will be removed in a future release. Please use local variable
+    PROXY_OIDC_USERINFO_CACHE_DATABASE instead.
 OCIS_CACHE_DISABLE_PERSISTENCE:
   name: OCIS_CACHE_DISABLE_PERSISTENCE;GATEWAY_PROVIDER_CACHE_DISABLE_PERSISTENCE;GRAPH_CACHE_DISABLE_PERSISTENCE;PROXY_OIDC_USERINFO_CACHE_DISABLE_PERSISTENCE;PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_DISABLE_PERSISTENCE;SETTINGS_CACHE_DISABLE_PERSISTENCE;STORAGE_SYSTEM_CACHE_DISABLE_PERSISTENCE;STORAGE_USERS_FILEMETADATA_CACHE_DISABLE_PERSISTENCE;STORAGE_USERS_ID_CACHE_DISABLE_PERSISTENCE
   defaultValue: false | true
@@ -8389,7 +8509,9 @@ OCIS_CACHE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the cache store. Only applies when
     store type 'nats-js-kv' is configured. | Activate TLS for the connection to the
-    signing key store. Only applies when store type 'nats-js-kv' is configured.
+    signing key store. Only applies when store type 'nats-js-kv' is configured. |
+    Activate TLS for the connection to the stat cache store. Only applies when using
+    the 'nats-js-kv' store type.
   introductionVersion: 8.3.0
   deprecationVersion: ""
   removalVersion: ""
@@ -8433,7 +8555,17 @@ OCIS_CACHE_TLS_INSECURE:
   description: Disable TLS certificate verification for the cache store connection.
     Only applies when store type 'nats-js-kv' is configured. | Disable TLS certificate
     verification for the signing key store connection. Only applies when store type
-    'nats-js-kv' is configured.
+    'nats-js-kv' is configured. | Disable TLS certificate verification for the cache
+    store connection. Only applies when store type 'nats-js-kv' is configured. Do
+    not enable this in production because it disables authentication of the NATS server.
+    Use it only for testing with self-signed certificates. | Disable TLS certificate
+    verification for the signing key store connection. Only applies when store type
+    'nats-js-kv' is configured. Do not enable this in production because it disables
+    authentication of the NATS server. Use it only for testing with self-signed certificates.
+    | Disable TLS certificate verification for the stat cache store connection. Only
+    applies when using the 'nats-js-kv' store type. Do not enable this in production
+    because it disables authentication of the NATS server. Use it only for testing
+    with self-signed certificates.
   introductionVersion: 8.3.0
   deprecationVersion: ""
   removalVersion: ""
@@ -8445,7 +8577,9 @@ OCIS_CACHE_TLS_ROOT_CA_CERTIFICATE:
   description: Path to the PEM-encoded root CA certificate for the cache store TLS
     connection. Only applies when store type 'nats-js-kv' is configured. | Path to
     the PEM-encoded root CA certificate for the signing key store TLS connection.
-    Only applies when store type 'nats-js-kv' is configured.
+    Only applies when store type 'nats-js-kv' is configured. | Path to the PEM-encoded
+    root CA certificate for the stat cache store TLS connection. Only applies when
+    using the 'nats-js-kv' store type.
   introductionVersion: 8.3.0
   deprecationVersion: ""
   removalVersion: ""
@@ -8613,6 +8747,19 @@ OCIS_DEFAULT_LANGUAGE:
   description: The default language used by services and the WebUI. If not defined,
     English will be used as default. See the documentation for more details.
   introductionVersion: "5.0"
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+OCIS_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS:
+  name: OCIS_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS;FRONTEND_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS;GRAPH_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS
+  defaultValue: "30"
+  type: int
+  description: The default expiration, in days, applied to a vault user or group share
+    created without an explicit expiration date. Space memberships are exempt. | The
+    default expiration, in days, applied to a vault user or group share created without
+    an explicit expiration date. Reported via the vault capability so clients can
+    reflect the admin-configured value. Must match the graph service's GRAPH_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -8852,6 +8999,18 @@ OCIS_GRPC_CLIENT_TLS_MODE:
     security for the clients. ''insecure'' allows using transport security, but disables
     certificate verification (to be used with the autogenerated self-signed certificates).
     ''on'' enables transport security, including server certificate verification.'
+  introductionVersion: pre5.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+OCIS_GRPC_MAX_RECEIVED_MESSAGE_SIZE:
+  name: OCIS_GRPC_MAX_RECEIVED_MESSAGE_SIZE
+  defaultValue: "0"
+  type: int
+  description: The maximum body size for grpc requests. Defaults to '10240000' bytes
+    (10MB). Note that large values can potentially hide errors but may lead to network
+    timeouts. Should only be changed temporarily to regain access for large folders
+    with 25.000+ files to copy out data.
   introductionVersion: pre5.0
   deprecationVersion: ""
   removalVersion: ""
@@ -9121,7 +9280,7 @@ OCIS_LDAP_GROUP_SCHEMA_GROUPNAME:
   deprecationInfo: ""
 OCIS_LDAP_GROUP_SCHEMA_ID:
   name: OCIS_LDAP_GROUP_SCHEMA_ID;AUTH_BASIC_LDAP_GROUP_SCHEMA_ID;GRAPH_LDAP_GROUP_ID_ATTRIBUTE;GROUPS_LDAP_GROUP_SCHEMA_ID;USERS_LDAP_GROUP_SCHEMA_ID
-  defaultValue: owncloudUUID | ownclouduuid
+  defaultValue: owncloudUUID | ownclouduuid | ownCloudUUID
   type: string
   description: LDAP Attribute to use as the unique id for groups. This should be a
     stable globally unique ID like a UUID. | LDAP Attribute to use as the unique ID
@@ -9354,6 +9513,17 @@ OCIS_LDAP_URI:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+OCIS_LDAP_USER_ADDITIONAL_OBJECTCLASSES:
+  name: OCIS_LDAP_USER_ADDITIONAL_OBJECTCLASSES;GRAPH_LDAP_USER_ADDITIONAL_OBJECTCLASSES
+  defaultValue: '[]'
+  type: '[]string'
+  description: Additional object classes to set when creating new users (e.g. to allow
+    a custom surname attribute). The default classes 'inetOrgPerson', 'organizationalPerson',
+    'person', 'top' and 'ownCloudUser' are always included.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 OCIS_LDAP_USER_BASE_DN:
   name: OCIS_LDAP_USER_BASE_DN;AUTH_BASIC_LDAP_USER_BASE_DN;GRAPH_LDAP_USER_BASE_DN;GROUPS_LDAP_USER_BASE_DN;IDP_LDAP_BASE_DN;USERS_LDAP_USER_BASE_DN
   defaultValue: ou=users,o=libregraph-idm
@@ -9471,6 +9641,15 @@ OCIS_LDAP_USER_SCHEMA_MAIL:
   description: LDAP User email attribute like 'mail'. | LDAP Attribute to use for
     the email address of users.
   introductionVersion: pre5.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+OCIS_LDAP_USER_SCHEMA_SURNAME:
+  name: OCIS_LDAP_USER_SCHEMA_SURNAME;GRAPH_LDAP_USER_SURNAME_ATTRIBUTE
+  defaultValue: sn
+  type: string
+  description: LDAP Attribute to use for the surname of users.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -9643,6 +9822,24 @@ OCIS_MULTI_INSTANCE_GUEST_ROLE:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+OCIS_MULTI_INSTANCE_GUEST_ROLE_MAPPING:
+  name: OCIS_MULTI_INSTANCE_GUEST_ROLE_MAPPING
+  defaultValue: '[]'
+  type: '[]string'
+  description: '(Optional) The guest role mapping of the proxy service. The graph
+    service matches it against the LDAP attribute ''userClass'' of guests without
+    a role on this instance, so they can receive vault shares before their first login
+    here. ''userClass'' must hold the same values as the PROXY_ROLE_ASSIGNMENT_OIDC_CLAIM
+    claim. | (Optional) Mapping of PROXY_ROLE_ASSIGNMENT_OIDC_CLAIM values to the
+    role a guest gets instead of OCIS_MULTI_INSTANCE_GUEST_ROLE. Example: ''spaceadmin:user-light-vault''.
+    A claim value is an exact string or a regular expression that must match the full
+    claim value, the same as the claim_value of the role mapping. Escape regex metacharacters
+    such as ''.'' in an exact string. The first match wins. Role names must not contain
+    a colon. Only applies to the ''oidc'' role assignment driver.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 OCIS_MULTI_INSTANCE_INSTANCEID:
   name: OCIS_MULTI_INSTANCE_INSTANCEID
   defaultValue: ""
@@ -9659,7 +9856,17 @@ OCIS_MULTI_INSTANCE_MASTER_ID:
   description: The master ID that grants access to all instances. Users with this
     ID in their memberOf or guestOf claims can access any instance. Leave empty to
     disable. | The master instance ID for multi-instance setups. When set, LDAP user
-    filters are enhanced to also match users belonging to the master instance.
+    filters are enhanced to also match users belonging to the master instance. | The
+    master ID that grants access to all instances. Users with this ID in their memberOf
+    or guestOf claims can access any instance. Leave empty to disable. Also set 'OCIS_LDAP_USER_FILTER'.
+    Without an explicit user filter, this instance resolves every user in the shared
+    LDAP directory. | The master instance ID for multi-instance setups. When set,
+    LDAP user filters are enhanced to also match users belonging to the master instance.
+    Also set 'user_filter'. Without an explicit 'user_filter', this instance resolves
+    every user in the shared LDAP directory. | The master instance ID for multi-instance
+    setups. When set, LDAP user filters are enhanced to also match users belonging
+    to the master instance. Also set 'user_filter'. Without an explicit 'user_filter',
+    this instance allows login for every user in the shared LDAP directory.
   introductionVersion: "7.0"
   deprecationVersion: ""
   removalVersion: ""
@@ -9834,7 +10041,10 @@ OCIS_PERSISTENT_STORE_TLS_INSECURE:
   defaultValue: "false"
   type: bool
   description: Disable TLS certificate verification for the store connection. Only
-    applies when store type 'nats-js-kv' is configured.
+    applies when store type 'nats-js-kv' is configured. | Disable TLS certificate
+    verification for the store connection. Only applies when store type 'nats-js-kv'
+    is configured. Do not enable this in production because it disables authentication
+    of the NATS server. Use it only for testing with self-signed certificates.
   introductionVersion: 8.3.0
   deprecationVersion: ""
   removalVersion: ""
@@ -9925,6 +10135,27 @@ OCIS_SERVICE_ACCOUNT_SECRET:
   type: string
   description: The service account secret.
   introductionVersion: "5.0"
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+OCIS_SHARING_ENABLE_EXPIRED_SHARES_CLEANUP:
+  name: OCIS_SHARING_ENABLE_EXPIRED_SHARES_CLEANUP;SHARING_ENABLE_EXPIRED_SHARES_CLEANUP
+  defaultValue: "true"
+  type: bool
+  description: Enable the periodic removal of expired public shares. When disabled,
+    expired shares are still hidden from listings but never actually deleted.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+OCIS_SHARING_JANITOR_RUN_INTERVAL:
+  name: OCIS_SHARING_JANITOR_RUN_INTERVAL;SHARING_JANITOR_RUN_INTERVAL
+  defaultValue: "3600"
+  type: int
+  description: Interval in seconds between two runs of the janitor that permanently
+    deletes expired public shares. Defaults to '3600' (1 hour). Only relevant when
+    OCIS_SHARING_ENABLE_EXPIRED_SHARES_CLEANUP is enabled.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -10776,7 +11007,7 @@ OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the signing key store. Only applies
     when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -10796,8 +11027,10 @@ OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_TLS_INSECURE:
   defaultValue: "false"
   type: bool
   description: Disable TLS certificate verification for the signing key store connection.
-    Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+    Only applies when store type 'nats-js-kv' is configured. Do not enable this in
+    production because it disables authentication of the NATS server. Use it only
+    for testing with self-signed certificates.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -10807,7 +11040,7 @@ OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the signing key store
     TLS connection. Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -11319,7 +11552,7 @@ POSTPROCESSING_STORE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the store. Only applies when store
     type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -11349,8 +11582,10 @@ POSTPROCESSING_STORE_TLS_INSECURE:
   defaultValue: "false"
   type: bool
   description: Disable TLS certificate verification for the store connection. Only
-    applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+    applies when store type 'nats-js-kv' is configured. Do not enable this in production
+    because it disables authentication of the NATS server. Use it only for testing
+    with self-signed certificates.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -11360,7 +11595,7 @@ POSTPROCESSING_STORE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the store TLS connection.
     Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -11859,6 +12094,17 @@ PROXY_OIDC_USERINFO_CACHE_AUTH_USERNAME:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+PROXY_OIDC_USERINFO_CACHE_DATABASE:
+  name: OCIS_CACHE_DATABASE;PROXY_OIDC_USERINFO_CACHE_DATABASE
+  defaultValue: cache-userinfo
+  type: string
+  description: The database name the configured store should use.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: The global variable OCIS_CACHE_DATABASE is deprecated and will
+    be removed in a future release. Please use local variable PROXY_OIDC_USERINFO_CACHE_DATABASE
+    instead.
 PROXY_OIDC_USERINFO_CACHE_DISABLE_PERSISTENCE:
   name: OCIS_CACHE_DISABLE_PERSISTENCE;PROXY_OIDC_USERINFO_CACHE_DISABLE_PERSISTENCE
   defaultValue: "false"
@@ -11875,7 +12121,7 @@ PROXY_OIDC_USERINFO_CACHE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the cache store. Only applies when
     store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -11916,7 +12162,7 @@ PROXY_OIDC_USERINFO_CACHE_TLS_INSECURE:
   type: bool
   description: Disable TLS certificate verification for the cache store connection.
     Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -11926,7 +12172,7 @@ PROXY_OIDC_USERINFO_CACHE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the cache store TLS
     connection. Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -11998,7 +12244,7 @@ PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the signing key store. Only applies
     when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -12019,7 +12265,7 @@ PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_TLS_INSECURE:
   type: bool
   description: Disable TLS certificate verification for the signing key store connection.
     Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -12029,7 +12275,7 @@ PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the signing key store
     TLS connection. Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -12367,6 +12613,18 @@ SEARCH_EXTRACTOR_CS3SOURCE_INSECURE:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+SEARCH_EXTRACTOR_MAX_CONSECUTIVE_FAILURES:
+  name: SEARCH_EXTRACTOR_MAX_CONSECUTIVE_FAILURES
+  defaultValue: "5"
+  type: int
+  description: Abort a space (re)index walk after this many files in a row fail content
+    extraction, which usually means the extraction service is down. Files that cannot
+    be resolved at all are logged and skipped without counting towards this limit.
+    Set to 0 to never abort.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 SEARCH_EXTRACTOR_TIKA_CLEAN_STOP_WORDS:
   name: SEARCH_EXTRACTOR_TIKA_CLEAN_STOP_WORDS
   defaultValue: "true"
@@ -12549,6 +12807,17 @@ SETTINGS_CACHE_AUTH_USERNAME:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+SETTINGS_CACHE_DATABASE:
+  name: OCIS_CACHE_DATABASE;SETTINGS_CACHE_DATABASE
+  defaultValue: settings-cache
+  type: string
+  description: The database name the configured store should use.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: The global variable OCIS_CACHE_DATABASE is deprecated and will
+    be removed in a future release. Please use local variable SETTINGS_CACHE_DATABASE
+    instead.
 SETTINGS_CACHE_DISABLE_PERSISTENCE:
   name: OCIS_CACHE_DISABLE_PERSISTENCE;SETTINGS_CACHE_DISABLE_PERSISTENCE
   defaultValue: "false"
@@ -12565,7 +12834,7 @@ SETTINGS_CACHE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the cache store. Only applies when
     store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -12597,7 +12866,7 @@ SETTINGS_CACHE_TLS_INSECURE:
   type: bool
   description: Disable TLS certificate verification for the cache store connection.
     Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -12607,7 +12876,7 @@ SETTINGS_CACHE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the cache store TLS
     connection. Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -12941,6 +13210,16 @@ SHARING_DEBUG_ZPAGES:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+SHARING_ENABLE_EXPIRED_SHARES_CLEANUP:
+  name: OCIS_SHARING_ENABLE_EXPIRED_SHARES_CLEANUP;SHARING_ENABLE_EXPIRED_SHARES_CLEANUP
+  defaultValue: "true"
+  type: bool
+  description: Enable the periodic removal of expired public shares. When disabled,
+    expired shares are still hidden from listings but never actually deleted.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 SHARING_EVENTS_AUTH_PASSWORD:
   name: OCIS_EVENTS_AUTH_PASSWORD;SHARING_EVENTS_AUTH_PASSWORD
   defaultValue: ""
@@ -13024,6 +13303,17 @@ SHARING_GRPC_PROTOCOL:
   type: string
   description: The transport protocol of the GRPC service.
   introductionVersion: pre5.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+SHARING_JANITOR_RUN_INTERVAL:
+  name: OCIS_SHARING_JANITOR_RUN_INTERVAL;SHARING_JANITOR_RUN_INTERVAL
+  defaultValue: "3600"
+  type: int
+  description: Interval in seconds between two runs of the janitor that permanently
+    deletes expired public shares. Defaults to '3600' (1 hour). Only relevant when
+    OCIS_SHARING_ENABLE_EXPIRED_SHARES_CLEANUP is enabled.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -13359,7 +13649,7 @@ SHARING_USER_DRIVER:
   defaultValue: jsoncs3
   type: string
   description: Driver to be used to persist shares. Supported values are 'jsoncs3',
-    'json', 'cs3' (deprecated) and 'owncloudsql'.
+    'json' and 'cs3' (deprecated).
   introductionVersion: pre5.0
   deprecationVersion: ""
   removalVersion: ""
@@ -13946,7 +14236,7 @@ STORAGE_PUBLICLINK_STORE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the store. Only applies when store
     type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -13986,8 +14276,10 @@ STORAGE_PUBLICLINK_STORE_TLS_INSECURE:
   defaultValue: "false"
   type: bool
   description: Disable TLS certificate verification for the store connection. Only
-    applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+    applies when store type 'nats-js-kv' is configured. Do not enable this in production
+    because it disables authentication of the NATS server. Use it only for testing
+    with self-signed certificates.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -13997,7 +14289,7 @@ STORAGE_PUBLICLINK_STORE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the store TLS connection.
     Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -14238,6 +14530,17 @@ STORAGE_SYSTEM_CACHE_AUTH_USERNAME:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+STORAGE_SYSTEM_CACHE_DATABASE:
+  name: OCIS_CACHE_DATABASE;STORAGE_SYSTEM_CACHE_DATABASE
+  defaultValue: storage-system
+  type: string
+  description: The database name the configured store should use.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: The global variable OCIS_CACHE_DATABASE is deprecated and will
+    be removed in a future release. Please use local variable STORAGE_SYSTEM_CACHE_DATABASE
+    instead.
 STORAGE_SYSTEM_CACHE_DISABLE_PERSISTENCE:
   name: OCIS_CACHE_DISABLE_PERSISTENCE;STORAGE_SYSTEM_CACHE_DISABLE_PERSISTENCE
   defaultValue: "false"
@@ -14254,7 +14557,7 @@ STORAGE_SYSTEM_CACHE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the cache store. Only applies when
     store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -14285,8 +14588,10 @@ STORAGE_SYSTEM_CACHE_TLS_INSECURE:
   defaultValue: "false"
   type: bool
   description: Disable TLS certificate verification for the cache store connection.
-    Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+    Only applies when store type 'nats-js-kv' is configured. Do not enable this in
+    production because it disables authentication of the NATS server. Use it only
+    for testing with self-signed certificates.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -14296,7 +14601,7 @@ STORAGE_SYSTEM_CACHE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the cache store TLS
     connection. Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -14683,10 +14988,9 @@ STORAGE_USERS_DRIVER:
   defaultValue: ocis
   type: string
   description: 'The storage driver which should be used by the service. Defaults to
-    ''ocis'', Supported values are: ''ocis'', ''s3ng'' and ''owncloudsql'' (deprecated).
-    The ''ocis'' driver stores all data (blob and meta data) in an POSIX compliant
-    volume. The ''s3ng'' driver stores metadata in a POSIX compliant volume and uploads
-    blobs to the s3 bucket.'
+    ''ocis'', Supported values are: ''ocis'' and ''s3ng''. The ''ocis'' driver stores
+    all data (blob and meta data) in an POSIX compliant volume. The ''s3ng'' driver
+    stores metadata in a POSIX compliant volume and uploads blobs to the s3 bucket.'
   introductionVersion: pre5.0
   deprecationVersion: ""
   removalVersion: ""
@@ -14825,6 +15129,17 @@ STORAGE_USERS_FILEMETADATA_CACHE_AUTH_USERNAME:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+STORAGE_USERS_FILEMETADATA_CACHE_DATABASE:
+  name: OCIS_CACHE_DATABASE;STORAGE_USERS_FILEMETADATA_CACHE_DATABASE
+  defaultValue: storage-users
+  type: string
+  description: The database name the configured store should use.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: The global variable OCIS_CACHE_DATABASE is deprecated and will
+    be removed in a future release. Please use local variable STORAGE_USERS_FILEMETADATA_CACHE_DATABASE
+    instead.
 STORAGE_USERS_FILEMETADATA_CACHE_DISABLE_PERSISTENCE:
   name: OCIS_CACHE_DISABLE_PERSISTENCE;STORAGE_USERS_FILEMETADATA_CACHE_DISABLE_PERSISTENCE
   defaultValue: "false"
@@ -14841,7 +15156,7 @@ STORAGE_USERS_FILEMETADATA_CACHE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the cache store. Only applies when
     store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -14872,8 +15187,10 @@ STORAGE_USERS_FILEMETADATA_CACHE_TLS_INSECURE:
   defaultValue: "false"
   type: bool
   description: Disable TLS certificate verification for the cache store connection.
-    Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+    Only applies when store type 'nats-js-kv' is configured. Do not enable this in
+    production because it disables authentication of the NATS server. Use it only
+    for testing with self-signed certificates.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -14883,7 +15200,7 @@ STORAGE_USERS_FILEMETADATA_CACHE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the cache store TLS
     connection. Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -14975,6 +15292,17 @@ STORAGE_USERS_ID_CACHE_AUTH_USERNAME:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+STORAGE_USERS_ID_CACHE_DATABASE:
+  name: OCIS_CACHE_DATABASE;STORAGE_USERS_ID_CACHE_DATABASE
+  defaultValue: ids-storage-users
+  type: string
+  description: The database name the configured store should use.
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: The global variable OCIS_CACHE_DATABASE is deprecated and will
+    be removed in a future release. Please use local variable STORAGE_USERS_ID_CACHE_DATABASE
+    instead.
 STORAGE_USERS_ID_CACHE_DISABLE_PERSISTENCE:
   name: OCIS_CACHE_DISABLE_PERSISTENCE;STORAGE_USERS_ID_CACHE_DISABLE_PERSISTENCE
   defaultValue: "false"
@@ -14991,7 +15319,7 @@ STORAGE_USERS_ID_CACHE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the cache store. Only applies when
     store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -15022,8 +15350,10 @@ STORAGE_USERS_ID_CACHE_TLS_INSECURE:
   defaultValue: "false"
   type: bool
   description: Disable TLS certificate verification for the cache store connection.
-    Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+    Only applies when store type 'nats-js-kv' is configured. Do not enable this in
+    production because it disables authentication of the NATS server. Use it only
+    for testing with self-signed certificates.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -15033,7 +15363,7 @@ STORAGE_USERS_ID_CACHE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the cache store TLS
     connection. Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -15337,12 +15667,12 @@ STORAGE_USERS_OWNCLOUDSQL_USERS_PROVIDER_ENDPOINT:
   removalVersion: ""
   deprecationInfo: ""
 STORAGE_USERS_PERMISSION_ENDPOINT:
-  name: STORAGE_USERS_PERMISSION_ENDPOINT;STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT
+  name: STORAGE_USERS_PERMISSION_ENDPOINT;STORAGE_USERS_S3NG_PERMISSIONS_ENDPOINT
   defaultValue: com.owncloud.api.settings
   type: string
-  description: Endpoint of the permissions service. The endpoints can differ for 'ocis',
-    'posix' and 's3ng'.
-  introductionVersion: 6.0.0
+  description: Endpoint of the permissions service. The endpoints can differ for 'ocis'
+    and 's3ng'.
+  introductionVersion: pre5.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -16386,7 +16716,7 @@ USERLOG_STORE_ENABLE_TLS:
   type: bool
   description: Activate TLS for the connection to the store. Only applies when store
     type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -16416,8 +16746,10 @@ USERLOG_STORE_TLS_INSECURE:
   defaultValue: "false"
   type: bool
   description: Disable TLS certificate verification for the store connection. Only
-    applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+    applies when store type 'nats-js-kv' is configured. Do not enable this in production
+    because it disables authentication of the NATS server. Use it only for testing
+    with self-signed certificates.
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -16427,7 +16759,7 @@ USERLOG_STORE_TLS_ROOT_CA_CERTIFICATE:
   type: string
   description: Path to the PEM-encoded root CA certificate for the store TLS connection.
     Only applies when store type 'nats-js-kv' is configured.
-  introductionVersion: 8.3.0
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -16532,8 +16864,8 @@ USERS_DRIVER:
   name: USERS_DRIVER
   defaultValue: ldap
   type: string
-  description: The driver which should be used by the users service. Supported values
-    are 'ldap' and 'owncloudsql'.
+  description: The driver which should be used by the users service. Supported value
+    is 'ldap'.
   introductionVersion: pre5.0
   deprecationVersion: ""
   removalVersion: ""
@@ -16677,7 +17009,7 @@ USERS_LDAP_GROUP_SCHEMA_GROUPNAME:
   deprecationInfo: ""
 USERS_LDAP_GROUP_SCHEMA_ID:
   name: OCIS_LDAP_GROUP_SCHEMA_ID;USERS_LDAP_GROUP_SCHEMA_ID
-  defaultValue: ownclouduuid
+  defaultValue: ownCloudUUID
   type: string
   description: LDAP Attribute to use as the unique ID for groups. This should be a
     stable globally unique ID like a UUID.
@@ -16844,7 +17176,7 @@ USERS_LDAP_USER_OBJECTCLASS:
   deprecationInfo: ""
 USERS_LDAP_USER_SCHEMA_DISPLAYNAME:
   name: OCIS_LDAP_USER_SCHEMA_DISPLAYNAME;USERS_LDAP_USER_SCHEMA_DISPLAYNAME
-  defaultValue: displayname
+  defaultValue: displayName
   type: string
   description: LDAP Attribute to use for the displayname of users.
   introductionVersion: pre5.0
@@ -16853,7 +17185,7 @@ USERS_LDAP_USER_SCHEMA_DISPLAYNAME:
   deprecationInfo: ""
 USERS_LDAP_USER_SCHEMA_ID:
   name: OCIS_LDAP_USER_SCHEMA_ID;USERS_LDAP_USER_SCHEMA_ID
-  defaultValue: ownclouduuid
+  defaultValue: ownCloudUUID
   type: string
   description: LDAP Attribute to use as the unique ID for users. This should be a
     stable globally unique ID like a UUID.

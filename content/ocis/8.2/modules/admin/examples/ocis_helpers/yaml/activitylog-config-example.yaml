@@ -38,6 +38,7 @@ store:
   tls_root_ca_certificate: ""
 reva_gateway: com.owncloud.api.gateway
 grpc_client_tls: null
+grpc_client_options: null
 http:
   addr: 127.0.0.1:9195
   root: /
