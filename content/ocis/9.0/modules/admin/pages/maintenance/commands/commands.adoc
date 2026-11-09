@@ -84,6 +84,10 @@ Detect and, if desired, delete storage grants that have no corresponding share-m
 
 When a shared space or directory got deleted, use the following xref:maintenance/commands/cleanup-orphaned-shares.adoc[CLI command] to cleanup those share orphans. This can't be done automatically at the moment.
 
+=== Compact the Search Index
+
+The search performance can degrade over time after bulk reindexing operations that create many small index segments. Use the following xref:{s-path}/search.adoc#compact-the-search-index[CLI command] to compact the search index for improved search performance.
+
 === Inspect and Manipulate Node Metadata
 
 Infinite Scale provides a xref:maintenance/commands/node-metadata.adoc[CLI command] with which you can inspect and manipulate node metadata.
