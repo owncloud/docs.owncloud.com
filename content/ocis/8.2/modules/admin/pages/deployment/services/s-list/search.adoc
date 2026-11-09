@@ -191,6 +191,17 @@ ocis search index --space $SPACE_ID || --all-spaces
 ** See the xref:maintenance/space-ids/space-ids.adoc[Listing Space IDs] for how to retrieve a space ID.
 * The arguments `-space` and `--all-spaces` are mutual exclusive , but one must be provided.
 
+==== Compact the Search Index
+
+The search performance can degrade over time after bulk reindexing operations that create many small index segments. Use this command to compact the search index by merging Bleve segments without reindexing the content.
+
+[source,bash]
+----
+ocis search optimize
+----
+
+NOTE: Although this command accesses the search index directly and does not block search queries, it is still recommended that it is issued during a maintenance window.
+
 == Notes
 
 The indexing process tries to be self-healing in some situations.
