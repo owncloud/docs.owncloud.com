@@ -28,6 +28,23 @@ Always write AsciiDoc tables with one cell per line and a blank line between eac
 - Span rows (e.g. `6+| _Section heading_`) are also followed by a blank line.
 - Empty cells are written as a bare `|` on its own line.
 
+## Page-Internal Xref Fragment Format
+
+This repository sets `idprefix: ''` and `idseparator: '-'` in `global-attributes.yml`. Auto-generated section IDs therefore use **lowercase words joined by hyphens** — not the Asciidoctor default of a leading underscore with underscore separators.
+
+```asciidoc
+// Section heading
+=== Default and Demo Users
+
+// Correct page-internal xref (this repo)
+xref:#default-and-demo-users[Default and Demo Users]
+
+// Wrong — Asciidoctor default format, not used here
+xref:_default_and_demo_users[Default and Demo Users]
+```
+
+Rule: strip `idprefix` (empty), lowercase every word, replace spaces with `idseparator` (`-`). Special characters are dropped. When in doubt, build locally and inspect the rendered anchor in the page HTML.
+
 ## Fixing Xrefs After Markdown Migration
 
 Content migrated from Markdown often carries broken cross-reference patterns. When you encounter them, apply the corrections below.

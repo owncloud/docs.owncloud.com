@@ -16,6 +16,3 @@ See the link for a detailed description of the respective CLI command if availab
 // the commented link is only as an easy to add template
 // * xref:maintenance/commands/commands.adoc#verify-and-inspect-blobstore[Verify and Inspect a Blobstore] +
 This CLI command has been added to verify and inspect the configured Blobstore without requiring direct access to the underlying storage system.
-
-* xref:maintenance/commands/commands.adoc#compact-the-search-index[Compact the Search Index] +
-This CLI command has been added to compact the search index.

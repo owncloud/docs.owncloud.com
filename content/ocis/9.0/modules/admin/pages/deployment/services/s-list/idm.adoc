@@ -97,6 +97,98 @@ LDAPTLS_REQCERT=never \
 
 Extract the `idm_password` password to enter from the `ocis.yaml` config file which is located in the Infinite Scale xref:deployment/general/general-info.adoc#configuration-directory[configuration directory].
 
+== Resetting Lost Passwords
+
+The `resetpassword` sub-command resets the password of any account stored in the built-in IDM, whether that is the administrator, a regular user, or one of the internal service accounts.
+
+[source,plaintext]
+----
+NAME:
+   ocis idm resetpassword - Reset user password
+
+USAGE:
+   ocis idm resetpassword [command options]
+
+CATEGORY:
+   password reset
+
+OPTIONS:
+   --user-name value, -u value  User name (default: "admin")
+   --user-type value            Type of user account: 'user' (ou=users) or 'service' (ou=sysusers) (default: "user")
+   --help, -h                   show help
+----
+
+[NOTE]
+====
+As this command accesses the IDM database directly, Infinite Scale must *not* be running and no other process may be accessing the database when you issue it.
+====
+
+=== Administrator Account
+
+If the password of the built-in `admin` account is ever lost, run the command without any options — it defaults to the `admin` account:
+
+[source,bash]
+----
+ocis idm resetpassword
+----
+
+The command prompts for the new password twice and updates the account on confirmation.
+
+=== Any Other User Account
+
+To reset the password of any other regular user stored in the built-in IDM, provide the account name with the `--user-name` option:
+
+[source,bash]
+----
+ocis idm resetpassword --user-name <username>
+----
+
+The command prompts for the new password twice and updates the account on confirmation.
+
+=== Internal Service Accounts
+
+As described in xref:#default-and-demo-users[Default and Demo Users], IDM maintains three internal service accounts that Infinite Scale services use to access the built-in directory: `libregraph`, `idp`, and `reva`. Normally their passwords are set during initialization and never need to change. Use this procedure only if the passwords have gone out of sync between the IDM database and the Infinite Scale configuration, for example after a manual database restore.
+
+[cols="1,2,3",options="header"]
+|===
+| Account
+| Used by
+| Environment Variables to Update
+
+| `libregraph`
+| Graph service — manages users and groups in the directory; has write access
+| `GRAPH_LDAP_BIND_PASSWORD` +
+`IDM_SVC_PASSWORD`
+
+| `idp`
+| IDP service — looks up users during login
+| `IDP_LDAP_BIND_PASSWORD` +
+`IDM_IDPSVC_PASSWORD`
+
+| `reva`
+| Auth-Basic, Users, and Groups services — read access to the directory
+| `AUTH_BASIC_LDAP_BIND_PASSWORD`, `USERS_LDAP_BIND_PASSWORD`, `GROUPS_LDAP_BIND_PASSWORD`, `IDM_REVASVC_PASSWORD`
+|===
+
+NOTE: `OCIS_LDAP_BIND_PASSWORD` is a single shared variable that sets the password for all three accounts at once. If you use it instead of the per-service variables, updating it and restarting Infinite Scale is sufficient.
+
+Run the command with `--user-type service` and the account name:
+
+[source,bash]
+----
+ocis idm resetpassword --user-type service --user-name <name>
+----
+
+Replace `<name>` with one of: `libregraph`, `idp`, or `reva`. The command prompts for the new password twice. After confirmation it performs two additional steps automatically:
+
+* It rewrites the affected password entries in `ocis.yaml` (if that file is present in the configuration directory).
+* It prints the names of all environment variables that must also be updated wherever they are configured — in environment files, container secrets, Kubernetes secrets, or any other external configuration store.
+
+[IMPORTANT]
+====
+After changing a service account password, Infinite Scale must be restarted so all affected services pick up the new credentials.
+====
+
 == Configuration
 
 include::partial$deployment/services/env-and-yaml.adoc[tag=envvars-yaml]
