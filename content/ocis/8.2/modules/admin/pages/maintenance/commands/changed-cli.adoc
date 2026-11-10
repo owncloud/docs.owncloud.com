@@ -18,3 +18,6 @@ This CLI command has been added to detect and remove corrupt public share entrie
 
 * xref:maintenance/commands/commands.adoc#compact-the-search-index[Compact the Search Index] +
 This CLI command has been added to compact the search index.
+
+* xref:maintenance/commands/commands.adoc#reset-password-for-idm-users[Reset Password for IDM Users] +
+This CLI command has been updated with new options.
