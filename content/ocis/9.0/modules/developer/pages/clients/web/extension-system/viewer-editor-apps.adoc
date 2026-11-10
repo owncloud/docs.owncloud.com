@@ -58,6 +58,7 @@ export default defineWebApplication({
     // if you want your app to be present in the app menu on the top left.
     const menuItems = computed<AppMenuItemExtension[]>(() => [
       {
+        id: 'com.github.owncloud.web.advanced-pdf-viewer.menu-item',
         label: () => $gettext('Advanced PDF Viewer'),
         type: 'appMenuItem',
         handler: () => {
@@ -108,13 +109,17 @@ interface ApplicationFileExtension {
     currentFolder: Resource
   }) => Promise<Resource>
   hasPriority?: boolean
-  label?: string
+  label?: string | (() => string)
   name?: string
   icon?: string
   mimeType?: string
-  newFileMenu?: { menuTitle: () => string }
+  newFileMenu?: {
+    menuTitle: () => string
+    isVisible?: ({ currentFolder }: { currentFolder: Resource }) => boolean
+  }
   routeName?: string
-  customHandler? (
+  secureView?: boolean
+  customHandler?: (
     fileActionOptions: FileActionOptions,
     extension: string,
     appFileExtension: ApplicationFileExtension

@@ -22,27 +22,32 @@ Here are the test standards and guidelines we adhere to when creating Playwright
 
 * `tests/:`
 ** `e2e/`: Main folder containing all (end-to-end) E2E test-related files.
+*** `playwright.config.ts`: Playwright configuration.
+*** `config.js`: Test configuration, read from environment variables.
+*** `run-e2e.sh`: Helper script to run selected suites, used in CI.
 *** `specs/`: Main folder containing all test-related files.
 **** `<test-suite-folder>/`: Collection house for "*related*" spec files.
 ***** `<aSpecFile>.spec.ts`: A spec file.
-**** `steps/`: Holds the files that defines actions of user.
-**** `hooks/`: Test hooks for setting up and tearing down test environments.
-***** `hooks.ts`: Contains `Before`, `After`, and other lifecycle hooks.
+*** `steps/`: Holds the files that define the actions of a user.
+**** `api/`: Steps that use the APIs.
+**** `ui/`: Steps that use the web UI.
+*** `environment/`: Test environment setup.
+**** `test.ts`: Extended Playwright `test` with fixtures and lifecycle hooks for setting up and tearing down the test environment.
+**** `world.ts`, `shared.ts`, `constants.ts`: Shared state and constants used by the tests.
 *** `support/`: Playwright (Test implementation)
 **** `api/`: Contains API-related test files and configurations.
 ***** `<api-folder>/`: Specific API tests for a particular service.
+**** `environment/`: Helpers for actors, users, spaces, links and files used during a test run.
 **** `objects/`: Contains the Page Object classes.
 ***** `<specific-page-object-folder>/`: Collection house for related page objects for each webpage or component.
 ****** `<individualPageObject>.ts`: Page Object for each webpage or component.
-**** `utils/`: Utility functions and common helpers.
-***** `helpers.ts`: Common utility functions (e.g., date formatting, data generation).
-**** `test-data/`: Static test data files or folders for upload.
-***** `filesForUpload/`: Static test data files for upload.
-*** `config/`: Configuration files for Playwright and other tools.
-**** `playwright.config.ts`: Playwright configuration.
-*** `reports/`: Generated test reports (e.g., HTML, JSON).
-**** `screenshots/`: Captured screenshots during test execution.
-**** `videos/`: Recorded videos of test runs.
+**** `store/`: Stores for users, groups, spaces, links and other entities created during a test run.
+**** `utils/`: Utility functions and common helpers (e.g., date picker, drag and drop, locators).
+*** `filesForUpload/`: Static test data files for upload.
+*** `reporters/`: Custom Playwright reporters (e.g., the accessibility report).
+*** `docs/`: Tool for capturing end-user documentation screenshots.
+
+Generated test reports (e.g., traces, videos, the accessibility report) are not stored in `tests/e2e/`. They are written to `REPORT_DIR`, which defaults to `reports/e2e` in the `web` directory.
 
 == Test Structure - Arrange, Act, Assert:
 

@@ -9,14 +9,14 @@ The source code is hosted in the ocis repo in the link:https://github.com/ownclo
 
 == Installation
 
-Make sure to have Docker, Docker-Compose, link:https://nodejs.org/en/download[Node.js, window=_blank] and link:https://pnpm.io/installation[pnpm, window=_blank] installed.
+Make sure to have Docker, Docker-Compose, link:https://nodejs.org/en/download[Node.js, window=_blank] 24 or later and link:https://pnpm.io/installation[pnpm, window=_blank] installed. The required pnpm version is pinned via the `packageManager` field and can be enabled with `corepack enable`. See the link:https://github.com/owncloud/ocis/blob/master/web/package.json[web/package.json, window=_blank] file for the exact versions.
 If you plan to work with translations, you also need to install the link:https://developers.transifex.com/docs/cli[Transifex Client, window=_blank]. Note when installing the Transifex Client, change to your `~/.local/bin` directory first because it installs at the current location.
 
-After cloning the link:https://github.com/owncloud/ocis[source code], install the dependencies via `pnpm install` and bundle the frontend code by running `pnpm build:w`.
+After cloning the link:https://github.com/owncloud/ocis[source code], change to the `web` directory (`cd ocis/web`), install the dependencies via `pnpm install` and bundle the frontend code by running `pnpm build:w`.
 
 === Docker
 
-Then, you can start the server by running `docker-compose up ocis` and access it via `\https://host.docker.internal:9200`. If you're not using Docker Desktop, you might have to modify your `/etc/hosts` and add `127.0.0.1 host.docker.internal` to make the `host.docker.internal` links work.
+Then, you can start the server by running `docker-compose up ocis` from the `web` directory and access it via `\https://host.docker.internal:9200`. If you're not using Docker Desktop, you might have to modify your `/etc/hosts` and add `127.0.0.1 host.docker.internal` to make the `host.docker.internal` links work.
 
 The bundled frontend code automatically gets mounted into the Docker containers, recompiles on changes and you can log in using the demo user (admin/admin) and take a look around!
 
@@ -46,9 +46,6 @@ Set a different target URL for the feedback link. Make sure to prepend it with `
 Since the link only has an icon, you can set an e.g. screen reader accessible label. Defaults to `ownCloud feedback survey`.
 ** *options.feedbackLink.description* +
 Provide any description you want to see as tooltip and as accessible description. Defaults to `Provide your feedback: We'd like to improve the web design and would be happy to hear your feedback. Thank you! Your ownCloud team.`
-
-* *options.sharingRecipientsPerPage* +
-Sets the amount of users shown as recipients in the dropdown when sharing resources. Default amount is 200.
 
 * *options.runningOnEos* +
 Set this option to `true` if running on an link:https://eos-web.web.cern.ch/eos-web/[EOS storage backend] to enable its specific features. Defaults to `false`, and we recommend reaching out to link:https://matrix.to/#/#ocis:matrix.org[the ownCloud web team] if you're not CERN and thinking about enabling this feature flag.
@@ -88,7 +85,7 @@ Concurrent number of file/folder/space batch actions like e.g. accepting shares.
 Concurrent number of SSE event handlers. Defaults to 4.
 ** *shares* +
 Accepts an object regarding the following sharing related options:
-*** *create*` +
+*** *create* +
 Concurrent number of share invites. Defaults to 4.
 *** *list* +
 Concurrent number of individually loaded shares. Defaults to 2.

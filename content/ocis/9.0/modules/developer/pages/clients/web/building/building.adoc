@@ -5,6 +5,8 @@
 
 == Building ownCloud Web
 
+Run the following commands from the `web` directory of the oCIS repository:
+
 * Run `pnpm install` to install dependencies
 * Run `pnpm build` to build Web and all apps included in the `packages` folder
 

@@ -5,15 +5,15 @@
 
 == Introduction
 
-In order to allow us to make changes quickly, often and with a high level of confidence, we heavily rely on tests within the `web` repository.
+In order to allow us to make changes quickly, often and with a high level of confidence, we heavily rely on tests within the `web` folder of the oCIS repository.
 
-All the steps below require you to have the `web` repo cloned locally and dependencies installed.
+All the steps below require you to have the oCIS repository cloned locally and the dependencies of the `web` folder installed. All commands on this page are run from the `web` directory of the oCIS repository.
 This can be achieved by running
 
 [source,shell]
 ----
-$ git clone https://github.com/owncloud/web.git
-$ cd web
+$ git clone https://github.com/owncloud/ocis.git
+$ cd ocis/web
 $ pnpm install
 ----
 
@@ -60,7 +60,7 @@ Bundle the web frontend with the following command:
 $ pnpm build
 ----
 
-Our compose setup automatically mounts it into an oCIS backend, respectively. Web also gets recompiled on changes.
+Our compose setup automatically mounts it into an oCIS backend, respectively. To have web recompiled on changes, use `pnpm build:w` instead.
 
 === Start Web
 
@@ -79,27 +79,31 @@ The following command will run all available e2e tests:
 
 [source,shell]
 ----
-$ pnpm test:e2e:playwright 'tests/e2e/specs/**/*.spec.ts'
+$ pnpm test:e2e:playwright
 ----
+
+To run only the tests in a specific folder, add its path, e.g. `pnpm test:e2e:playwright tests/e2e/specs/smoke/`.
 
 === Options
 
-To run a particular test, simply add the spec file and line number to the test command, e.g. `pnpm test:e2e:playwright tests/e2e/specs/admin-settings/users.feature:14`
+To run a particular test, simply add the spec file and line number to the test command, e.g. `pnpm test:e2e:playwright tests/e2e/specs/admin-settings/users.spec.ts:14`
 
 Various options are available via ENV variables, e.g.
 
 * `BASIC_AUTH=true` use basic authorization for api requests.
 * `RETRY=n` to retry failures `n` times
 * `SLOW_MO=n` to slow the execution time by `n` milliseconds
-* `TIMEOUT=n` to set tests to timeout after `n` milliseconds
-* `HEADLESS=bool` to open the browser while the tests run (defaults to true => headless mode)
-* `BROWSER=name` to run tests against a specific browser. Defaults to chromium, available are chromium, firefox, webkit, chromium
+* `TIMEOUT=n` to set tests to timeout after `n` seconds (defaults to 180)
+* `HEADLESS=true` to run the browser in headless mode (by default, the browser window is opened while the tests run)
+* `BROWSER=name` to run tests against a specific browser. Defaults to `chrome` (the Google Chrome channel, which must be installed locally), available are `chrome`, `chromium`, `firefox` and `webkit`
 * `ADMIN_PASSWORD` to set administrator password. By default, the `admin` password is used in the test
+
+NOTE: The Playwright configuration defines the projects `chromium`, `firefox` and `webkit`. Without the `--project` option, the tests run once for every project. To run them only once, pass a project together with a matching `BROWSER`, e.g. `BROWSER=chromium pnpm test:e2e:playwright --project=chromium`. The `tests/e2e/run-e2e.sh` script used in CI does this, with `BROWSER` defaulting to `chromium`.
 
 For debugging reasons, you may want to record a video or traces of your test run.
 Again, you can use the following ENV variables in your command:
 
-* `REPORT_DIR=another/path` to set a directory for your recorded files (defaults to "reports")
+* `REPORT_DIR=another/path` to set a directory for your recorded files (defaults to `reports/e2e`, relative to the `web` directory)
 * `REPORT_VIDEO=true` to record a video of the test run
 * `REPORT_HAR=true` to save request information from the test run
 * `REPORT_TRACING=true` to record traces from the test run
@@ -144,11 +148,11 @@ To inspect a trace file:
 npx playwright show-trace reports/e2e/playwright/tracing/<trace-file>.zip
 ----
 
-If you want an HTML Playwright report for a run, execute tests with the HTML reporter enabled and then open it:
+If you want an HTML Playwright report for a run, execute tests with the HTML reporter enabled and then open it. Passing `--reporter` replaces the reporters configured in `playwright.config.ts`, so keep `list` in the list. Note that the accessibility report is only written by the configured reporters and is not created in this case:
 
 [source,bash]
 ----
-pnpm test:e2e:playwright -- --reporter=html
+pnpm test:e2e:playwright --reporter=list,html
 npx playwright show-report
 ----
 
@@ -240,13 +244,13 @@ A complete example of a JSON file.
 }
 ----
 
-The test scenarios that can run with predefined users are marked with the `@predefined-users` tag and can be run with the following command:
+The test scenarios that can run with predefined users are marked with the `@predefined-users` tag, e.g. `test.describe('rename', { tag: '@predefined-users' }, ...)`, and can be run with the following command:
 
 [source,bash]
 ----
 PREDEFINED_USERS=true \
 PREDEFINED_USERS_FILE='<path-to>/users.json' \
-pnpm test:e2e:playwright tests/e2e/specs/file-action/rename.feature --tags '@predefined-users'
+pnpm test:e2e:playwright tests/e2e/specs/file-action/rename.spec.ts --grep @predefined-users
 ----
 
 *The following tests cannot be run with predefined users:*
@@ -263,24 +267,12 @@ All tests which are related to:
 * Running latest tests against an older version of oCIS/Web
 * Large file uploads may take longer time
 
-== Usage of `web-packages.txt` in the Test Suite
+== Test Suite Selection in CI
 
-Test suites may include the `web-packages.txt` file to denote which web packages changes affect the defined test scenarios. This information is used in CI pipelines to determine which test suites to run based on the changed web packages.
+In CI, the e2e tests run in the `e2e-tests` job of the `.github/workflows/acceptance-tests.yml` workflow. Each entry of the job matrix passes arguments to `tests/acceptance/run-e2e.py`, which starts the required services and calls `web/tests/e2e/run-e2e.sh` with these arguments. A suite is a folder in `tests/e2e/specs`, e.g. `admin-settings`.
 
-The `web-packages.txt` file should be included within the test suite directory as shown below:
+* `--suites` runs only the given suites, comma separated, e.g. `--suites search`.
+* `--xsuites` excludes the given suites, e.g. `--xsuites search,ocm`.
+* `--total-parts` and `--run-part` split the remaining suites into groups that run in parallel jobs.
 
-----
-└── tests/e2e/specs
-    └── admin-settings
-        ├── users.feature
-        └── web-packages.txt
-----
-
-And the `web-packages.txt` file should list the dependent web packages, one per line, for example:
-
-NOTE: The package name should start with `web-` in order to be recognized correctly, if not, the line will be ignored.
-
-----
-web-app-files
-web-app-admin-settings
-----
+Suites are discovered from the folders in `tests/e2e/specs`, so a new suite is picked up by the `part-*` matrix entries automatically. Suites that need additional services, such as `search`, `keycloak` or `ocm`, are excluded there via `--xsuites` and run in their own matrix entries. A matrix entry can also pass spec file paths instead of suites.
