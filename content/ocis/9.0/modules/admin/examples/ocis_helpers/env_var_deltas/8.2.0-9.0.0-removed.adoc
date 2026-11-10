@@ -8,5 +8,10 @@
 |===
 | Service | Variable | Description | Default
 
+| xref:deployment/services/env-vars-special-scope.adoc#extended-environment-variables[Extended Environment Variables]
+| GRPC_MAX_CONNECTION_AGE
+| Timeout for GRPC connections. After timeout, a new connection will be established automatically. The default value is in ns and is about 2.5 mio h.
+| 9223372036854775807
+
 |===
 
