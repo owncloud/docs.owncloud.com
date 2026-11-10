@@ -6,6 +6,9 @@
 {{!-- Pagefind Component UI: self-registers the web components used in the navbar
       (<pagefind-modal-trigger> / <pagefind-modal>). Must load as a module. --}}
 <script src="{{{siteRootPath}}}/pagefind/pagefind-component-ui.js" type="module"></script>
+{{!-- Injects component/version filter panes into the search modal after it renders.
+      Must load after pagefind-component-ui.js so pagefind-modal-body is defined. --}}
+<script src="{{{uiRootPath}}}/js/pagefind-filters.js"></script>
 {{!-- Companion behavior for the AsciiDoc tabs extension (asciidoc-extensions/tabs.js):
       removes the is-loading fallback and wires tab switching. --}}
 <script src="{{{uiRootPath}}}/js/tabs.js"></script>
