@@ -13,6 +13,23 @@
     
     
 
+// manually added: GRPC PR #13020 (8.2.1 backport); re-verify on next ocis_helper run
+a| `GRPC_CLIENT_KEEPALIVE_TIME` +
+a| [subs=-attributes]
+++Duration ++
+a| [subs=-attributes]
+++0s ++
+a| [subs=-attributes]
+++How long a grpc client connection with an ongoing request may stay silent before the server is pinged to check whether it is still answering. Set a duration like '20s' to enable detection of unresponsive peers. Leaving it unset, or at '0', sends no pings at all, which is grpc's own default. Values below '10s' are raised to '10s' by grpc. Make sure to include the unit suffix, a bare number is not a valid duration. ++
+
+a| `GRPC_CLIENT_KEEPALIVE_TIMEOUT` +
+a| [subs=-attributes]
+++Duration ++
+a| [subs=-attributes]
+++0s ++
+a| [subs=-attributes]
+++How long a grpc client waits for the answer to a keepalive ping before it considers the connection dead and fails all requests on it. Defaults to '10s'. Has no effect unless GRPC_CLIENT_KEEPALIVE_TIME is set. See GRPC_CLIENT_KEEPALIVE_TIME. ++
+
 a| `MICRO_LOG_LEVEL` +
 a| [subs=-attributes]
 ++string ++
