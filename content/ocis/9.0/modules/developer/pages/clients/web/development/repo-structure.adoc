@@ -8,9 +8,9 @@
 From a developer's perspective, the most important parts of the link:https://github.com/owncloud/ocis[ownCloud ocis repo] are the following files and folders:
 
 [NOTE]
-===
+====
 All mentioned folders are a subfolder inside the web/ directory of the ocis repo.
-===
+====
 
 === dev Folder and docker-compose.yml File
 
@@ -61,11 +61,11 @@ Namely those packages are
 
 The ownCloud Design System (`/packages/design-system`) is a collection of components, design tokens and styles which ensure a unique and consistent look and feel and branding throughout the ownCloud Web ecosystem. We hope that you use it, too, so that your very own apps and extensions will blend in with all the others. Documentation and code examples can be found in the link:https://owncloud.design[design system documentation].
 
-The ownCloud Design System is a standalone project, but to make development easier we have the code in our mono repo. We're planning to publish it on npmjs.com as link:https://www.npmjs.com/package/@ownclouders/design-system[@ownclouders/design-system] as soon as possible. Since it's bundled with ownCloud Web, you should not bundle it with your app or extension.
+The ownCloud Design System is a standalone project, but to make development easier we have the code in our mono repo. It is published on npmjs.com as link:https://www.npmjs.com/package/@ownclouders/design-system[@ownclouders/design-system]. Since it's bundled with ownCloud Web, you should not bundle it with your app or extension.
 
 === web-client
 
-The client package (`/packages/web-client`) serves as an abstraction layer for the various ownCloud APIs, like xref:apis/http/graph/[LibreGraph], xref:server:developer_manual:webdav_api/index.adoc[WebDAV] and xref:server:developer_manual:core/apis/ocs-capabilities.adoc[OCS]. The package provides TypeScript interfaces for various entities (like files, folders, shares and spaces) and makes sure that raw API responses are properly transformed so that you can deal with more useful objects. The web-client package gets published on npmjs.com as link:https://www.npmjs.com/package/@ownclouders/web-client[@ownclouders/web-client].
+The client package (`/packages/web-client`) serves as an abstraction layer for the various ownCloud APIs, like xref:apis/http/graph/index.adoc[LibreGraph], xref:server:developer_manual:webdav_api/index.adoc[WebDAV] and xref:server:developer_manual:core/apis/ocs-capabilities.adoc[OCS]. The package provides TypeScript interfaces for various entities (like files, folders, shares and spaces) and makes sure that raw API responses are properly transformed so that you can deal with more useful objects. The web-client package gets published on npmjs.com as link:https://www.npmjs.com/package/@ownclouders/web-client[@ownclouders/web-client].
 
 Dedicated documentation for the `web-client` package is not available, yet, since our extension system is still work in progress. However, the package's link:https://github.com/owncloud/ocis/blob/master/web/packages/web-client/README.md[README.md] gives you a few examples on how to use it.
 
@@ -89,6 +89,23 @@ or write an issue in our link:https://github.com/owncloud/ocis/issues[issue trac
 
 Both `web-app-admin-settings` and `web-app-files` are standalone apps which are bundled with the default ownCloud Web release artifact.
 
+=== Other Bundled Apps
+
+The following apps are also bundled with the default ownCloud Web release artifact. Not all of them are enabled by default:
+
+* `web-app-activities` +
+a list of activities on files and folders
+* `web-app-app-store` +
+an app store for browsing and downloading Web extensions
+* `web-app-ocm` +
+invitations and connections for federated sharing via Open Cloud Mesh (ScienceMesh)
+* `web-app-password-protected-folders` +
+creating and opening password-protected folders
+* `web-app-search` +
+the search integration of Web
+* `web-app-webfinger` +
+discovers the oCIS instance of the user via WebFinger and redirects to it
+
 === Viewer and Editor Apps
 
 Apps which fall into the categories `viewer` or `editor` can be opened from the context of a file or folder. This mostly happens from
@@ -98,6 +115,10 @@ within the `files` app. We currently bundle the following apps with the default 
 a simple reader for `.epub` files
 * `web-app-external` +
 an iframe integration of all the apps coming from the xref:{dev-s-path}/app-provider/app-provider.adoc[app provider] (e.g. OnlyOffice, Collabora Online and others)
+* `web-app-html-editor` +
+an editor for `.html`, `.htm` and `.xhtml` files with a live preview
+* `web-app-mermaid-editor` +
+an editor for Mermaid diagrams (`.mmd` and `.mermaid` files) with a live preview
 * `web-app-pdf-viewer` +
 a viewer for `.pdf` files, which relies on native PDF rendering support from the browser
 * `web-app-preview` +
@@ -108,4 +129,4 @@ If you're interested in writing your own viewer or editor app for certain file t
 
 === Testing
 
-Additional unit testing code lives in `test-helpers`.
+Additional unit testing code lives in `/packages/web-test-helpers`, which gets published on npmjs.com as link:https://www.npmjs.com/package/@ownclouders/web-test-helpers[@ownclouders/web-test-helpers].

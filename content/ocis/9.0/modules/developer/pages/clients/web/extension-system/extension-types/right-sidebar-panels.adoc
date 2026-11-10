@@ -87,7 +87,7 @@ Determines if the panel is a root panel for the given panel context.
 
 == Extension Point FileSideBar
 
-In the context of files (e.g. file listing, text editor for a single file, etc.) we have a dedicated component `FileSideBar` which can be toggled (shown/hidden) with a button in the top bar. The component queries all extensions of the type `sideBarPanel` from the extension registry that also fulfill the scope `resource`. By registering an custom extension of type `sideBarPanel` and scope `resource`, your extension will automatically become available in all environments that display the `FileSideBar` (i.e. any file viewer, file editor, file listing).
+In the context of files (e.g. file listing, text editor for a single file, etc.) we have a dedicated component `FileSideBar` which can be toggled (shown/hidden) with a button in the top bar. The component queries all extensions of the type `sidebarPanel` from the extension registry for the extension point `global.files.sidebar`. By registering a custom extension of type `sidebarPanel` that either targets `global.files.sidebar` in its `extensionPointIds` or defines no `extensionPointIds` at all, your extension will automatically become available in all environments that display the `FileSideBar` (i.e. any file viewer, file editor, file listing).
 
 == Example
 
@@ -101,7 +101,7 @@ export const useExifDataPanelExtension = () => {
   const extension = computed<SidebarPanelExtension<SpaceResource, Resource, Resource>>(() => ({
     id: 'com.github.owncloud.web.files.sidebar-panel.exif-data',
     type: 'sidebarPanel',
-    scopes: ['resource'],
+    extensionPointIds: ['global.files.sidebar'],
     panel: {
       name: 'exif-data',
       icon: 'image',

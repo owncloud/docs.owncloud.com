@@ -5,7 +5,7 @@
 
 == Left Sidebar Menu Item Extension Type
 
-One possible extension type is left sidebar menu items. Registered left sidebar menu items get rendered in the left sidebar, as long as there is more than one available.
+One possible extension type is left sidebar menu items. Registered left sidebar menu items get rendered in the left sidebar, as long as there is at least one available.
 
 === Configuration
 
@@ -19,11 +19,12 @@ interface SidebarNavExtension {
     type: 'sidebarNav'
     extensionPointIds?: string[]
     navItem: AppNavigationItem // Please check the AppNavigationItem section below
-    }
 }
 ----
 
 For `id`, `type`, and `extensionPointIds`, please see xref:clients/web/extension-system/index.adoc#extension-base-configuration[extension base section] in top level docs.
+
+The left sidebar of each app requests its navigation items from the extension point `+app.${appId}.navItems+` (e.g. `app.files.navItems` for the files app). To show a menu item only in specific apps, list the respective extension point IDs in `extensionPointIds`. Without `extensionPointIds`, the menu item is shown in the left sidebar of every app.
 
 ==== AppNavigationItem
 
@@ -54,9 +55,9 @@ export const useCustomPageExtension = () => {
 
   const extension = computed<SidebarNavExtension>(() => ({
     id: 'com.github.owncloud.web.files.left-nav.custom-page',
-    scopes: ['app.files'],
     type: 'sidebarNav',
-    action: {
+    extensionPointIds: ['app.files.navItems'],
+    navItem: {
       name: $gettext('Custom page'),
       icon: 'world',
       priority: 100,
@@ -86,14 +87,16 @@ export default defineWebApplication({
         name: $gettext('Custom page app'),
         id: 'custom-page-app'
       },
-      routes: {
-        path: '/files/custom-page',
-        name: 'files-custom-page',
-        component: CustomPageComponent,
-        meta: {
-          title: $gettext('Custom Page')
+      routes: [
+        {
+          path: '/files/custom-page',
+          name: 'files-custom-page',
+          component: CustomPageComponent,
+          meta: {
+            title: $gettext('Custom Page')
+          }
         }
-      },
+      ],
       extensions: computed(() => [unref(extension)])
     }
   }

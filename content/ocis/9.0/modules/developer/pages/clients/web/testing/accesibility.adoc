@@ -15,7 +15,7 @@ We use link:https://github.com/vue-a11y/eslint-plugin-vuejs-accessibility[eslint
 
 === @axe-core/playwright
 
-We use link:https://github.com/dequelabs/axe-core-npm[@axe-core/playwright] to automatically test the accessibility of the ownCloud Web client. All tests are run automatically on every PR and on commits to the `master` branch. We are not running dedicated accessibility tests and instead make them part of the E2E tests. This way we do not have to maintain duplicate tests and we can granularly add accessibility tests to the specific steps of the tests. The tests are considered failed if any `serious` or `critical` accessibility violations are found.
+We use link:https://github.com/dequelabs/axe-core-npm[@axe-core/playwright] to automatically test the accessibility of the ownCloud Web client. All tests are run automatically on every pull request (and on manual runs of the workflow). Pull requests that only change documentation skip them. We are not running dedicated accessibility tests and instead make them part of the E2E tests. This way we do not have to maintain duplicate tests and we can granularly add accessibility tests to the specific steps of the tests. The tests are considered failed if any `serious` or `critical` accessibility violations are found.
 
 ==== Running Accessibility Tests
 
@@ -35,9 +35,7 @@ If you want to skip the accessibility tests, you can add the `SKIP_A11Y_TESTS` e
 SKIP_A11Y_TESTS=true pnpm test:e2e:playwright
 ----
 
-==== Skipping Accessibility Tests in CI
-
-If you want to skip the accessibility tests in CI, you can add the `[skip-a11y]` flag into the title of the PR.
+WARNING: In the current code, this check is inverted: the accessibility tests are only skipped with `SKIP_A11Y_TESTS=false`, see `skipA11y` in `tests/e2e/config.js`. This is tracked as a bug.
 
 ==== Accessibility Report
 

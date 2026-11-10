@@ -20,7 +20,7 @@ To establish seamless cross-origin communication between the embedded instance a
 
 === Target Origin
 
-By default, the `postMessage` method does not specify the `targetOrigin` parameter. However, it is recommended best practice to explicitly pass in the URI of the iframe origin (not the parent application). To enhance security, you can specify this value by modifying the config option `options.embed.messagesOrigin`.
+Set the config option `options.embed.messagesOrigin` (oCIS: `WEB_OPTION_EMBED_MESSAGES_ORIGIN`) to the origin of the parent application. The value is used as the `targetOrigin` when posting messages to the parent application, and messages coming from the parent application are only accepted if their origin is either the origin of ownCloud Web itself or this value. If it is not set, `postMessage` is called without a `targetOrigin`, which defaults to same-origin only, so a parent application running on a different origin receives no messages. Setting it is therefore required whenever the parent application runs on a different origin.
 
 === Events
 
@@ -33,8 +33,8 @@ To maintain uniformity and ease of handling, each event encapsulates the same st
 | Description
 
 | *owncloud-embed:select*
-| Resource[]
-| Gets emitted when user selects resources or location via the select action
+| Resource[] or { resources: Resource[], fileName: string, locationQuery: LocationQuery }
+| Gets emitted when user selects resources or location via the select action. When `embed-choose-file-name=true` is set, two messages are emitted: first the object form including the chosen `fileName`, then the `Resource[]` array. Use `Array.isArray(event.data.data)` to tell them apart.
 
 | *owncloud-embed:share*
 | string[]
@@ -43,6 +43,10 @@ To maintain uniformity and ease of handling, each event encapsulates the same st
 | *owncloud-embed:share-links*
 | Array<{ url: string; password?: string }>
 | Gets emitted when user selects resources and shares them via the "Share link(s)" or "Share link(s) and password(s)" action. Each object contains the link URL and optionally the password (when shared with password).
+
+| *owncloud-embed:file-pick*
+| { resource: Resource, locationQuery: LocationQuery }
+| Gets emitted in File Picker mode (`embed-target=file`) when the user clicks a file.
 
 | *owncloud-embed:cancel*
 | null
@@ -60,6 +64,11 @@ To maintain uniformity and ease of handling, each event encapsulates the same st
 <script>
   function selectEventHandler(event) {
     if (event.data?.name !== 'owncloud-embed:select') {
+      return
+    }
+
+    // with embed-choose-file-name=true, an additional message with an object payload is emitted
+    if (!Array.isArray(event.data.data)) {
       return
     }
 
@@ -111,9 +120,15 @@ By default, the Embed mode allows users to select resources. In certain cases (e
       return
     }
 
-    const resources = event.data.data[0]
+    const payload = event.data.data
 
-    doSomethingWithSelectedResources(resources)
+    if (Array.isArray(payload)) {
+      // Resource[] containing the current folder as the only item
+      doSomethingWithSelectedLocation(payload[0])
+    } else {
+      // only emitted with embed-choose-file-name=true: { resources, fileName, locationQuery }
+      doSomethingWithSelectedLocationAndFileName(payload.resources[0], payload.fileName)
+    }
   }
 
   window.addEventListener('message', selectEventHandler)
@@ -137,9 +152,9 @@ The File Picker mode in ownCloud Web is designed for embedding an interface that
             return
         }
 
-        const file = event.data.data
+        const { resource } = event.data.data
 
-        doSomethingWithPickedFile(file)
+        doSomethingWithPickedFile(resource)
     }
 
     window.addEventListener('message', selectEventHandler)
@@ -152,7 +167,7 @@ If you already have a valid `access_token` that can be used to call the API from
 
 === Configuration
 
-To allow authentication delegation, you need to set the config option `options.embed.delegateAuthentication` to `true`. This can be achieved via query parameter `embed-delegate-authentication=true`. Because we are using the `postMessage` method to communicate across different origins, it is best practice to verify that the event originated from a known origin and not from some malicious site. We highly recommend to allow this check in production environments. You can enable it by setting the config option `options.embed.delegateAuthenticationOrigin` via query parameter `embed-delegate-authentication-origin=my-origin`. The value of this parameter will be compared against the `MessageEvent.origin` value and if they do not match, the token will be rejected.
+To allow authentication delegation, you need to set the config option `options.embed.delegateAuthentication` to `true`. This can be achieved via query parameter `embed-delegate-authentication=true`. Because we are using the `postMessage` method to communicate across different origins, the origin of every token message is verified. Delegated authentication only works if the config option `options.embed.delegateAuthenticationOrigin` (oCIS: `WEB_OPTION_EMBED_DELEGATE_AUTHENTICATION_ORIGIN`) is set to the origin of the parent application. The value is compared against the `MessageEvent.origin` value; if it is not set or the values do not match, the token is rejected. For security reasons, this option can only be set in the configuration, not via a query parameter.
 
 === Events
 

@@ -19,7 +19,7 @@ interface AppMenuItemExtension {
   extensionPointIds?: string[]
   label: () => string
   color?: string
-  handler?: () => void
+  handler?: () => Promise<void> | void
   icon?: string
   path?: string
   priority?: number
@@ -41,7 +41,7 @@ At least one of these properties has to be provided when registering an extensio
 
 == Example
 
-The following example shows how an app creates an extension that registers an app menu item, linking to an internal page. All helper types and composables are being provided via the link:https://github.com/owncloud/web/tree/master/packages/web-pkg[web-pkg] package.
+The following example shows how an app creates an extension that registers an app menu item, linking to an internal page. All helper types and composables are being provided via the link:https://github.com/owncloud/ocis/tree/master/web/packages/web-pkg[web-pkg] package.
 
 [source,typescript]
 ----

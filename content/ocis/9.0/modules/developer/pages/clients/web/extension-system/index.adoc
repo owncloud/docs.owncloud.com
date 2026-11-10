@@ -36,19 +36,22 @@ import {
   ApplicationFileExtension,
   defineWebApplication
 } from '@ownclouders/web-pkg'
+import { computed } from 'vue'
+import { useGettext } from 'vue3-gettext'
 
 export default defineWebApplication({
   setup({ applicationConfig }) {
     // Here, you have access to the full injection context, meaning you can use all composables that we provide via web-pkg
+    const { $gettext } = useGettext()
 
     // Needs to be unique within all installed applications in any ownCloud web instance
     // Should be short, unique and expressive as it is used as prefix on all routes within your application
     const appId = 'your-extension'
 
     // See extensions section below
-    const extensions = [
+    const extensions = computed(() => [
         ...
-    ]
+    ])
 
     // See details below
     const navItems = [
@@ -80,7 +83,7 @@ By defining an application via `defineWebApplication` you can provide the follow
 The application metadata, which is used to make the application available via the app switcher and the app registry.
 
 * `navItems` +
-The statically defined navigation items for the left sidebar. Only gets rendered when more than 1 navigation item exists at runtime.
+The statically defined navigation items for the left sidebar. Only gets rendered when at least one navigation item exists at runtime.
 Additional dynamic navigation items can be registered via the extension registry.
 
 * `routes` +
@@ -123,6 +126,12 @@ An extension that can register additional ways of displaying the content of a fo
 . `CustomComponentExtension` (type `customComponent`) +
 An extension that can register a custom component for a render target. For details, please refer to the xref:clients/web/extension-system/extension-types/custom-components.adoc[custom component docs]
 
+. `AppMenuItemExtension` (type `appMenuItem`) +
+An extension that can register additional items for the application switcher menu in the global top bar. For details, please refer to the xref:clients/web/extension-system/extension-types/app-menu-items.adoc[app menu item docs].
+
+. `ResourceIndicatorExtension` (type `resourceIndicator`) +
+An extension that can register indicators which get shown on resources in file lists. It needs to implement `getResourceIndicators: (resource) => ResourceIndicator[] | void`, returning the indicators for the given resource.
+
 You're free to introduce your own extension types within your application code and use the extension registry to query the available ones. However, if you have the impression that an important extension type is missing and would be beneficial for the platform, please reach out to us by opening a link:https://github.com/owncloud/ocis/issues/new/choose[GitHub issue].
 
 ==== Extension Base Configuration
@@ -140,13 +149,14 @@ You can find predefined extension point ids in the extension points section belo
 
 There are standardized components and places where extensions are being used automatically. The following ones are currently provided by the ownCloud Web runtime or the `files` app. If you decide to develop an extension which fulfills the type and registers itself for the extensionPointId of the respective extension point, your extension will be used automatically.
 
-. Left Sidebar for Navigation. ExtensionPointId `+app.${appName}.navItems+` (dynamically created for each app). Mounts extensions of type `sidebarNav`.
+. Left Sidebar for Navigation. ExtensionPointId `+app.${appId}.navItems+` (dynamically created for each app). Mounts extensions of type `sidebarNav`.
 . Global top bar
+.. Application switcher menu. ExtensionPointId `app.runtime.header.app-menu`. Mounts extensions of type `appMenuItem`.
 .. Center area. ExtensionPointId `app.runtime.header.center`. Mounts extensions of type `customComponent`.
 .. Progress bar for the global loading state. ExtensionPointId `app.runtime.global-progress-bar`. Mounts a single extensions of type `customComponent`. If multiple exist, the user can choose via the account page.
 
 . Files app
-.. Right sidebar. ExtensionPointId `app.files.sidebar`. Mounts extensions of type `sidebarPanel`. Used in any file(s) context (files app, file viewer apps, file editor apps).
+.. Right sidebar. ExtensionPointId `global.files.sidebar`. Mounts extensions of type `sidebarPanel`. Used in any file(s) context (files app, file viewer apps, file editor apps).
 .. Folder views for regular folders. ExtensionPointId `app.files.folder-views.folder`. Mounts extensions of type `folderView`.
 .. Folder views for the project spaces overview. ExtensionPointId `app.files.folder-views.project-spaces`. Mounts extensions of type `folderView`.
 .. Folder views for the favorites page. ExtensionPointId `app.files.folder-views.favorites`. Mounts extensions of type `folderView`.
@@ -155,8 +165,9 @@ There are standardized components and places where extensions are being used aut
 .. Default actions (left click) on a file. ExtensionPointId `global.files.default-actions`. Mounts extensions of type `action`.
 .. Upload menu. ExtensionPointId `app.files.upload-menu`. Mounts extensions of type `action`.
 .. Quick actions. ExtensionPointId `app.files.quick-actions`. Mounts extensions of type `action`.
+.. Resource indicators in file lists. ExtensionPointId `global.files.resource-indicator`. Mounts extensions of type `resourceIndicator`.
 
-. Global search providers. ExtensionPointId `app.search.providers`. Utilizes extensions of type `search` as search engines for the search input in the global top bar.
+. Global search providers. ExtensionPointId `app.search.provider`. Utilizes extensions of type `search` as search engines for the search input in the global top bar.
 
 ==== User Preferences for Extensions
 

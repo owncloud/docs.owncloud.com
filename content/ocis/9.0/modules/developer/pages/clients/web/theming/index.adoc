@@ -17,7 +17,7 @@ To reference your theme, you have two options:
 
 * Using a URL, e.g. `"theme": "https://externalurl.example.com/theme-name/theme.json",`. To avoid CORS issues, please make sure that you host the URL on the same URL as your ownCloud web hosting.
 
-* For development and testing purposes, you can store your `theme.json` inside `+packages/web-runtime/themes/{theme-name}/+` and reference it in the `config.json`. However, this isn't recommended for production use since your changes may get lost when updating oCIS or the `web` app in ownCloud Classic.
+* For development and testing purposes, you can store your `theme.json` inside `+packages/web-runtime/themes/{theme-name}/+` and reference it in the `config.json`. However, this isn't recommended for production use since your changes may get lost when updating oCIS.
 
 *Hint:* If no theme is provided, the loading of your custom theme fails or the theme can't be parsed correctly, the standard ownCloud theme will be loaded as a fallback and an error with further information will be logged on the browser console.
 
@@ -42,7 +42,7 @@ The general top-level structure of a valid `theme.json` is outlined below:
 
 === Common Section
 
-The `common` section provides a set of information that is designed to be available for all clients. It gets merged "down" to the final themes and aims to reduce duplication, but can be overwritten by more specific information inside both the clients' defaults and actual themes.
+The `common` section provides a set of information that is designed to be available for all clients. It is used as the `common` entry of the web `defaults` and aims to reduce duplication. Note that this is a shallow replacement, not a merge: if `clients.web.defaults.common` is set, it replaces the top-level `common` section entirely. The resulting `common` can then be overwritten by more specific information inside the actual themes.
 
 The structure of a valid `common` section is outlined below:
 
@@ -66,9 +66,18 @@ All of the below parameters are required:
 * `name` specifies the publicly visible name
 * `slogan` specifies the publicly visible slogan
 * `logo` specifies the logo in e.g. the top bar within the web UI
-* `accessDeniedHelp` specifies the target URL for the access denied help link
-* `imprintUrl` specifies the target URL for the imprint link
-* `privacyUrl` specifies the target URL for the privacy link
+* `urls.accessDeniedHelp` specifies the target URL for the access denied help link
+* `urls.imprint` specifies the target URL for the imprint link
+* `urls.privacy` specifies the target URL for the privacy link
+* `shareRoles` maps share role IDs to an object with the `iconName` used for that role
+
+The following `urls` keys are optional:
+
+* `urls.accessibilityStatement` specifies the target URL for the accessibility statement link
+* `urls.universalAccessEasyLanguage` specifies the target URL for the easy language page
+* `urls.universalAccessSignLanguage` specifies the target URL for the sign language page
+* `urls.softwareLicense` specifies the target URL for the software license link
+* `urls.helpPage` specifies the target URL for the help page link
 
 === Web Theme
 
@@ -93,6 +102,9 @@ The structure of a valid `web` client section is outlined below:
       },
       "designTokens": {
         // Please see below for details
+      },
+      "icons": {
+        // Please see below for details
       }
     },
     "themes": [
@@ -104,7 +116,7 @@ The structure of a valid `web` client section is outlined below:
 
 ==== The "Defaults"
 
-Similar to the top level `common` section, this object contains information that shall be shared among the available themes and can/should be defined only once. The top level `common` section first gets merged into the `defaults`, which then get merged into the individual themes.
+Similar to the top level `common` section, this object contains information that shall be shared among the available themes and can/should be defined only once. The top level `common` section is set as the `common` entry of the `defaults` unless `defaults.common` is provided, in which case `defaults.common` replaces it entirely. The `defaults` are then deep-merged into each individual theme, where values from the theme take precedence and arrays (e.g. `tagColorsList`) in a theme replace the ones from the `defaults` instead of being appended.
 
 ===== The "appBanner" Options
 
@@ -149,10 +161,35 @@ Here, you can specify the images to be used in the `"topbar"`, for the `"favicon
 ----
 "logo": {
   "topbar": "themes/owncloud/assets/logo.svg",
+  "topbarSm": "themes/owncloud/assets/logo-sm.svg",
   "favicon": "themes/owncloud/assets/favicon.jpg",
-  "login": "themes/owncloud/assets/logo.svg"
+  "login": "themes/owncloud/assets/logo.svg",
+  "href": "https://example.com"
 },
 ----
+
+The `topbar`, `favicon` and `login` keys are required. The following keys are optional:
+
+* `topbarSm` specifies the top bar logo used on small screens
+* `href` specifies a URL the top bar logo links to; if not set, the logo links to the Web home page
+* `notFound` is accepted by the theme schema but currently not used by Web
+
+===== The "icons" Options
+
+Optional icons shown in the universal access menu of the top bar. The universal access menu is only displayed when `urls.universalAccessEasyLanguage` or `urls.universalAccessSignLanguage` is set in the `common` section.
+
+[source,json]
+----
+"icons": {
+  "universalAccess": "",
+  "universalAccessEasyLanguage": "",
+  "universalAccessSignLanguage": ""
+},
+----
+
+* `universalAccess` specifies the icon of the universal access menu button
+* `universalAccessEasyLanguage` specifies the icon of the easy language entry
+* `universalAccessSignLanguage` specifies the icon of the sign language entry
 
 ===== The "loginPage" Options
 
@@ -171,7 +208,7 @@ To further customize your ownCloud instance, you can provide your own styles. To
 
 *Hint:* All the variables are initialized using the link:https://owncloud.design/#/Design%20Tokens[ownCloud design tokens] and then overwritten by your theme variables. Therefore, you don't have to provide all the variables and can use the default ownCloud colors as a fallback.
 
-In general, the theme loader looks for a `designTokens` key inside your theme configuration. Inside the `designTokens`, it expects to find a `colorPalette`, `fontSizes` and `spacing` collection. The structure is outlined below:
+In general, the theme loader looks for a `designTokens` key inside your theme configuration. Inside the `designTokens`, it can find the collections and values outlined below, all of which are optional. The structure is outlined below:
 
 [source,json]
 ----
@@ -191,7 +228,10 @@ In general, the theme loader looks for a `designTokens` key inside your theme co
   },
   "spacing": {
     // Please see below for details
-  }
+  },
+  "tagColorsList": [
+    // Please see below for details
+  ]
 }
 ----
 
@@ -334,7 +374,12 @@ Size variables get prepended with `--oc-size-`, so e.g. _"icon-default"_ creates
 
 Use the six spacing options (`xsmall | small | medium | large | xlarge | xxlarge`) to create a more (or less) condensed version of the user interface. If you need more customization options regarding sizes, please link:https://github.com/owncloud/ocis/issues/new[open an issue on GitHub] with a detailed description.
 
-Spacing variables get prepended with `--oc-space-`, so e.g. _"xlarge"_ creates the custom CSS property `--oc-space-xlarge`.
+Spacing variables get prepended with `--oc-spacing-`, so e.g. _"xlarge"_ creates the custom CSS property `--oc-spacing-xlarge`.
+
+[NOTE]
+====
+The stylesheets currently consume `--oc-space-*` properties, not `--oc-spacing-*`. Spacing overrides therefore have no visible effect yet.
+====
 
 [source,json]
 ----
@@ -347,6 +392,19 @@ Spacing variables get prepended with `--oc-space-`, so e.g. _"xlarge"_ creates t
     "xlarge": "",
     "xxlarge": ""
   }
+}
+----
+
+====== Tag Colors
+
+Use `tagColorsList` to define the ordered list of colors tags are drawn from (at most 512 entries). Each entry gets written into a custom CSS property `--oc-color-tag-<index>`, starting at `0`. The color of a tag is picked by hashing the tag name modulo the length of the list, so every theme should provide the same number of entries, otherwise a tag changes its color when switching themes.
+
+For each entry, a matching text color is written into `--oc-color-tag-<index>-text`. It is whichever of the theme's `text-default` and `text-inverse` colors contrasts better with the tag color, falling back to black and white if these are not hex colors. If the tag color itself is not a hex color, no text color property is written.
+
+[source,json]
+----
+{
+  "tagColorsList": ["#e9f3fd", "#fdeee9", "#e9fdf0"]
 }
 ----
 
@@ -375,7 +433,7 @@ Apart from the `defaults`, you need to provide one or more themes in the `themes
 }
 ----
 
-Again, both the global `common` section as well as the `defaults` will get merged into your themes, but locally provided information takes precedence.
+Again, the `defaults` (including the resulting `common` section, see above) get merged into your themes, but locally provided information takes precedence.
 
 Required information
 
@@ -387,6 +445,9 @@ To provide the user agent with additional information
 
 Optional information
 
+* `mode` +
+Either `regular` (default) or `vault`. Themes with mode `vault` are only offered while the user is in the vault area of Web (URLs under `/vault`), all other themes only outside of it
+
 * `appBanner` +
 See section above
 
@@ -394,6 +455,9 @@ See section above
 See section above
 
 * `designTokens` +
+See section above
+
+* `icons` +
 See section above
 
 * `logo` +
@@ -404,7 +468,7 @@ See section above
 
 == Extendability
 
-If you define different key-value pairs inside any of the objects (`breakpoints`, `colorPalette`, `fontSizes`, `sizes`, `spacing`) in `"designTokens"`, they will get loaded and initialized as CSS custom properties but don't necessarily take any effect in the user interface. This gives you an opportunity to, for example, customize extensions from within the theme in the web runtime (and not the extension itself).
+If you define different key-value pairs inside any of the objects (`breakpoints`, `colorPalette`, `fontSizes`, `sizes`, `spacing`) or entries to `tagColorsList` in `"designTokens"`, they will get loaded and initialized as CSS custom properties but don't necessarily take any effect in the user interface. This gives you an opportunity to, for example, customize extensions from within the theme in the web runtime (and not the extension itself).
 
 == Example Theme
 
@@ -520,8 +584,8 @@ A full template for your custom theme is provided below, and you can use the ins
               "background-muted": "#f8f8f8",
               "background-secondary": "#ffffff",
               "background-hover": "rgb(236, 236, 236)",
-              "color-components-apptopbar-background": "transparent",
-              "color-components-apptopbar-border": "#ceddee",
+              "components-apptopbar-background": "transparent",
+              "components-apptopbar-border": "#ceddee",
               "border": "#ecebee",
               "input-bg": "#ffffff",
               "input-border": "#ceddee",
@@ -583,8 +647,8 @@ A full template for your custom theme is provided below, and you can use the ins
               "background-muted": "#383838",
               "background-secondary": "#4f4f4f",
               "background-hover": "#383838",
-              "color-components-apptopbar-background": "transparent",
-              "color-components-apptopbar-border": "#ceddee",
+              "components-apptopbar-background": "transparent",
+              "components-apptopbar-border": "#ceddee",
               "border": "#383838",
               "input-bg": "#4f4f4f",
               "input-border": "#696969",

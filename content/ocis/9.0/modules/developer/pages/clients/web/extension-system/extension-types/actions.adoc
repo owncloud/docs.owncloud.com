@@ -1,11 +1,11 @@
 = Action Extensions
 :toc: right
 :toclevels: 3
-:description: Actions are one of the possible extension types. Registered actions get rendered in various places across the UI, depending on their scope and targets.
+:description: Actions are one of the possible extension types. Registered actions get rendered in various places across the UI, depending on the extension points they target.
 
 == Action Extension Type
 
-Actions are one of the possible extension types. Registered actions get rendered in various places across the UI, depending on their scope and targets.
+Actions are one of the possible extension types. Registered actions get rendered in various places across the UI, depending on the extension points they target.
 
 === Configuration
 
@@ -30,8 +30,8 @@ The most important configuration options are:
 * `icon` - The icon to be displayed, can be picked from https://owncloud.design/#/Design%20Tokens/IconList
 * `name` - The name of the action (not displayed in the UI)
 * `label` - The text to be displayed
-* `route` - The string/route to navigate to. The nav item will be a `<router-link>` tag.
-* `href` - The URL to navigate to. The nav item will be a `<a>`tag.
+* `route` - A function returning the route to navigate to. The nav item will be a `<router-link>` tag.
+* `href` - A function returning the URL to navigate to. The nav item will be a `<a>`tag.
 * `handler` - The action to perform upon click. The nav item will be a `<button>` tag.
 * `isVisible` - Determines whether the action is displayed to the user
 
@@ -48,8 +48,8 @@ export const useDownloadFilesExtension = () => {
 
   const extension = computed<ActionExtension>(() => ({
     id: 'com.github.owncloud.web.files.download-action',
-    scopes: ['resource'],
     type: 'action',
+    extensionPointIds: ['global.files.context-actions', 'global.files.batch-actions'],
     action: {
       name: 'download-files',
       icon: 'download',
@@ -78,7 +78,7 @@ The extension could then be registered in any app like so:
 ----
 export default defineWebApplication({
   setup() {
-    const { extension } = useFileActionDownloadFiles()
+    const { extension } = useDownloadFilesExtension()
 
     return {
       appInfo: {

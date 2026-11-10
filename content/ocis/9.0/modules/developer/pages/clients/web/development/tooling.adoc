@@ -13,24 +13,26 @@ Web is using link:https://pnpm.io/[pnpm] as package manager and link:https://vit
 
 * docker
 * docker-compose (if not already included in your docker installation)
-* pnpm
-* node
+* pnpm (the version is pinned via the `packageManager` field, enable it with `corepack enable`)
+* node 24 or later
+
+See the link:https://github.com/owncloud/ocis/blob/master/web/package.json[web/package.json] file for the exact versions.
 
 If you’re not using Docker Desktop, you might have to modify your `/etc/hosts` and add `127.0.0.1 host.docker.internal` to make `host.docker.internal` links work.
 
 === Installing Dependencies
 
-After cloning the source code, install the dependencies via `pnpm install`.
+After cloning the source code, change to the `web` directory of the oCIS repository and install the dependencies via `pnpm install`. Run all commands on this page from the `web` directory.
 
 === Starting the Server
 
 You can start the server by running `docker-compose up ocis`.
 
-Note that the container needs a short while to start because it is waiting for `tika` to be initialized. This is the case as soon as the `tika-service` container has stopped running.
+Note that the container needs a short while to start because it is waiting for `tika` to be initialized. oCIS starts as soon as the `tika` service (container `web_tika`) reports as healthy.
 
 === Building and Accessing Web
 
-After the docker containers are running (and `tika` is being initialized), run `pnpm build:w` to build Web. This also includes hot-reloading after changes you make, although it will take a while to rebuild the project. See down below for some details on how to enable instant hot-reloading.
+After the docker containers are running (and `tika` is being initialized), run `pnpm build:w` to build Web. This rebuilds the project after changes you make, although it will take a while, and you need to reload the browser page manually. See down below for some details on how to enable instant hot-reloading.
 
 Now you can access Web via https://host.docker.internal:9200.
 

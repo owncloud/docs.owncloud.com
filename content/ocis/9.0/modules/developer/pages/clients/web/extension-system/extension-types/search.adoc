@@ -6,7 +6,7 @@
 == Search Extensions
 
 One possible extension type is search. Registered search extensions are available when using the search field in the topbar. A search extension can consist of a
-`list` and a `preview` search. The result of a `preview` search is shown below the search input field while the `list` search result is
+`list` and a `preview` search. The result of a `preview` search is shown below the search input field while the `list` search result is shown on the dedicated search results page.
 
 === Configuration
 
@@ -55,7 +55,7 @@ The listSearch object consists of:
 Vue component that can render the values from the SearchResult below
 
 * `search(term: string)` +
-Function that exectues the search, based on a given term. The term is formatted in xref:{dev-s-path}/search/search.adoc[KQL]. Please note that the returned values needs to be formatted to fit either `SearchResource` or `GenericSearchResultItem` type
+Function that exectues the search, based on a given term. The term is formatted in xref:{dev-s-path}/search/search.adoc[KQL]. It returns a `Promise<SearchResult>`, i.e. an object `{ totalResults, values }` where `totalResults` is a number (or `null`) and `values` is a list of `{ id, data }` items. Please note that the `data` of each value needs to be formatted to fit either `SearchResource` or `GenericSearchResultItem` type
 
 ==== PreviewSearch
 
@@ -74,10 +74,11 @@ export const useSolrSearchExtension = () => {
 
   const previewSearch: SearchPreview = {
     component: SolarSearchComponent, // see the next example snippet
-    available: () => true,
-    search: (term) => {
+    available: true,
+    search: async (term) => {
       // actual search implementation
       console.log('Querying solr search engine...')
+      return { totalResults: 0, values: [] }
     }
   }
 
