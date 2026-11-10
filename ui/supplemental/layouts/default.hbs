@@ -3,14 +3,14 @@
   <head>
 {{> head defaultPageTitle='Untitled'}}
   </head>
-  {{!-- Keep Pagefind from indexing non-canonical page copies. Every page is
-        published once per component version (e.g. server/10.15, server/latest,
-        server/11.0); without this they all land in search as duplicate hits.
-        Antora points each page's canonical URL at the latest version, so a page
-        whose canonicalUrl does not end with its own url is an older/prerelease
-        duplicate and is excluded. Pages with no canonicalUrl (e.g. preview
-        builds with no site.url) stay indexed. --}}
-  <body class="article{{#with (or page.attributes.role page.role)}} {{{this}}}{{/with}}"{{#if page.canonicalUrl}}{{#unless (endsWith page.canonicalUrl page.url)}} data-pagefind-ignore{{/unless}}{{/if}}>
+  {{!-- `latest` and `next` aliases are pure redirect stubs (not full content pages),
+        so they are never indexed by Pagefind. All real versioned pages are indexed
+        so users can search across versions and narrow results with the version filter. --}}
+  <body class="article{{#with (or page.attributes.role page.role)}} {{{this}}}{{/with}}">
+{{!-- Pagefind filter tags: tag every page with its component and version so the
+      search modal can offer component/version filter panels. --}}
+<span hidden data-pagefind-filter="component[data-value]" data-value="{{page.component.name}}"></span>
+{{#if page.version}}<span hidden data-pagefind-filter="version[data-value]" data-value="{{page.version}}"></span>{{/if}}
 {{> header}}
 {{> body}}
 {{> footer}}
