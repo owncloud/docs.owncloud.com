@@ -14,5 +14,5 @@
 See the link for a detailed description of the respective CLI command if available.
 
 // the commented link is only as an easy to add template
-// * xref:maintenance/commands/commands.adoc#verify-and-inspect-blobstore[Verify and Inspect a Blobstore] +
-This CLI command has been added to verify and inspect the configured Blobstore without requiring direct access to the underlying storage system.
+// * xref:{s-path}/storage-users.adoc#verify-and-inspect-the-configured-blobstore[Verify and Inspect the Configured Blobstore] +
+// This CLI command has been added to verify and inspect the configured blobstore without requiring direct access to the underlying storage system.

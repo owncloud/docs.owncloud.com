@@ -69,6 +69,10 @@ There are no breaking changes in Infinite Scale 8.2
 == Notabale Changes
 
 * The deployment examples now include KeyCloak as an option.
+* The OIDC group synchronization is now opt-in. +
+*Upgrade note.*
+** Deployments that set `PROXY_AUTOPROVISION_CLAIM_GROUPS` explicitly will not be affected.
+** Deployments that relied on the previous 'groups' default setting will stop synchronising group memberships after upgrading. Set `PROXY_AUTOPROVISION_CLAIM_GROUPS=groups` to restore the previous behaviour.
 
 == Reconfigure Deployment Examples
 
