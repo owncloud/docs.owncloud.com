@@ -21,3 +21,6 @@ This CLI command has been added to compact the search index.
 
 * xref:maintenance/commands/commands.adoc#reset-password-for-idm-users[Reset Password for IDM Users] +
 This CLI command has been updated with new options.
+
+* xref:maintenance/commands/commands.adoc#verify-and-inspect-a-configured-blobstore[Verify and Inspect a Configured Blobstore] +
+This CLI command has been added to Inspect and Verify a configured Blobstore (S3).

@@ -40,6 +40,38 @@ To authenticate CLI commands use:
 
 The `storage-users` CLI tool uses the default address to establish the connection to the xref:{s-path}/gateway.adoc[gateway] service. If the connection fails, check your custom `gateway` service `GATEWAY_GRPC_ADDR` configuration and set the same address in `storage-users` `OCIS_GATEWAY_GRPC_ADDR` or `STORAGE_USERS_GATEWAY_GRPC_ADDR`.
 
+=== Command Set Overview
+
+The following commands are available in the `ocis storage-users` command set:
+
+[source,bash]
+----
+ocis storage-users -h
+NAME:
+   ocis storage-users - storage-users service commands
+
+USAGE:
+   ocis storage-users [command options]
+
+CATEGORY:
+   services
+
+COMMANDS:
+   uploads    manage unfinished uploads
+   trash-bin  manage trash-bin's
+   spaces     manage spaces
+   blobstore  manage the blobstore
+   help, h    Shows a list of commands or help for one command
+   info:
+     health   check health status
+     version  print the version of this binary and the running service instances
+   server:
+     server  start the storage-users service without runtime (unsupervised mode)
+
+OPTIONS:
+   --help, -h  show help
+----
+
 === Manage Unfinished or Stale Uploads
 
 When using Infinite Scale as user storage, a directory named `storage/users/uploads` can be found in the Infinite Scale data folder. This is an intermediate directory based on {tus-url}[TUS] which is an open protocol for resumable uploads. Each upload consists of a _blob_ and a _blob.info_ file. Note that the term _blob_ is just a placeholder.
@@ -326,6 +358,44 @@ Restore a trash-bin item by ID::
 ocis storage-users trash-bin restore [command options] ['spaceID' required] ['itemID' required]
 ----
 --
+
+=== Verify and Inspect the Configured Blobstore
+
+Verify and inspect the configured blobstore without requiring direct access to the underlying storage system.
+
+==== Command Details
+
+The following command can verify and inspect the configured blobstore.
+
+.Usage:
+
+[source,bash]
+----
+ocis storage-users blobstore -h
+NAME:
+   ocis storage-users blobstore - manage the blobstore
+
+USAGE:
+   ocis storage-users blobstore [command options]
+
+COMMANDS:
+   check    check blobstore connectivity via an upload/download/delete round-trip
+   get      get a blob from the blobstore by ID
+   help, h  Shows a list of commands or help for one command
+
+OPTIONS:
+   --help, -h  show help
+----
+
+.Notes:
+
+* `blobstore check` +
+Performs a full upload/download/delete round-trip using a random payload. The payload size is configurable via `--blob-size` and accepts human-readable values such as `64`, `1KB` or `4MiB` (default: 64 bytes).
+
+* `blobstore get` +
+Downloads a specific blob by its ID to verify it is readable. The blob can be identified either with `--blob-id` and `--space-id`, or by passing the raw blob path from a log line directly via `--path`. Both the s3ng key format (`<spaceID>/<pathified_blobID>`) and the ocis filesystem path format (`…/spaces/<pathified_spaceID>/blobs/<pathified_blobID>`) are accepted. When using the s3ng driver without a known blob size, an automatic retry with the actual size is performed on a size mismatch.
+
+As both commands read the existing service configuration, they always target the same blobstore as the running service. Only the `ocis` and `s3ng` storage drivers are supported.
 
 == Resource Optimisation
 
