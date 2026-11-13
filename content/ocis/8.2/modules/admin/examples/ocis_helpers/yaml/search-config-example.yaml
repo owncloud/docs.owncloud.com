@@ -27,6 +27,7 @@ reva:
     mode: ""
     cacert: ""
 grpc_client_tls: null
+grpc_client_options: null
 events:
   endpoint: 127.0.0.1:9233
   cluster: ocis-cluster

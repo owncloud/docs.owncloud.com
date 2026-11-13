@@ -1,7 +1,7 @@
-// # Deprecated Variables between oCIS 8.2.0 and oCIS 8.3.0
+// # Deprecated Variables between oCIS 8.2.0 and oCIS 9.0.0
 // commenting the headline to make it better includable
 
-// table created per 2026.09.10
+// table created per 2026.11.13
 // the table should be recreated/updated on source () changes
 
 [width="100%",cols="~,~,~,~,~",options="header"]
@@ -61,6 +61,330 @@
 | Set this to true if you want to enforce passwords for writable shares. Only effective if the setting for 'passwords on all public shares' is set to false.
 | %%NEXT_PRODUCTION_VERSION%%
 | The OCS API is deprecated
+
+| xref:{s-path}/auth-basic.adoc[Auth-Basic]
+| AUTH_BASIC_OWNCLOUDSQL_DB_HOST
+| Hostname of the database server.
+| 9.0.0
+| AUTH_BASIC_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| AUTH_BASIC_OWNCLOUDSQL_DB_NAME
+| Name of the owncloud database.
+| 9.0.0
+| AUTH_BASIC_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| AUTH_BASIC_OWNCLOUDSQL_DB_PASSWORD
+| Password for the database user.
+| 9.0.0
+| AUTH_BASIC_OWNCLOUDSQL_DB_PASSWORD is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| AUTH_BASIC_OWNCLOUDSQL_DB_PORT
+| Network port to use for the database connection.
+| 9.0.0
+| AUTH_BASIC_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| AUTH_BASIC_OWNCLOUDSQL_DB_USERNAME
+| Database user to use for authenticating with the owncloud database.
+| 9.0.0
+| AUTH_BASIC_OWNCLOUDSQL_DB_USERNAME is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| AUTH_BASIC_OWNCLOUDSQL_IDP
+| The identity provider value to set in the userids of the CS3 user objects for users returned by this user provider.
+| 9.0.0
+| AUTH_BASIC_OWNCLOUDSQL_IDP is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| AUTH_BASIC_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID
+| Join the user properties table to read user ID's.
+| 9.0.0
+| AUTH_BASIC_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| AUTH_BASIC_OWNCLOUDSQL_JOIN_USERNAME
+| Join the user properties table to read usernames
+| 9.0.0
+| AUTH_BASIC_OWNCLOUDSQL_JOIN_USERNAME is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| AUTH_BASIC_OWNCLOUDSQL_NOBODY
+| Fallback number if no numeric UID and GID properties are provided.
+| 9.0.0
+| AUTH_BASIC_OWNCLOUDSQL_NOBODY is deprecated because the owncloudsql driver is deprecated.
+
+| xref:{s-path}/groups.adoc[Groups]
+| GROUPS_OWNCLOUDSQL_DB_HOST
+| Hostname of the database server.
+| 9.0.0
+| GROUPS_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| GROUPS_OWNCLOUDSQL_DB_NAME
+| Name of the owncloud database.
+| 9.0.0
+| GROUPS_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| GROUPS_OWNCLOUDSQL_DB_PASSWORD
+| Password for the database user.
+| 9.0.0
+| GROUPS_OWNCLOUDSQL_DB_PASSWORD is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| GROUPS_OWNCLOUDSQL_DB_PORT
+| Network port to use for the database connection.
+| 9.0.0
+| GROUPS_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| GROUPS_OWNCLOUDSQL_DB_USERNAME
+| Database user to use for authenticating with the owncloud database.
+| 9.0.0
+| GROUPS_OWNCLOUDSQL_DB_USERNAME is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| GROUPS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH
+| Allow 'medial search' when searching for users instead of just doing a prefix search. This allows finding 'Alice' when searching for 'lic'.
+| 9.0.0
+| GROUPS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| GROUPS_OWNCLOUDSQL_IDP
+| The identity provider value to set in the userids of the CS3 user objects for users returned by this user provider.
+| 9.0.0
+| GROUPS_OWNCLOUDSQL_IDP is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| GROUPS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID
+| Join the user properties table to read user IDs.
+| 9.0.0
+| GROUPS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| GROUPS_OWNCLOUDSQL_JOIN_USERNAME
+| Join the user properties table to read usernames.
+| 9.0.0
+| GROUPS_OWNCLOUDSQL_JOIN_USERNAME is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| GROUPS_OWNCLOUDSQL_NOBODY
+| Fallback number if no numeric UID and GID properties are provided.
+| 9.0.0
+| GROUPS_OWNCLOUDSQL_NOBODY is deprecated because the owncloudsql driver is deprecated.
+
+| xref:{s-path}/sharing.adoc[Sharing]
+| SHARING_USER_OWNCLOUDSQL_DB_HOST
+| Hostname or IP of the database server.
+| 9.0.0
+| SHARING_USER_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| SHARING_USER_OWNCLOUDSQL_DB_NAME
+| Name of the database to be used.
+| 9.0.0
+| SHARING_USER_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| SHARING_USER_OWNCLOUDSQL_DB_PASSWORD
+| Password for the database.
+| 9.0.0
+| SHARING_USER_OWNCLOUDSQL_DB_PASSWORD is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| SHARING_USER_OWNCLOUDSQL_DB_PORT
+| Port that the database server is listening on.
+| 9.0.0
+| SHARING_USER_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| SHARING_USER_OWNCLOUDSQL_DB_USERNAME
+| Username for the database.
+| 9.0.0
+| SHARING_USER_OWNCLOUDSQL_DB_USERNAME is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| SHARING_USER_OWNCLOUDSQL_USER_STORAGE_MOUNT_ID
+| Mount ID of the ownCloudSQL users storage for mapping ownCloud 10 shares.
+| 9.0.0
+| SHARING_USER_OWNCLOUDSQL_USER_STORAGE_MOUNT_ID is deprecated because the owncloudsql driver is deprecated.
+
+| xref:{s-path}/storage-users.adoc[Storage-Users]
+| STORAGE_USERS_OWNCLOUDSQL_DATADIR
+| The directory where the filesystem storage will store SQL migration data. If not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/owncloud.
+| 9.0.0
+| STORAGE_USERS_OWNCLOUDSQL_DATADIR is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| STORAGE_USERS_OWNCLOUDSQL_DB_HOST
+| Hostname or IP of the database server.
+| 9.0.0
+| STORAGE_USERS_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| STORAGE_USERS_OWNCLOUDSQL_DB_NAME
+| Name of the database to be used.
+| 9.0.0
+| STORAGE_USERS_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| STORAGE_USERS_OWNCLOUDSQL_DB_PASSWORD
+| Password for the database.
+| 9.0.0
+| STORAGE_USERS_OWNCLOUDSQL_DB_PASSWORD is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| STORAGE_USERS_OWNCLOUDSQL_DB_PORT
+| Port that the database server is listening on.
+| 9.0.0
+| STORAGE_USERS_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| STORAGE_USERS_OWNCLOUDSQL_DB_USERNAME
+| Username for the database.
+| 9.0.0
+| STORAGE_USERS_OWNCLOUDSQL_DB_USERNAME is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| STORAGE_USERS_OWNCLOUDSQL_LAYOUT
+| Path layout to use to navigate into a users folder in an owncloud data directory
+| 9.0.0
+| STORAGE_USERS_OWNCLOUDSQL_LAYOUT is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| STORAGE_USERS_OWNCLOUDSQL_SHARE_FOLDER
+| Name of the folder jailing all shares.
+| 9.0.0
+| STORAGE_USERS_OWNCLOUDSQL_SHARE_FOLDER is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| STORAGE_USERS_OWNCLOUDSQL_UPLOADINFO_DIR
+| The directory where the filesystem will store uploads temporarily. If not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/uploadinfo.
+| 9.0.0
+| STORAGE_USERS_OWNCLOUDSQL_UPLOADINFO_DIR is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| STORAGE_USERS_OWNCLOUDSQL_USERS_PROVIDER_ENDPOINT
+| Endpoint of the users provider.
+| 9.0.0
+| STORAGE_USERS_OWNCLOUDSQL_USERS_PROVIDER_ENDPOINT is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| STORAGE_USERS_POSIX_GENERAL_SPACE_PATH_TEMPLATE
+| Template string to construct the paths of the projects space roots.
+| 9.0.0
+| STORAGE_USERS_POSIX_GENERAL_SPACE_PATH_TEMPLATE is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+
+| 
+| STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT
+| Endpoint of the permissions service. The endpoints can differ for 'ocis', 'posix' and 's3ng'.
+| 9.0.0
+| STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+
+| 
+| STORAGE_USERS_POSIX_PERSONAL_SPACE_PATH_TEMPLATE
+| Template string to construct the paths of the personal space roots.
+| 9.0.0
+| STORAGE_USERS_POSIX_PERSONAL_SPACE_PATH_TEMPLATE is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+
+| 
+| STORAGE_USERS_POSIX_ROOT
+| The directory where the filesystem storage will store its data. If not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/users.
+| 9.0.0
+| STORAGE_USERS_POSIX_ROOT is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+
+| 
+| STORAGE_USERS_POSIX_SCAN_DEBOUNCE_DELAY
+| The time in milliseconds to wait before scanning the filesystem for changes after a change has been detected.
+| 9.0.0
+| STORAGE_USERS_POSIX_SCAN_DEBOUNCE_DELAY is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+
+| 
+| STORAGE_USERS_POSIX_USE_SPACE_GROUPS
+| Use space groups to manage permissions on spaces.
+| 9.0.0
+| STORAGE_USERS_POSIX_USE_SPACE_GROUPS is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+
+| 
+| STORAGE_USERS_POSIX_WATCH_FOLDER_KAFKA_BROKERS
+| Comma-separated list of kafka brokers to read the watchfolder events from.
+| 9.0.0
+| STORAGE_USERS_POSIX_WATCH_FOLDER_KAFKA_BROKERS is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+
+| 
+| STORAGE_USERS_POSIX_WATCH_PATH
+| Path to the watch directory/file. Only applies to the 'gpfsfileauditlogging' and 'inotifywait' watcher, in which case it is the path of the file audit log file/base directory to watch.
+| 9.0.0
+| STORAGE_USERS_POSIX_WATCH_PATH is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+
+| 
+| STORAGE_USERS_POSIX_WATCH_TYPE
+| Type of the watcher to use for getting notified about changes to the filesystem. Currently available options are 'inotifywait' (default), 'gpfswatchfolder' and 'gpfsfileauditlogging'.
+| 9.0.0
+| STORAGE_USERS_POSIX_WATCH_TYPE is deprecated because the posixfs storage driver is deprecated and will be removed in 9.0.0.
+
+| xref:{s-path}/users.adoc[Users]
+| USERS_OWNCLOUDSQL_DB_HOST
+| Hostname of the database server.
+| 9.0.0
+| USERS_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| USERS_OWNCLOUDSQL_DB_NAME
+| Name of the owncloud database.
+| 9.0.0
+| USERS_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| USERS_OWNCLOUDSQL_DB_PASSWORD
+| Password for the database user.
+| 9.0.0
+| USERS_OWNCLOUDSQL_DB_PASSWORD is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| USERS_OWNCLOUDSQL_DB_PORT
+| Network port to use for the database connection.
+| 9.0.0
+| USERS_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| USERS_OWNCLOUDSQL_DB_USERNAME
+| Database user to use for authenticating with the owncloud database.
+| 9.0.0
+| USERS_OWNCLOUDSQL_DB_USERNAME is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| USERS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH
+| Allow 'medial search' when searching for users instead of just doing a prefix search. This allows finding 'Alice' when searching for 'lic'.
+| 9.0.0
+| USERS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| USERS_OWNCLOUDSQL_IDP
+| The identity provider value to set in the userids of the CS3 user objects for users returned by this user provider.
+| 9.0.0
+| USERS_OWNCLOUDSQL_IDP is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| USERS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID
+| Join the user properties table to read user IDs.
+| 9.0.0
+| USERS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| USERS_OWNCLOUDSQL_JOIN_USERNAME
+| Join the user properties table to read usernames
+| 9.0.0
+| USERS_OWNCLOUDSQL_JOIN_USERNAME is deprecated because the owncloudsql driver is deprecated.
+
+| 
+| USERS_OWNCLOUDSQL_NOBODY
+| Fallback number if no numeric UID and GID properties are provided.
+| 9.0.0
+| USERS_OWNCLOUDSQL_NOBODY is deprecated because the owncloudsql driver is deprecated.
 
 |===
 

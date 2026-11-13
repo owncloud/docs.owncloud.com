@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-27-22]
+[#deprecation-note-2026-11-13-11-05-23]
 [caption=]
 .Deprecation notes for the frontend service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -639,7 +639,7 @@ a| [subs=-attributes]
 Path prefix for the data gateway.
 
 a|`OCIS_CACHE_STORE` +
-xref:deprecation-note-2026-09-09-11-27-22[Deprecation Note]
+xref:deprecation-note-2026-11-13-11-05-23[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -650,7 +650,7 @@ a| [subs=-attributes]
 The type of the cache store. Supported values are: 'memory', 'redis-sentinel', 'nats-js-kv', 'noop'. See the text description for details.
 
 a|`OCIS_CACHE_STORE_NODES` +
-xref:deprecation-note-2026-09-09-11-27-22[Deprecation Note]
+xref:deprecation-note-2026-11-13-11-05-23[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -661,7 +661,7 @@ a| [subs=-attributes]
 A list of nodes to access the configured store. This has no effect when 'memory' store is configured. Note that the behaviour how nodes are used is dependent on the library of the configured store. See the Environment Variable Types description for more details.
 
 a|`OCIS_CACHE_DATABASE` +
-xref:deprecation-note-2026-09-09-11-27-22[Deprecation Note]
+xref:deprecation-note-2026-11-13-11-05-23[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -672,7 +672,7 @@ a| [subs=-attributes]
 The database name the configured store should use.
 
 a|`OCIS_CACHE_TTL` +
-xref:deprecation-note-2026-09-09-11-27-22[Deprecation Note]
+xref:deprecation-note-2026-11-13-11-05-23[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -683,7 +683,7 @@ a| [subs=-attributes]
 Default time to live for user info in the cache. Only applied when access tokens has no expiration. See the Environment Variable Types description for more details.
 
 a|`OCIS_CACHE_DISABLE_PERSISTENCE` +
-xref:deprecation-note-2026-09-09-11-27-22[Deprecation Note]
+xref:deprecation-note-2026-11-13-11-05-23[Deprecation Note]
 a| [subs=-attributes]
 ++5.0 ++
 a| [subs=-attributes]
@@ -694,7 +694,7 @@ a| [subs=-attributes]
 Disable persistence of the cache. Only applies when using the 'nats-js-kv' store type. Defaults to false.
 
 a|`OCIS_CACHE_AUTH_USERNAME` +
-xref:deprecation-note-2026-09-09-11-27-22[Deprecation Note]
+xref:deprecation-note-2026-11-13-11-05-23[Deprecation Note]
 a| [subs=-attributes]
 ++5.0 ++
 a| [subs=-attributes]
@@ -705,7 +705,7 @@ a| [subs=-attributes]
 The username to use for authentication. Only applies when using the 'nats-js-kv' store type.
 
 a|`OCIS_CACHE_AUTH_PASSWORD` +
-xref:deprecation-note-2026-09-09-11-27-22[Deprecation Note]
+xref:deprecation-note-2026-11-13-11-05-23[Deprecation Note]
 a| [subs=-attributes]
 ++5.0 ++
 a| [subs=-attributes]
@@ -715,8 +715,63 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 The password to use for authentication. Only applies when using the 'nats-js-kv' store type.
 
+a|`OCIS_NATS_CREDS_FILE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+
+a|`OCIS_NATS_CREDS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Only applies when store type 'nats-js-kv' is configured.
+
+a|`OCIS_CACHE_ENABLE_TLS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++bool ++
+a| [subs=-attributes]
+++false ++
+a| [subs=-attributes]
+Activate TLS for the connection to the stat cache store. Only applies when using the 'nats-js-kv' store type.
+
+a|`OCIS_CACHE_TLS_INSECURE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++bool ++
+a| [subs=-attributes]
+++false ++
+a| [subs=-attributes]
+Disable TLS certificate verification for the stat cache store connection. Only applies when using the 'nats-js-kv' store type. Do not enable this in production because it disables authentication of the NATS server. Use it only for testing with self-signed certificates.
+
+a|`OCIS_CACHE_TLS_ROOT_CA_CERTIFICATE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Path to the PEM-encoded root CA certificate for the stat cache store TLS connection. Only applies when using the 'nats-js-kv' store type.
+
 a|`OCIS_ENABLE_OCM` +
-xref:deprecation-note-2026-09-09-11-27-22[Deprecation Note]
+xref:deprecation-note-2026-11-13-11-05-23[Deprecation Note]
 a| [subs=-attributes]
 ++5.0 ++
 a| [subs=-attributes]
@@ -727,7 +782,7 @@ a| [subs=-attributes]
 Include OCM shares when listing shares. See the OCM service documentation for more details.
 
 a|`OCIS_ENABLE_OCM` +
-xref:deprecation-note-2026-09-09-11-27-22[Deprecation Note]
+xref:deprecation-note-2026-11-13-11-05-23[Deprecation Note]
 a| [subs=-attributes]
 ++5.0 ++
 a| [subs=-attributes]
@@ -738,7 +793,7 @@ a| [subs=-attributes]
 Include OCM sharees when listing sharees.
 
 a|`OCIS_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD` +
-xref:deprecation-note-2026-09-09-11-27-22[Deprecation Note]
+xref:deprecation-note-2026-11-13-11-05-23[Deprecation Note]
 a| [subs=-attributes]
 ++5.0 ++
 a| [subs=-attributes]
@@ -749,7 +804,7 @@ a| [subs=-attributes]
 Set this to true if you want to enforce passwords on all public shares.
 
 a|`OCIS_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD` +
-xref:deprecation-note-2026-09-09-11-27-22[Deprecation Note]
+xref:deprecation-note-2026-11-13-11-05-23[Deprecation Note]
 a| [subs=-attributes]
 ++5.0 ++
 a| [subs=-attributes]
@@ -898,6 +953,30 @@ a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
 The password to authenticate with the events broker. The events broker is the ocis service which receives and delivers events between the services.
+
+a|`OCIS_NATS_CREDS_FILE` +
+`FRONTEND_EVENTS_CREDS_FILE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+
+a|`OCIS_NATS_CREDS` +
+`FRONTEND_EVENTS_CREDS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
 
 a|`FRONTEND_AUTO_ACCEPT_SHARES` +
 
@@ -1073,17 +1152,6 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 This authentication level name indicates that multi-factor authentication was performed. The name must match the ACR claim in the access token received. Note: If multiple names are required, use a comma-separated list. The front-end service will use the first name in the list when requesting multi-factor authentication (MFA).
 
-a|`OCIS_MFA_SESSION_DURATION` +
-
-a| [subs=-attributes]
-++8.1.0 ++
-a| [subs=-attributes]
-++int ++
-a| [subs=-attributes]
-++3600 ++
-a| [subs=-attributes]
-The duration in seconds that a multi-factor authentication session is valid. After this time the user will be prompted to re-authenticate. Defaults to 3600 (1 hour).
-
 a|`OCIS_ENABLE_VAULT_MODE` +
 `FRONTEND_ENABLE_VAULT_MODE` +
 
@@ -1095,5 +1163,17 @@ a| [subs=-attributes]
 ++false ++
 a| [subs=-attributes]
 Enable vault mode. When enabled, the capabilities endpoint will report vault as enabled and the capabilities?vault=true endpoint will return capabilities with public sharing and federation disabled.
+
+a|`OCIS_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS` +
+`FRONTEND_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++int ++
+a| [subs=-attributes]
+++30 ++
+a| [subs=-attributes]
+The default expiration, in days, applied to a vault user or group share created without an explicit expiration date. Reported via the vault capability so clients can reflect the admin-configured value. Must match the graph service's GRAPH_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS.
 |===
 

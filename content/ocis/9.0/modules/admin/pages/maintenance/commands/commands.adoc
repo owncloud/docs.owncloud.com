@@ -84,6 +84,10 @@ Detect and, if desired, delete storage grants that have no corresponding share-m
 
 When a shared space or directory got deleted, use the following xref:maintenance/commands/cleanup-orphaned-shares.adoc[CLI command] to cleanup those share orphans. This can't be done automatically at the moment.
 
+=== Compact the Search Index
+
+The search performance can degrade over time after bulk reindexing operations that create many small index segments. Use the following xref:{s-path}/search.adoc#compact-the-search-index[CLI command] to compact the search index for improved search performance.
+
 === Inspect and Manipulate Node Metadata
 
 Infinite Scale provides a xref:maintenance/commands/node-metadata.adoc[CLI command] with which you can inspect and manipulate node metadata.
@@ -129,6 +133,6 @@ WARNING: Use this command with absolute care. It is not intended to play around 
 
 This command is about sending emails based on events stored in a named group bucket. See the xref:{s-path}/notifications.adoc#sending-grouped-emails[Sending Grouped Emails] section in the _notification_ service for details.
 
-=== Verify and Inspect a Blobstore
+=== Verify and Inspect a Configured Blobstore
 
-This command has been added to verify and inspect the configured Blobstore without requiring direct access to the underlying storage system. Use the following xref:maintenance/commands/verify-and-inspect-blobstore.adoc[CLI command] for this task.
+This command has been added to verify and inspect the configured blobstore without requiring direct access to the underlying storage system. Use the following xref:{s-path}/storage-users.adoc#verify-and-inspect-the-configured-blobstore[CLI command] for this task.

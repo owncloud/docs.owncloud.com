@@ -8,6 +8,7 @@
 :release-types-url: https://owncloud.dev/ocis/release_roadmap/#release-types
 :release-roadmap-url: https://owncloud.dev/ocis/release_roadmap/#dates
 :ocis-releases-url: https://github.com/owncloud/ocis/releases/tag
+// do not remove the web-releases-url attribute until all references in this page are gone.
 :web-releases-url: https://github.com/owncloud/web/releases/tag
 
 {description} Also see our {release-roadmap-url}[release roadmap] for additional information.
@@ -15,6 +16,149 @@
 {empty} +
 
 toc::[]
+
+== Infinite Scale 8.2.3 (Production)
+
+Please find the most important changes described here or refer to the changelog for a complete list of changes see: {ocis-releases-url}/v8.2.3[Changes in 8.2.3, window=_blank]
+
+[discrete]
+=== Issues Fixed
+
+This release has security and bugfixes, as well as deprecation notices.
+
+* Bugfix: Fix a data race in the `web` service on concurrent `GET /themes/*` requests that could corrupt the rendered theme or crash the service: https://github.com/owncloud/ocis/pull/13251[#13251]
+
+* Deprecation of environment variables
+** Change: All environment variables of the `owncloudsql` driver (`OWNCLOUDSQL` name part) are deprecated in `storage-users`, `auth-basic`, `users`, `groups`, and `sharing`. They will be removed together with the driver in oCIS 9.0: https://github.com/owncloud/ocis/pull/13193[#13193]
+** Change: All environment variables of the `posixfs` driver (`POSIX` name part) are deprecated in `storage-users`. They will be removed together with the driver in oCIS 9.0: https://github.com/owncloud/ocis/pull/13302[#13302]
+
+* Security:
+** Dependency updates
+
+== Infinite Scale 8.2.2 (Production)
+
+Please find the most important changes described here or refer to the changelog for a complete list of changes see: {ocis-releases-url}/v8.2.2[Changes in 8.2.2, window=_blank]
+
+[discrete]
+=== Issues Fixed
+
+This release has security and bugfixes.
+
+* Bugfix: Fix AuthApp (app password) and HTTP basic auth requests returning an internal server error when `PROXY_USER_OIDC_CLAIM` was set to a non-default value: https://github.com/owncloud/ocis/pull/13078[#13078]
+* Bugfix: Fix `GET /graph/v1.0/me` returning HTTP 500 when the preferred-language settings lookup fails; the Web UI uses this endpoint on every login, so affected users were locked out of oCIS entirely: https://github.com/owncloud/ocis/pull/13188[#13188]
+* Bugfix: Fix the LDAP master-ID filter to leave an empty base filter unchanged; previously it was restricted to master-ID users only, breaking cross-instance user search in multi-instance deployments: https://github.com/owncloud/ocis/pull/13096[#13096]
+
+* Deployment example (ocis_multi only):
+** Enhancement: Allow connections to the ownCloud Marketplace domain in the `ocis_multi` deployment example CSP: https://github.com/owncloud/ocis/pull/13090[#13090]
+
+* Security:
+** Dependency updates
+
+== Infinite Scale 8.2.1 (Production)
+
+Please find the most important changes described here or refer to the changelog for a complete list of changes see: {ocis-releases-url}/v8.2.1[Changes in 8.2.1, window=_blank]
+
+[discrete]
+=== Issues Fixed
+
+This release has security and bugfixes, as well as enhancements.
+
+* Bugfix: Fix share metadata corruption when multiple sharing service replicas processed share operations concurrently for the same user, making all shares inaccessible; the received share cache now uses compare-and-swap (etag) validation to prevent corruption: https://github.com/owncloud/ocis/pull/12621[#12621]
+* Bugfix: Fix permanent space delete being silently treated as a disable when using axios >=1.20.0, which strips a header literally named `Purge`; the graph service now also accepts `X-Purge`: https://github.com/owncloud/ocis/pull/13049[#13049]
+* Bugfix: Fix transient OIDC userinfo failures (timeouts, network errors, 5xx/429 from IdP) returning HTTP 401 and logging users out; the proxy now returns a retryable 503 with `Retry-After` for transient failures: https://github.com/owncloud/ocis/pull/12999[#12999]
+* Bugfix: Cache LDAP instance mapper lookups to eliminate redundant LDAP round-trips per request in multi-instance deployments; configurable via `OCIS_LDAP_INSTANCE_MAPPER_CACHE_TTL` (default 60s): https://github.com/owncloud/ocis/pull/12898[#12898]
+
+* Security:
+** Harden brute force protection for password-protected public links so failed attempts are reliably counted and rate limits consistently enforced: https://github.com/owncloud/ocis/pull/12945[#12945]
+** Dependency updates
+
+== Infinite Scale 8.2.0 (Production) - Ebadi
+
+Please find the most important changes described here or refer to the changelog for a complete list of changes:
+
+* Infinite Scale: {ocis-releases-url}/v8.2.0[Changes in 8.2.0, window=_blank]
+* Web: Please note, that from this Infinite Scale release onwards, the WebUI is integrated into the ocis repository. This means that there will only be one combined changelog, and the WebUI version shown will most likely be removed in a subsequent release.
+
+[discrete]
+=== Summary of Notable Changes
+
+* User Interface Changes:
+** The icon displayed next to group entries in the 'Share Collaborator' autocomplete list was invisible due to an incorrect text colour. It now uses the correct default text colour, so renders properly again.
+** When using the internal IDP, the login, consent, and account chooser pages did not announce error messages when they appeared, and invalid username/password fields gave no indication of their error state. This has been fixed now.
+** The optical representation of low-contrast form controls in dark and vault themes has been greatly improved.
+** The keyboard navigation in "New" and "Upload" dropdown menus has been fixed.
+** The keyboard focus has been removed from purely informational file names in the top bar. These are no longer part of the tab order or interactive elements.
+** Even though they don't trigger any action, some icons and date columns in tables (such as the Spaces list and file list) can no longer receive keyboard focus unexpectedly.
+** Hover feedback has been restored in high-contrast and dark themes.
+** The accessibility focus in the 'File Versions' sidebar is now preserved.
+** The Vault navigation labels are now updated when you switch into or out of the Vault.
+** A 'select all' checkbox has been added to the 'Tile view' option.
+
+* User and File Management:
+** For administrators, the 'Delete user' action now excludes the current user from the request. This means that all the other selected users will be deleted, but the current user's account will remain untouched. If the admins own account is part of the selection, a message will appear in the deletion confirmation dialogue box to indicate that it will not be deleted.
+** The ability to disable public link sharing has been added.
+** The ability to disable direct sharing (user/group) has been added.
+** It is now allowed to rename, move and edit files with the 'Editor Lite' role.
+
+* LDAP Configuration:
+** It is now possible to disable the last sign-in timestamp update using the environment variables `OCIS_LDAP_UPDATE_LAST_SIGNIN_DATE` or `GRAPH_LDAP_UPDATE_LAST_SIGNIN_DATE`, without disabling all LDAP writes via the environment variable `OCIS_LDAP_SERVER_WRITE_ENABLED`.
+** A bounded LDAP connection pool that requires opt-in has been added. This can be configured using environment variables beginning with `OCIS_LDAP_POOL_`.
+** There are now options that can be configured using environment variables beginning with `GRAPH_LDAP_RETRY_xxx` for LDAP retry operations against a lagging replica.
+** To improve stability, the redundant LDAP read-after-write process has been eliminated for create and update.
+
+* Authentication and Token Handling:
+** Access tokens with expired user info cache entries are now re-verified.
+** A new proxy configuration option, `PROXY_OIDC_ACCESS_TOKEN_VERIFY_AUD`, has been added. This allows operators to restrict the JWT access tokens accepted to a list of permitted audiences.
+
+* The double HTML escaping of notification emails for multiple recipients has been removed.
+
+* The proxy `/readyz` endpoint now correctly reports NATS reachability instead of always failing due to passing the cluster ID instead of the connection endpoint.
+
+* Translations have been fixed/updated.
+
+* New environment variables have been added. See the xref:ocis:admin:migration/upgrading-ocis.adoc[Migration and Upgrade, window=_blank] section of the Infinite Scale admin documentation for more details.
+
+* CLI Commands:
+** New CLI commands have been added or extended, in particular the `Clean Corrupt Public Shares`, the `Compact the Search Index`, the `Reset Password for IDM Users` and `Verify and Inspect a Configured Blobstore` command. For details see the xref:ocis:admin:migration/upgrading-ocis.adoc[Migration and Upgrade, window=_blank] section of the Infinite Scale admin documentation.
+
+* Several updates were made to the deployment examples:
+** Examples of legacy deployment, such as the `oc10_ocis_parallel`, and references to their documentation have been removed.
+** Collabora hardening.
+** Volume path corrected for Keycloak.
+
+* Security:
+** A rate-limit to export personal GDPR data per user has been added to mitigate DoS attacks and set to 5 requests per user and minute.
+** The underlaying Alpine image used for Infinite Scale has been updated to version 3.24.1
+** `go` has been updated to version 1.26.10
+** Password/account changes via PATCH `/graph/v1.0/me` are now blocked.
+** Internal error details in WebDAV responses are no longer published.
+
+[discrete]
+=== Upgrading Infinite Scale
+
+See the xref:ocis:admin:migration/upgrading-ocis.adoc[Migration and Upgrade, window=_blank] section of the Infinite Scale admin documentation for more details.
+
+* Since the deployment examples have been updated, you *must* update the configuration files, reconfigure them and pull new image versions. No data migration is necessary.
+
+=== Known Issues
+
+This section will be updated if issues are discovered.
+
+//[discrete]
+=== Deprecations
+
+See the xref:ocis:admin:migration/upgrading-ocis.adoc[Migration and Upgrade, window=_blank] section of the Infinite Scale admin documentation for more details.
+
+* Some features that were deprecated in previous releases have not yet been removed. No new deprecations have been added.
+
+//[discrete]
+=== Migrations
+
+See the xref:ocis:admin:migration/upgrading-ocis.adoc[Migration and Upgrade, window=_blank] section of the Infinite Scale admin documentation for more details.
+
+=== Breaking Changes
+
+There are no breaking changes in Infinite Scale 8.2
 
 == Infinite Scale 8.1.0 (Production) - Daledda
 
@@ -34,7 +178,7 @@ Please find the most important changes described here or refer to the changelog 
 
 * Added a new space membership role: `Can edit`.
 
-* The new environment variables have been added. For details see the ...
+* New environment variables have been added .See the xref:ocis:admin:migration/upgrading-ocis.adoc[Migration and Upgrade, window=_blank] section of the Infinite Scale admin documentation for more details.
 
 * CLI Commands
 ** New CLI commands have been added, in particular the `Verify and Inspect the Blobstore`, the `Search Index Optimize` and the `Reset Password for System Users` command. For details see the xref:ocis:admin:migration/upgrading-ocis.adoc[Migration and Upgrade, window=_blank] section of the Infinite Scale admin documentation.
@@ -97,6 +241,42 @@ See the xref:ocis:admin:migration/upgrading-ocis.adoc[Migration and Upgrade, win
 === Breaking Changes
 
 There are no breaking changes in Infinite Scale 8.1
+
+== Infinite Scale 8.0.10 (Production)
+
+Please find the most important changes described here or refer to the changelog for a complete list of changes see: {ocis-releases-url}/v8.0.10[Changes in 8.0.10, window=_blank]
+
+[discrete]
+=== Issues Fixed
+
+This release has security, bugfixes and enhancements.
+
+* Bugfix: Fix gateway provider cache always using persistence due to a wrong config key sent to reva: https://github.com/owncloud/ocis/pull/13220[#13220]
+* Bugfix: Skip not-ready gRPC nodes before reusing cached clients to prevent long stalls on dead nodes: https://github.com/owncloud/ocis/pull/13147[#13147]
+* Enhancement: Add NATS JWT authentication support via `OCIS_NATS_CREDS_FILE` and `OCIS_NATS_CREDS` for all NATS connections: https://github.com/owncloud/ocis/pull/13220[#13220]
+* Security:
+** Mask secret values in the proxy debug configuration output: https://github.com/owncloud/ocis/pull/13220[#13220]
+** Dependency updates
+
+== Infinite Scale 8.0.9 (Production)
+
+Please find the most important changes described here or refer to the changelog for a complete list of changes see: {ocis-releases-url}/v8.0.9[Changes in 8.0.9, window=_blank]
+
+[discrete]
+=== Issues Fixed
+
+This release has security, bugfixes and enhancements.
+
+* Bugfix: Drop unmarshalable body field from graph service log messages: https://github.com/owncloud/ocis/pull/12918[#12918]
+* Bugfix: Release quota of upload sessions with unreadable node metadata; adds `--orphaned` filter to `storage-users uploads sessions`: https://github.com/owncloud/ocis/pull/12739[#12739]
+* Bugfix: Return degraded drive items for shares in `sharedWithMe` instead of silently dropping them on transient stat failures: https://github.com/owncloud/ocis/pull/12430[#12430]
+* Bugfix: Return a retryable 503 instead of 401 when the OIDC userinfo call fails transiently: https://github.com/owncloud/ocis/pull/13047[#13047]
+* Change: Replace `GRPC_MAX_CONNECTION_AGE` with gRPC client keepalive via `GRPC_CLIENT_KEEPALIVE_TIME` and `GRPC_CLIENT_KEEPALIVE_TIMEOUT`; `GRPC_MAX_CONNECTION_AGE` is removed: https://github.com/owncloud/ocis/pull/13020[#13020]
+* Enhancement: Add `OCDAV_DISABLE_PROPFIND_PUBLIC_LINK_RESOLUTION` toggle to skip public link resolution in PROPFIND requests: https://github.com/owncloud/ocis/pull/13020[#13020]
+* Enhancement: Make the public share expiry janitor configurable via `OCIS_SHARING_ENABLE_EXPIRED_SHARES_CLEANUP` and `OCIS_SHARING_JANITOR_RUN_INTERVAL`: https://github.com/owncloud/ocis/pull/13020[#13020]
+* Enhancement: Add TLS support for the frontend stat cache NATS store connection: https://github.com/owncloud/ocis/pull/12777[#12777]
+* Security:
+** Dependency updates
 
 == Infinite Scale 8.0.8 (Production)
 

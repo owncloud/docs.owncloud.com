@@ -44,6 +44,7 @@ http:
     cert: ""
     key: ""
 grpc_client_tls: null
+grpc_client_options: null
 token_manager:
   jwt_secret: ""
 reva:

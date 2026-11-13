@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-27-22]
+[#deprecation-note-2026-11-13-11-05-23]
 [caption=]
 .Deprecation notes for the graph service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -221,11 +221,35 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 The password to authenticate with the cache. Only applies when store type 'nats-js-kv' is configured.
 
+a|`OCIS_NATS_CREDS_FILE` +
+`GRAPH_CACHE_CREDS_FILE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+
+a|`OCIS_NATS_CREDS` +
+`GRAPH_CACHE_CREDS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+
 a|`OCIS_CACHE_ENABLE_TLS` +
 `GRAPH_CACHE_ENABLE_TLS` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -237,7 +261,7 @@ a|`OCIS_CACHE_TLS_INSECURE` +
 `GRAPH_CACHE_TLS_INSECURE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -249,7 +273,7 @@ a|`OCIS_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 `GRAPH_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
@@ -633,7 +657,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
-++ ++
+++en ++
 a| [subs=-attributes]
 The default language used by services and the WebUI. If not defined, English will be used as default. See the documentation for more details.
 
@@ -897,6 +921,18 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 The object class to use for users in the default user search filter ('inetOrgPerson').
 
+a|`OCIS_LDAP_USER_ADDITIONAL_OBJECTCLASSES` +
+`GRAPH_LDAP_USER_ADDITIONAL_OBJECTCLASSES` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++[]string ++
+a| [subs=-attributes]
+++[] ++
+a| [subs=-attributes]
+Additional object classes to set when creating new users (e.g. to allow a custom surname attribute). The default classes 'inetOrgPerson', 'organizationalPerson', 'person', 'top' and 'ownCloudUser' are always included.
+
 a|`OCIS_LDAP_USER_SCHEMA_MAIL` +
 `GRAPH_LDAP_USER_EMAIL_ATTRIBUTE` +
 
@@ -933,6 +969,29 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 LDAP Attribute to use for username of users.
 
+a|`OCIS_LDAP_USER_SCHEMA_SURNAME` +
+`GRAPH_LDAP_USER_SURNAME_ATTRIBUTE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++sn ++
+a| [subs=-attributes]
+LDAP Attribute to use for the surname of users.
+
+a|`GRAPH_LDAP_USER_SEARCH_ATTRIBUTES` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++[]string ++
+a| [subs=-attributes]
+++[onPremisesSamAccountName displayName mail] ++
+a| [subs=-attributes]
+The user attributes to match against when searching for users via the Graph API. Does not affect the legacy OCS sharees search, which always matches on username, display name, and mail. Accepts the logical names 'onPremisesSamAccountName', 'displayName', 'surname', 'mail' (case-insensitive), or any other LDAP attribute name directly.
+
 a|`OCIS_LDAP_USER_SCHEMA_ID` +
 `GRAPH_LDAP_USER_UID_ATTRIBUTE` +
 
@@ -941,7 +1000,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
-++owncloudUUID ++
+++ownCloudUUID ++
 a| [subs=-attributes]
 LDAP Attribute to use as the unique ID for users. This should be a stable globally unique ID like a UUID.
 
@@ -1120,7 +1179,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
-++owncloudUUID ++
+++ownCloudUUID ++
 a| [subs=-attributes]
 LDAP Attribute to use as the unique id for groups. This should be a stable globally unique ID like a UUID.
 
@@ -1359,7 +1418,7 @@ Template for the instance URL. Requires OCIS_MULTI_INSTANCE_ENABLED.
 a|`OCIS_LDAP_INSTANCE_MAPPER_CACHE_TTL` +
 
 a| [subs=-attributes]
-++8.0.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++int ++
 a| [subs=-attributes]
@@ -1462,6 +1521,30 @@ a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
 The password to authenticate with the events broker. The events broker is the ocis service which receives and delivers events between the services.
+
+a|`OCIS_NATS_CREDS_FILE` +
+`GRAPH_EVENTS_CREDS_FILE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+
+a|`OCIS_NATS_CREDS` +
+`GRAPH_EVENTS_CREDS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
 
 a|`GRAPH_AVAILABLE_ROLES` +
 
@@ -1624,7 +1707,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
-The master ID that grants access to all instances. Users with this ID in their memberOf or guestOf claims can access any instance. Leave empty to disable.
+The master ID that grants access to all instances. Users with this ID in their memberOf or guestOf claims can access any instance. Leave empty to disable. Also set 'OCIS_LDAP_USER_FILTER'. Without an explicit user filter, this instance resolves every user in the shared LDAP directory.
 
 a|`OCIS_MULTI_INSTANCE_QUERY_TEMPLATE` +
 
@@ -1636,6 +1719,17 @@ a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
 The regular expression extracting username and instancename from a user provided search.
+
+a|`OCIS_MULTI_INSTANCE_GUEST_ROLE_MAPPING` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++[]string ++
+a| [subs=-attributes]
+++[] ++
+a| [subs=-attributes]
+(Optional) The guest role mapping of the proxy service. The graph service matches it against the LDAP attribute 'userClass' of guests without a role on this instance, so they can receive vault shares before their first login here. 'userClass' must hold the same values as the PROXY_ROLE_ASSIGNMENT_OIDC_CLAIM claim.
 
 a|`OCIS_MAX_TAG_LENGTH` +
 
@@ -1651,7 +1745,7 @@ Define the maximum tag length. Defaults to 100 if not set. Set to 0 to not limit
 a|`GRAPH_MAX_IMAGE_FILE_SIZE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
@@ -1670,6 +1764,18 @@ a| [subs=-attributes]
 ++false ++
 a| [subs=-attributes]
 Enable vault mode in addition to the regular graph service. This only applies when the additional storage-users-vault service is running, which is a special configured storage-users service.
+
+a|`OCIS_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS` +
+`GRAPH_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++int ++
+a| [subs=-attributes]
+++30 ++
+a| [subs=-attributes]
+The default expiration, in days, applied to a vault user or group share created without an explicit expiration date. Space memberships are exempt.
 
 a|`OCIS_ENABLE_USER_SHARING` +
 

@@ -28,7 +28,7 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-The default role assignments the demo users should be setup.
+Flag to enable or disable the creation of the demo users.
 a| `OCIS_ADMIN_USER_ID`
 
 a| [subs=-attributes]
@@ -54,7 +54,6 @@ a| [subs=-attributes]
 
 a| [subs=attributes+]
 * xref:{s-path}/search.adoc[search] +
-* xref:{s-path}/storage-users.adoc[storage-users] +
 * xref:{s-path}/storage-users.adoc[storage-users] +
 
 a| [subs=-attributes]
@@ -89,7 +88,7 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-The password to authenticate with the store. Only applies when store type 'nats-js-kv' is configured.
+The password to use for authentication. Only applies when using the 'nats-js-kv' store type.
 a| `OCIS_CACHE_AUTH_USERNAME`
 
 a| [subs=-attributes]
@@ -114,7 +113,7 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-The username to authenticate with the store. Only applies when store type 'nats-js-kv' is configured.
+The username to use for authentication. Only applies when using the 'nats-js-kv' store type.
 a| `OCIS_CACHE_DATABASE`
 
 a| [subs=-attributes]
@@ -133,14 +132,14 @@ a| [subs=-attributes]
 ++string ++
 
 a| [subs=-attributes]
-++settings-cache ++
+++cache-stat ++
 
 a| [subs=-attributes]
 The database name the configured store should use.
 a| `OCIS_CACHE_DISABLE_PERSISTENCE`
 
 a| [subs=-attributes]
-++5.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/frontend.adoc[frontend] +
@@ -160,13 +159,14 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Disables persistence of the cache. Only applies when store type 'nats-js-kv' is configured. Defaults to false.
+Disable persistence of the cache. Only applies when using the 'nats-js-kv' store type. Defaults to false.
 a| `OCIS_CACHE_ENABLE_TLS`
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 
 a| [subs=attributes+]
+* xref:{s-path}/frontend.adoc[frontend] +
 * xref:{s-path}/gateway.adoc[gateway] +
 * xref:{s-path}/graph.adoc[graph] +
 * xref:{s-path}/ocs.adoc[ocs] +
@@ -184,11 +184,11 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Activate TLS for the connection to the signing key store. Only applies when store type 'nats-js-kv' is configured.
+Activate TLS for the connection to the stat cache store. Only applies when using the 'nats-js-kv' store type.
 a| `OCIS_CACHE_STORE`
 
 a| [subs=-attributes]
-++5.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/frontend.adoc[frontend] +
@@ -206,14 +206,14 @@ a| [subs=-attributes]
 ++string ++
 
 a| [subs=-attributes]
-++nats-js-kv ++
+++memory ++
 
 a| [subs=-attributes]
-The type of the signing key store. Supported values are: 'redis-sentinel' and 'nats-js-kv'. See the text description for details.
+The type of the cache store. Supported values are: 'memory', 'redis-sentinel', 'nats-js-kv', 'noop'. See the text description for details.
 a| `OCIS_CACHE_STORE_NODES`
 
 a| [subs=-attributes]
-++5.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/frontend.adoc[frontend] +
@@ -234,13 +234,14 @@ a| [subs=-attributes]
 ++[127.0.0.1:9233] ++
 
 a| [subs=-attributes]
-A list of nodes to access the configured store. Note that the behaviour how nodes are used is dependent on the library of the configured store. See the Environment Variable Types description for more details.
+A list of nodes to access the configured store. This has no effect when 'memory' store is configured. Note that the behaviour how nodes are used is dependent on the library of the configured store. See the Environment Variable Types description for more details.
 a| `OCIS_CACHE_TLS_INSECURE`
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 
 a| [subs=attributes+]
+* xref:{s-path}/frontend.adoc[frontend] +
 * xref:{s-path}/gateway.adoc[gateway] +
 * xref:{s-path}/graph.adoc[graph] +
 * xref:{s-path}/ocs.adoc[ocs] +
@@ -258,13 +259,14 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Disable TLS certificate verification for the signing key store connection. Only applies when store type 'nats-js-kv' is configured.
+Disable TLS certificate verification for the stat cache store connection. Only applies when using the 'nats-js-kv' store type. Do not enable this in production because it disables authentication of the NATS server. Use it only for testing with self-signed certificates.
 a| `OCIS_CACHE_TLS_ROOT_CA_CERTIFICATE`
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 
 a| [subs=attributes+]
+* xref:{s-path}/frontend.adoc[frontend] +
 * xref:{s-path}/gateway.adoc[gateway] +
 * xref:{s-path}/graph.adoc[graph] +
 * xref:{s-path}/ocs.adoc[ocs] +
@@ -282,11 +284,11 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-Path to the PEM-encoded root CA certificate for the signing key store TLS connection. Only applies when store type 'nats-js-kv' is configured.
+Path to the PEM-encoded root CA certificate for the stat cache store TLS connection. Only applies when using the 'nats-js-kv' store type.
 a| `OCIS_CACHE_TTL`
 
 a| [subs=-attributes]
-++5.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/frontend.adoc[frontend] +
@@ -304,10 +306,10 @@ a| [subs=-attributes]
 ++Duration ++
 
 a| [subs=-attributes]
-++12h0m0s ++
+++5m0s ++
 
 a| [subs=-attributes]
-Default time to live for signing keys. See the Environment Variable Types description for more details.
+Default time to live for user info in the cache. Only applied when access tokens has no expiration. See the Environment Variable Types description for more details.
 a| `OCIS_CLAIM_MANAGED_SPACES_ENABLED`
 
 a| [subs=-attributes]
@@ -352,7 +354,7 @@ a| [subs=-attributes]
 ++bool ++
 
 a| [subs=-attributes]
-++true ++
+++false ++
 
 a| [subs=-attributes]
 Allow credentials for CORS.See following chapter for more details: *Access-Control-Allow-Credentials* at \https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials.
@@ -383,7 +385,7 @@ a| [subs=-attributes]
 ++[]string ++
 
 a| [subs=-attributes]
-++[Authorization Origin Content-Type Accept X-Requested-With X-Request-Id Cache-Control] ++
+++[] ++
 
 a| [subs=-attributes]
 A list of allowed CORS headers. See following chapter for more details: *Access-Control-Request-Headers* at \https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Request-Headers. See the Environment Variable Types description for more details.
@@ -414,7 +416,7 @@ a| [subs=-attributes]
 ++[]string ++
 
 a| [subs=-attributes]
-++[GET POST PUT PATCH DELETE OPTIONS] ++
+++[] ++
 
 a| [subs=-attributes]
 A list of allowed CORS methods. See following chapter for more details: *Access-Control-Request-Method* at \https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Request-Method. See the Environment Variable Types description for more details.
@@ -445,7 +447,7 @@ a| [subs=-attributes]
 ++[]string ++
 
 a| [subs=-attributes]
-++[*] ++
+++[https://localhost:9200] ++
 
 a| [subs=-attributes]
 A list of allowed CORS origins. See following chapter for more details: *Access-Control-Allow-Origin* at \https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin. See the Environment Variable Types description for more details.
@@ -482,10 +484,27 @@ a| [subs=-attributes]
 ++string ++
 
 a| [subs=-attributes]
-++ ++
+++en ++
 
 a| [subs=-attributes]
 The default language used by services and the WebUI. If not defined, English will be used as default. See the documentation for more details.
+a| `OCIS_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS`
+
+a| [subs=-attributes]
+++9.0.0 ++
+
+a| [subs=attributes+]
+* xref:{s-path}/frontend.adoc[frontend] +
+* xref:{s-path}/graph.adoc[graph] +
+
+a| [subs=-attributes]
+++int ++
+
+a| [subs=-attributes]
+++30 ++
+
+a| [subs=-attributes]
+The default expiration, in days, applied to a vault user or group share created without an explicit expiration date. Reported via the vault capability so clients can reflect the admin-configured value. Must match the graph service's GRAPH_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS.
 a| `OCIS_DISABLE_VERSIONING`
 
 a| [subs=-attributes]
@@ -523,7 +542,7 @@ Edition of oCIS. Used for branding purposes.
 a| `OCIS_ENABLE_OCM`
 
 a| [subs=-attributes]
-++5.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/frontend.adoc[frontend] +
@@ -539,7 +558,7 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Include OCM sharees when listing users.
+Changing this value is NOT supported. Enables support for incoming federated sharing for clients. The backend behaviour is not changed.
 a| `OCIS_ENABLE_PUBLIC_SHARING`
 
 a| [subs=-attributes]
@@ -594,7 +613,7 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Set this to true to enable the default rule for vault storage provider configuration. Only applicable if the storage-users-vault service, a specially configured storage-users service, is configured.
+Enable vault mode. When enabled, the capabilities endpoint will report vault as enabled and the capabilities?vault=true endpoint will return capabilities with public sharing and federation disabled.
 a| `OCIS_EVENTS_AUTH_PASSWORD`
 
 a| [subs=-attributes]
@@ -786,7 +805,7 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-The root CA certificate used to validate the server's TLS certificate. If provided POSTPROCESSING_EVENTS_TLS_INSECURE will be seen as false.
+The root CA certificate used to validate the server's TLS certificate. Will be seen as empty if NOTIFICATIONS_EVENTS_TLS_INSECURE is provided.
 a| `OCIS_GATEWAY_GRPC_ADDR`
 
 a| [subs=-attributes]
@@ -911,7 +930,7 @@ a| [subs=-attributes]
 ++tcp ++
 
 a| [subs=-attributes]
-The transport protocol of the GPRC service.
+The transport protocol of the GRPC service.
 a| `OCIS_HTTP_TLS_CERTIFICATE`
 
 a| [subs=-attributes]
@@ -1037,7 +1056,7 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Whether the ocis server should skip the client certificate verification during the TLS handshake.
+Whether to verify the server TLS certificates.
 a| `OCIS_JWT_SECRET`
 
 a| [subs=-attributes]
@@ -1115,7 +1134,7 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-The client id to authenticate with keycloak.
+The client ID to authenticate with keycloak.
 a| `OCIS_KEYCLOAK_CLIENT_REALM`
 
 a| [subs=-attributes]
@@ -1389,7 +1408,7 @@ a| [subs=-attributes]
 ++string ++
 
 a| [subs=-attributes]
-++ownclouduuid ++
+++ownCloudUUID ++
 
 a| [subs=-attributes]
 LDAP Attribute to use as the unique id for groups. This should be a stable globally unique ID like a UUID.
@@ -1771,7 +1790,7 @@ a| [subs=-attributes]
 ++string ++
 
 a| [subs=-attributes]
-++displayname ++
+++displayName ++
 
 a| [subs=-attributes]
 LDAP Attribute to use for the displayname of users.
@@ -1791,7 +1810,7 @@ a| [subs=-attributes]
 ++string ++
 
 a| [subs=-attributes]
-++ownclouduuid ++
+++ownCloudUUID ++
 
 a| [subs=-attributes]
 LDAP Attribute to use as the unique id for users. This should be a stable globally unique id like a UUID.
@@ -2122,7 +2141,7 @@ Activates pretty log output.
 a| `OCIS_MACHINE_AUTH_API_KEY`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/auth-app.adoc[auth-app] +
@@ -2140,11 +2159,11 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-The machine auth API key used to validate internal requests necessary to access resources from other services.
+Machine auth API key used to validate internal requests necessary for the access to resources from other services.
 a| `OCIS_MAX_CONCURRENCY`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/frontend.adoc[frontend] +
@@ -2212,24 +2231,7 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Enable MFA enforcement. If enabled users need to complete MFA before they can access specific paths
-a| `OCIS_MFA_SESSION_DURATION`
-
-a| [subs=-attributes]
-++7.3.0 ++
-
-a| [subs=attributes+]
-* xref:{s-path}/frontend.adoc[frontend] +
-* xref:{s-path}/proxy.adoc[proxy] +
-
-a| [subs=-attributes]
-++int ++
-
-a| [subs=-attributes]
-++3600 ++
-
-a| [subs=-attributes]
-The duration in seconds that a multi-factor authentication session is valid for non-OIDC requests. Defaults to 3600 (1 hour).
+Set to true to enable multi factor authentication. See the documentation for more details.
 a| `OCIS_MULTI_INSTANCE_ENABLED`
 
 a| [subs=-attributes]
@@ -2247,6 +2249,23 @@ a| [subs=-attributes]
 
 a| [subs=-attributes]
 Enable multiple instances of Infinite Scale.
+a| `OCIS_MULTI_INSTANCE_GUEST_ROLE_MAPPING`
+
+a| [subs=-attributes]
+++9.0.0 ++
+
+a| [subs=attributes+]
+* xref:{s-path}/graph.adoc[graph] +
+* xref:{s-path}/proxy.adoc[proxy] +
+
+a| [subs=-attributes]
+++[]string ++
+
+a| [subs=-attributes]
+++[] ++
+
+a| [subs=-attributes]
+(Optional) Mapping of PROXY_ROLE_ASSIGNMENT_OIDC_CLAIM values to the role a guest gets instead of OCIS_MULTI_INSTANCE_GUEST_ROLE. Example: 'spaceadmin:user-light-vault'. A claim value is an exact string or a regular expression that must match the full claim value, the same as the claim_value of the role mapping. Escape regex metacharacters such as '.' in an exact string. The first match wins. Role names must not contain a colon. Only applies to the 'oidc' role assignment driver.
 a| `OCIS_MULTI_INSTANCE_INSTANCEID`
 
 a| [subs=-attributes]
@@ -2263,7 +2282,7 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-The unique ID of this instance.
+The unique id of this instance
 a| `OCIS_MULTI_INSTANCE_MASTER_ID`
 
 a| [subs=-attributes]
@@ -2283,7 +2302,105 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-The master instance ID for multi-instance setups. When set, LDAP user filters are enhanced to also match users belonging to the master instance.
+The master instance ID for multi-instance setups. When set, LDAP user filters are enhanced to also match users belonging to the master instance. Also set 'user_filter'. Without an explicit 'user_filter', this instance resolves every user in the shared LDAP directory.
+a| `OCIS_NATS_CREDS`
+
+a| [subs=-attributes]
+++9.0.0 ++
+
+a| [subs=attributes+]
+* xref:{s-path}/activitylog.adoc[activitylog] +
+* xref:{s-path}/activitylog.adoc[activitylog] +
+* xref:{s-path}/antivirus.adoc[antivirus] +
+* xref:{s-path}/audit.adoc[audit] +
+* xref:{s-path}/clientlog.adoc[clientlog] +
+* xref:{s-path}/collaboration.adoc[collaboration] +
+* xref:{s-path}/eventhistory.adoc[eventhistory] +
+* xref:{s-path}/eventhistory.adoc[eventhistory] +
+* xref:{s-path}/frontend.adoc[frontend] +
+* xref:{s-path}/frontend.adoc[frontend] +
+* xref:{s-path}/gateway.adoc[gateway] +
+* xref:{s-path}/graph.adoc[graph] +
+* xref:{s-path}/graph.adoc[graph] +
+* xref:{s-path}/notifications.adoc[notifications] +
+* xref:{s-path}/notifications.adoc[notifications] +
+* xref:{s-path}/ocm.adoc[ocm] +
+* xref:{s-path}/ocs.adoc[ocs] +
+* xref:{s-path}/policies.adoc[policies] +
+* xref:{s-path}/postprocessing.adoc[postprocessing] +
+* xref:{s-path}/postprocessing.adoc[postprocessing] +
+* xref:{s-path}/proxy.adoc[proxy] +
+* xref:{s-path}/proxy.adoc[proxy] +
+* xref:{s-path}/proxy.adoc[proxy] +
+* xref:{s-path}/search.adoc[search] +
+* xref:{s-path}/settings.adoc[settings] +
+* xref:{s-path}/sharing.adoc[sharing] +
+* xref:{s-path}/sse.adoc[sse] +
+* xref:{s-path}/storage-publiclink.adoc[storage-publiclink] +
+* xref:{s-path}/storage-system.adoc[storage-system] +
+* xref:{s-path}/storage-users.adoc[storage-users] +
+* xref:{s-path}/storage-users.adoc[storage-users] +
+* xref:{s-path}/storage-users.adoc[storage-users] +
+* xref:{s-path}/userlog.adoc[userlog] +
+* xref:{s-path}/userlog.adoc[userlog] +
+
+a| [subs=-attributes]
+++string ++
+
+a| [subs=-attributes]
+++ ++
+
+a| [subs=-attributes]
+Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+a| `OCIS_NATS_CREDS_FILE`
+
+a| [subs=-attributes]
+++9.0.0 ++
+
+a| [subs=attributes+]
+* xref:{s-path}/activitylog.adoc[activitylog] +
+* xref:{s-path}/activitylog.adoc[activitylog] +
+* xref:{s-path}/antivirus.adoc[antivirus] +
+* xref:{s-path}/audit.adoc[audit] +
+* xref:{s-path}/clientlog.adoc[clientlog] +
+* xref:{s-path}/collaboration.adoc[collaboration] +
+* xref:{s-path}/eventhistory.adoc[eventhistory] +
+* xref:{s-path}/eventhistory.adoc[eventhistory] +
+* xref:{s-path}/frontend.adoc[frontend] +
+* xref:{s-path}/frontend.adoc[frontend] +
+* xref:{s-path}/gateway.adoc[gateway] +
+* xref:{s-path}/graph.adoc[graph] +
+* xref:{s-path}/graph.adoc[graph] +
+* xref:{s-path}/notifications.adoc[notifications] +
+* xref:{s-path}/notifications.adoc[notifications] +
+* xref:{s-path}/ocm.adoc[ocm] +
+* xref:{s-path}/ocs.adoc[ocs] +
+* xref:{s-path}/policies.adoc[policies] +
+* xref:{s-path}/postprocessing.adoc[postprocessing] +
+* xref:{s-path}/postprocessing.adoc[postprocessing] +
+* xref:{s-path}/proxy.adoc[proxy] +
+* xref:{s-path}/proxy.adoc[proxy] +
+* xref:{s-path}/proxy.adoc[proxy] +
+* xref:{s-path}/search.adoc[search] +
+* xref:{s-path}/settings.adoc[settings] +
+* xref:{s-path}/sharing.adoc[sharing] +
+* xref:{s-path}/sse.adoc[sse] +
+* xref:{s-path}/storage-publiclink.adoc[storage-publiclink] +
+* xref:{s-path}/storage-system.adoc[storage-system] +
+* xref:{s-path}/storage-users.adoc[storage-users] +
+* xref:{s-path}/storage-users.adoc[storage-users] +
+* xref:{s-path}/storage-users.adoc[storage-users] +
+* xref:{s-path}/userlog.adoc[userlog] +
+* xref:{s-path}/userlog.adoc[userlog] +
+
+a| [subs=-attributes]
+++string ++
+
+a| [subs=-attributes]
+++ ++
+
+a| [subs=-attributes]
+Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
 a| `OCIS_OIDC_ISSUER`
 
 a| [subs=-attributes]
@@ -2307,7 +2424,7 @@ a| [subs=-attributes]
 ++https://localhost:9200 ++
 
 a| [subs=-attributes]
-The identity provider value to set in the group IDs of the CS3 group objects for groups returned by this group provider.
+The OIDC issuer URL to assign to the demo users.
 a| `OCIS_PASSWORD_POLICY_BANNED_PASSWORDS_LIST`
 
 a| [subs=-attributes]
@@ -2448,7 +2565,7 @@ a| [subs=-attributes]
 ++nats-js-kv ++
 
 a| [subs=-attributes]
-The type of the store. Supported values are: 'memory', 'redis-sentinel', 'nats-js-kv', 'noop'. See the text description for details.
+The type of the store. Supported values are: 'memory', 'nats-js-kv', 'redis-sentinel', 'noop'. See the text description for details.
 a| `OCIS_PERSISTENT_STORE_AUTH_PASSWORD`
 
 a| [subs=-attributes]
@@ -2496,7 +2613,7 @@ The username to authenticate with the store. Only applies when store type 'nats-
 a| `OCIS_PERSISTENT_STORE_ENABLE_TLS`
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -2540,7 +2657,7 @@ A list of nodes to access the configured store. This has no effect when 'memory'
 a| `OCIS_PERSISTENT_STORE_TLS_INSECURE`
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -2558,11 +2675,11 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Disable TLS certificate verification for the store connection. Only applies when store type 'nats-js-kv' is configured.
+Disable TLS certificate verification for the store connection. Only applies when store type 'nats-js-kv' is configured. Do not enable this in production because it disables authentication of the NATS server. Use it only for testing with self-signed certificates.
 a| `OCIS_PERSISTENT_STORE_TLS_ROOT_CA_CERTIFICATE`
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -2598,10 +2715,10 @@ a| [subs=-attributes]
 ++Duration ++
 
 a| [subs=-attributes]
-++0s ++
+++336h0m0s ++
 
 a| [subs=-attributes]
-Time to live for events in the store. See the Environment Variable Types description for more details.
+Time to live for events in the store. Defaults to '336h' (2 weeks). See the Environment Variable Types description for more details.
 a| `OCIS_REVA_GATEWAY`
 
 a| [subs=-attributes]
@@ -2749,7 +2866,7 @@ a| [subs=-attributes]
 ++0 ++
 
 a| [subs=-attributes]
-Set a global max quota for spaces in bytes. A value of 0 equals unlimited. If not using the global OCIS_SPACES_MAX_QUOTA, you must define the FRONTEND_MAX_QUOTA in the frontend service.
+Set the global max quota value in bytes. A value of 0 equals unlimited. The value is provided via capabilities.
 a| `OCIS_SYSTEM_USER_API_KEY`
 
 a| [subs=-attributes]
@@ -3056,7 +3173,7 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-The storage transfer secret.
+Transfer secret for signing file up- and download requests.
 a| `OCIS_TRANSLATION_PATH`
 
 a| [subs=-attributes]
@@ -3107,10 +3224,10 @@ a| [subs=-attributes]
 ++string ++
 
 a| [subs=-attributes]
-++https://localhost:9200/ ++
+++https://localhost:9200 ++
 
 a| [subs=-attributes]
-Base url to navigate back from the app to the containing folder in the file list.
+The OIDC issuer URL to assign to the demo users.
 a| `OCIS_USER_SEARCH_DISPLAYED_ATTRIBUTES`
 
 a| [subs=-attributes]
@@ -3127,7 +3244,7 @@ a| [subs=-attributes]
 ++[] ++
 
 a| [subs=-attributes]
-The attributes to display in the user search results.
+A list of user attributes to display in the user search results.
 a| `OCIS_WOPI_DISABLE_CHAT`
 
 a| [subs=-attributes]
@@ -3144,7 +3261,7 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Disable the chat functionality of the office app.
+Disable chat in the office web frontend. This feature applies to OnlyOffice and Microsoft.
 a| `STORAGE_USERS_ASYNC_PROPAGATOR_PROPAGATION_DELAY`
 
 a| [subs=-attributes]
@@ -3168,7 +3285,6 @@ a| [subs=-attributes]
 ++pre5.0 ++
 
 a| [subs=attributes+]
-* xref:{s-path}/storage-users.adoc[storage-users] +
 * xref:{s-path}/storage-users.adoc[storage-users] +
 * xref:{s-path}/storage-users.adoc[storage-users] +
 

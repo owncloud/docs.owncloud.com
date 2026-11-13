@@ -45,6 +45,7 @@ grpc:
   addr: 127.0.0.1:9191
   tls: null
 grpc_client_tls: null
+grpc_client_options: null
 metadata_config:
   gateway_addr: com.owncloud.api.storage-system
   storage_addr: com.owncloud.api.storage-system
@@ -62,6 +63,8 @@ metadata_config:
     disable_persistence: false
     username: ""
     password: ""
+    creds_file: ""
+    creds: ""
     enable_tls: false
     tls_insecure: false
     tls_root_ca_certificate: ""
@@ -72,5 +75,5 @@ token_manager:
 set_default_assignments: false
 service_account_ids:
 - service-user-id
-default_language: ""
+default_language: en
 translation_path: ""

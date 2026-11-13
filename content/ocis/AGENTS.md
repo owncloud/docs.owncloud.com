@@ -2,6 +2,34 @@
 
 Agent guidelines specific to the oCIS component (developer service pages, Collector and Swagger UI). Applies to every oCIS version directory. Loaded on demand; repo-wide rules live in the root `AGENTS.md`, content-authoring rules in `content/AGENTS.md`.
 
+## Running a Throwaway oCIS Container for CLI Help
+
+When you need to inspect a CLI command's help output for a specific oCIS version, run it directly in a throwaway container — no init step or volume needed:
+
+```bash
+docker run --rm owncloud/ocis:<VERSION> <command> --help
+```
+
+Replace `<VERSION>` with the target release (e.g. `8.2.2`, `9.0.0`). Check available tags at https://hub.docker.com/r/owncloud/ocis/tags.
+
+Top-level commands are reached directly (`ocis backup`, `ocis init`, …). Service commands are nested under the service name:
+
+```bash
+# Top-level command
+docker run --rm owncloud/ocis:8.2.2 backup --help
+
+# Service sub-command
+docker run --rm owncloud/ocis:8.2.2 idm resetpassword --help
+```
+
+To list all available top-level commands for a version:
+
+```bash
+docker run --rm owncloud/ocis:<VERSION> --help
+```
+
+This is a read-only, ephemeral operation: the container starts, prints help, and exits without touching any data. No volume, no init, no port mapping required.
+
 ## Audit-Tracking Page Attributes
 
 Pages that contain content requiring periodic review (Mermaid diagrams, architecture descriptions, configuration examples) carry two tracking attributes in their document header:

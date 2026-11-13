@@ -42,6 +42,8 @@ cache:
   provider_cache_disable_persistence: false
   provider_cache_auth_username: ""
   provider_cache_auth_password: ""
+  provider_cache_creds_file: ""
+  provider_cache_creds: ""
   provider_cache_enable_tls: false
   provider_cache_tls_insecure: false
   provider_cache_tls_root_ca_certificate: ""

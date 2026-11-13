@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-30-54]
+[#deprecation-note-2026-11-13-09-58-28]
 [caption=]
 .Deprecation notes for the eventhistory service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -352,7 +352,7 @@ a|`OCIS_PERSISTENT_STORE_ENABLE_TLS` +
 `EVENTHISTORY_STORE_ENABLE_TLS` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -364,7 +364,7 @@ a|`OCIS_PERSISTENT_STORE_TLS_INSECURE` +
 `EVENTHISTORY_STORE_TLS_INSECURE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -376,7 +376,7 @@ a|`OCIS_PERSISTENT_STORE_TLS_ROOT_CA_CERTIFICATE` +
 `EVENTHISTORY_STORE_TLS_ROOT_CA_CERTIFICATE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]

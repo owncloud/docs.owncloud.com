@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-27-22]
+[#deprecation-note-2026-11-13-11-05-23]
 [caption=]
 .Deprecation notes for the activitylog service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -248,6 +248,28 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 The password to authenticate with the events broker. The events broker is the ocis service which receives and delivers events between the services.
 
+a|`OCIS_NATS_CREDS_FILE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. The service reads the file again on each reconnect.
+
+a|`OCIS_NATS_CREDS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password.
+
 a|`OCIS_PERSISTENT_STORE` +
 `ACTIVITYLOG_STORE` +
 
@@ -330,11 +352,35 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 The password to authenticate with the store. Only applies when store type 'nats-js-kv' is configured.
 
+a|`OCIS_NATS_CREDS_FILE` +
+`ACTIVITYLOG_STORE_CREDS_FILE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+
+a|`OCIS_NATS_CREDS` +
+`ACTIVITYLOG_STORE_CREDS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+
 a|`OCIS_PERSISTENT_STORE_ENABLE_TLS` +
 `ACTIVITYLOG_STORE_ENABLE_TLS` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -346,7 +392,7 @@ a|`OCIS_PERSISTENT_STORE_TLS_INSECURE` +
 `ACTIVITYLOG_STORE_TLS_INSECURE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -358,7 +404,7 @@ a|`OCIS_PERSISTENT_STORE_TLS_ROOT_CA_CERTIFICATE` +
 `ACTIVITYLOG_STORE_TLS_ROOT_CA_CERTIFICATE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]

@@ -9,10 +9,7 @@
 | Default Value
 | Description
 {{- range .Variables}}
-
-{{- if .Ignore }}
-    {{ continue }}
-{{- end }}
+{{- if not .Ignore }}
 
 a| `{{- .Name }}` +
 a| [subs=-attributes]
@@ -21,6 +18,6 @@ a| [subs=-attributes]
 ++{{.DefaultValue}} ++
 a| [subs=-attributes]
 ++{{.Description}} ++
-
+{{- end }}
 {{- end }}
 |===
