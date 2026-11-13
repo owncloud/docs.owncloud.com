@@ -1,7 +1,7 @@
 // # Added Variables between oCIS 8.2.0 and oCIS 9.0.0
 // commenting the headline to make it better includable
 
-// table created per 2026.11.05
+// table created per 2026.11.13
 // the table should be recreated/updated on source () changes
 
 [width="100%",cols="~,~,~,~",options="header"]
@@ -28,7 +28,27 @@
 | (Optional) The guest role mapping of the proxy service. The graph service matches it against the LDAP attribute 'userClass' of guests without a role on this instance, so they can receive vault shares before their first login here. 'userClass' must hold the same values as the PROXY_ROLE_ASSIGNMENT_OIDC_CLAIM claim.
 | []
 
+| 
+| OCIS_NATS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| OCIS_NATS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
 | xref:{s-path}/activitylog.adoc[Activitylog]
+| ACTIVITYLOG_STORE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| ACTIVITYLOG_STORE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | ACTIVITYLOG_STORE_ENABLE_TLS
 | Activate TLS for the connection to the store. Only applies when store type 'nats-js-kv' is configured.
 | false
@@ -43,7 +63,47 @@
 | Path to the PEM-encoded root CA certificate for the store TLS connection. Only applies when store type 'nats-js-kv' is configured.
 | 
 
+| xref:{s-path}/antivirus.adoc[Antivirus]
+| ANTIVIRUS_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| ANTIVIRUS_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
+| xref:{s-path}/audit.adoc[Audit]
+| AUDIT_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| AUDIT_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
+| xref:{s-path}/clientlog.adoc[Clientlog]
+| CLIENTLOG_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| CLIENTLOG_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
 | xref:{s-path}/collaboration.adoc[Collaboration]
+| COLLABORATION_STORE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| COLLABORATION_STORE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | COLLABORATION_STORE_ENABLE_TLS
 | Activate TLS for the connection to the store. Only applies when store type 'nats-js-kv' is configured.
 | false
@@ -59,6 +119,26 @@
 | 
 
 | xref:{s-path}/eventhistory.adoc[Eventhistory]
+| EVENTHISTORY_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| EVENTHISTORY_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
+| 
+| EVENTHISTORY_STORE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| EVENTHISTORY_STORE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | EVENTHISTORY_STORE_ENABLE_TLS
 | Activate TLS for the connection to the store. Only applies when store type 'nats-js-kv' is configured.
 | false
@@ -78,7 +158,27 @@
 | The default expiration, in days, applied to a vault user or group share created without an explicit expiration date. Reported via the vault capability so clients can reflect the admin-configured value. Must match the graph service's GRAPH_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS.
 | 30
 
+| 
+| FRONTEND_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| FRONTEND_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
 | xref:{s-path}/gateway.adoc[Gateway]
+| GATEWAY_PROVIDER_CACHE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| GATEWAY_PROVIDER_CACHE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | GATEWAY_PROVIDER_CACHE_DATABASE
 | The database name the configured store should use.
 | cache-providers
@@ -99,6 +199,16 @@
 | 
 
 | xref:{s-path}/graph.adoc[Graph]
+| GRAPH_CACHE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| GRAPH_CACHE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | GRAPH_CACHE_ENABLE_TLS
 | Activate TLS for the connection to the cache store. Only applies when store type 'nats-js-kv' is configured.
 | false
@@ -117,6 +227,16 @@
 | GRAPH_DEFAULT_VAULT_SHARE_EXPIRATION_DAYS
 | The default expiration, in days, applied to a vault user or group share created without an explicit expiration date. Space memberships are exempt.
 | 30
+
+| 
+| GRAPH_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| GRAPH_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
 
 | 
 | GRAPH_LDAP_USER_ADDITIONAL_OBJECTCLASSES
@@ -154,6 +274,26 @@
 | [UPDATE_PASSWORD VERIFY_EMAIL]
 
 | xref:{s-path}/notifications.adoc[Notifications]
+| NOTIFICATIONS_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| NOTIFICATIONS_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
+| 
+| NOTIFICATIONS_STORE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| NOTIFICATIONS_STORE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | NOTIFICATIONS_STORE_ENABLE_TLS
 | Activate TLS for the connection to the store. Only applies when store type 'nats-js-kv' is configured.
 | false
@@ -173,7 +313,27 @@
 | Disable the resolution of public link shares when answering PROPFIND requests. When disabled, the oc:share-type property will not be populated with public link share information, which can reduce load on services for large collections.
 | false
 
+| xref:{s-path}/ocm.adoc[OCM]
+| OCM_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| OCM_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
 | xref:{s-path}/ocs.adoc[OCS]
+| OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_ENABLE_TLS
 | Activate TLS for the connection to the signing key store. Only applies when store type 'nats-js-kv' is configured.
 | false
@@ -188,7 +348,37 @@
 | Path to the PEM-encoded root CA certificate for the signing key store TLS connection. Only applies when store type 'nats-js-kv' is configured.
 | 
 
+| xref:{s-path}/policies.adoc[Policies]
+| POLICIES_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| POLICIES_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
 | xref:{s-path}/postprocessing.adoc[Postprocessing]
+| POSTPROCESSING_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| POSTPROCESSING_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
+| 
+| POSTPROCESSING_STORE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| POSTPROCESSING_STORE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | POSTPROCESSING_STORE_ENABLE_TLS
 | Activate TLS for the connection to the store. Only applies when store type 'nats-js-kv' is configured.
 | false
@@ -204,6 +394,26 @@
 | 
 
 | xref:{s-path}/proxy.adoc[Proxy]
+| PROXY_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| PROXY_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
+| 
+| PROXY_OIDC_USERINFO_CACHE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| PROXY_OIDC_USERINFO_CACHE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | PROXY_OIDC_USERINFO_CACHE_DATABASE
 | The database name the configured store should use.
 | cache-userinfo
@@ -224,6 +434,16 @@
 | 
 
 | 
+| PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_ENABLE_TLS
 | Activate TLS for the connection to the signing key store. Only applies when store type 'nats-js-kv' is configured.
 | false
@@ -239,11 +459,31 @@
 | 
 
 | xref:{s-path}/search.adoc[Search]
+| SEARCH_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| SEARCH_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
+| 
 | SEARCH_EXTRACTOR_MAX_CONSECUTIVE_FAILURES
 | Abort a space (re)index walk after this many files in a row fail content extraction, which usually means the extraction service is down. Files that cannot be resolved at all are logged and skipped without counting towards this limit. Set to 0 to never abort.
 | 5
 
 | xref:{s-path}/settings.adoc[Settings]
+| SETTINGS_CACHE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| SETTINGS_CACHE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | SETTINGS_CACHE_DATABASE
 | The database name the configured store should use.
 | settings-cache
@@ -269,11 +509,41 @@
 | true
 
 | 
+| SHARING_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| SHARING_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
+| 
 | SHARING_JANITOR_RUN_INTERVAL
 | Interval in seconds between two runs of the janitor that permanently deletes expired public shares. Defaults to '3600' (1 hour). Only relevant when OCIS_SHARING_ENABLE_EXPIRED_SHARES_CLEANUP is enabled.
 | 3600
 
+| xref:{s-path}/sse.adoc[SSE]
+| SSE_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| SSE_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
 | xref:{s-path}/storage-publiclink.adoc[Storage-Publiclink]
+| STORAGE_PUBLICLINK_STORE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| STORAGE_PUBLICLINK_STORE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | STORAGE_PUBLICLINK_STORE_ENABLE_TLS
 | Activate TLS for the connection to the store. Only applies when store type 'nats-js-kv' is configured.
 | false
@@ -289,6 +559,16 @@
 | 
 
 | xref:{s-path}/storage-system.adoc[Storage-System]
+| STORAGE_SYSTEM_CACHE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| STORAGE_SYSTEM_CACHE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | STORAGE_SYSTEM_CACHE_DATABASE
 | The database name the configured store should use.
 | storage-system
@@ -309,6 +589,26 @@
 | 
 
 | xref:{s-path}/storage-users.adoc[Storage-Users]
+| STORAGE_USERS_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| STORAGE_USERS_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
+| 
+| STORAGE_USERS_FILEMETADATA_CACHE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| STORAGE_USERS_FILEMETADATA_CACHE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | STORAGE_USERS_FILEMETADATA_CACHE_DATABASE
 | The database name the configured store should use.
 | storage-users
@@ -326,6 +626,16 @@
 | 
 | STORAGE_USERS_FILEMETADATA_CACHE_TLS_ROOT_CA_CERTIFICATE
 | Path to the PEM-encoded root CA certificate for the cache store TLS connection. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| STORAGE_USERS_ID_CACHE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| STORAGE_USERS_ID_CACHE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
 | 
 
 | 
@@ -349,6 +659,26 @@
 | 
 
 | xref:{s-path}/userlog.adoc[Userlog]
+| USERLOG_EVENTS_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+| 
+
+| 
+| USERLOG_EVENTS_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+| 
+
+| 
+| USERLOG_STORE_CREDS
+| Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
+| USERLOG_STORE_CREDS_FILE
+| Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the store when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+| 
+
+| 
 | USERLOG_STORE_ENABLE_TLS
 | Activate TLS for the connection to the store. Only applies when store type 'nats-js-kv' is configured.
 | false

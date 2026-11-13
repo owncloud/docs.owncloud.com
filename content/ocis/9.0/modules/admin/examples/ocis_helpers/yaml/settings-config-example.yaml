@@ -63,6 +63,8 @@ metadata_config:
     disable_persistence: false
     username: ""
     password: ""
+    creds_file: ""
+    creds: ""
     enable_tls: false
     tls_insecure: false
     tls_root_ca_certificate: ""

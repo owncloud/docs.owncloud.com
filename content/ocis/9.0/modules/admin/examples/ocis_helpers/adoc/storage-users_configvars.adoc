@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-11-05-13-25-14]
+[#deprecation-note-2026-11-13-11-05-23]
 [caption=]
 .Deprecation notes for the storage-users service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -878,30 +878,6 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 The time after which the token for upload postprocessing expires
 
-a|`OCIS_EVENTS_ENDPOINT` +
-`STORAGE_USERS_EVENTS_ENDPOINT` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++string ++
-a| [subs=-attributes]
-++127.0.0.1:9233 ++
-a| [subs=-attributes]
-The address of the event system. The event system is the message queuing service. It is used as message broker for the microservice architecture.
-
-a|`OCIS_EVENTS_CLUSTER` +
-`STORAGE_USERS_EVENTS_CLUSTER` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++string ++
-a| [subs=-attributes]
-++ocis-cluster ++
-a| [subs=-attributes]
-The clusterID of the event system. The event system is the message queuing service. It is used as message broker for the microservice architecture. Mandatory when using NATS as event system.
-
 a|`OCIS_INSECURE` +
 `STORAGE_USERS_EVENTS_TLS_INSECURE` +
 
@@ -913,18 +889,6 @@ a| [subs=-attributes]
 ++false ++
 a| [subs=-attributes]
 Whether to verify the server TLS certificates.
-
-a|`OCIS_EVENTS_TLS_ROOT_CA_CERTIFICATE` +
-`STORAGE_USERS_EVENTS_TLS_ROOT_CA_CERTIFICATE` +
-
-a| [subs=-attributes]
-++pre5.0 ++
-a| [subs=-attributes]
-++string ++
-a| [subs=-attributes]
-++ ++
-a| [subs=-attributes]
-The root CA certificate used to validate the server's TLS certificate. If provided STORAGE_USERS_EVENTS_TLS_INSECURE will be seen as false.
 
 a|`OCIS_EVENTS_ENABLE_TLS` +
 `STORAGE_USERS_EVENTS_ENABLE_TLS` +
@@ -949,17 +913,6 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 The amount of concurrent event consumers to start. Event consumers are used for post-processing files. Multiple consumers increase parallelisation, but will also increase CPU and memory demands. The setting has no effect when the OCIS_ASYNC_UPLOADS is set to false. The default and minimum value is 1.
 
-a|`STORAGE_USERS_EVENTS_CONSUMER_GROUP` +
-
-a| [subs=-attributes]
-++8.1.0 ++
-a| [subs=-attributes]
-++string ++
-a| [subs=-attributes]
-++ ++
-a| [subs=-attributes]
-The name of the consumer group to be used at the event to help consumers identify the unique group.
-
 a|`OCIS_EVENTS_AUTH_USERNAME` +
 `STORAGE_USERS_EVENTS_AUTH_USERNAME` +
 
@@ -983,6 +936,77 @@ a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
 The password to authenticate with the events broker. The events broker is the ocis service which receives and delivers events between the services.
+
+a|`OCIS_NATS_CREDS_FILE` +
+`STORAGE_USERS_EVENTS_CREDS_FILE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+
+a|`OCIS_NATS_CREDS` +
+`STORAGE_USERS_EVENTS_CREDS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+
+a|`OCIS_EVENTS_ENDPOINT` +
+`STORAGE_USERS_EVENTS_ENDPOINT` +
+
+a| [subs=-attributes]
+++pre5.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++127.0.0.1:9233 ++
+a| [subs=-attributes]
+The address of the event system. The event system is the message queuing service. It is used as message broker for the microservice architecture.
+
+a|`OCIS_EVENTS_CLUSTER` +
+`STORAGE_USERS_EVENTS_CLUSTER` +
+
+a| [subs=-attributes]
+++pre5.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ocis-cluster ++
+a| [subs=-attributes]
+The clusterID of the event system. The event system is the message queuing service. It is used as message broker for the microservice architecture. Mandatory when using NATS as event system.
+
+a|`OCIS_EVENTS_TLS_ROOT_CA_CERTIFICATE` +
+`STORAGE_USERS_EVENTS_TLS_ROOT_CA_CERTIFICATE` +
+
+a| [subs=-attributes]
+++pre5.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+The root CA certificate used to validate the server's TLS certificate. If provided STORAGE_USERS_EVENTS_TLS_INSECURE will be seen as false.
+
+a|`STORAGE_USERS_EVENTS_CONSUMER_GROUP` +
+
+a| [subs=-attributes]
+++8.1.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+The name of the consumer group to be used at the event to help consumers identify the unique group.
 
 a|`OCIS_CACHE_STORE` +
 `STORAGE_USERS_FILEMETADATA_CACHE_STORE` +
@@ -1010,7 +1034,7 @@ A list of nodes to access the configured store. This has no effect when 'memory'
 
 a|`OCIS_CACHE_DATABASE` +
 `STORAGE_USERS_FILEMETADATA_CACHE_DATABASE` +
-xref:deprecation-note-2026-11-05-13-25-14[Deprecation Note]
+xref:deprecation-note-2026-11-13-11-05-23[Deprecation Note]
 a| [subs=-attributes]
 ++9.0.0 ++
 a| [subs=-attributes]
@@ -1067,6 +1091,30 @@ a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
 The password to authenticate with the cache store. Only applies when store type 'nats-js-kv' is configured.
+
+a|`OCIS_NATS_CREDS_FILE` +
+`STORAGE_USERS_FILEMETADATA_CACHE_CREDS_FILE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+
+a|`OCIS_NATS_CREDS` +
+`STORAGE_USERS_FILEMETADATA_CACHE_CREDS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
 
 a|`OCIS_CACHE_ENABLE_TLS` +
 `STORAGE_USERS_FILEMETADATA_CACHE_ENABLE_TLS` +
@@ -1130,7 +1178,7 @@ A list of nodes to access the configured store. This has no effect when 'memory'
 
 a|`OCIS_CACHE_DATABASE` +
 `STORAGE_USERS_ID_CACHE_DATABASE` +
-xref:deprecation-note-2026-11-05-13-25-14[Deprecation Note]
+xref:deprecation-note-2026-11-13-11-05-23[Deprecation Note]
 a| [subs=-attributes]
 ++9.0.0 ++
 a| [subs=-attributes]
@@ -1187,6 +1235,30 @@ a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
 The password to authenticate with the cache store. Only applies when store type 'nats-js-kv' is configured.
+
+a|`OCIS_NATS_CREDS_FILE` +
+`STORAGE_USERS_ID_CACHE_CREDS_FILE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+
+a|`OCIS_NATS_CREDS` +
+`STORAGE_USERS_ID_CACHE_CREDS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
 
 a|`OCIS_CACHE_ENABLE_TLS` +
 `STORAGE_USERS_ID_CACHE_ENABLE_TLS` +

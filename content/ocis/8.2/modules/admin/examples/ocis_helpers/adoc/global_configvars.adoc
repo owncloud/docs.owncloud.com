@@ -89,7 +89,7 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-The password to authenticate with the store. Only applies when store type 'nats-js-kv' is configured.
+The password to authenticate with the cache. Only applies when store type 'nats-js-kv' is configured.
 a| `OCIS_CACHE_AUTH_USERNAME`
 
 a| [subs=-attributes]
@@ -114,7 +114,7 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-The username to authenticate with the store. Only applies when store type 'nats-js-kv' is configured.
+The username to authenticate with the cache. Only applies when store type 'nats-js-kv' is configured.
 a| `OCIS_CACHE_DATABASE`
 
 a| [subs=-attributes]
@@ -133,7 +133,7 @@ a| [subs=-attributes]
 ++string ++
 
 a| [subs=-attributes]
-++cache-userinfo ++
+++storage-system ++
 
 a| [subs=-attributes]
 The database name the configured store should use.
@@ -185,11 +185,11 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Activate TLS for the connection to the signing key store. Only applies when store type 'nats-js-kv' is configured.
+Activate TLS for the connection to the cache store. Only applies when store type 'nats-js-kv' is configured.
 a| `OCIS_CACHE_STORE`
 
 a| [subs=-attributes]
-++5.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/frontend.adoc[frontend] +
@@ -207,14 +207,14 @@ a| [subs=-attributes]
 ++string ++
 
 a| [subs=-attributes]
-++nats-js-kv ++
+++memory ++
 
 a| [subs=-attributes]
-The type of the signing key store. Supported values are: 'redis-sentinel' and 'nats-js-kv'. See the text description for details.
+The type of the cache store. Supported values are: 'memory', 'redis-sentinel', 'nats-js-kv', 'noop'. See the text description for details.
 a| `OCIS_CACHE_STORE_NODES`
 
 a| [subs=-attributes]
-++5.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/frontend.adoc[frontend] +
@@ -235,7 +235,7 @@ a| [subs=-attributes]
 ++[127.0.0.1:9233] ++
 
 a| [subs=-attributes]
-A list of nodes to access the configured store. Note that the behaviour how nodes are used is dependent on the library of the configured store. See the Environment Variable Types description for more details.
+A list of nodes to access the configured store. This has no effect when 'memory' store are configured. Note that the behaviour how nodes are used is dependent on the library of the configured store. See the Environment Variable Types description for more details.
 a| `OCIS_CACHE_TLS_INSECURE`
 
 a| [subs=-attributes]
@@ -260,7 +260,7 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Disable TLS certificate verification for the signing key store connection. Only applies when store type 'nats-js-kv' is configured.
+Disable TLS certificate verification for the cache store connection. Only applies when store type 'nats-js-kv' is configured.
 a| `OCIS_CACHE_TLS_ROOT_CA_CERTIFICATE`
 
 a| [subs=-attributes]
@@ -285,11 +285,11 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-Path to the PEM-encoded root CA certificate for the signing key store TLS connection. Only applies when store type 'nats-js-kv' is configured.
+Path to the PEM-encoded root CA certificate for the cache store TLS connection. Only applies when store type 'nats-js-kv' is configured.
 a| `OCIS_CACHE_TTL`
 
 a| [subs=-attributes]
-++5.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/frontend.adoc[frontend] +
@@ -307,10 +307,10 @@ a| [subs=-attributes]
 ++Duration ++
 
 a| [subs=-attributes]
-++12h0m0s ++
+++336h0m0s ++
 
 a| [subs=-attributes]
-Default time to live for signing keys. See the Environment Variable Types description for more details.
+Time to live for cache records in the graph. Defaults to '336h' (2 weeks). See the Environment Variable Types description for more details.
 a| `OCIS_CLAIM_MANAGED_SPACES_ENABLED`
 
 a| [subs=-attributes]
@@ -417,7 +417,7 @@ a| [subs=-attributes]
 ++[]string ++
 
 a| [subs=-attributes]
-++[GET POST DELETE] ++
+++[GET] ++
 
 a| [subs=-attributes]
 A list of allowed CORS methods. See following chapter for more details: *Access-Control-Request-Method* at \https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Request-Method. See the Environment Variable Types description for more details.
@@ -472,7 +472,7 @@ The propagator used for decomposedfs. At the moment, only 'sync' is fully suppor
 a| `OCIS_DEFAULT_LANGUAGE`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -542,7 +542,7 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Changing this value is NOT supported. Enables support for incoming federated sharing for clients. The backend behaviour is not changed.
+Include OCM sharees when listing users.
 a| `OCIS_ENABLE_PUBLIC_SHARING`
 
 a| [subs=-attributes]
@@ -578,7 +578,7 @@ a| [subs=-attributes]
 ++true ++
 
 a| [subs=-attributes]
-Enables direct sharing with users and groups. When disabled, creating new user or group shares is rejected and searching for users to share with is disabled. Public link sharing is not affected.
+Enables direct sharing with users and groups. When disabled, creating new user, group or federated shares via the drive item invite endpoints is rejected. Public link sharing and space membership are not affected.
 a| `OCIS_ENABLE_VAULT_MODE`
 
 a| [subs=-attributes]
@@ -597,7 +597,7 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Set this to true to automatically create a new vault home for the user if it does not exist. Only applicapable if the storage-users-vault service, a special configured storage-users service is configured.
+Enable vault mode in addition to the regular graph service. This only applies when the additional storage-users-vault service is running, which is a special configured storage-users service.
 a| `OCIS_EVENTS_AUTH_PASSWORD`
 
 a| [subs=-attributes]
@@ -665,7 +665,7 @@ The username to authenticate with the events broker. The events broker is the oc
 a| `OCIS_EVENTS_CLUSTER`
 
 a| [subs=-attributes]
-++5.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -697,7 +697,7 @@ The clusterID of the event system. The event system is the message queuing servi
 a| `OCIS_EVENTS_ENABLE_TLS`
 
 a| [subs=-attributes]
-++5.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -730,7 +730,7 @@ Enable TLS for the connection to the events broker. The events broker is the oci
 a| `OCIS_EVENTS_ENDPOINT`
 
 a| [subs=-attributes]
-++5.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -762,7 +762,7 @@ The address of the event system. The event system is the message queuing service
 a| `OCIS_EVENTS_TLS_ROOT_CA_CERTIFICATE`
 
 a| [subs=-attributes]
-++5.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -886,7 +886,7 @@ TLS mode for grpc connection to the go-micro based grpc services. Possible value
 a| `OCIS_GRPC_PROTOCOL`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/app-provider.adoc[app-provider] +
@@ -1002,7 +1002,7 @@ Path/File name for the TLS certificate key (in PEM format) for the server certif
 a| `OCIS_INSECURE`
 
 a| [subs=-attributes]
-++5.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -1044,7 +1044,7 @@ Whether to verify the server TLS certificates.
 a| `OCIS_JWT_SECRET`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -1203,7 +1203,7 @@ a| [subs=-attributes]
 ++string ++
 
 a| [subs=-attributes]
-++uid=reva,ou=sysusers,o=libregraph-idm ++
+++uid=libregraph,ou=sysusers,o=libregraph-idm ++
 
 a| [subs=-attributes]
 LDAP DN to use for simple bind authentication with the target LDAP server.
@@ -1282,7 +1282,7 @@ a| [subs=-attributes]
 ++attribute ++
 
 a| [subs=-attributes]
-An option to control the behavior for disabling users. Valid options are 'none', 'attribute' and 'group'. If set to 'group', disabling a user via API will add the user to the configured group for disabled users, if set to 'attribute' this will be done in the ldap user entry, if set to 'none' the disable request is not processed.
+An option to control the behavior for disabling users. Supported options are 'none', 'attribute' and 'group'. If set to 'group', disabling a user via API will add the user to the configured group for disabled users, if set to 'attribute' this will be done in the ldap user entry, if set to 'none' the disable request is not processed. Default is 'attribute'.
 a| `OCIS_LDAP_GROUP_BASE_DN`
 
 a| [subs=-attributes]
@@ -1392,7 +1392,7 @@ a| [subs=-attributes]
 ++string ++
 
 a| [subs=-attributes]
-++ownclouduuid ++
+++owncloudUUID ++
 
 a| [subs=-attributes]
 LDAP Attribute to use as the unique id for groups. This should be a stable globally unique ID like a UUID.
@@ -1414,7 +1414,7 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Set this to true if the defined 'id' attribute for groups is of the 'OCTETSTRING' syntax. This is e.g. required when using the 'objectGUID' attribute of Active Directory for the group ID's.
+Set this to true if the defined 'ID' attribute for groups is of the 'OCTETSTRING' syntax. This is required when using the 'objectGUID' attribute of Active Directory for the group ID's.
 a| `OCIS_LDAP_GROUP_SCHEMA_MAIL`
 
 a| [subs=-attributes]
@@ -1585,7 +1585,7 @@ a| [subs=-attributes]
 ++1 ++
 
 a| [subs=-attributes]
-Maximum number of retries for failed LDAP operations. Applies to both read and write operations (with different retryable error sets). Default 1.
+Maximum number of retries for failed LDAP operations. Reads retry on transient and network errors; writes retry only when the connection failed before the request was sent (e.g. a reused idle connection found closed), so the request provably never reached the server and cannot be double-applied. Default 1.
 a| `OCIS_LDAP_RETRY_MAX_DELAY`
 
 a| [subs=-attributes]
@@ -1719,7 +1719,7 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-LDAP attribute that marks a user as a guest of an instance.
+LDAP Attribute to signal the user is guest of an instance. Requires OCIS_MULTI_INSTANCE_ENABLED.
 a| `OCIS_LDAP_USER_MEMBER_ATTRIBUTE`
 
 a| [subs=-attributes]
@@ -1738,7 +1738,7 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-LDAP attribute that marks a user as a member of an instance.
+LDAP Attribute to signal the user is member of an instance. Requires OCIS_MULTI_INSTANCE_ENABLED.
 a| `OCIS_LDAP_USER_OBJECTCLASS`
 
 a| [subs=-attributes]
@@ -1774,10 +1774,10 @@ a| [subs=-attributes]
 ++string ++
 
 a| [subs=-attributes]
-++displayname ++
+++displayName ++
 
 a| [subs=-attributes]
-LDAP Attribute to use for the displayname of users.
+LDAP Attribute to use for the display name of users.
 a| `OCIS_LDAP_USER_SCHEMA_ID`
 
 a| [subs=-attributes]
@@ -1794,10 +1794,10 @@ a| [subs=-attributes]
 ++string ++
 
 a| [subs=-attributes]
-++ownclouduuid ++
+++owncloudUUID ++
 
 a| [subs=-attributes]
-LDAP Attribute to use as the unique id for users. This should be a stable globally unique id like a UUID.
+LDAP Attribute to use as the unique ID for users. This should be a stable globally unique ID like a UUID.
 a| `OCIS_LDAP_USER_SCHEMA_ID_IS_OCTETSTRING`
 
 a| [subs=-attributes]
@@ -1816,7 +1816,7 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Set this to true if the defined 'ID' attribute for users is of the 'OCTETSTRING' syntax. This is e.g. required when using the 'objectGUID' attribute of Active Directory for the user ID's.
+Set this to true if the defined 'ID' attribute for users is of the 'OCTETSTRING' syntax. This is required when using the 'objectGUID' attribute of Active Directory for the user ID's.
 a| `OCIS_LDAP_USER_SCHEMA_MAIL`
 
 a| [subs=-attributes]
@@ -1897,7 +1897,7 @@ LDAP search scope to use when looking up users. Supported scopes are 'base', 'on
 a| `OCIS_LOG_COLOR`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -1954,7 +1954,7 @@ Activates colorized log output.
 a| `OCIS_LOG_FILE`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -2011,7 +2011,7 @@ The path to the log file. Activates logging to this file if set.
 a| `OCIS_LOG_LEVEL`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -2068,7 +2068,7 @@ The log level. Valid values are: 'panic', 'fatal', 'error', 'warn', 'info', 'deb
 a| `OCIS_LOG_PRETTY`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -2125,7 +2125,7 @@ Activates pretty log output.
 a| `OCIS_MACHINE_AUTH_API_KEY`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/auth-app.adoc[auth-app] +
@@ -2143,11 +2143,11 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-The machine auth API key used to validate internal requests necessary to access resources from other services.
+Machine auth API key used to validate internal requests necessary for the access to resources from other services.
 a| `OCIS_MAX_CONCURRENCY`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/frontend.adoc[frontend] +
@@ -2266,11 +2266,11 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-The unique id of this instance
+The unique ID of this instance.
 a| `OCIS_MULTI_INSTANCE_MASTER_ID`
 
 a| [subs=-attributes]
-++8.1.0 ++
+++7.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/auth-basic.adoc[auth-basic] +
@@ -2286,7 +2286,7 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-The master ID that grants access to all instances. Users with this ID in their memberOf or guestOf claims can access any instance. Leave empty to disable.
+The master ID that grants access to all instances. Users with this ID in their memberOf or guestOf claims can access any instance. Leave empty to disable. Also set 'OCIS_LDAP_USER_FILTER'. Without an explicit user filter, this instance resolves every user in the shared LDAP directory.
 a| `OCIS_OIDC_ISSUER`
 
 a| [subs=-attributes]
@@ -2310,7 +2310,7 @@ a| [subs=-attributes]
 ++https://localhost:9200 ++
 
 a| [subs=-attributes]
-URL of the OIDC issuer. It defaults to URL of the builtin IDP.
+The identity provider value to set in the userids of the CS3 user objects for users returned by this user provider.
 a| `OCIS_PASSWORD_POLICY_BANNED_PASSWORDS_LIST`
 
 a| [subs=-attributes]
@@ -2448,10 +2448,10 @@ a| [subs=-attributes]
 ++string ++
 
 a| [subs=-attributes]
-++nats-js-kv ++
+++memory ++
 
 a| [subs=-attributes]
-The type of the store. Supported values are: 'memory', 'redis-sentinel', 'nats-js-kv', 'noop'. See the text description for details.
+The type of the store. Supported values are: 'memory', 'nats-js-kv', 'redis-sentinel', 'noop'. See the text description for details.
 a| `OCIS_PERSISTENT_STORE_AUTH_PASSWORD`
 
 a| [subs=-attributes]
@@ -2536,7 +2536,7 @@ a| [subs=-attributes]
 ++[]string ++
 
 a| [subs=-attributes]
-++[127.0.0.1:9233] ++
+++[] ++
 
 a| [subs=-attributes]
 A list of nodes to access the configured store. This has no effect when 'memory' store is configured. Note that the behaviour how nodes are used is dependent on the library of the configured store. See the Environment Variable Types description for more details.
@@ -2601,10 +2601,10 @@ a| [subs=-attributes]
 ++Duration ++
 
 a| [subs=-attributes]
-++0s ++
+++336h0m0s ++
 
 a| [subs=-attributes]
-Time to live for events in the store. See the Environment Variable Types description for more details.
+Time to live for events in the store. Defaults to '336h' (2 weeks). See the Environment Variable Types description for more details.
 a| `OCIS_REVA_GATEWAY`
 
 a| [subs=-attributes]
@@ -2648,7 +2648,7 @@ a| [subs=-attributes]
 ++com.owncloud.api.gateway ++
 
 a| [subs=-attributes]
-The CS3 gateway endpoint.
+CS3 gateway used to look up user metadata
 a| `OCIS_SERVICE_ACCOUNT_ID`
 
 a| [subs=-attributes]
@@ -2735,7 +2735,7 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Set this to true if you want to enforce passwords for writable shares. Only effective if the setting for 'passwords on all public shares' is set to false.
+Set this to true if you want to enforce passwords on Uploader, Editor or Contributor shares.
 a| `OCIS_SPACES_MAX_QUOTA`
 
 a| [subs=-attributes]
@@ -2752,7 +2752,7 @@ a| [subs=-attributes]
 ++0 ++
 
 a| [subs=-attributes]
-Set the global max quota value in bytes. A value of 0 equals unlimited. The value is provided via capabilities.
+Set a global max quota for spaces in bytes. A value of 0 equals unlimited. If not using the global OCIS_SPACES_MAX_QUOTA, you must define the FRONTEND_MAX_QUOTA in the frontend service.
 a| `OCIS_SYSTEM_USER_API_KEY`
 
 a| [subs=-attributes]
@@ -2818,7 +2818,7 @@ IDP of the oCIS STORAGE-SYSTEM system user.
 a| `OCIS_TRACING_COLLECTOR`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -2875,7 +2875,7 @@ The HTTP endpoint for sending spans directly to a collector, i.e. \http://jaeger
 a| `OCIS_TRACING_ENABLED`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -2932,7 +2932,7 @@ Activates tracing.
 a| `OCIS_TRACING_ENDPOINT`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -2989,7 +2989,7 @@ The endpoint of the tracing agent.
 a| `OCIS_TRACING_TYPE`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -3059,11 +3059,11 @@ a| [subs=-attributes]
 ++ ++
 
 a| [subs=-attributes]
-Transfer secret for signing file up- and download requests.
+The storage transfer secret.
 a| `OCIS_TRANSLATION_PATH`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/activitylog.adoc[activitylog] +
@@ -3113,7 +3113,7 @@ a| [subs=-attributes]
 ++https://localhost:9200 ++
 
 a| [subs=-attributes]
-URL of the OIDC issuer. It defaults to URL of the builtin IDP.
+The public facing URL of WebDAV.
 a| `OCIS_USER_SEARCH_DISPLAYED_ATTRIBUTES`
 
 a| [subs=-attributes]
@@ -3130,11 +3130,11 @@ a| [subs=-attributes]
 ++[] ++
 
 a| [subs=-attributes]
-A list of user attributes to display in the user search results.
+The attributes to display in the user search results.
 a| `OCIS_WOPI_DISABLE_CHAT`
 
 a| [subs=-attributes]
-++7.0.0 ++
+++pre5.0 ++
 
 a| [subs=attributes+]
 * xref:{s-path}/app-provider.adoc[app-provider] +
@@ -3147,7 +3147,7 @@ a| [subs=-attributes]
 ++false ++
 
 a| [subs=-attributes]
-Disable chat in the office web frontend. This feature applies to OnlyOffice and Microsoft.
+Disable the chat functionality of the office app.
 a| `STORAGE_USERS_ASYNC_PROPAGATOR_PROPAGATION_DELAY`
 
 a| [subs=-attributes]

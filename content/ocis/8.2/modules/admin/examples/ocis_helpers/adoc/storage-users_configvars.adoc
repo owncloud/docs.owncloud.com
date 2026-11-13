@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-11-05-13-26-45]
+[#deprecation-note-2026-11-13-09-58-28]
 [caption=]
 .Deprecation notes for the storage-users service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -931,7 +931,7 @@ a| [subs=-attributes]
 Disables versioning of files. When set to true, new uploads with the same filename will overwrite existing files instead of creating a new version.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_DATADIR` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -942,7 +942,7 @@ a| [subs=-attributes]
 The directory where the filesystem storage will store SQL migration data. If not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/owncloud.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_SHARE_FOLDER` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -953,7 +953,7 @@ a| [subs=-attributes]
 Name of the folder jailing all shares.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_LAYOUT` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -964,7 +964,7 @@ a| [subs=-attributes]
 Path layout to use to navigate into a users folder in an owncloud data directory
 
 a|`STORAGE_USERS_OWNCLOUDSQL_UPLOADINFO_DIR` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -975,7 +975,7 @@ a| [subs=-attributes]
 The directory where the filesystem will store uploads temporarily. If not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/uploadinfo.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_DB_USERNAME` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -986,7 +986,7 @@ a| [subs=-attributes]
 Username for the database.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_DB_PASSWORD` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -997,7 +997,7 @@ a| [subs=-attributes]
 Password for the database.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_DB_HOST` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -1008,7 +1008,7 @@ a| [subs=-attributes]
 Hostname or IP of the database server.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_DB_PORT` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -1019,7 +1019,7 @@ a| [subs=-attributes]
 Port that the database server is listening on.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_DB_NAME` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -1030,7 +1030,7 @@ a| [subs=-attributes]
 Name of the database to be used.
 
 a|`STORAGE_USERS_OWNCLOUDSQL_USERS_PROVIDER_ENDPOINT` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -1041,7 +1041,7 @@ a| [subs=-attributes]
 Endpoint of the users provider.
 
 a|`STORAGE_USERS_POSIX_ROOT` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -1052,7 +1052,7 @@ a| [subs=-attributes]
 The directory where the filesystem storage will store its data. If not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/users.
 
 a|`STORAGE_USERS_POSIX_PERSONAL_SPACE_PATH_TEMPLATE` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -1063,7 +1063,7 @@ a| [subs=-attributes]
 Template string to construct the paths of the personal space roots.
 
 a|`STORAGE_USERS_POSIX_GENERAL_SPACE_PATH_TEMPLATE` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -1075,7 +1075,7 @@ Template string to construct the paths of the projects space roots.
 
 a|`STORAGE_USERS_PERMISSION_ENDPOINT` +
 `STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -1097,7 +1097,7 @@ a| [subs=-attributes]
 Enable asynchronous file uploads.
 
 a|`STORAGE_USERS_POSIX_SCAN_DEBOUNCE_DELAY` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -1108,7 +1108,7 @@ a| [subs=-attributes]
 The time in milliseconds to wait before scanning the filesystem for changes after a change has been detected.
 
 a|`STORAGE_USERS_POSIX_USE_SPACE_GROUPS` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -1119,7 +1119,7 @@ a| [subs=-attributes]
 Use space groups to manage permissions on spaces.
 
 a|`STORAGE_USERS_POSIX_WATCH_TYPE` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -1130,7 +1130,7 @@ a| [subs=-attributes]
 Type of the watcher to use for getting notified about changes to the filesystem. Currently available options are 'inotifywait' (default), 'gpfswatchfolder' and 'gpfsfileauditlogging'.
 
 a|`STORAGE_USERS_POSIX_WATCH_PATH` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
@@ -1141,7 +1141,7 @@ a| [subs=-attributes]
 Path to the watch directory/file. Only applies to the 'gpfsfileauditlogging' and 'inotifywait' watcher, in which case it is the path of the file audit log file/base directory to watch.
 
 a|`STORAGE_USERS_POSIX_WATCH_FOLDER_KAFKA_BROKERS` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++6.0.0 ++
 a| [subs=-attributes]
