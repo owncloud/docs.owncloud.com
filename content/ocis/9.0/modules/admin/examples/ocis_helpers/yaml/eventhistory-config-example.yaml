@@ -29,6 +29,8 @@ events:
   enable_tls: false
   username: ""
   password: ""
+  creds_file: ""
+  creds: ""
 store:
   store: nats-js-kv
   nodes:
@@ -38,6 +40,8 @@ store:
   ttl: 336h0m0s
   username: ""
   password: ""
+  creds_file: ""
+  creds: ""
   enable_tls: false
   tls_insecure: false
   tls_root_ca_certificate: ""

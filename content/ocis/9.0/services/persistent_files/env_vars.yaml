@@ -193,6 +193,36 @@ ACTIVITYLOG_STORE_AUTH_USERNAME:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+ACTIVITYLOG_STORE_CREDS:
+  name: OCIS_NATS_CREDS;ACTIVITYLOG_STORE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+ACTIVITYLOG_STORE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;ACTIVITYLOG_STORE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the store when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 ACTIVITYLOG_STORE_DATABASE:
   name: ACTIVITYLOG_STORE_DATABASE
   defaultValue: activitylog
@@ -398,6 +428,35 @@ ANTIVIRUS_EVENTS_CLUSTER:
     queuing service. It is used as message broker for the microservice architecture.
     Mandatory when using NATS as event system.
   introductionVersion: pre5.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+ANTIVIRUS_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;ANTIVIRUS_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+ANTIVIRUS_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;ANTIVIRUS_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -1078,6 +1137,35 @@ AUDIT_EVENTS_CLUSTER:
     queuing service. It is used as message broker for the microservice architecture.
     Mandatory when using NATS as event system.
   introductionVersion: pre5.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+AUDIT_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;AUDIT_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+AUDIT_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;AUDIT_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -1929,45 +2017,50 @@ AUTH_BASIC_OWNCLOUDSQL_DB_HOST:
   type: string
   description: Hostname of the database server.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql
+    driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_DB_NAME:
   name: AUTH_BASIC_OWNCLOUDSQL_DB_NAME
   defaultValue: owncloud
   type: string
   description: Name of the owncloud database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql
+    driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_DB_PASSWORD:
   name: AUTH_BASIC_OWNCLOUDSQL_DB_PASSWORD
   defaultValue: ""
   type: string
   description: Password for the database user.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_DB_PASSWORD is deprecated because the owncloudsql
+    driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_DB_PORT:
   name: AUTH_BASIC_OWNCLOUDSQL_DB_PORT
   defaultValue: "3306"
   type: int
   description: Network port to use for the database connection.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql
+    driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_DB_USERNAME:
   name: AUTH_BASIC_OWNCLOUDSQL_DB_USERNAME
   defaultValue: owncloud
   type: string
   description: Database user to use for authenticating with the owncloud database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_DB_USERNAME is deprecated because the owncloudsql
+    driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_IDP:
   name: AUTH_BASIC_OWNCLOUDSQL_IDP
   defaultValue: https://localhost:9200
@@ -1975,36 +2068,40 @@ AUTH_BASIC_OWNCLOUDSQL_IDP:
   description: The identity provider value to set in the userids of the CS3 user objects
     for users returned by this user provider.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_IDP is deprecated because the owncloudsql
+    driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID:
   name: AUTH_BASIC_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID
   defaultValue: "false"
   type: bool
   description: Join the user properties table to read user ID's.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID is deprecated because
+    the owncloudsql driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_JOIN_USERNAME:
   name: AUTH_BASIC_OWNCLOUDSQL_JOIN_USERNAME
   defaultValue: "false"
   type: bool
   description: Join the user properties table to read usernames
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_JOIN_USERNAME is deprecated because the
+    owncloudsql driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_NOBODY:
   name: AUTH_BASIC_OWNCLOUDSQL_NOBODY
   defaultValue: "90"
   type: int64
   description: Fallback number if no numeric UID and GID properties are provided.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_NOBODY is deprecated because the owncloudsql
+    driver is deprecated.
 AUTH_BASIC_SKIP_USER_GROUPS_IN_TOKEN:
   name: AUTH_BASIC_SKIP_USER_GROUPS_IN_TOKEN
   defaultValue: "false"
@@ -2639,6 +2736,35 @@ CLIENTLOG_EVENTS_CLUSTER:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+CLIENTLOG_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;CLIENTLOG_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+CLIENTLOG_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;CLIENTLOG_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 CLIENTLOG_EVENTS_ENABLE_TLS:
   name: OCIS_EVENTS_ENABLE_TLS;CLIENTLOG_EVENTS_ENABLE_TLS
   defaultValue: "false"
@@ -3029,6 +3155,36 @@ COLLABORATION_STORE_AUTH_USERNAME:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+COLLABORATION_STORE_CREDS:
+  name: OCIS_NATS_CREDS;COLLABORATION_STORE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+COLLABORATION_STORE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;COLLABORATION_STORE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the store when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 COLLABORATION_STORE_DATABASE:
   name: COLLABORATION_STORE_DATABASE
   defaultValue: collaboration
@@ -3292,6 +3448,35 @@ EVENTHISTORY_EVENTS_CLUSTER:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+EVENTHISTORY_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;EVENTHISTORY_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+EVENTHISTORY_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;EVENTHISTORY_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 EVENTHISTORY_EVENTS_ENABLE_TLS:
   name: OCIS_EVENTS_ENABLE_TLS;EVENTHISTORY_EVENTS_ENABLE_TLS
   defaultValue: "false"
@@ -3404,6 +3589,36 @@ EVENTHISTORY_STORE_AUTH_USERNAME:
   description: The username to authenticate with the store. Only applies when store
     type 'nats-js-kv' is configured.
   introductionVersion: "5.0"
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+EVENTHISTORY_STORE_CREDS:
+  name: OCIS_NATS_CREDS;EVENTHISTORY_STORE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+EVENTHISTORY_STORE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;EVENTHISTORY_STORE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the store when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -3818,6 +4033,35 @@ FRONTEND_EVENTS_CLUSTER:
     queuing service. It is used as message broker for the microservice architecture.
     Mandatory when using NATS as event system.
   introductionVersion: "5.0"
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+FRONTEND_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;FRONTEND_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+FRONTEND_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;FRONTEND_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -4430,6 +4674,36 @@ GATEWAY_PROVIDER_CACHE_AUTH_USERNAME:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+GATEWAY_PROVIDER_CACHE_CREDS:
+  name: OCIS_NATS_CREDS;GATEWAY_PROVIDER_CACHE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+GATEWAY_PROVIDER_CACHE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;GATEWAY_PROVIDER_CACHE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the cache when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 GATEWAY_PROVIDER_CACHE_DATABASE:
   name: OCIS_CACHE_DATABASE;GATEWAY_PROVIDER_CACHE_DATABASE
   defaultValue: cache-providers
@@ -4744,6 +5018,36 @@ GRAPH_CACHE_AUTH_USERNAME:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+GRAPH_CACHE_CREDS:
+  name: OCIS_NATS_CREDS;GRAPH_CACHE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+GRAPH_CACHE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;GRAPH_CACHE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the cache when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 GRAPH_CACHE_DISABLE_PERSISTENCE:
   name: OCIS_CACHE_DISABLE_PERSISTENCE;GRAPH_CACHE_DISABLE_PERSISTENCE
   defaultValue: "false"
@@ -4987,6 +5291,35 @@ GRAPH_EVENTS_CLUSTER:
   description: The clusterID of the event system. The event system is the message
     queuing service. It is used as message broker for the microservice architecture.
   introductionVersion: pre5.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+GRAPH_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;GRAPH_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+GRAPH_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;GRAPH_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -6329,45 +6662,50 @@ GROUPS_OWNCLOUDSQL_DB_HOST:
   type: string
   description: Hostname of the database server.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql
+    driver is deprecated.
 GROUPS_OWNCLOUDSQL_DB_NAME:
   name: GROUPS_OWNCLOUDSQL_DB_NAME
   defaultValue: owncloud
   type: string
   description: Name of the owncloud database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql
+    driver is deprecated.
 GROUPS_OWNCLOUDSQL_DB_PASSWORD:
   name: GROUPS_OWNCLOUDSQL_DB_PASSWORD
   defaultValue: ""
   type: string
   description: Password for the database user.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_DB_PASSWORD is deprecated because the owncloudsql
+    driver is deprecated.
 GROUPS_OWNCLOUDSQL_DB_PORT:
   name: GROUPS_OWNCLOUDSQL_DB_PORT
   defaultValue: "3306"
   type: int
   description: Network port to use for the database connection.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql
+    driver is deprecated.
 GROUPS_OWNCLOUDSQL_DB_USERNAME:
   name: GROUPS_OWNCLOUDSQL_DB_USERNAME
   defaultValue: owncloud
   type: string
   description: Database user to use for authenticating with the owncloud database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_DB_USERNAME is deprecated because the owncloudsql
+    driver is deprecated.
 GROUPS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH:
   name: GROUPS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH
   defaultValue: "false"
@@ -6375,9 +6713,10 @@ GROUPS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH:
   description: Allow 'medial search' when searching for users instead of just doing
     a prefix search. This allows finding 'Alice' when searching for 'lic'.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH is deprecated because the
+    owncloudsql driver is deprecated.
 GROUPS_OWNCLOUDSQL_IDP:
   name: GROUPS_OWNCLOUDSQL_IDP
   defaultValue: https://localhost:9200
@@ -6385,36 +6724,40 @@ GROUPS_OWNCLOUDSQL_IDP:
   description: The identity provider value to set in the userids of the CS3 user objects
     for users returned by this user provider.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_IDP is deprecated because the owncloudsql driver
+    is deprecated.
 GROUPS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID:
   name: GROUPS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID
   defaultValue: "false"
   type: bool
   description: Join the user properties table to read user IDs.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID is deprecated because the
+    owncloudsql driver is deprecated.
 GROUPS_OWNCLOUDSQL_JOIN_USERNAME:
   name: GROUPS_OWNCLOUDSQL_JOIN_USERNAME
   defaultValue: "false"
   type: bool
   description: Join the user properties table to read usernames.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_JOIN_USERNAME is deprecated because the owncloudsql
+    driver is deprecated.
 GROUPS_OWNCLOUDSQL_NOBODY:
   name: GROUPS_OWNCLOUDSQL_NOBODY
   defaultValue: "90"
   type: int64
   description: Fallback number if no numeric UID and GID properties are provided.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_NOBODY is deprecated because the owncloudsql
+    driver is deprecated.
 GROUPS_SKIP_USER_GROUPS_IN_TOKEN:
   name: GROUPS_SKIP_USER_GROUPS_IN_TOKEN
   defaultValue: "false"
@@ -7754,6 +8097,35 @@ NOTIFICATIONS_EVENTS_CLUSTER:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+NOTIFICATIONS_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;NOTIFICATIONS_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+NOTIFICATIONS_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;NOTIFICATIONS_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 NOTIFICATIONS_EVENTS_ENABLE_TLS:
   name: OCIS_EVENTS_ENABLE_TLS;NOTIFICATIONS_EVENTS_ENABLE_TLS
   defaultValue: "false"
@@ -7951,6 +8323,36 @@ NOTIFICATIONS_STORE_AUTH_USERNAME:
   description: The username to authenticate with the store. Only applies when store
     type 'nats-js-kv' is configured.
   introductionVersion: 7.1.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+NOTIFICATIONS_STORE_CREDS:
+  name: OCIS_NATS_CREDS;NOTIFICATIONS_STORE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+NOTIFICATIONS_STORE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;NOTIFICATIONS_STORE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the store when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -9890,6 +10292,77 @@ OCIS_MULTI_INSTANCE_QUERY_TEMPLATE:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+OCIS_NATS_CREDS:
+  name: OCIS_NATS_CREDS;ACTIVITYLOG_STORE_CREDS;ANTIVIRUS_EVENTS_CREDS;AUDIT_EVENTS_CREDS;CLIENTLOG_EVENTS_CREDS;COLLABORATION_STORE_CREDS;EVENTHISTORY_EVENTS_CREDS;EVENTHISTORY_STORE_CREDS;FRONTEND_EVENTS_CREDS;GATEWAY_PROVIDER_CACHE_CREDS;GRAPH_CACHE_CREDS;GRAPH_EVENTS_CREDS;NOTIFICATIONS_EVENTS_CREDS;NOTIFICATIONS_STORE_CREDS;OCM_EVENTS_CREDS;OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS;POLICIES_EVENTS_CREDS;POSTPROCESSING_EVENTS_CREDS;POSTPROCESSING_STORE_CREDS;PROXY_EVENTS_CREDS;PROXY_OIDC_USERINFO_CACHE_CREDS;PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS;SEARCH_EVENTS_CREDS;SETTINGS_CACHE_CREDS;SHARING_EVENTS_CREDS;SSE_EVENTS_CREDS;STORAGE_PUBLICLINK_STORE_CREDS;STORAGE_SYSTEM_CACHE_CREDS;STORAGE_USERS_EVENTS_CREDS;STORAGE_USERS_FILEMETADATA_CACHE_CREDS;STORAGE_USERS_ID_CACHE_CREDS;USERLOG_EVENTS_CREDS;USERLOG_STORE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. | Content of a NATS .creds file with a user
+    JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in
+    JWT (operator) mode. A service-specific variable takes precedence over a global
+    variable. In the same scope, the content takes precedence over the path of a .creds
+    file. When set, the service does not use the username and the password. Exception:
+    a service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store
+    type ''nats-js-kv'' is configured. | Content of a NATS .creds file with a user
+    JWT and an NKey seed. Use it to authenticate with the store when NATS runs in
+    JWT (operator) mode. A service-specific variable takes precedence over a global
+    variable. In the same scope, the content takes precedence over the path of a .creds
+    file. When set, the service does not use the username and the password. Exception:
+    a service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store
+    type ''nats-js-kv'' is configured. | Content of a NATS .creds file with a user
+    JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in
+    JWT (operator) mode. A service-specific variable takes precedence over a global
+    variable. In the same scope, the content takes precedence over the path of a .creds
+    file. When set, the service does not use the username and the password. Only applies
+    when store type ''nats-js-kv'' is configured. | Content of a NATS .creds file
+    with a user JWT and an NKey seed. Use it to authenticate with the events broker
+    when NATS runs in JWT (operator) mode. A service-specific variable takes precedence
+    over a global variable. In the same scope, the content takes precedence over the
+    path of a .creds file. When set, the service does not use the username and the
+    password.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+OCIS_NATS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;ACTIVITYLOG_STORE_CREDS_FILE;ANTIVIRUS_EVENTS_CREDS_FILE;AUDIT_EVENTS_CREDS_FILE;CLIENTLOG_EVENTS_CREDS_FILE;COLLABORATION_STORE_CREDS_FILE;EVENTHISTORY_EVENTS_CREDS_FILE;EVENTHISTORY_STORE_CREDS_FILE;FRONTEND_EVENTS_CREDS_FILE;GATEWAY_PROVIDER_CACHE_CREDS_FILE;GRAPH_CACHE_CREDS_FILE;GRAPH_EVENTS_CREDS_FILE;NOTIFICATIONS_EVENTS_CREDS_FILE;NOTIFICATIONS_STORE_CREDS_FILE;OCM_EVENTS_CREDS_FILE;OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS_FILE;POLICIES_EVENTS_CREDS_FILE;POSTPROCESSING_EVENTS_CREDS_FILE;POSTPROCESSING_STORE_CREDS_FILE;PROXY_EVENTS_CREDS_FILE;PROXY_OIDC_USERINFO_CACHE_CREDS_FILE;PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS_FILE;SEARCH_EVENTS_CREDS_FILE;SETTINGS_CACHE_CREDS_FILE;SHARING_EVENTS_CREDS_FILE;SSE_EVENTS_CREDS_FILE;STORAGE_PUBLICLINK_STORE_CREDS_FILE;STORAGE_SYSTEM_CACHE_CREDS_FILE;STORAGE_USERS_EVENTS_CREDS_FILE;STORAGE_USERS_FILEMETADATA_CACHE_CREDS_FILE;STORAGE_USERS_ID_CACHE_CREDS_FILE;USERLOG_EVENTS_CREDS_FILE;USERLOG_STORE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect. | Path to a NATS .creds file with a user JWT and
+    an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator)
+    mode. When set, the service does not use the username and the password. Exception:
+    a service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect. Only applies when store type ''nats-js-kv'' is configured.
+    | Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate
+    with the store when NATS runs in JWT (operator) mode. When set, the service does
+    not use the username and the password. Exception: a service-specific username
+    and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured. | Path to a NATS .creds
+    file with a user JWT and an NKey seed. Use it to authenticate with the cache when
+    NATS runs in JWT (operator) mode. When set, the service does not use the username
+    and the password. The service reads the file again on each reconnect. Only applies
+    when store type ''nats-js-kv'' is configured. | Path to a NATS .creds file with
+    a user JWT and an NKey seed. Use it to authenticate with the events broker when
+    NATS runs in JWT (operator) mode. When set, the service does not use the username
+    and the password. The service reads the file again on each reconnect.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 OCIS_OIDC_CLIENT_ID:
   name: OCIS_OIDC_CLIENT_ID;WEB_OIDC_CLIENT_ID
   defaultValue: web
@@ -10441,6 +10914,35 @@ OCM_EVENTS_CLUSTER:
     queuing service. It is used as message broker for the microservice architecture.
     Mandatory when using NATS as event system.
   introductionVersion: pre5.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+OCM_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;OCM_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+OCM_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;OCM_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -11001,6 +11503,36 @@ OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_AUTH_USERNAME:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS:
+  name: OCIS_NATS_CREDS;OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the cache when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_ENABLE_TLS:
   name: OCIS_CACHE_ENABLE_TLS;OCS_PRESIGNEDURL_SIGNING_KEYS_STORE_ENABLE_TLS
   defaultValue: "false"
@@ -11179,6 +11711,35 @@ POLICIES_EVENTS_CLUSTER:
     queuing service. It is used as message broker for the microservice architecture.
     Mandatory when using NATS as event system.
   introductionVersion: pre5.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+POLICIES_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;POLICIES_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+POLICIES_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;POLICIES_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -11399,6 +11960,35 @@ POSTPROCESSING_EVENTS_CLUSTER:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+POSTPROCESSING_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;POSTPROCESSING_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+POSTPROCESSING_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;POSTPROCESSING_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 POSTPROCESSING_EVENTS_ENABLE_TLS:
   name: OCIS_EVENTS_ENABLE_TLS;POSTPROCESSING_EVENTS_ENABLE_TLS
   defaultValue: "false"
@@ -11534,6 +12124,36 @@ POSTPROCESSING_STORE_AUTH_USERNAME:
   description: The username to authenticate with the store. Only applies when store
     type 'nats-js-kv' is configured.
   introductionVersion: "5.0"
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+POSTPROCESSING_STORE_CREDS:
+  name: OCIS_NATS_CREDS;POSTPROCESSING_STORE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+POSTPROCESSING_STORE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;POSTPROCESSING_STORE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the store when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -11832,6 +12452,35 @@ PROXY_EVENTS_CLUSTER:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+PROXY_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;PROXY_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+PROXY_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;PROXY_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 PROXY_EVENTS_ENABLE_TLS:
   name: OCIS_EVENTS_ENABLE_TLS;PROXY_EVENTS_ENABLE_TLS
   defaultValue: "false"
@@ -12094,6 +12743,36 @@ PROXY_OIDC_USERINFO_CACHE_AUTH_USERNAME:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+PROXY_OIDC_USERINFO_CACHE_CREDS:
+  name: OCIS_NATS_CREDS;PROXY_OIDC_USERINFO_CACHE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+PROXY_OIDC_USERINFO_CACHE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;PROXY_OIDC_USERINFO_CACHE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the cache when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 PROXY_OIDC_USERINFO_CACHE_DATABASE:
   name: OCIS_CACHE_DATABASE;PROXY_OIDC_USERINFO_CACHE_DATABASE
   defaultValue: cache-userinfo
@@ -12225,6 +12904,36 @@ PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_AUTH_USERNAME:
   description: The username to authenticate with the store. Only applies when store
     type 'nats-js-kv' is configured.
   introductionVersion: "5.0"
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS:
+  name: OCIS_NATS_CREDS;PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the cache when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -12544,6 +13253,35 @@ SEARCH_EVENTS_CLUSTER:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+SEARCH_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;SEARCH_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+SEARCH_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;SEARCH_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 SEARCH_EVENTS_ENABLE_TLS:
   name: OCIS_EVENTS_ENABLE_TLS;SEARCH_EVENTS_ENABLE_TLS
   defaultValue: "false"
@@ -12804,6 +13542,36 @@ SETTINGS_CACHE_AUTH_USERNAME:
   description: The username to authenticate with the cache. Only applies when store
     type 'nats-js-kv' is configured.
   introductionVersion: "5.0"
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+SETTINGS_CACHE_CREDS:
+  name: OCIS_NATS_CREDS;SETTINGS_CACHE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+SETTINGS_CACHE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;SETTINGS_CACHE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the cache when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -13246,6 +14014,35 @@ SHARING_EVENTS_CLUSTER:
     queuing service. It is used as message broker for the microservice architecture.
     Mandatory when using NATS as event system.
   introductionVersion: pre5.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+SHARING_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;SHARING_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+SHARING_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;SHARING_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -13729,54 +14526,60 @@ SHARING_USER_OWNCLOUDSQL_DB_HOST:
   type: string
   description: Hostname or IP of the database server.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: SHARING_USER_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql
+    driver is deprecated.
 SHARING_USER_OWNCLOUDSQL_DB_NAME:
   name: SHARING_USER_OWNCLOUDSQL_DB_NAME
   defaultValue: owncloud
   type: string
   description: Name of the database to be used.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: SHARING_USER_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql
+    driver is deprecated.
 SHARING_USER_OWNCLOUDSQL_DB_PASSWORD:
   name: SHARING_USER_OWNCLOUDSQL_DB_PASSWORD
   defaultValue: ""
   type: string
   description: Password for the database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: SHARING_USER_OWNCLOUDSQL_DB_PASSWORD is deprecated because the
+    owncloudsql driver is deprecated.
 SHARING_USER_OWNCLOUDSQL_DB_PORT:
   name: SHARING_USER_OWNCLOUDSQL_DB_PORT
   defaultValue: "3306"
   type: int
   description: Port that the database server is listening on.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: SHARING_USER_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql
+    driver is deprecated.
 SHARING_USER_OWNCLOUDSQL_DB_USERNAME:
   name: SHARING_USER_OWNCLOUDSQL_DB_USERNAME
   defaultValue: owncloud
   type: string
   description: Username for the database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: SHARING_USER_OWNCLOUDSQL_DB_USERNAME is deprecated because the
+    owncloudsql driver is deprecated.
 SHARING_USER_OWNCLOUDSQL_USER_STORAGE_MOUNT_ID:
   name: SHARING_USER_OWNCLOUDSQL_USER_STORAGE_MOUNT_ID
   defaultValue: ""
   type: string
   description: Mount ID of the ownCloudSQL users storage for mapping ownCloud 10 shares.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: SHARING_USER_OWNCLOUDSQL_USER_STORAGE_MOUNT_ID is deprecated because
+    the owncloudsql driver is deprecated.
 SSE_CORS_ALLOW_CREDENTIALS:
   name: OCIS_CORS_ALLOW_CREDENTIALS;SSE_CORS_ALLOW_CREDENTIALS
   defaultValue: "true"
@@ -13887,6 +14690,35 @@ SSE_EVENTS_CLUSTER:
     queuing service. It is used as message broker for the microservice architecture.
     Mandatory when using NATS as event system.
   introductionVersion: "5.0"
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+SSE_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;SSE_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+SSE_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;SSE_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -14221,6 +15053,36 @@ STORAGE_PUBLICLINK_STORE_AUTH_USERNAME:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+STORAGE_PUBLICLINK_STORE_CREDS:
+  name: OCIS_NATS_CREDS;STORAGE_PUBLICLINK_STORE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+STORAGE_PUBLICLINK_STORE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;STORAGE_PUBLICLINK_STORE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the store when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 STORAGE_PUBLICLINK_STORE_DATABASE:
   name: STORAGE_PUBLICLINK_STORE_DATABASE
   defaultValue: storage-publiclink
@@ -14527,6 +15389,36 @@ STORAGE_SYSTEM_CACHE_AUTH_USERNAME:
   description: Username for the configured store. Only applies when store type 'nats-js-kv'
     is configured.
   introductionVersion: "5.0"
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+STORAGE_SYSTEM_CACHE_CREDS:
+  name: OCIS_NATS_CREDS;STORAGE_SYSTEM_CACHE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+STORAGE_SYSTEM_CACHE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;STORAGE_SYSTEM_CACHE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the cache when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -15048,6 +15940,35 @@ STORAGE_USERS_EVENTS_CONSUMER_GROUP:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+STORAGE_USERS_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;STORAGE_USERS_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+STORAGE_USERS_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;STORAGE_USERS_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 STORAGE_USERS_EVENTS_ENABLE_TLS:
   name: OCIS_EVENTS_ENABLE_TLS;STORAGE_USERS_EVENTS_ENABLE_TLS
   defaultValue: "false"
@@ -15126,6 +16047,36 @@ STORAGE_USERS_FILEMETADATA_CACHE_AUTH_USERNAME:
   description: The username to authenticate with the cache store. Only applies when
     store type 'nats-js-kv' is configured.
   introductionVersion: "5.0"
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+STORAGE_USERS_FILEMETADATA_CACHE_CREDS:
+  name: OCIS_NATS_CREDS;STORAGE_USERS_FILEMETADATA_CACHE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+STORAGE_USERS_FILEMETADATA_CACHE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;STORAGE_USERS_FILEMETADATA_CACHE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the cache when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -15289,6 +16240,36 @@ STORAGE_USERS_ID_CACHE_AUTH_USERNAME:
   description: The username to authenticate with the cache store. Only applies when
     store type 'nats-js-kv' is configured.
   introductionVersion: "5.0"
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+STORAGE_USERS_ID_CACHE_CREDS:
+  name: OCIS_NATS_CREDS;STORAGE_USERS_ID_CACHE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+STORAGE_USERS_ID_CACHE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;STORAGE_USERS_ID_CACHE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the cache when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
@@ -15580,54 +16561,60 @@ STORAGE_USERS_OWNCLOUDSQL_DATADIR:
   description: The directory where the filesystem storage will store SQL migration
     data. If not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/owncloud.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_DATADIR is deprecated because the owncloudsql
+    driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_DB_HOST:
   name: STORAGE_USERS_OWNCLOUDSQL_DB_HOST
   defaultValue: ""
   type: string
   description: Hostname or IP of the database server.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql
+    driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_DB_NAME:
   name: STORAGE_USERS_OWNCLOUDSQL_DB_NAME
   defaultValue: owncloud
   type: string
   description: Name of the database to be used.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql
+    driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_DB_PASSWORD:
   name: STORAGE_USERS_OWNCLOUDSQL_DB_PASSWORD
   defaultValue: owncloud
   type: string
   description: Password for the database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_DB_PASSWORD is deprecated because the
+    owncloudsql driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_DB_PORT:
   name: STORAGE_USERS_OWNCLOUDSQL_DB_PORT
   defaultValue: "3306"
   type: int
   description: Port that the database server is listening on.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql
+    driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_DB_USERNAME:
   name: STORAGE_USERS_OWNCLOUDSQL_DB_USERNAME
   defaultValue: owncloud
   type: string
   description: Username for the database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_DB_USERNAME is deprecated because the
+    owncloudsql driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_LAYOUT:
   name: STORAGE_USERS_OWNCLOUDSQL_LAYOUT
   defaultValue: '{{.Username}}'
@@ -15635,18 +16622,20 @@ STORAGE_USERS_OWNCLOUDSQL_LAYOUT:
   description: Path layout to use to navigate into a users folder in an owncloud data
     directory
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_LAYOUT is deprecated because the owncloudsql
+    driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_SHARE_FOLDER:
   name: STORAGE_USERS_OWNCLOUDSQL_SHARE_FOLDER
   defaultValue: /Shares
   type: string
   description: Name of the folder jailing all shares.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_SHARE_FOLDER is deprecated because the
+    owncloudsql driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_UPLOADINFO_DIR:
   name: STORAGE_USERS_OWNCLOUDSQL_UPLOADINFO_DIR
   defaultValue: /var/lib/ocis/storage/uploadinfo
@@ -15654,18 +16643,20 @@ STORAGE_USERS_OWNCLOUDSQL_UPLOADINFO_DIR:
   description: The directory where the filesystem will store uploads temporarily.
     If not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/uploadinfo.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_UPLOADINFO_DIR is deprecated because
+    the owncloudsql driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_USERS_PROVIDER_ENDPOINT:
   name: STORAGE_USERS_OWNCLOUDSQL_USERS_PROVIDER_ENDPOINT
   defaultValue: com.owncloud.api.users
   type: string
   description: Endpoint of the users provider.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_USERS_PROVIDER_ENDPOINT is deprecated
+    because the owncloudsql driver is deprecated.
 STORAGE_USERS_PERMISSION_ENDPOINT:
   name: STORAGE_USERS_PERMISSION_ENDPOINT;STORAGE_USERS_S3NG_PERMISSIONS_ENDPOINT
   defaultValue: com.owncloud.api.settings
@@ -15682,9 +16673,10 @@ STORAGE_USERS_POSIX_GENERAL_SPACE_PATH_TEMPLATE:
   type: string
   description: Template string to construct the paths of the projects space roots.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_GENERAL_SPACE_PATH_TEMPLATE is deprecated because
+    the posixfs storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT:
   name: STORAGE_USERS_PERMISSION_ENDPOINT;STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT
   defaultValue: com.owncloud.api.settings
@@ -15692,18 +16684,20 @@ STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT:
   description: Endpoint of the permissions service. The endpoints can differ for 'ocis',
     'posix' and 's3ng'.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT is deprecated because
+    the posixfs storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_PERSONAL_SPACE_PATH_TEMPLATE:
   name: STORAGE_USERS_POSIX_PERSONAL_SPACE_PATH_TEMPLATE
   defaultValue: users/{{.User.Username}}
   type: string
   description: Template string to construct the paths of the personal space roots.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_PERSONAL_SPACE_PATH_TEMPLATE is deprecated
+    because the posixfs storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_ROOT:
   name: STORAGE_USERS_POSIX_ROOT
   defaultValue: /var/lib/ocis/storage/users
@@ -15711,9 +16705,10 @@ STORAGE_USERS_POSIX_ROOT:
   description: The directory where the filesystem storage will store its data. If
     not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/users.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_ROOT is deprecated because the posixfs storage
+    driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_SCAN_DEBOUNCE_DELAY:
   name: STORAGE_USERS_POSIX_SCAN_DEBOUNCE_DELAY
   defaultValue: 1s
@@ -15721,18 +16716,20 @@ STORAGE_USERS_POSIX_SCAN_DEBOUNCE_DELAY:
   description: The time in milliseconds to wait before scanning the filesystem for
     changes after a change has been detected.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_SCAN_DEBOUNCE_DELAY is deprecated because the
+    posixfs storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_USE_SPACE_GROUPS:
   name: STORAGE_USERS_POSIX_USE_SPACE_GROUPS
   defaultValue: "false"
   type: bool
   description: Use space groups to manage permissions on spaces.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_USE_SPACE_GROUPS is deprecated because the
+    posixfs storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_WATCH_FOLDER_KAFKA_BROKERS:
   name: STORAGE_USERS_POSIX_WATCH_FOLDER_KAFKA_BROKERS
   defaultValue: ""
@@ -15740,9 +16737,10 @@ STORAGE_USERS_POSIX_WATCH_FOLDER_KAFKA_BROKERS:
   description: Comma-separated list of kafka brokers to read the watchfolder events
     from.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_WATCH_FOLDER_KAFKA_BROKERS is deprecated because
+    the posixfs storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_WATCH_PATH:
   name: STORAGE_USERS_POSIX_WATCH_PATH
   defaultValue: ""
@@ -15751,9 +16749,10 @@ STORAGE_USERS_POSIX_WATCH_PATH:
     and 'inotifywait' watcher, in which case it is the path of the file audit log
     file/base directory to watch.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_WATCH_PATH is deprecated because the posixfs
+    storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_WATCH_TYPE:
   name: STORAGE_USERS_POSIX_WATCH_TYPE
   defaultValue: ""
@@ -15762,9 +16761,10 @@ STORAGE_USERS_POSIX_WATCH_TYPE:
     filesystem. Currently available options are 'inotifywait' (default), 'gpfswatchfolder'
     and 'gpfsfileauditlogging'.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_WATCH_TYPE is deprecated because the posixfs
+    storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_PURGE_TRASH_BIN_PERSONAL_DELETE_BEFORE:
   name: STORAGE_USERS_PURGE_TRASH_BIN_PERSONAL_DELETE_BEFORE
   defaultValue: 720h0m0s
@@ -16527,6 +17527,35 @@ USERLOG_EVENTS_CLUSTER:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+USERLOG_EVENTS_CREDS:
+  name: OCIS_NATS_CREDS;USERLOG_EVENTS_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    A service-specific variable takes precedence over a global variable. In the same
+    scope, the content takes precedence over the path of a .creds file. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+USERLOG_EVENTS_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;USERLOG_EVENTS_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the events broker when NATS runs in JWT (operator) mode.
+    When set, the service does not use the username and the password. Exception: a
+    service-specific username and password take precedence over the global OCIS_NATS_CREDS
+    and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the
+    file again on each reconnect.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 USERLOG_EVENTS_ENABLE_TLS:
   name: OCIS_EVENTS_ENABLE_TLS;USERLOG_EVENTS_ENABLE_TLS
   defaultValue: "false"
@@ -16701,6 +17730,36 @@ USERLOG_STORE_AUTH_USERNAME:
   deprecationVersion: ""
   removalVersion: ""
   deprecationInfo: ""
+USERLOG_STORE_CREDS:
+  name: OCIS_NATS_CREDS;USERLOG_STORE_CREDS
+  defaultValue: ""
+  type: string
+  description: 'Content of a NATS .creds file with a user JWT and an NKey seed. Use
+    it to authenticate with the store when NATS runs in JWT (operator) mode. A service-specific
+    variable takes precedence over a global variable. In the same scope, the content
+    takes precedence over the path of a .creds file. When set, the service does not
+    use the username and the password. Exception: a service-specific username and
+    password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. Only applies when store type ''nats-js-kv''
+    is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
+USERLOG_STORE_CREDS_FILE:
+  name: OCIS_NATS_CREDS_FILE;USERLOG_STORE_CREDS_FILE
+  defaultValue: ""
+  type: string
+  description: 'Path to a NATS .creds file with a user JWT and an NKey seed. Use it
+    to authenticate with the store when NATS runs in JWT (operator) mode. When set,
+    the service does not use the username and the password. Exception: a service-specific
+    username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE
+    variables when both have a value. The service reads the file again on each reconnect.
+    Only applies when store type ''nats-js-kv'' is configured.'
+  introductionVersion: 9.0.0
+  deprecationVersion: ""
+  removalVersion: ""
+  deprecationInfo: ""
 USERLOG_STORE_DATABASE:
   name: USERLOG_STORE_DATABASE
   defaultValue: userlog
@@ -16722,7 +17781,7 @@ USERLOG_STORE_ENABLE_TLS:
   deprecationInfo: ""
 USERLOG_STORE_NODES:
   name: OCIS_PERSISTENT_STORE_NODES;USERLOG_STORE_NODES
-  defaultValue: '[]'
+  defaultValue: '[127.0.0.1:9233]'
   type: '[]string'
   description: A list of nodes to access the configured store. This has no effect
     when 'memory' store is configured. Note that the behaviour how nodes are used
@@ -17296,45 +18355,50 @@ USERS_OWNCLOUDSQL_DB_HOST:
   type: string
   description: Hostname of the database server.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql
+    driver is deprecated.
 USERS_OWNCLOUDSQL_DB_NAME:
   name: USERS_OWNCLOUDSQL_DB_NAME
   defaultValue: owncloud
   type: string
   description: Name of the owncloud database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql
+    driver is deprecated.
 USERS_OWNCLOUDSQL_DB_PASSWORD:
   name: USERS_OWNCLOUDSQL_DB_PASSWORD
   defaultValue: secret
   type: string
   description: Password for the database user.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_DB_PASSWORD is deprecated because the owncloudsql
+    driver is deprecated.
 USERS_OWNCLOUDSQL_DB_PORT:
   name: USERS_OWNCLOUDSQL_DB_PORT
   defaultValue: "3306"
   type: int
   description: Network port to use for the database connection.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql
+    driver is deprecated.
 USERS_OWNCLOUDSQL_DB_USERNAME:
   name: USERS_OWNCLOUDSQL_DB_USERNAME
   defaultValue: owncloud
   type: string
   description: Database user to use for authenticating with the owncloud database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_DB_USERNAME is deprecated because the owncloudsql
+    driver is deprecated.
 USERS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH:
   name: USERS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH
   defaultValue: "false"
@@ -17342,9 +18406,10 @@ USERS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH:
   description: Allow 'medial search' when searching for users instead of just doing
     a prefix search. This allows finding 'Alice' when searching for 'lic'.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH is deprecated because the
+    owncloudsql driver is deprecated.
 USERS_OWNCLOUDSQL_IDP:
   name: USERS_OWNCLOUDSQL_IDP
   defaultValue: https://localhost:9200
@@ -17352,36 +18417,40 @@ USERS_OWNCLOUDSQL_IDP:
   description: The identity provider value to set in the userids of the CS3 user objects
     for users returned by this user provider.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_IDP is deprecated because the owncloudsql driver
+    is deprecated.
 USERS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID:
   name: USERS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID
   defaultValue: "false"
   type: bool
   description: Join the user properties table to read user IDs.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID is deprecated because the
+    owncloudsql driver is deprecated.
 USERS_OWNCLOUDSQL_JOIN_USERNAME:
   name: USERS_OWNCLOUDSQL_JOIN_USERNAME
   defaultValue: "false"
   type: bool
   description: Join the user properties table to read usernames
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_JOIN_USERNAME is deprecated because the owncloudsql
+    driver is deprecated.
 USERS_OWNCLOUDSQL_NOBODY:
   name: USERS_OWNCLOUDSQL_NOBODY
   defaultValue: "90"
   type: int64
   description: Fallback number if no numeric UID and GID properties are provided.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_NOBODY is deprecated because the owncloudsql
+    driver is deprecated.
 USERS_SKIP_USER_GROUPS_IN_TOKEN:
   name: USERS_SKIP_USER_GROUPS_IN_TOKEN
   defaultValue: "false"

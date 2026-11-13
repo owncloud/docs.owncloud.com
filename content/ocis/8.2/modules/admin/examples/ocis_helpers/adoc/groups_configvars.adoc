@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-11-05-13-26-45]
+[#deprecation-note-2026-11-13-09-58-28]
 [caption=]
 .Deprecation notes for the groups service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -730,7 +730,7 @@ a| [subs=-attributes]
 Maximum time to wait for a pooled LDAP connection to become available once the pool is exhausted. Defaults to 30s when unset or <= 0. See the Environment Variable Types description for more details.
 
 a|`GROUPS_OWNCLOUDSQL_DB_USERNAME` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -741,7 +741,7 @@ a| [subs=-attributes]
 Database user to use for authenticating with the owncloud database.
 
 a|`GROUPS_OWNCLOUDSQL_DB_PASSWORD` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -752,7 +752,7 @@ a| [subs=-attributes]
 Password for the database user.
 
 a|`GROUPS_OWNCLOUDSQL_DB_HOST` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -763,7 +763,7 @@ a| [subs=-attributes]
 Hostname of the database server.
 
 a|`GROUPS_OWNCLOUDSQL_DB_PORT` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -774,7 +774,7 @@ a| [subs=-attributes]
 Network port to use for the database connection.
 
 a|`GROUPS_OWNCLOUDSQL_DB_NAME` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -785,7 +785,7 @@ a| [subs=-attributes]
 Name of the owncloud database.
 
 a|`GROUPS_OWNCLOUDSQL_IDP` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -796,7 +796,7 @@ a| [subs=-attributes]
 The identity provider value to set in the userids of the CS3 user objects for users returned by this user provider.
 
 a|`GROUPS_OWNCLOUDSQL_NOBODY` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -807,7 +807,7 @@ a| [subs=-attributes]
 Fallback number if no numeric UID and GID properties are provided.
 
 a|`GROUPS_OWNCLOUDSQL_JOIN_USERNAME` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -818,7 +818,7 @@ a| [subs=-attributes]
 Join the user properties table to read usernames.
 
 a|`GROUPS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -829,7 +829,7 @@ a| [subs=-attributes]
 Join the user properties table to read user IDs.
 
 a|`GROUPS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]

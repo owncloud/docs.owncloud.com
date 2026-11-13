@@ -1930,45 +1930,50 @@ AUTH_BASIC_OWNCLOUDSQL_DB_HOST:
   type: string
   description: Hostname of the database server.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql
+    driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_DB_NAME:
   name: AUTH_BASIC_OWNCLOUDSQL_DB_NAME
   defaultValue: owncloud
   type: string
   description: Name of the owncloud database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql
+    driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_DB_PASSWORD:
   name: AUTH_BASIC_OWNCLOUDSQL_DB_PASSWORD
   defaultValue: ""
   type: string
   description: Password for the database user.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_DB_PASSWORD is deprecated because the owncloudsql
+    driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_DB_PORT:
   name: AUTH_BASIC_OWNCLOUDSQL_DB_PORT
   defaultValue: "3306"
   type: int
   description: Network port to use for the database connection.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql
+    driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_DB_USERNAME:
   name: AUTH_BASIC_OWNCLOUDSQL_DB_USERNAME
   defaultValue: owncloud
   type: string
   description: Database user to use for authenticating with the owncloud database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_DB_USERNAME is deprecated because the owncloudsql
+    driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_IDP:
   name: AUTH_BASIC_OWNCLOUDSQL_IDP
   defaultValue: https://localhost:9200
@@ -1976,36 +1981,40 @@ AUTH_BASIC_OWNCLOUDSQL_IDP:
   description: The identity provider value to set in the userids of the CS3 user objects
     for users returned by this user provider.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_IDP is deprecated because the owncloudsql
+    driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID:
   name: AUTH_BASIC_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID
   defaultValue: "false"
   type: bool
   description: Join the user properties table to read user ID's.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID is deprecated because
+    the owncloudsql driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_JOIN_USERNAME:
   name: AUTH_BASIC_OWNCLOUDSQL_JOIN_USERNAME
   defaultValue: "false"
   type: bool
   description: Join the user properties table to read usernames
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_JOIN_USERNAME is deprecated because the
+    owncloudsql driver is deprecated.
 AUTH_BASIC_OWNCLOUDSQL_NOBODY:
   name: AUTH_BASIC_OWNCLOUDSQL_NOBODY
   defaultValue: "90"
   type: int64
   description: Fallback number if no numeric UID and GID properties are provided.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: AUTH_BASIC_OWNCLOUDSQL_NOBODY is deprecated because the owncloudsql
+    driver is deprecated.
 AUTH_BASIC_SKIP_USER_GROUPS_IN_TOKEN:
   name: AUTH_BASIC_SKIP_USER_GROUPS_IN_TOKEN
   defaultValue: "false"
@@ -6249,45 +6258,50 @@ GROUPS_OWNCLOUDSQL_DB_HOST:
   type: string
   description: Hostname of the database server.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql
+    driver is deprecated.
 GROUPS_OWNCLOUDSQL_DB_NAME:
   name: GROUPS_OWNCLOUDSQL_DB_NAME
   defaultValue: owncloud
   type: string
   description: Name of the owncloud database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql
+    driver is deprecated.
 GROUPS_OWNCLOUDSQL_DB_PASSWORD:
   name: GROUPS_OWNCLOUDSQL_DB_PASSWORD
   defaultValue: ""
   type: string
   description: Password for the database user.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_DB_PASSWORD is deprecated because the owncloudsql
+    driver is deprecated.
 GROUPS_OWNCLOUDSQL_DB_PORT:
   name: GROUPS_OWNCLOUDSQL_DB_PORT
   defaultValue: "3306"
   type: int
   description: Network port to use for the database connection.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql
+    driver is deprecated.
 GROUPS_OWNCLOUDSQL_DB_USERNAME:
   name: GROUPS_OWNCLOUDSQL_DB_USERNAME
   defaultValue: owncloud
   type: string
   description: Database user to use for authenticating with the owncloud database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_DB_USERNAME is deprecated because the owncloudsql
+    driver is deprecated.
 GROUPS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH:
   name: GROUPS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH
   defaultValue: "false"
@@ -6295,9 +6309,10 @@ GROUPS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH:
   description: Allow 'medial search' when searching for users instead of just doing
     a prefix search. This allows finding 'Alice' when searching for 'lic'.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH is deprecated because the
+    owncloudsql driver is deprecated.
 GROUPS_OWNCLOUDSQL_IDP:
   name: GROUPS_OWNCLOUDSQL_IDP
   defaultValue: https://localhost:9200
@@ -6305,36 +6320,40 @@ GROUPS_OWNCLOUDSQL_IDP:
   description: The identity provider value to set in the userids of the CS3 user objects
     for users returned by this user provider.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_IDP is deprecated because the owncloudsql driver
+    is deprecated.
 GROUPS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID:
   name: GROUPS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID
   defaultValue: "false"
   type: bool
   description: Join the user properties table to read user IDs.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID is deprecated because the
+    owncloudsql driver is deprecated.
 GROUPS_OWNCLOUDSQL_JOIN_USERNAME:
   name: GROUPS_OWNCLOUDSQL_JOIN_USERNAME
   defaultValue: "false"
   type: bool
   description: Join the user properties table to read usernames.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_JOIN_USERNAME is deprecated because the owncloudsql
+    driver is deprecated.
 GROUPS_OWNCLOUDSQL_NOBODY:
   name: GROUPS_OWNCLOUDSQL_NOBODY
   defaultValue: "90"
   type: int64
   description: Fallback number if no numeric UID and GID properties are provided.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: GROUPS_OWNCLOUDSQL_NOBODY is deprecated because the owncloudsql
+    driver is deprecated.
 GROUPS_SKIP_USER_GROUPS_IN_TOKEN:
   name: GROUPS_SKIP_USER_GROUPS_IN_TOKEN
   defaultValue: "false"
@@ -6430,10 +6449,10 @@ IDM_ADMIN_USER_ID:
   removalVersion: ""
   deprecationInfo: ""
 IDM_CREATE_DEMO_USERS:
-  name: SETTINGS_SETUP_DEFAULT_ASSIGNMENTS;IDM_CREATE_DEMO_USERS
+  name: IDM_CREATE_DEMO_USERS
   defaultValue: "false"
   type: bool
-  description: The default role assignments the demo users should be setup.
+  description: Flag to enable or disable the creation of the demo users.
   introductionVersion: pre5.0
   deprecationVersion: ""
   removalVersion: ""
@@ -13528,54 +13547,60 @@ SHARING_USER_OWNCLOUDSQL_DB_HOST:
   type: string
   description: Hostname or IP of the database server.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: SHARING_USER_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql
+    driver is deprecated.
 SHARING_USER_OWNCLOUDSQL_DB_NAME:
   name: SHARING_USER_OWNCLOUDSQL_DB_NAME
   defaultValue: owncloud
   type: string
   description: Name of the database to be used.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: SHARING_USER_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql
+    driver is deprecated.
 SHARING_USER_OWNCLOUDSQL_DB_PASSWORD:
   name: SHARING_USER_OWNCLOUDSQL_DB_PASSWORD
   defaultValue: ""
   type: string
   description: Password for the database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: SHARING_USER_OWNCLOUDSQL_DB_PASSWORD is deprecated because the
+    owncloudsql driver is deprecated.
 SHARING_USER_OWNCLOUDSQL_DB_PORT:
   name: SHARING_USER_OWNCLOUDSQL_DB_PORT
   defaultValue: "3306"
   type: int
   description: Port that the database server is listening on.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: SHARING_USER_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql
+    driver is deprecated.
 SHARING_USER_OWNCLOUDSQL_DB_USERNAME:
   name: SHARING_USER_OWNCLOUDSQL_DB_USERNAME
   defaultValue: owncloud
   type: string
   description: Username for the database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: SHARING_USER_OWNCLOUDSQL_DB_USERNAME is deprecated because the
+    owncloudsql driver is deprecated.
 SHARING_USER_OWNCLOUDSQL_USER_STORAGE_MOUNT_ID:
   name: SHARING_USER_OWNCLOUDSQL_USER_STORAGE_MOUNT_ID
   defaultValue: ""
   type: string
   description: Mount ID of the ownCloudSQL users storage for mapping ownCloud 10 shares.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: SHARING_USER_OWNCLOUDSQL_USER_STORAGE_MOUNT_ID is deprecated because
+    the owncloudsql driver is deprecated.
 SSE_CORS_ALLOW_CREDENTIALS:
   name: OCIS_CORS_ALLOW_CREDENTIALS;SSE_CORS_ALLOW_CREDENTIALS
   defaultValue: "true"
@@ -15339,54 +15364,60 @@ STORAGE_USERS_OWNCLOUDSQL_DATADIR:
   description: The directory where the filesystem storage will store SQL migration
     data. If not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/owncloud.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_DATADIR is deprecated because the owncloudsql
+    driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_DB_HOST:
   name: STORAGE_USERS_OWNCLOUDSQL_DB_HOST
   defaultValue: ""
   type: string
   description: Hostname or IP of the database server.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql
+    driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_DB_NAME:
   name: STORAGE_USERS_OWNCLOUDSQL_DB_NAME
   defaultValue: owncloud
   type: string
   description: Name of the database to be used.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql
+    driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_DB_PASSWORD:
   name: STORAGE_USERS_OWNCLOUDSQL_DB_PASSWORD
   defaultValue: owncloud
   type: string
   description: Password for the database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_DB_PASSWORD is deprecated because the
+    owncloudsql driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_DB_PORT:
   name: STORAGE_USERS_OWNCLOUDSQL_DB_PORT
   defaultValue: "3306"
   type: int
   description: Port that the database server is listening on.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql
+    driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_DB_USERNAME:
   name: STORAGE_USERS_OWNCLOUDSQL_DB_USERNAME
   defaultValue: owncloud
   type: string
   description: Username for the database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_DB_USERNAME is deprecated because the
+    owncloudsql driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_LAYOUT:
   name: STORAGE_USERS_OWNCLOUDSQL_LAYOUT
   defaultValue: '{{.Username}}'
@@ -15394,18 +15425,20 @@ STORAGE_USERS_OWNCLOUDSQL_LAYOUT:
   description: Path layout to use to navigate into a users folder in an owncloud data
     directory
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_LAYOUT is deprecated because the owncloudsql
+    driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_SHARE_FOLDER:
   name: STORAGE_USERS_OWNCLOUDSQL_SHARE_FOLDER
   defaultValue: /Shares
   type: string
   description: Name of the folder jailing all shares.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_SHARE_FOLDER is deprecated because the
+    owncloudsql driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_UPLOADINFO_DIR:
   name: STORAGE_USERS_OWNCLOUDSQL_UPLOADINFO_DIR
   defaultValue: /var/lib/ocis/storage/uploadinfo
@@ -15413,18 +15446,20 @@ STORAGE_USERS_OWNCLOUDSQL_UPLOADINFO_DIR:
   description: The directory where the filesystem will store uploads temporarily.
     If not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/uploadinfo.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_UPLOADINFO_DIR is deprecated because
+    the owncloudsql driver is deprecated.
 STORAGE_USERS_OWNCLOUDSQL_USERS_PROVIDER_ENDPOINT:
   name: STORAGE_USERS_OWNCLOUDSQL_USERS_PROVIDER_ENDPOINT
   defaultValue: com.owncloud.api.users
   type: string
   description: Endpoint of the users provider.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_OWNCLOUDSQL_USERS_PROVIDER_ENDPOINT is deprecated
+    because the owncloudsql driver is deprecated.
 STORAGE_USERS_PERMISSION_ENDPOINT:
   name: STORAGE_USERS_PERMISSION_ENDPOINT;STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT
   defaultValue: com.owncloud.api.settings
@@ -15441,9 +15476,10 @@ STORAGE_USERS_POSIX_GENERAL_SPACE_PATH_TEMPLATE:
   type: string
   description: Template string to construct the paths of the projects space roots.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_GENERAL_SPACE_PATH_TEMPLATE is deprecated because
+    the posixfs storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT:
   name: STORAGE_USERS_PERMISSION_ENDPOINT;STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT
   defaultValue: com.owncloud.api.settings
@@ -15451,18 +15487,20 @@ STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT:
   description: Endpoint of the permissions service. The endpoints can differ for 'ocis',
     'posix' and 's3ng'.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_PERMISSIONS_ENDPOINT is deprecated because
+    the posixfs storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_PERSONAL_SPACE_PATH_TEMPLATE:
   name: STORAGE_USERS_POSIX_PERSONAL_SPACE_PATH_TEMPLATE
   defaultValue: users/{{.User.Username}}
   type: string
   description: Template string to construct the paths of the personal space roots.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_PERSONAL_SPACE_PATH_TEMPLATE is deprecated
+    because the posixfs storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_ROOT:
   name: STORAGE_USERS_POSIX_ROOT
   defaultValue: /var/lib/ocis/storage/users
@@ -15470,9 +15508,10 @@ STORAGE_USERS_POSIX_ROOT:
   description: The directory where the filesystem storage will store its data. If
     not defined, the root directory derives from $OCIS_BASE_DATA_PATH/storage/users.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_ROOT is deprecated because the posixfs storage
+    driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_SCAN_DEBOUNCE_DELAY:
   name: STORAGE_USERS_POSIX_SCAN_DEBOUNCE_DELAY
   defaultValue: 1s
@@ -15480,18 +15519,20 @@ STORAGE_USERS_POSIX_SCAN_DEBOUNCE_DELAY:
   description: The time in milliseconds to wait before scanning the filesystem for
     changes after a change has been detected.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_SCAN_DEBOUNCE_DELAY is deprecated because the
+    posixfs storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_USE_SPACE_GROUPS:
   name: STORAGE_USERS_POSIX_USE_SPACE_GROUPS
   defaultValue: "false"
   type: bool
   description: Use space groups to manage permissions on spaces.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_USE_SPACE_GROUPS is deprecated because the
+    posixfs storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_WATCH_FOLDER_KAFKA_BROKERS:
   name: STORAGE_USERS_POSIX_WATCH_FOLDER_KAFKA_BROKERS
   defaultValue: ""
@@ -15499,9 +15540,10 @@ STORAGE_USERS_POSIX_WATCH_FOLDER_KAFKA_BROKERS:
   description: Comma-separated list of kafka brokers to read the watchfolder events
     from.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_WATCH_FOLDER_KAFKA_BROKERS is deprecated because
+    the posixfs storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_WATCH_PATH:
   name: STORAGE_USERS_POSIX_WATCH_PATH
   defaultValue: ""
@@ -15510,9 +15552,10 @@ STORAGE_USERS_POSIX_WATCH_PATH:
     and 'inotifywait' watcher, in which case it is the path of the file audit log
     file/base directory to watch.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_WATCH_PATH is deprecated because the posixfs
+    storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_POSIX_WATCH_TYPE:
   name: STORAGE_USERS_POSIX_WATCH_TYPE
   defaultValue: ""
@@ -15521,9 +15564,10 @@ STORAGE_USERS_POSIX_WATCH_TYPE:
     filesystem. Currently available options are 'inotifywait' (default), 'gpfswatchfolder'
     and 'gpfsfileauditlogging'.
   introductionVersion: 6.0.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: STORAGE_USERS_POSIX_WATCH_TYPE is deprecated because the posixfs
+    storage driver is deprecated and will be removed in 9.0.0.
 STORAGE_USERS_PURGE_TRASH_BIN_PERSONAL_DELETE_BEFORE:
   name: STORAGE_USERS_PURGE_TRASH_BIN_PERSONAL_DELETE_BEFORE
   defaultValue: 720h0m0s
@@ -17054,45 +17098,50 @@ USERS_OWNCLOUDSQL_DB_HOST:
   type: string
   description: Hostname of the database server.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_DB_HOST is deprecated because the owncloudsql
+    driver is deprecated.
 USERS_OWNCLOUDSQL_DB_NAME:
   name: USERS_OWNCLOUDSQL_DB_NAME
   defaultValue: owncloud
   type: string
   description: Name of the owncloud database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_DB_NAME is deprecated because the owncloudsql
+    driver is deprecated.
 USERS_OWNCLOUDSQL_DB_PASSWORD:
   name: USERS_OWNCLOUDSQL_DB_PASSWORD
   defaultValue: secret
   type: string
   description: Password for the database user.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_DB_PASSWORD is deprecated because the owncloudsql
+    driver is deprecated.
 USERS_OWNCLOUDSQL_DB_PORT:
   name: USERS_OWNCLOUDSQL_DB_PORT
   defaultValue: "3306"
   type: int
   description: Network port to use for the database connection.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_DB_PORT is deprecated because the owncloudsql
+    driver is deprecated.
 USERS_OWNCLOUDSQL_DB_USERNAME:
   name: USERS_OWNCLOUDSQL_DB_USERNAME
   defaultValue: owncloud
   type: string
   description: Database user to use for authenticating with the owncloud database.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_DB_USERNAME is deprecated because the owncloudsql
+    driver is deprecated.
 USERS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH:
   name: USERS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH
   defaultValue: "false"
@@ -17100,9 +17149,10 @@ USERS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH:
   description: Allow 'medial search' when searching for users instead of just doing
     a prefix search. This allows finding 'Alice' when searching for 'lic'.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_ENABLE_MEDIAL_SEARCH is deprecated because the
+    owncloudsql driver is deprecated.
 USERS_OWNCLOUDSQL_IDP:
   name: USERS_OWNCLOUDSQL_IDP
   defaultValue: https://localhost:9200
@@ -17110,36 +17160,40 @@ USERS_OWNCLOUDSQL_IDP:
   description: The identity provider value to set in the userids of the CS3 user objects
     for users returned by this user provider.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_IDP is deprecated because the owncloudsql driver
+    is deprecated.
 USERS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID:
   name: USERS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID
   defaultValue: "false"
   type: bool
   description: Join the user properties table to read user IDs.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_JOIN_OWNCLOUD_UUID is deprecated because the
+    owncloudsql driver is deprecated.
 USERS_OWNCLOUDSQL_JOIN_USERNAME:
   name: USERS_OWNCLOUDSQL_JOIN_USERNAME
   defaultValue: "false"
   type: bool
   description: Join the user properties table to read usernames
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_JOIN_USERNAME is deprecated because the owncloudsql
+    driver is deprecated.
 USERS_OWNCLOUDSQL_NOBODY:
   name: USERS_OWNCLOUDSQL_NOBODY
   defaultValue: "90"
   type: int64
   description: Fallback number if no numeric UID and GID properties are provided.
   introductionVersion: pre5.0
-  deprecationVersion: ""
-  removalVersion: ""
-  deprecationInfo: ""
+  deprecationVersion: 8.2.0
+  removalVersion: 9.0.0
+  deprecationInfo: USERS_OWNCLOUDSQL_NOBODY is deprecated because the owncloudsql
+    driver is deprecated.
 USERS_SKIP_USER_GROUPS_IN_TOKEN:
   name: USERS_SKIP_USER_GROUPS_IN_TOKEN
   defaultValue: "false"

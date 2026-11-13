@@ -124,15 +124,17 @@ data_server_url: http://localhost:9158/data
 data_gateway_url: https://localhost:9200/data
 transfer_expires: 86400
 events:
-  endpoint: 127.0.0.1:9233
-  cluster: ocis-cluster
   tls_insecure: false
-  tls_root_ca_cert_path: ""
   enable_tls: false
   num_consumers: 0
-  consumer_group: ""
   username: ""
   password: ""
+  creds_file: ""
+  creds: ""
+  endpoint: 127.0.0.1:9233
+  cluster: ocis-cluster
+  tls_root_ca_cert_path: ""
+  consumer_group: ""
 filemetadata_cache:
   store: memory
   nodes:
@@ -142,6 +144,8 @@ filemetadata_cache:
   disable_persistence: false
   username: ""
   password: ""
+  creds_file: ""
+  creds: ""
   enable_tls: false
   tls_insecure: false
   tls_root_ca_certificate: ""
@@ -154,6 +158,8 @@ id_cache:
   disable_persistence: false
   username: ""
   password: ""
+  creds_file: ""
+  creds: ""
   enable_tls: false
   tls_insecure: false
   tls_root_ca_certificate: ""

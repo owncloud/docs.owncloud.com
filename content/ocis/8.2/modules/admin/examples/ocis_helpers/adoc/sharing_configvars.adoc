@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-11-05-13-26-45]
+[#deprecation-note-2026-11-13-09-58-28]
 [caption=]
 .Deprecation notes for the sharing service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -504,7 +504,7 @@ a| [subs=-attributes]
 API key for the STORAGE-SYSTEM system user.
 
 a|`SHARING_USER_OWNCLOUDSQL_DB_USERNAME` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -515,7 +515,7 @@ a| [subs=-attributes]
 Username for the database.
 
 a|`SHARING_USER_OWNCLOUDSQL_DB_PASSWORD` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -526,7 +526,7 @@ a| [subs=-attributes]
 Password for the database.
 
 a|`SHARING_USER_OWNCLOUDSQL_DB_HOST` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -537,7 +537,7 @@ a| [subs=-attributes]
 Hostname or IP of the database server.
 
 a|`SHARING_USER_OWNCLOUDSQL_DB_PORT` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -548,7 +548,7 @@ a| [subs=-attributes]
 Port that the database server is listening on.
 
 a|`SHARING_USER_OWNCLOUDSQL_DB_NAME` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]
@@ -559,7 +559,7 @@ a| [subs=-attributes]
 Name of the database to be used.
 
 a|`SHARING_USER_OWNCLOUDSQL_USER_STORAGE_MOUNT_ID` +
-xref:deprecation-note-2026-11-05-13-26-45[Deprecation Note]
+xref:deprecation-note-2026-11-13-09-58-28[Deprecation Note]
 a| [subs=-attributes]
 ++pre5.0 ++
 a| [subs=-attributes]

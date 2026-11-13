@@ -21,6 +21,8 @@ cache:
   disable_persistence: false
   username: ""
   password: ""
+  creds_file: ""
+  creds: ""
   enable_tls: false
   tls_insecure: false
   tls_root_ca_certificate: ""
@@ -166,6 +168,8 @@ events:
   enable_tls: false
   username: ""
   password: ""
+  creds_file: ""
+  creds: ""
 unified_roles:
   available_roles:
   - b1e2218d-eef8-4d4c-b82d-0f1a1b48f3b5

@@ -69,10 +69,21 @@ There are no breaking changes in Infinite Scale 8.2
 == Notabale Changes
 
 * The deployment examples now include KeyCloak as an option.
+
 * The OIDC group synchronization is now opt-in. +
 *Upgrade note.*
 ** Deployments that set `PROXY_AUTOPROVISION_CLAIM_GROUPS` explicitly will not be affected.
 ** Deployments that relied on the previous 'groups' default setting will stop synchronising group memberships after upgrading. Set `PROXY_AUTOPROVISION_CLAIM_GROUPS=groups` to restore the previous behaviour.
+
+* The `ocis_full` and `ocis_ocm` deployment examples now ship a hardened Collabora configuration.
+** Collabora is restricted to the hosts it needs, runs on its own internal network that only the proxy and the collaboration service share, and the admin console requires explicitly configured credentials (`COLLABORA_ADMIN_USER` and `COLLABORA_ADMIN_PASSWORD`). If you copy these examples, make sure to set the credentials in your `.env` file.
+** Note for operators: when updating the COLLABORA_DOCKER_TAG, diff the image's stock `/etc/coolwsd/coolwsd.xml` against the compose file `config/coolwsd/coolwsd.xml` and merge changes manually.
+
+* The `keycloak.yml` in the deployment examples have changed — operator action may be required:
+** The PostgreSQL volume path has been corrected corrected: +
+`/var/lib/postgresql/data` → `/var/lib/postgresql` +
+For upgrades, this is a *breakingchange*: +
+If the existing volume was created with the old path, data may appear missing after the change. Volume migration or recreation may be needed before upgrading.
 
 == Reconfigure Deployment Examples
 

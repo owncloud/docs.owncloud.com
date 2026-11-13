@@ -28,6 +28,8 @@ events:
   enable_tls: false
   username: ""
   password: ""
+  creds_file: ""
+  creds: ""
 service_account:
   service_account_id: ""
   service_account_secret: ""
