@@ -347,6 +347,12 @@ If you expect a higher amount of data in the instance, consider using own paths 
 * `SMTP_xxx` +
 Define these settings according to your email configuration. If the settings are defined, Infinite Scale will be able to send notifications to users. If the settings are not defined, Infinite Scale will start but won't be able to send notifications.
 
+* `COLLABORA_ADMIN_USER` and `COLLABORA_ADMIN_PASSWORD` +
+If Collabora Online is enabled, set these to credentials of your choice. The hardened Collabora configuration enforces explicit credentials for the admin console; leaving them empty disables admin console access.
+
+* `COLLABORA_CONFIG_DIR` +
+Optional. Path on the host where the Collabora WOPI proof key is persisted across container restarts. Defaults to `./config/collabora` relative to the compose project directory. The proof key is generated automatically on first start by a dedicated init container.
+
 NOTE: If you do not define your own domain names, only domain names with self-signed certificates are automatically used for internal evaluation.
 
 NOTE: Additional options can be configured like web applications. These should be configured _after_ the deployment has successfully started without problems. This makes it easier to find any initial startup issues that need to be resolved first.

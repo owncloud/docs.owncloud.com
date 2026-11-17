@@ -150,6 +150,8 @@ OPTIONS:
    --processing  filter sessions by processing status (default: unset)
    --expired     filter sessions by expired status    (default: unset)
    --has-virus   filter sessions by virus scan result (default: unset)
+   --orphaned    filter sessions by whether their node metadata is unreadable.
+                 Such sessions can never finish processing and can be removed with --clean (default: unset)
    --json        output as json                       (default: false)
    --restart     send restart event for all listed sessions (default: false)
    --resume      send resume event for all listed sessions (default: false)

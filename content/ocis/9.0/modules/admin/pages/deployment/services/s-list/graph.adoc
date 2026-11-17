@@ -17,6 +17,12 @@ include::partial$multi-location/compose-version.adoc[]
 
 * Graph listens on port 9120 by default.
 
+== Space Image Size Limit
+
+The maximum file size of an image that can be set as a space image is controlled by `GRAPH_MAX_IMAGE_FILE_SIZE` (default: `50MB`). Set to `0` to disable the limit.
+
+IMPORTANT: `GRAPH_MAX_IMAGE_FILE_SIZE` must not exceed `THUMBNAILS_MAX_INPUT_IMAGE_FILE_SIZE` in the xref:{s-path}/thumbnails.adoc[Thumbnails] service. If `GRAPH_MAX_IMAGE_FILE_SIZE` is larger, the Graph service accepts the upload but the Thumbnails service refuses to render it, resulting in a broken space image.
+
 == Restrict Username Patterns
 
 Usernames can be restricted to follow certain patterns. Such patterns can be neccessary when using the xref:{s-path}/idm.adoc[internal IDM,window=_blank] for example to align with local Unix username restrictions. Username restrictions can also be handled with an external IDM like Keycloak. The environment variable `GRAPH_USERNAME_MATCH` can be set to the following values to define where and how these restriction are handled:

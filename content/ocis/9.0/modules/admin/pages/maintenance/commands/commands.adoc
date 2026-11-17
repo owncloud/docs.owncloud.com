@@ -50,7 +50,13 @@ WARNING: Use this command with absolute care. It is not intended to play around 
 
 === Reset Password for IDM Users
 
-If you need to reset the password for the admin or a user in the xref:{s-path}/idm.adoc[idm] service from the command line, follow the xref:deployment/general/general-info.adoc#password-reset-for-idm-users[Password Reset for IDM Users].
+If you need to reset the password for the admin, a service account or an ordinary user that is handled via the IDM service from the command line, see the xref:{s-path}/idm.adoc#resetting-lost-passwords[Resetting Lost Passwords] section in the IDM service for more details.
+
+=== Recalculate Space Treesize
+
+The reported quota of a space can drift from the data actually stored on disk. Infinite Scale provides a xref:maintenance/commands/recalculate-treesize.adoc[CLI command] to walk a space bottom-up and correct the stored treesize of every directory.
+
+NOTE: This command MUST only be issued when Infinite Scale is offline and no services are running.
 
 === Revisions Cleanup
 

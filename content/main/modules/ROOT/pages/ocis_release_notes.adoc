@@ -17,6 +17,78 @@
 
 toc::[]
 
+== Infinite Scale 9.0.0 (Production) - Frances
+
+Please find the most important changes described here or refer to the changelog for a complete list of changes:
+
+* Infinite Scale: {ocis-releases-url}/v9.0.0[Changes in 9.0.0, window=_blank]
+
+[discrete]
+=== Summary of Notable Changes
+
+* Storage Driver Removals:
+** The deprecated `posix` storage driver has been completely removed. The `storage-users` service no longer accepts `posix` as a driver value, and all related environment variables are removed. See the Breaking Changes section for details.
+** The deprecated `owncloudsql` storage driver has been completely removed. The affected services no longer accept `owncloudsql` as a driver value, and all related environment variables are removed. See the Breaking Changes section for details.
+
+* Networking and Authentication:
+** NATS JWT authentication is now supported for all NATS connections via `OCIS_NATS_CREDS_FILE` and `OCIS_NATS_CREDS`, enabling use of a shared NATS cluster with per-instance accounts.
+** TLS support has been added for all NATS store, cache, and service registry connections.
+** OIDC requests in the proxy and webfinger services now respect proxy environment variables (`HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`).
+
+* New and Changed Commands:
+** A new `ocis storage-users spaces recalculate-treesize` command has been added to correct drifting quota usage by recalculating the treesize of every directory in a space from the actual data on disk. Infinite Scale must be shut down before running in write mode.
+** The `ocis search index` command has been extended with a `--timeout` flag (default `10m`, `0` for no limit) to allow indexing of large spaces or spaces with slow content extractors that previously failed with a timeout error.
+** The `ocis storage-users uploads sessions` command has been extended with an `--orphaned` flag to filter sessions whose node metadata is unreadable and that can never complete processing.
+** For details see the xref:ocis:admin:migration/upgrading-ocis.adoc[Migration and Upgrade, window=_blank] section of the Infinite Scale admin documentation.
+
+* User Interface:
+** Tags are now colour-coded by name, making it easier to distinguish a file's tags at a glance.
+** Vault shares now default to a 30-day expiration.
+** Multi-instance guest role mapping can now be derived from claims.
+
+* Search:
+** Apache Tika 4.x is now supported for content extraction in the search service.
+
+* Spaces:
+** A new `GRAPH_MAX_IMAGE_FILE_SIZE` environment variable (default: `50MB`) limits the size of images that can be set as a space image. The value must not exceed `THUMBNAILS_MAX_INPUT_IMAGE_FILE_SIZE` of the Thumbnails service, otherwise accepted images cannot be rendered.
+
+* Deployment Examples:
+** The `ocis_full` and `ocis_ocm` deployment examples now ship a hardened Collabora configuration: Collabora is restricted to the hosts it needs, runs on its own internal network, and the admin console requires explicit credentials (`COLLABORA_ADMIN_USER` and `COLLABORA_ADMIN_PASSWORD` in `.env`).
+** The Keycloak realm in `ocis_full` now points its SMTP configuration at the bundled Mailpit instance, so invitation emails (including guest invitations) are delivered correctly.
+
+* Security:
+** Public link brute force protection has been hardened.
+** Group member data is now restricted to authorised users only.
+** Origin validation has been hardened for delegated authentication in embed mode.
+
+* Licensing:
+** The End-User License Agreement (EULA) that was previously attached to production release assets has been removed. Infinite Scale is now distributed exclusively under the link:https://github.com/owncloud/ocis/blob/master/LICENSE[Apache 2.0] license.
+
+[discrete]
+=== Upgrading Infinite Scale
+
+See the xref:ocis:admin:migration/upgrading-ocis.adoc[Migration and Upgrade, window=_blank] section of the Infinite Scale admin documentation for more details.
+
+=== Known Issues
+
+This section will be updated if issues are discovered.
+
+//[discrete]
+=== Deprecations
+
+* The `posix` and `owncloudsql` storage drivers, deprecated in 8.2.3, have been removed in this release.
+* No new deprecations have been introduced in this release.
+
+//[discrete]
+=== Migrations
+
+See the xref:ocis:admin:migration/upgrading-ocis.adoc[Migration and Upgrade, window=_blank] section of the Infinite Scale admin documentation for more details.
+
+=== Breaking Changes
+
+* The `posix` storage driver has been completely removed without replacement. If you are using the `posix` driver, you *must* migrate to `decomposedfs` before upgrading to 9.0. All `STORAGE_USERS_POSIX_*` environment variables are removed and will cause an error if set. See the xref:ocis:admin:migration/upgrading-ocis.adoc[Upgrading Infinite Scale, window=_blank] guide for details.
+* The `owncloudsql` storage driver has been completely removed. All related environment variables across the `auth-basic`, `users`, `groups`, `sharing`, and `storage-users` services are removed.
+
 == Infinite Scale 8.2.3 (Production)
 
 Please find the most important changes described here or refer to the changelog for a complete list of changes see: {ocis-releases-url}/v8.2.3[Changes in 8.2.3, window=_blank]

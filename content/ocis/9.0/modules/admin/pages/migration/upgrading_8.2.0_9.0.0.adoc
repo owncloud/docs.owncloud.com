@@ -1,4 +1,4 @@
-= Upgrading from 8.1.0 to 8.2.0
+= Upgrading from 8.2.0 to 9.0.0
 :toc: right
 :description: This document describes the necessary steps when upgrading Infinite Scale from release 8.2.0 to 9.0.0.
 
@@ -64,11 +64,39 @@ Reconfigure the deployment to use the new image:
 
 == Manage Breaking Changes
 
-There are breaking changes in Infinite Scale 9.0
+There are breaking changes in Infinite Scale 9.0.
+
+=== Removal of the posixfs Storage Driver
+
+The `posix` storage driver has been completely removed in 9.0.0 without replacement.
+
+IMPORTANT: If you are currently using `STORAGE_USERS_DRIVER=posix`, you *must* migrate to the `decomposedfs` driver *before* upgrading to 9.0.0. Starting Infinite Scale 9.0.0 with posixfs-related environment variables set will result in an error.
+
+The following changes apply:
+
+* The `storage-users` service no longer accepts `posix` as a driver value.
+* All `STORAGE_USERS_POSIX_*` environment variables have been removed and must be unset before upgrading.
+* Remove any posixfs-related configuration from your deployment before starting the upgraded instance.
+
+=== Removal of the owncloudsql Storage Driver
+
+The `owncloudsql` storage driver has been completely removed in 9.0.0.
+
+IMPORTANT: If you are using the `owncloudsql` driver in any service, you *must* migrate away from it before upgrading to 9.0.0.
+
+The following services are affected: `auth-basic`, `users`, `groups`, `sharing`, and `storage-users`. All related environment variables have been removed and must be unset before upgrading.
 
 == Notabale Changes
 
 * The deployment examples now include KeyCloak as an option.
+
+* The Collabora Online image in the deployment examples has been updated from version 25.x to 26.x. Collabora 26.x ships without a shell and without the `coolconfig` helper used in earlier releases to generate the WOPI proof key on startup. The deployment example handles this automatically with a new one-shot `collabora-proof-key-init` container that generates and persists the key before Collabora starts.
++
+If you are using Collabora, review the following changes in the `.env` file when migrating from an 8.2 deployment:
+
+** `COLLABORA_ADMIN_USER` and `COLLABORA_ADMIN_PASSWORD` must now be set explicitly. The hardened Collabora configuration included in this release enforces credentials for the admin console; leaving these empty disables admin console access.
+
+** A new `COLLABORA_CONFIG_DIR` variable controls where the WOPI proof key is stored on the host. It defaults to `./config/collabora` relative to the compose project directory. Set a custom path if you want the key stored elsewhere, for example when using an external volume.
 
 == Reconfigure Deployment Examples
 
