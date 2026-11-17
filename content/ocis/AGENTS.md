@@ -82,6 +82,20 @@ Every ADR page under `pages/ocis/adr/` must have its `:description:` attribute s
 
 Exception: if a status note is needed (e.g. superseded), keep it after the number: `ADR 3 (superseded by ADR-0017): ...`
 
+## ocis_helpers Go Dependencies
+
+`ocis_helpers/go.mod` and `go.sum` track the Go dependencies required to build the helper against a specific ocis branch. These files do **not** need to be updated proactively or checked manually — `ocis_helpers` enforces it at runtime: if the current `go.mod` does not match what the targeted ocis branch requires, Go prints `go: updates to go.mod needed; to update it` and exits. When that message appears, run:
+
+```bash
+cd ocis_helpers
+go mod tidy
+go build
+```
+
+Then commit all three changed files — `go.mod`, `go.sum`, and the rebuilt `ocis_helpers` binary — together with the other work for that version.
+
+The `tools.go` file must remain present. It declares the intermediate-code imports that `go mod tidy` would otherwise drop, which would cause every task using the generated code to fail.
+
 ## Developer Service Pages
 
 The oCIS developer module (`content/ocis/<version>/modules/developer/`) has a specific structure and content rule for service pages.
