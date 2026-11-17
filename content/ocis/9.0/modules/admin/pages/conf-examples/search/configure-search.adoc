@@ -11,7 +11,7 @@
 
 {description} Using search is a good way to find documents based on various criteria. The search service will return results for documents the searcher is eligible to access. Read the description of the xref:{s-path}/search.adoc[search service] for more details.
 
-You can use basic search functionality without any configuration as it is preconfigured when using the default container deployment.
+You can use basic search functionality without any configuration as it is preconfigured when using the default container deployment. For the full query syntax available to users, see xref:conf-examples/search/kql-search-syntax.adoc[KQL Search Syntax].
 
 == Index Data
 

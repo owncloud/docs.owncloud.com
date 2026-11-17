@@ -1,0 +1,108 @@
+= Identity Management Overview
+:toc: right
+:toclevels: 3
+:description: Infinite Scale uses two built-in services to handle identity: IDM stores users and groups, and IDP authenticates them. Both can be replaced with external systems for larger or production deployments.
+
+== Introduction
+
+{description} Understanding which service does what — and when to replace the built-in components — is the foundation for any Infinite Scale deployment.
+
+Infinite Scale separates two concerns:
+
+* *Directory* — where user and group records are stored and managed. The xref:{s-path}/idm.adoc[IDM service] provides a minimal built-in LDAP server.
+* *Authentication* — how users prove their identity. The xref:{s-path}/idp.adoc[IDP service] provides a minimal built-in OpenID Connect provider.
+
+== Service Interaction
+
+The diagram below shows how the core identity services interact at login and during a typical API request.
+
+[mermaid, width=700]
+-----
+flowchart LR
+  client([Client / Browser])
+  proxy[Proxy]
+  idp["IDP<br/>OpenID Connect"]
+  idm[("IDM<br/>LDAP Directory")]
+  users["Users service<br/>CS3 API"]
+  groups["Groups service<br/>CS3 API"]
+  graphsvc["Graph service<br/>LibreGraph API"]
+
+  client -->|"① HTTP request"| proxy
+  proxy -->|"② OIDC auth"| idp
+  idp -->|"③ LDAP lookup"| idm
+  proxy -->|"④ CS3 user lookup"| users
+  users -->|"⑤ LDAP read"| idm
+  proxy -->|"⑥ CS3 group lookup"| groups
+  groups -->|"⑦ LDAP read"| idm
+  client -->|"⑧ LibreGraph API"| graphsvc
+  graphsvc -->|"⑨ LDAP write"| idm
+-----
+
+Steps ① through ⑦ happen on every authenticated request. Step ⑧–⑨ happen when users or groups are created, modified or deleted through the Web UI or the LibreGraph API.
+
+== Built-In Services
+
+=== IDM Limitations
+
+The built-in IDM is based on https://github.com/libregraph/idm[LibreGraph IDM] and is intentionally minimal:
+
+* Supports only `BIND`, `SEARCH`, `ADD`, `MODIFY`, and `DELETE` LDAP operations — no replication, no referrals, no LDAP schema validation.
+* No support for 2FA or device management.
+* Single-node only — cannot be clustered or replicated.
+* Recommended only for *small installations* or *testing*.
+
+For larger or production deployments, replace IDM with a full LDAP server such as OpenLDAP or Microsoft Active Directory.
+
+=== IDP Limitations
+
+The built-in IDP is a minimal OpenID Connect provider:
+
+* No login screen branding or theming.
+* No brute force protection — failed login attempts are not rate-limited or locked out.
+* No backchannel logout — when a user logs out via an external application, Infinite Scale cannot be notified to invalidate its session cache. Access tokens remain valid until they expire.
+* Recommended only for *small installations* or *testing*.
+
+For larger or production deployments, replace IDP with an external OpenID Connect provider such as Keycloak.
+
+== When to Use Built-In vs. External
+
+[cols="1,1,1",options="header"]
+|===
+| Scenario
+| IDM
+| IDP
+
+| Development / testing
+| Built-in ✓
+| Built-in ✓
+
+| Small production (< ~100 users, single node)
+| Built-in ✓
+| Built-in ✓
+
+| Existing corporate LDAP / Active Directory
+| External ✓
+| Built-in or external
+
+| Requires 2FA, SSO, or federation
+| External ✓
+| External ✓
+
+| Requires backchannel logout
+| —
+| External ✓
+
+| Multi-node or high-availability
+| External ✓
+| External ✓
+|===
+
+NOTE: IDM and IDP can be replaced independently. A common intermediate step is to keep the built-in IDM while replacing the IDP with Keycloak.
+
+== Further Reading
+
+* xref:{s-path}/idm.adoc[IDM Service] — configuration, password reset, service accounts
+* xref:{s-path}/idp.adoc[IDP Service] — configuration
+* xref:deployment/identity-management/external-iam.adoc[External Identity and Authentication] — requirements for replacing IDM or IDP with external systems
+* xref:{s-path}/graph.adoc[Graph Service] — LDAP backend configuration, user/group management
+* xref:{s-path}/proxy.adoc[Proxy Service] — OIDC configuration, automatic user provisioning

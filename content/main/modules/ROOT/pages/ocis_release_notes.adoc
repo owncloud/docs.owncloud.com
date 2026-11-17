@@ -64,6 +64,9 @@ Please find the most important changes described here or refer to the changelog 
 * Licensing:
 ** The End-User License Agreement (EULA) that was previously attached to production release assets has been removed. Infinite Scale is now distributed exclusively under the link:https://github.com/owncloud/ocis/blob/master/LICENSE[Apache 2.0] license.
 
+* Developer Documentation:
+** The Infinite Scale developer documentation, previously maintained at `owncloud.dev`, has been migrated into this repository and is now published at https://doc.owncloud.com/ocis/9.0/developer/[doc.owncloud.com] alongside the admin documentation.
+
 [discrete]
 === Upgrading Infinite Scale
 

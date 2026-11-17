@@ -1,0 +1,296 @@
+= KQL Search Syntax
+:toc: right
+:toclevels: 3
+:description: Infinite Scale search uses a subset of the Keyword Query Language (KQL). This page documents every field, operator, and date shortcut that the search service understands.
+
+{description}
+
+The search box in the web interface and clients accepts plain text as well as structured queries using the syntax described below. All queries are case-insensitive.
+
+== Fields
+
+If no field is specified, the query matches against the file or folder name.
+
+[cols="1,1,2,2",options="header"]
+|===
+| Field
+| Type
+| Description
+| Example
+
+| `name`
+| text
+| File or folder name. Default when no field is given. Supports wildcards.
+| `name:report` or just `report`
+
+| `content`
+| text
+| Full-text content. Requires a content extraction engine (Tika). See xref:conf-examples/search/configure-search.adoc[Configuring Search].
+| `content:budget`
+
+| `tag` / `tags`
+| text
+| Tags assigned to the file.
+| `tag:project`
+
+| `mediatype` / `type`
+| keyword
+| MIME type or a type shortcut (see <<type-shortcuts,Type Shortcuts>>).
+| `mediatype:pdf` or `type:image`
+
+| `size`
+| numeric
+| File size in bytes. Only comparison operators are supported — equality is not.
+| `size:>1048576`
+
+| `mtime`
+| date
+| Last-modified time. Accepts ISO dates, times, or natural-language ranges (see <<natural-language-dates,Natural-Language Dates>>).
+| `mtime:>2025-01-01`
+
+| `hidden`
+| boolean
+| Whether the item is hidden.
+| `hidden:true`
+
+| `photo.cameraMake`
+| text
+| Camera manufacturer embedded in photo metadata.
+| `photo.cameraMake:Canon`
+
+| `photo.cameraModel`
+| text
+| Camera model embedded in photo metadata.
+| `photo.cameraModel:"EOS R5"`
+
+| `photo.takenDateTime`
+| date
+| Date and time the photo was taken (EXIF).
+| `photo.takenDateTime:>=2024-01-01`
+
+| `photo.iso`
+| text
+| ISO speed value embedded in photo metadata.
+| `photo.iso:3200`
+
+| `photo.fNumber`
+| text
+| Aperture f-number embedded in photo metadata.
+| `photo.fNumber:2.8`
+
+| `photo.focalLength`
+| text
+| Focal length embedded in photo metadata.
+| `photo.focalLength:50`
+
+| `photo.orientation`
+| text
+| Orientation flag embedded in photo metadata.
+| `photo.orientation:1`
+
+|===
+
+NOTE: `photo.*` fields are populated only when a content extraction engine (Tika) is configured and the file has been indexed.
+
+== Operators
+
+=== Boolean Operators
+
+[cols="1,2,3",options="header"]
+|===
+| Operator
+| Shorthand
+| Description
+
+| `AND`
+| `+`
+| Both conditions must match (default when no operator is written between terms).
+
+| `OR`
+|
+| Either condition may match.
+
+| `NOT`
+| `-`
+| The following term must not match.
+
+|===
+
+Examples:
+
+[source]
+----
+report AND budget
+report OR budget
+report NOT draft
++report +budget
+-draft report
+----
+
+=== Comparison Operators
+
+Used with `size:` and `mtime:` (and `photo.takenDateTime:`):
+
+[cols="1,3",options="header"]
+|===
+| Operator
+| Meaning
+
+| `>`
+| Greater than
+
+| `>=`
+| Greater than or equal
+
+| `<`
+| Less than
+
+| `\<=`
+| Less than or equal
+
+|===
+
+=== Grouping
+
+Use parentheses to group sub-expressions. Optionally prefix a group with a field name to apply the field to all terms inside:
+
+[source]
+----
+(report OR budget) AND mtime:>2025-01-01
+name:(report budget)
+----
+
+== Wildcards
+
+[cols="1,3",options="header"]
+|===
+| Wildcard
+| Meaning
+
+| `*`
+| Zero or more characters
+
+| `?`
+| Exactly one character
+
+|===
+
+Examples:
+
+[source]
+----
+report*
+rep?rt
+name:*.pdf
+----
+
+NOTE: Wildcards apply to `name:` and free-text queries. They are not applied to `content:`, numeric, or date fields.
+
+[[type-shortcuts]]
+== Type Shortcuts
+
+The `mediatype:` (or `type:`) field accepts the following convenience shortcuts in addition to raw MIME types:
+
+[cols="1,3",options="header"]
+|===
+| Shortcut
+| Matches
+
+| `file`
+| Any file (excludes folders)
+
+| `folder`
+| Folders only
+
+| `document`
+| Word-processor formats: `.docx`, `.odt`, `.doc`, `.txt`, `.md`, `.rtf`, Pages
+
+| `spreadsheet`
+| Spreadsheet formats: `.xlsx`, `.ods`, `.xls`, `.csv`, Numbers
+
+| `presentation`
+| Presentation formats: `.pptx`, `.odp`, `.ppt`, Keynote
+
+| `pdf`
+| PDF files
+
+| `image`
+| All image MIME types (`image/*`)
+
+| `video`
+| All video MIME types (`video/*`)
+
+| `audio`
+| All audio MIME types (`audio/*`)
+
+| `archive`
+| Archive formats: `.zip`, `.gz`, `.7z`, `.rar`, `.tar`, `.bz2`
+
+|===
+
+[[natural-language-dates]]
+== Natural-Language Dates
+
+The `mtime:` and `photo.takenDateTime:` fields accept the following natural-language values in place of an ISO date. The week starts on Monday.
+
+[cols="1,3",options="header"]
+|===
+| Value
+| Range
+
+| `today`
+| From the beginning to the end of today
+
+| `yesterday`
+| From the beginning to the end of yesterday
+
+| `this week`
+| From Monday to Sunday of the current week
+
+| `last week`
+| From Monday to Sunday of the previous week
+
+| `last 7 days`
+| The last 7 days including today
+
+| `this month`
+| From the first to the last day of the current month
+
+| `last month`
+| From the first to the last day of the previous month
+
+| `last 30 days`
+| The last 30 days including today
+
+| `this year`
+| From 1 January to 31 December of the current year
+
+| `last year`
+| From 1 January to 31 December of the previous year
+
+|===
+
+Example:
+
+[source]
+----
+mtime:"last 7 days"
+mtime:"this month" AND type:document
+----
+
+NOTE: Natural-language date values that contain a space must be enclosed in double quotes.
+
+== Examples
+
+[source]
+----
+report
+"quarterly report"
+name:report*
+content:budget AND mtime:>2025-01-01
+type:document AND mtime:"last 30 days"
+size:>=10485760 AND type:video
+tag:invoice NOT tag:draft
+(type:image OR type:video) AND mtime:"this year"
+photo.cameraMake:Canon AND photo.takenDateTime:>=2024-01-01
+----

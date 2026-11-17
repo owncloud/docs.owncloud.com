@@ -155,14 +155,14 @@ Four bits of bookkeeping remain:
 |---------|-------------------|-------|
 | main | — | ROOT landing component (versionless) |
 | server | 11.1, 11.0, 10.16 | 11.1 is `latest`, copied from 11.0 (never imported); 11.0 was imported from master |
-| ocis | 8.3 (dev), 8.2, 8.1, 8.0, 7.3 | master→8.3 (prerelease); 8.2 branch is `latest` |
+| ocis | 9.0 (dev), 8.2, 8.1, 8.0, 7.3 | master→9.0 (prerelease); 8.2 branch is `latest`; developer docs included from 9.0 onwards (previously at owncloud.dev) |
 | webui | — | single rolling component (versionless) |
 | desktop | 7.2 (dev), 7.1, 6.0, 5.3 | master→7.2 (prerelease); 7.1 branch is `latest` |
 | ios | 12.7, 12.6 | 12.7 branch is `latest` (released 2026-05-19) |
 | android | 4.8 (dev), 4.7 | 4.8 branch imported as prerelease; 4.7 branch is `latest` |
 
 > ⚠️ **Dev version numbers are provisional.** The in-development folders
-> (`ocis/8.3`, `desktop/7.2`, `android/4.8`, …) are marked `prerelease: true` and
+> (`ocis/9.0`, `desktop/7.2`, `android/4.8`, …) are marked `prerelease: true` and
 > carry a `(dev)` `display_version`. They were the upcoming numbers chosen at
 > import time — rename the folder + drop `prerelease` on actual release.
 >

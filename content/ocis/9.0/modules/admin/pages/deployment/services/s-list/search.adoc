@@ -104,7 +104,7 @@ Every time a resource changes its state, a corresponding event is triggered. Bas
 
 === Searching
 
-A query via the {service_name} service will return results based on the index created.
+A query via the {service_name} service will return results based on the index created. The search box accepts plain text as well as structured queries using the Keyword Query Language (KQL) subset implemented by Infinite Scale. For the full field reference, operators, and date shortcuts, see xref:conf-examples/search/kql-search-syntax.adoc[KQL Search Syntax].
 
 === State Changes which Trigger Indexing
 
