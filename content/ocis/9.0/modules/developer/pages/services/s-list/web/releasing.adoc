@@ -1,31 +1,27 @@
 = Releasing
 :toc: right
 :toclevels: 3
-:description: The next generation Web Frontend is shipped as an oCIS Extension.
+:description: The Web frontend is part of the oCIS repository and is built into the web service, so it is released together with oCIS.
 
 == Releasing
 
-The next generation Web Frontend is shipped as an oCIS Extension. The `ocis-web` extension is also embedded in the single binary and part of the `ocis server` command.
+The source code of ownCloud Web lives in the link:https://github.com/owncloud/ocis/tree/master/web[web folder] of the oCIS repository. There is no separate Web release that needs to be pulled into oCIS: every oCIS build compiles the Web frontend from the same commit and embeds it into the `web` service, which is part of the single binary and the `ocis server` command.
 
-To update this package within all the deliveries, we need to update the package in the following chain from the bottom to the top.
+=== How Web Gets Into the Web Service
 
-=== Package Hierarchy
+The `build-assets` target in `services/web/Makefile` builds the frontend and copies the result into the service assets (excerpt, `WEB_DIR` is `../../web`):
 
-* link:https://github.com/owncloud/ocis[ocis]
-** link:https://github.com/owncloud/ocis/tree/master/web[ocis-web]
-*** link:https://github.com/owncloud/ocis/tree/master/ocis-pkg[ocis-pkg]
-*** link:https://github.com/owncloud/web[ownCloud Web]
+[source,make]
+----
+build-assets:
+	cd $(WEB_DIR) && pnpm install && pnpm check:types && pnpm build
+	cp $(WEB_DIR)/config/config.json.dist $(WEB_DIR)/dist/
+	cp -r $(WEB_DIR)/dist/. assets/core/
+----
 
-==== Prerequisites
+CI runs this target as part of `ci-node-generate`. Changes to Web are therefore released with the next oCIS release of the branch they are merged into.
 
-Before updating the assets, make sure that link:https://github.com/owncloud/web[ownCloud Web] has been released first and take note of its release tag name.
+=== Further Information
 
-==== Updating ocis-web
-
-. Create a branch `update-web-$version` in the link:https://github.com/owncloud/ocis[ocis repository]
-. Change into web package folder via `cd web`
-. Inside the `web/` folder, update the `Makefile` so that the WEB_ASSETS_VERSION variable references the currently released version of https://github.com/owncloud/web
-. Move to the changelog (`cd ../changelog/`) and add a changelog file to the `unreleased/` folder (You can copy an old web release changelog item as a template)
-. Move to the repo root (`cd ..`) and update the WEB_COMMITID in the `/.drone.env` file to the commit id from the released version (unless the existing commit id is already newer)
-. _Optional:_ Test the changes locally by running `cd ocis && go run cmd/ocis/main.go server`, visiting link:https://localhost:9200[https://localhost:9200] and confirming everything renders correctly
-. Commit your changes, push them and link:https://github.com/owncloud/ocis/pulls[create a PR]
+* For changelog entries, translations and publishing the Web npm packages, see the xref:clients/web/releasing/releasing.adoc[Web releasing guide].
+* For the oCIS release process itself, see the xref:releasing_guide/releasing_guide.adoc[Releasing Guide] and the xref:release_life_cycle.adoc[Release Life Cycle].
