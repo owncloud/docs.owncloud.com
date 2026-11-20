@@ -131,7 +131,7 @@ The following features *are already removed*.
 | `getToken` getter
 | v6
 | July 7, 2022
-| Use `runtime/auth/accessToken` getter. Since the removal of the Vuex store (v9), use `accessToken` of `useAuthStore()` from `@ownclouders/web-pkg` instead
+| Use `accessToken` of `useAuthStore()` from `@ownclouders/web-pkg`. The original replacement, the `runtime/auth/accessToken` getter, was removed together with the Vuex store in v9
 | N/A
 | `user` state is not supposed to deal with authentication details. We introduced the namespaced `auth` module for `user` and `public-link` related authentication contexts
 |===

@@ -7,11 +7,11 @@
 
 ownCloud Web lives in the `web/` folder of the link:https://github.com/owncloud/ocis[oCIS repository]. It is not released on its own: the `web` service build runs `pnpm install && pnpm check:types && pnpm build` in `web/` and copies the result into the service assets, so every oCIS release ships the Web version of the commit it was built from.
 
-There are no separate Web releases, Web versions or Web release branches. Web changes reach a release the same way as any other oCIS change, through `master` and the oCIS `stable-X.Y` branches. See the xref:release_life_cycle.adoc[oCIS release life cycle] for release types and schedule, and the xref:releasing_guide/releasing_guide.adoc[Releasing Guide] for the oCIS release process.
+There are no separate Web releases, Web versions or Web release branches. Only the npm packages described <<publishing-the-npm-packages,below>> have versions of their own. Web changes reach a release the same way as any other oCIS change, through `master` and the oCIS `stable-X.Y` branches. See the xref:release_life_cycle.adoc[oCIS release life cycle] for release types and schedule, and the xref:releasing_guide/releasing_guide.adoc[Releasing Guide] for the oCIS release process.
 
 == Changelog Entries
 
-For a user-facing Web change, add a changelog entry to the oCIS root `changelog/unreleased/` folder, based on `changelog/TEMPLATE`:
+For a user-facing Web change, add a changelog entry to the oCIS root `changelog/unreleased/` folder, based on `changelog/TEMPLATE`. These entries are what the oCIS release workflow (`.github/workflows/release.yml`) turns into the release notes of the GitHub release, using calens:
 
 * The first line starts with the change type `Bugfix`, `Change` (breaking change), `Enhancement` (new feature) or `Security`, followed by a short title.
 * The body describes the change, wrapped at 80 characters.
@@ -19,7 +19,7 @@ For a user-facing Web change, add a changelog entry to the oCIS root `changelog/
 
 Existing Web entries are named like `bugfix-web-embed-delegated-token-renewal.md` or `enhancement-web-bump-pinia.md`. Do not create or move versioned changelog folders, this is part of the oCIS release process.
 
-In addition, PR titles follow link:https://www.conventionalcommits.org[Conventional Commits] as described in `COMMIT_CONVENTION.md`. Web changes usually use `web` as the scope, for example `fix(web): [OCISDEV-1572] show an error when a copy gets no answer`. PRs are squash-merged and release notes are generated from these titles with git-cliff.
+In addition, PR titles must follow link:https://www.conventionalcommits.org[Conventional Commits] as described in `COMMIT_CONVENTION.md`; the `pr-title.yml` workflow checks this. Web changes usually use `web` as the scope, for example `fix(web): [OCISDEV-1572] show an error when a copy gets no answer`. PRs are squash-merged, so the title becomes the commit message. `make changelog-generate` can build notes from these titles with git-cliff, but no release workflow uses that yet, so the changelog entry is still required.
 
 == Translations
 
