@@ -55,6 +55,7 @@ http:
     - X-Requested-With
     - X-Request-Id
     - Purge
+    - X-Purge
     - Restore
     allow_credentials: true
 api:
@@ -71,6 +72,7 @@ reva:
 token_manager:
   jwt_secret: ""
 grpc_client_tls: null
+grpc_client_options: null
 application:
   id: ""
   displayname: ownCloud Infinite Scale
@@ -83,7 +85,7 @@ spaces:
   groups_cache_ttl: 60000000000
   storage_users_address: com.owncloud.api.storage-users
   storage_users_vault_address: com.owncloud.api.storage-users-vault
-  default_language: ""
+  default_language: en
   translation_path: ""
 identity:
   backend: ldap
@@ -149,6 +151,7 @@ identity:
     instance_mapper_id_attribute: ""
     cross_instance_reference_template: ""
     instance_url_template: ""
+    instance_mapper_cache_ttl: 60000000000
 include_ocm_sharees: false
 events:
   endpoint: 127.0.0.1:9233

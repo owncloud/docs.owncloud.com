@@ -16,6 +16,58 @@ include::partial$services/readme-link-text.adoc[]
 
 == Developer Topics
 
+=== Configurable Service Endpoints
+
+The Gateway acts as a proxy for other CS3 services and resolves their addresses via the service registry on each request. Each downstream service endpoint can instead be configured with an explicit gRPC URI using the `dns://`, `kubernetes://`, or `unix:` scheme, bypassing registry lookups entirely.
+
+[IMPORTANT]
+====
+This feature is experimental and intended for testing only. Services do not remove their socket files on shutdown; stale sockets must be cleaned up manually.
+====
+
+The configuration follows a triple of environment variables per service:
+
+[cols="2,2,3",options="header"]
+|===
+| Variable
+| Default
+| Alternative example
+
+| `OCIS_GRPC_PROTOCOL` or +
+`<SERVICE>_GRPC_PROTOCOL`
+| `tcp`
+| `unix`
+
+| `<SERVICE>_GRPC_ADDR`
+| `127.0.0.1:<port>`
+| `/var/run/ocis/<service>.sock`
+
+| `GATEWAY_<SERVICE>_ENDPOINT`
+| `com.owncloud.api.<service>`
+| `unix:/var/run/ocis/<service>.sock`
+|===
+
+Example for three services using unix sockets on a single-node deployment:
+
+[source,bash]
+----
+USERS_GRPC_PROTOCOL=unix
+USERS_GRPC_ADDR=/var/run/ocis/users.sock
+GATEWAY_USERS_ENDPOINT=unix:/var/run/ocis/users.sock
+
+GROUPS_GRPC_PROTOCOL=unix
+GROUPS_GRPC_ADDR=/var/run/ocis/groups.sock
+GATEWAY_GROUPS_ENDPOINT=unix:/var/run/ocis/groups.sock
+
+STORAGE_USERS_GRPC_PROTOCOL=unix
+STORAGE_USERS_GRPC_ADDR=/var/run/ocis/storage-users.sock
+GATEWAY_STORAGE_USERS_ENDPOINT=unix:/var/run/ocis/storage-users.sock
+----
+
+NOTE: When configuring a unix socket for `storage-users`, also set `GRAPH_SPACES_STORAGE_USERS_ADDRESS=unix:/var/run/ocis/storage-users.sock`. The Graph service can bypass the Gateway for direct storage access and must be pointed at the socket independently.
+
+The full list of `GATEWAY_*_ENDPOINT` variables is available in the auto-generated environment variable reference of the xref:admin:{s-path}/gateway.adoc[Gateway admin documentation].
+
 === Storage Registry
 
 To add another storage provider, the CS3 storage registry that is running as part of the CS3 gateway must be made aware of it. Set `GATEWAY_STORAGE_REGISTRY_CONFIG_JSON=/path/to/storages.json` and list all storage providers in the JSON file. Replace `<storage-users-mount-uuid>` with the mount UUID generated for the storage-users service; it can be found in the `config.yaml` created by `ocis init`. The last entry (`com.owncloud.api.storage-hello`) is an example for an additional storage provider running `hellofs`, a minimal example storage driver:

@@ -17,6 +17,8 @@
 **** xref:admin:deployment/storage/posixfs.adoc[PosixFS]
 *** xref:admin:deployment/general/general-info.adoc[General Information]
 *** xref:admin:deployment/general/ocis-init.adoc[The ocis init Command]
+*** xref:admin:deployment/identity-management/index.adoc[Identity Management]
+**** xref:admin:deployment/identity-management/external-iam.adoc[External Identity and Authentication]
 *** xref:admin:deployment/wopi/wopi.adoc[Office Applications using WOPI]
 *** xref:admin:deployment/security/security.adoc[Securing oCIS]
 *** xref:admin:deployment/gdpr/gdpr.adoc[User Triggered GDPR Report]
@@ -98,6 +100,7 @@
 ** Configuration Examples
 *** xref:admin:conf-examples/office/office-integration.adoc[Office Integration]
 *** xref:admin:conf-examples/search/configure-search.adoc[Search]
+**** xref:admin:conf-examples/search/kql-search-syntax.adoc[KQL Search Syntax]
 
 ** Deployment Examples
 *** Ubuntu with Docker Compose

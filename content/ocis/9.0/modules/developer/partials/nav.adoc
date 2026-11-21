@@ -141,6 +141,7 @@
 *** xref:developer:cli-commands/create-new-cli-command.adoc[Create a New CLI Command]
 *** xref:developer:cli-commands/service_dependent_cli.adoc[Service-Dependent CLI]
 *** xref:developer:cli-commands/service_independent_cli.adoc[Service-Independent CLI]
+*** xref:developer:cli-commands/benchmark.adoc[Benchmark]
 
 ** xref:developer:clients/index.adoc[Clients]
 *** xref:developer:clients/web/index.adoc[ownCloud Web]

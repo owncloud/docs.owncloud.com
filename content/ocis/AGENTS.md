@@ -2,6 +2,34 @@
 
 Agent guidelines specific to the oCIS component (developer service pages, Collector and Swagger UI). Applies to every oCIS version directory. Loaded on demand; repo-wide rules live in the root `AGENTS.md`, content-authoring rules in `content/AGENTS.md`.
 
+## Running a Throwaway oCIS Container for CLI Help
+
+When you need to inspect a CLI command's help output for a specific oCIS version, run it directly in a throwaway container — no init step or volume needed:
+
+```bash
+docker run --rm owncloud/ocis:<VERSION> <command> --help
+```
+
+Replace `<VERSION>` with the target release (e.g. `8.2.2`, `9.0.0`). Check available tags at https://hub.docker.com/r/owncloud/ocis/tags.
+
+Top-level commands are reached directly (`ocis backup`, `ocis init`, …). Service commands are nested under the service name:
+
+```bash
+# Top-level command
+docker run --rm owncloud/ocis:8.2.2 backup --help
+
+# Service sub-command
+docker run --rm owncloud/ocis:8.2.2 idm resetpassword --help
+```
+
+To list all available top-level commands for a version:
+
+```bash
+docker run --rm owncloud/ocis:<VERSION> --help
+```
+
+This is a read-only, ephemeral operation: the container starts, prints help, and exits without touching any data. No volume, no init, no port mapping required.
+
 ## Audit-Tracking Page Attributes
 
 Pages that contain content requiring periodic review (Mermaid diagrams, architecture descriptions, configuration examples) carry two tracking attributes in their document header:
@@ -53,6 +81,20 @@ Every ADR page under `pages/ocis/adr/` must have its `:description:` attribute s
 ```
 
 Exception: if a status note is needed (e.g. superseded), keep it after the number: `ADR 3 (superseded by ADR-0017): ...`
+
+## ocis_helpers Go Dependencies
+
+`ocis_helpers/go.mod` and `go.sum` track the Go dependencies required to build the helper against a specific ocis branch. These files do **not** need to be updated proactively or checked manually — `ocis_helpers` enforces it at runtime: if the current `go.mod` does not match what the targeted ocis branch requires, Go prints `go: updates to go.mod needed; to update it` and exits. When that message appears, run:
+
+```bash
+cd ocis_helpers
+go mod tidy
+go build
+```
+
+Then commit all three changed files — `go.mod`, `go.sum`, and the rebuilt `ocis_helpers` binary — together with the other work for that version.
+
+The `tools.go` file must remain present. It declares the intermediate-code imports that `go mod tidy` would otherwise drop, which would cause every task using the generated code to fail.
 
 ## Developer Service Pages
 

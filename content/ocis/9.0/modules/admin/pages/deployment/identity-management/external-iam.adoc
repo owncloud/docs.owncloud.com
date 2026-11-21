@@ -1,0 +1,272 @@
+= External Identity and Authentication
+:toc: right
+:toclevels: 3
+:description: Requirements and configuration guidance for replacing the built-in IDM and IDP services with an external LDAP directory and an external OpenID Connect provider.
+
+include::partial$multi-location/compose-version.adoc[]
+
+== Introduction
+
+{description}
+
+The two services can be replaced independently. A common approach is:
+
+. Replace *IDP* with an external OIDC provider first (e.g. Keycloak) while keeping the built-in IDM.
+. Replace *IDM* with an external LDAP directory once the organization's directory requirements are clear.
+
+Both replacements can also be done simultaneously.
+
+== Replacing IDM with an External LDAP Directory
+
+=== When to Replace
+
+Replace the built-in IDM when you need:
+
+* An existing corporate directory (Active Directory, OpenLDAP) as the user source.
+* User management through external tooling rather than the Infinite Scale Web UI.
+* High-availability or replication for the directory.
+* Features the built-in IDM does not support: schema validation, referrals, 2FA.
+
+=== LDAP Schema Requirements
+
+Infinite Scale requires the following from any external LDAP directory:
+
+* The `inetOrgPerson` object class for user entries.
+* The `groupOfNames` object class for group entries.
+* Several additional attributes that are not part of the standard LDAP schema (e.g. `owncloudUUID`). A ready-to-use OpenLDAP schema file (ldif) is available in the deployment example: {compose_url}{compose_version}{compose_final_path}/ocis_ldap/config/ldap/schemas/[LDAP schemas,window=_blank].
+
+NOTE: Microsoft Active Directory uses `group` instead of `groupOfNames`. The Graph service can be configured to work with AD via `OCIS_LDAP_GROUP_OBJECTCLASS=group`. See the developer documentation at https://owncloud.dev/ocis/identity-provider/ldap-active-directory/[LDAP Active Directory,window=_blank] for a full example.
+
+=== User ID Attribute
+
+Infinite Scale uses a stable, unique attribute to identify users internally. The attribute is configured via `OCIS_LDAP_USER_SCHEMA_ID`. The value must:
+
+* Be unique across all users.
+* Never change for the lifetime of a user — a change causes the user to lose access to their files and shares.
+
+The `owncloudUUID` attribute from the schema file above is the recommended choice. For Active Directory, `objectGUID` is a suitable alternative.
+
+=== Write Access for Web UI User Management
+
+If you want administrators to be able to create, update and delete users and groups through the Infinite Scale Web UI or the LibreGraph API, the LDAP directory must grant write access to the bind user configured in `OCIS_LDAP_BIND_DN`. Set `OCIS_LDAP_SERVER_WRITE_ENABLED=true` (the default) and ensure the bind user has the necessary write permissions in the directory.
+
+If you are connecting to a *read-only* directory and do not need Web UI user management, set `OCIS_LDAP_SERVER_WRITE_ENABLED=false`.
+
+=== Key Environment Variables
+
+The following variables configure the LDAP connection. All services that connect to the directory (IDP, Graph, Users, Groups) share the `OCIS_LDAP_*` prefix; service-specific overrides use `GRAPH_LDAP_*`, `IDP_LDAP_*`, etc.
+
+[cols="2,3",options="header"]
+|===
+| Variable
+| Purpose
+
+| `OCIS_LDAP_URI`
+| LDAP server address (e.g. `ldaps://ldap.example.com:636`)
+
+| `OCIS_LDAP_BIND_DN`
+| DN of the service account used to connect
+
+| `OCIS_LDAP_BIND_PASSWORD`
+| Password for the service account
+
+| `OCIS_LDAP_USER_BASE_DN`
+| Base DN for user searches
+
+| `OCIS_LDAP_GROUP_BASE_DN`
+| Base DN for group searches
+
+| `OCIS_LDAP_USER_SCHEMA_ID`
+| LDAP attribute used as the stable internal user ID
+
+| `OCIS_LDAP_SERVER_WRITE_ENABLED`
+| `true` to allow user/group creation via the Web UI
+
+| `OCIS_LDAP_GROUP_OBJECTCLASS`
+| Object class for groups (default: `groupOfNames`; use `group` for AD)
+|===
+
+For the full list of LDAP configuration options see the xref:{s-path}/graph.adoc#ldap-configuration[Graph service LDAP configuration].
+
+== Replacing IDP with an External OIDC Provider
+
+=== When to Replace
+
+Replace the built-in IDP when you need:
+
+* SSO across multiple applications.
+* Federation with external identity providers (SAML, social login).
+* 2FA / MFA.
+* Backchannel logout so Infinite Scale invalidates sessions immediately when a user logs out elsewhere.
+* Branding of the login screen.
+
+=== Requirements for the External OIDC Provider
+
+The external OIDC provider must:
+
+* Expose a standards-compliant OIDC discovery endpoint (`/.well-known/openid-configuration`).
+* Issue tokens that include a *stable, unique* claim for each user. The `sub` claim is the safest choice; `email` or `preferred_username` can be used only if they never change.
+* Include `email`, `profile`, and `groups` scopes (or equivalent custom scopes) in tokens, so Infinite Scale can read display names, email addresses, and group memberships.
+
+For backchannel logout support (strongly recommended for production), the provider must implement the https://openid.net/specs/openid-connect-backchannel-1_0.html[OIDC Back-Channel Logout specification]. Configure the backchannel logout URL in the provider to point at the Proxy service.
+
+=== User Lookup: Connecting OIDC Identity to the LDAP Directory
+
+When a user authenticates via the external OIDC provider, the Proxy service must map the OIDC identity to a user record in the directory. Two environment variables control this mapping:
+
+* `PROXY_USER_OIDC_CLAIM` — the OIDC claim whose value is used to look up the user (default: `preferred_username`).
+* `PROXY_USER_CS3_CLAIM` — the user attribute in Infinite Scale that must match the claim value above (default: `username`).
+
+For a stable mapping that survives username or email changes, set both to use the `sub` claim and the `userid` attribute:
+
+[source,bash]
+----
+PROXY_USER_OIDC_CLAIM=sub
+PROXY_USER_CS3_CLAIM=userid
+----
+
+=== Automatic User Provisioning
+
+When the directory is managed externally (e.g. Active Directory) and you use an external OIDC provider, users can be provisioned into Infinite Scale automatically on first login without any manual import step.
+
+The Proxy service handles provisioning when `PROXY_AUTOPROVISION_ACCOUNTS=true` is set. On the user's first login it creates a user record in the directory using claims from the OIDC token. On subsequent logins it synchronises changed display names, email addresses, and group memberships.
+
+For full configuration details and caveats (claim immutability, group sync latency) see xref:{s-path}/proxy.adoc#automatic-user-and-group-provisioning[Automatic User and Group Provisioning] in the Proxy service documentation.
+
+== Combining an External LDAP Directory with an External OIDC Provider
+
+When both IDM and IDP are replaced:
+
+. Configure the external LDAP directory as described above.
+. Configure the external OIDC provider as described above.
+. Ensure the OIDC provider uses the same directory as its user store, so that the user identity from the token and the user record in LDAP refer to the same account.
+. Set `PROXY_USER_OIDC_CLAIM` and `PROXY_USER_CS3_CLAIM` to match the stable identifier used in both systems (typically the LDAP `owncloudUUID` or AD `objectGUID` exposed as a custom OIDC claim).
+
+NOTE: Automatic user provisioning (`PROXY_AUTOPROVISION_ACCOUNTS`) is not needed when both systems share the same user store — users already exist in LDAP before they log in for the first time.
+
+== Using AD FS as the External OIDC Provider
+
+=== AD vs. AD FS
+
+*Active Directory (AD)* is an LDAP-based identity and access management (IAM) directory — it stores user and group records. *Active Directory Federation Services (AD FS)* is a Security Token Service (STS) that sits in front of AD and issues OIDC (and SAML) tokens. When this page refers to replacing the built-in IDP with AD FS, it means using AD FS as the OIDC provider while AD itself continues to serve as the LDAP directory.
+
+=== CORS Requirement
+
+The Proxy service calls the AD FS userinfo endpoint from the browser during the OIDC flow. AD FS does not send CORS headers by default, which causes browsers to block the response. To enable CORS on AD FS, the AD FS farm behavior level must first be raised to the 2019 level, then CORS can be configured.
+
+Run the following commands on the AD FS server (PowerShell, elevated):
+
+[source,powershell]
+----
+# Raise the farm behavior level to ADFS 2019 (required for CORS support)
+Invoke-AdfsFarmBehaviorLevelRaise
+
+# Enable CORS and allow requests from the Infinite Scale origin
+Set-AdfsResponseHeader -EnableCORS $true
+Set-AdfsResponseHeader -CORSTrustedOrigins "https://your-ocis-domain.example.com"
+----
+
+Replace `\https://your-ocis-domain.example.com` with the actual public URL of your Infinite Scale instance.
+
+For the full list of AD FS HTTP security header options see the https://learn.microsoft.com/en-us/windows-server/identity/ad-fs/operations/customize-http-security-headers-ad-fs#cors-customization[Microsoft AD FS CORS customization documentation,window=_blank].
+
+=== Skipping the Userinfo Endpoint
+
+If raising the farm behavior level is not possible, or as an alternative to CORS configuration, Infinite Scale can be told to skip the userinfo endpoint entirely and read all user claims directly from the JWT access token:
+
+[source,bash]
+----
+PROXY_OIDC_SKIP_USER_INFO=true
+PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD=jwt
+----
+
+[IMPORTANT]
+====
+`PROXY_OIDC_SKIP_USER_INFO=true` requires `PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD=jwt`. The two settings are mutually exclusive with the value `none` — setting `PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD=none` while also setting `PROXY_OIDC_SKIP_USER_INFO=true` is an invalid combination and Infinite Scale will refuse to start.
+
+When skipping the userinfo endpoint, all required claims (`sub`, `email`, `preferred_username`, group memberships) must be present in the access token itself. Ensure the AD FS relying party trust is configured to include these claims in the issued access tokens.
+====
+
+== Access Token Verification
+
+The Proxy service verifies every OIDC access token it receives. The verification method and the behaviour when an unknown signing key is encountered are configurable.
+
+=== Verification Methods
+
+`PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD` controls how the Proxy verifies access tokens. The default is `jwt`.
+
+`jwt`::
+The access token is parsed as a JSON Web Token (JWT) and its signature is verified against the public keys published at the IDP's `jwks_uri` endpoint. This is the recommended and most secure method and requires the IDP to issue proper JWT access tokens containing a `kid` (Key ID) header.
+
+`none`::
+No JWT signature verification is performed. The token is forwarded as-is to the IDP's userinfo endpoint, and the response is used to identify the user. Use this when the IDP issues opaque (non-JWT) access tokens, or JWT tokens that do not include a `kid` header.
+
+[IMPORTANT]
+====
+`PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD=none` is incompatible with `PROXY_OIDC_SKIP_USER_INFO=true`. Setting both causes Infinite Scale to refuse to start because there is no JWT to read claims from and no userinfo endpoint to fall back to.
+====
+
+=== The `kid` Header and When Verification Fails
+
+A JWT access token contains a header, a payload, and a signature. The header may carry a `kid` (Key ID) claim — a hint that tells the Proxy which key in the IDP's JSON Web Key Set (JWKS) to use when verifying the token's signature. When the Proxy encounters a token with a `kid` it does not recognise, it fetches the JWKS again to look for the new key.
+
+When the `kid` is missing from the token or cannot be matched to any key in the JWKS, the Proxy logs:
+
+[source]
+----
+failed to verify access token: the JWT has an invalid kid: could not find kid in JWT header
+----
+
+There are two ways to resolve this:
+
+. *Fix the IDP configuration* (preferred). Configure the IDP to include a `kid` header in its issued access tokens and to publish the corresponding key in its JWKS. This is the correct long-term solution.
+
+. *Disable JWT verification* (workaround). If the IDP cannot be changed — for example in home-network setups using a provider that omits the `kid` — set:
++
+[source,bash]
+----
+PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD=none
+----
++
+With this setting the Proxy no longer validates the token's signature; it simply presents the token to the userinfo endpoint. Authentication still works but the cryptographic integrity check is skipped.
+
+=== JWKS Refresh Tuning
+
+When `PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD=jwt` is active, the Proxy maintains an in-memory copy of the IDP's JSON Web Key Set (JWKS) and refreshes it periodically. The following variables control that behaviour:
+
+[cols="~,~,^~",options="header"]
+|===
+| Variable
+| Description
+| Default
+
+| `PROXY_OIDC_JWKS_REFRESH_INTERVAL`
+| Interval in minutes at which the JWKS is refreshed in the background.
+| `60`
+
+| `PROXY_OIDC_JWKS_REFRESH_TIMEOUT`
+| Timeout in seconds for an outgoing JWKS HTTP request.
+| `10`
+
+| `PROXY_OIDC_JWKS_REFRESH_RATE_LIMIT`
+| Minimum number of seconds that must pass between refresh requests triggered by an unknown `kid`. Prevents a flood of JWKS requests when a malicious client sends tokens with fabricated key IDs.
+| `60`
+
+| `PROXY_OIDC_JWKS_REFRESH_UNKNOWN_KID`
+| When `true`, an immediate background JWKS refresh is triggered every time a token arrives with an unknown `kid`. Useful when the IDP rotates keys frequently. Always keep `PROXY_OIDC_JWKS_REFRESH_RATE_LIMIT` set to a sensible value when this is enabled.
+| `true`
+
+|===
+
+=== Restricting Accepted Audiences
+
+By default the Proxy accepts any valid JWT access token issued by the configured OIDC issuer, regardless of which application it was issued for. In a shared IDP environment — where the same IDP serves multiple applications — a token issued for a different application could technically be presented to Infinite Scale.
+
+`PROXY_OIDC_ACCESS_TOKEN_VERIFY_AUD` restricts which tokens are accepted by requiring the token's `aud` (audience) or `azp` (authorised party) claim to match one of the configured values. Set it to the OIDC client IDs used to access Infinite Scale (for example the web and desktop client IDs):
+
+[source,bash]
+----
+PROXY_OIDC_ACCESS_TOKEN_VERIFY_AUD=web,xdXOt13JKxym1B1QcEncf2XDkLAexMBFwiT9j6EkMg
+----
+
+Leave the variable unset to disable the audience check (the default). The setting has no effect when `PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD=none`.

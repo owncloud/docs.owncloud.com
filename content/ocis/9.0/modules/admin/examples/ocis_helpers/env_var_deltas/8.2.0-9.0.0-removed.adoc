@@ -1,12 +1,17 @@
-// # Removed Variables between oCIS 8.2.0 and oCIS 8.3.0
+// # Removed Variables between oCIS 8.2.0 and oCIS 9.0.0
 // commenting the headline to make it better includable
 
-// table created per 2026.09.10
+// table created per 2026.11.13
 // the table should be recreated/updated on source () changes
 
 [width="100%",cols="~,~,~,~",options="header"]
 |===
 | Service | Variable | Description | Default
+
+| xref:deployment/services/env-vars-special-scope.adoc#extended-environment-variables[Extended Environment Variables]
+| GRPC_MAX_CONNECTION_AGE
+| Timeout for GRPC connections. After timeout, a new connection will be established automatically. The default value is in ns and is about 2.5 mio h.
+| 9223372036854775807
 
 |===
 

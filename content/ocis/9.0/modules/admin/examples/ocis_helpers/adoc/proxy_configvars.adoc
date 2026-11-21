@@ -2,11 +2,11 @@
 // if the generated adoc file is used outside tabs, it renders correctly depending on the attribute set.
 // if inside, you need to also use the xxx_deprecation.adoc file. attributes can't be defined inside tabs.
 
-:show-deprecation: false
+:show-deprecation: true
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-27-22]
+[#deprecation-note-2026-11-13-11-05-23]
 [caption=]
 .Deprecation notes for the proxy service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -15,6 +15,11 @@ ifeval::[{show-deprecation} == true]
 | Deprecation Version
 | Removal Version
 | Deprecation Replacement
+
+| The global variable OCIS_CACHE_DATABASE is deprecated and will be removed in a future release. Please use local variable PROXY_OIDC_USERINFO_CACHE_DATABASE instead.
+| 
+| 
+| 
 |===
 
 {empty} +
@@ -306,17 +311,6 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 Sets how OIDC access tokens should be verified. Possible values are 'none' and 'jwt'. When using 'none', no special validation apart from using it for accessing the IDP's userinfo endpoint will be done. When using 'jwt', it tries to parse the access token as a jwt token and verifies the signature using the keys published on the IDP's 'jwks_uri'.
 
-a|`PROXY_OIDC_ACCESS_TOKEN_VERIFY_AUD` +
-
-a| [subs=-attributes]
-++8.2.0 ++
-a| [subs=-attributes]
-++[]string ++
-a| [subs=-attributes]
-++[] ++
-a| [subs=-attributes]
-A list of accepted audiences for OIDC access tokens, usually the OIDC client IDs used to access ownCloud (for example the web and desktop client IDs). When set, a JWT access token is only accepted if one of these values is present in its 'aud' claim or matches its 'azp' claim. This prevents tokens issued for other applications of a shared IDP from being accepted. When set via the environment variable, use a comma-separated list. Has no effect when 'PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD' is set to 'none'. Leave empty to disable the check (default).
-
 a|`PROXY_OIDC_SKIP_USER_INFO` +
 
 a| [subs=-attributes]
@@ -353,9 +347,10 @@ a| [subs=-attributes]
 A list of nodes to access the configured store. This has no effect when 'memory' store is configured. Note that the behaviour how nodes are used is dependent on the library of the configured store. See the Environment Variable Types description for more details.
 
 a|`OCIS_CACHE_DATABASE` +
-
+`PROXY_OIDC_USERINFO_CACHE_DATABASE` +
+xref:deprecation-note-2026-11-13-11-05-23[Deprecation Note]
 a| [subs=-attributes]
-++pre5.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
@@ -422,11 +417,35 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 The password to authenticate with the cache. Only applies when store type 'nats-js-kv' is configured.
 
+a|`OCIS_NATS_CREDS_FILE` +
+`PROXY_OIDC_USERINFO_CACHE_CREDS_FILE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+
+a|`OCIS_NATS_CREDS` +
+`PROXY_OIDC_USERINFO_CACHE_CREDS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+
 a|`OCIS_CACHE_ENABLE_TLS` +
 `PROXY_OIDC_USERINFO_CACHE_ENABLE_TLS` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -438,7 +457,7 @@ a|`OCIS_CACHE_TLS_INSECURE` +
 `PROXY_OIDC_USERINFO_CACHE_TLS_INSECURE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -450,7 +469,7 @@ a|`OCIS_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 `PROXY_OIDC_USERINFO_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
@@ -512,6 +531,17 @@ a| [subs=-attributes]
 ++false ++
 a| [subs=-attributes]
 Enables rewriting the /.well-known/openid-configuration to the configured OIDC issuer. Needed by the Desktop Client, Android Client and iOS Client to discover the OIDC provider.
+
+a|`PROXY_OIDC_ACCESS_TOKEN_VERIFY_AUD` +
+
+a| [subs=-attributes]
+++8.2.0 ++
+a| [subs=-attributes]
+++[]string ++
+a| [subs=-attributes]
+++[] ++
+a| [subs=-attributes]
+A list of accepted audiences for OIDC access tokens, usually the OIDC client IDs used to access ownCloud (for example the web and desktop client IDs). When set, a JWT access token is only accepted if one of these values is present in its 'aud' claim or matches its 'azp' claim. This prevents tokens issued for other applications of a shared IDP from being accepted. When set via the environment variable, use a comma-separated list. Has no effect when 'PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD' is set to 'none'. Leave empty to disable the check (default).
 
 a|`OCIS_SERVICE_ACCOUNT_ID` +
 `PROXY_SERVICE_ACCOUNT_ID` +
@@ -642,11 +672,35 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 The password to authenticate with the store. Only applies when store type 'nats-js-kv' is configured.
 
+a|`OCIS_NATS_CREDS_FILE` +
+`PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS_FILE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect. Only applies when store type 'nats-js-kv' is configured.
+
+a|`OCIS_NATS_CREDS` +
+`PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_CREDS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the cache when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. Only applies when store type 'nats-js-kv' is configured.
+
 a|`OCIS_CACHE_ENABLE_TLS` +
 `PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_ENABLE_TLS` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -658,7 +712,7 @@ a|`OCIS_CACHE_TLS_INSECURE` +
 `PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_TLS_INSECURE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -670,7 +724,7 @@ a|`OCIS_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 `PROXY_PRESIGNEDURL_SIGNING_KEYS_STORE_TLS_ROOT_CA_CERTIFICATE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
@@ -928,6 +982,30 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 The password to authenticate with the events broker. The events broker is the ocis service which receives and delivers events between the services.
 
+a|`OCIS_NATS_CREDS_FILE` +
+`PROXY_EVENTS_CREDS_FILE` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Path to a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value. The service reads the file again on each reconnect.
+
+a|`OCIS_NATS_CREDS` +
+`PROXY_EVENTS_CREDS` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++string ++
+a| [subs=-attributes]
+++ ++
+a| [subs=-attributes]
+Content of a NATS .creds file with a user JWT and an NKey seed. Use it to authenticate with the events broker when NATS runs in JWT (operator) mode. A service-specific variable takes precedence over a global variable. In the same scope, the content takes precedence over the path of a .creds file. When set, the service does not use the username and the password. Exception: a service-specific username and password take precedence over the global OCIS_NATS_CREDS and OCIS_NATS_CREDS_FILE variables when both have a value.
+
 a|`OCIS_CLAIM_MANAGED_SPACES_ENABLED` +
 
 a| [subs=-attributes]
@@ -1070,6 +1148,17 @@ a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
 The role that should be assigned to a guest user
+
+a|`OCIS_MULTI_INSTANCE_GUEST_ROLE_MAPPING` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++[]string ++
+a| [subs=-attributes]
+++[] ++
+a| [subs=-attributes]
+(Optional) Mapping of PROXY_ROLE_ASSIGNMENT_OIDC_CLAIM values to the role a guest gets instead of OCIS_MULTI_INSTANCE_GUEST_ROLE. Example: 'spaceadmin:user-light-vault'. A claim value is an exact string or a regular expression that must match the full claim value, the same as the claim_value of the role mapping. Escape regex metacharacters such as '.' in an exact string. The first match wins. Role names must not contain a colon. Only applies to the 'oidc' role assignment driver.
 
 a|`OCIS_ENABLE_VAULT_MODE` +
 `PROXY_ENABLE_VAULT_MODE` +

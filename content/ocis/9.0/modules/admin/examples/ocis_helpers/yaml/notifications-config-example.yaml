@@ -35,14 +35,20 @@ notifications:
     enable_tls: false
     username: ""
     password: ""
+    creds_file: ""
+    creds: ""
   email_template_path: ""
   translation_path: ""
-  default_language: ""
+  default_language: en
   reva_gateway: com.owncloud.api.gateway
   grpc_client_tls: null
 grpc_client_tls:
   mode: ""
   cacert: ""
+grpc_client_options:
+  grpc_max_received_message_size: 0
+  grpc_client_keepalive_time: 0s
+  grpc_client_keepalive_timeout: 0s
 service_account:
   service_account_id: ""
   service_account_secret: ""
@@ -55,6 +61,8 @@ store:
   ttl: 336h0m0s
   username: ""
   password: ""
+  creds_file: ""
+  creds: ""
   enable_tls: false
   tls_insecure: false
   tls_root_ca_certificate: ""

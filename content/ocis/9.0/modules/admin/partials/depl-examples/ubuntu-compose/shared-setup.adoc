@@ -104,6 +104,10 @@ The following (sub)domains are required as a minimum, an example is printed for 
 * `ONLYOFFICE_DOMAIN` +
 `[.blue]#onlyoffice.yourdomain.com#`
 
+.If Keycloak is configured via .env
+* `KEYCLOAK_DOMAIN` +
+`[.blue]#keycloak.yourdomain.com#`
+
 Note that depending on your setup, more (sub)domains may be required. See the `.env` file for more details..
 
 Note that any communication between ocis and any web office application is handled via the docker network and is not exposed to the outside.
@@ -316,6 +320,7 @@ clamav.yml
 cloudimporter.yml
 collabora.yml
 [.aqua]#config#
+keycloak.yml
 ...
 ----
 --
@@ -346,6 +351,24 @@ If you expect a higher amount of data in the instance, consider using own paths 
 
 * `SMTP_xxx` +
 Define these settings according to your email configuration. If the settings are defined, Infinite Scale will be able to send notifications to users. If the settings are not defined, Infinite Scale will start but won't be able to send notifications.
+
+* `COLLABORA_ADMIN_USER` and `COLLABORA_ADMIN_PASSWORD` +
+If Collabora Online is enabled, set these to credentials of your choice. The hardened Collabora configuration enforces explicit credentials for the admin console; leaving them empty disables admin console access.
+
+* `COLLABORA_CONFIG_DIR` +
+Optional. Path on the host where the Collabora WOPI proof key is persisted across container restarts. Defaults to `./config/collabora` relative to the compose project directory. The proof key is generated automatically on first start by a dedicated init container.
+
+* `KEYCLOAK` +
+To enable Keycloak as an external Identity Provider, uncomment `#KEYCLOAK=:keycloak.yml` by removing the leading `#`. See xref:optional-keycloak-as-identity-provider[Optional: Keycloak as Identity Provider] before enabling this.
+
+* `KEYCLOAK_DOMAIN` +
+If Keycloak is enabled, set the domain name for the Keycloak management and authentication frontend, as defined in xref:domain-names[Domain Names].
+
+* `KEYCLOAK_REALM` +
+The Keycloak realm to use with Infinite Scale. Defaults to `oCIS`. The realm is pre-configured and imported automatically on first start, including demo users.
+
+* `KEYCLOAK_ADMIN_USER` and `KEYCLOAK_ADMIN_PASSWORD` +
+Keycloak administrator credentials for the Keycloak management UI. Change these from the default `admin/admin` before exposing the instance to the internet.
 
 NOTE: If you do not define your own domain names, only domain names with self-signed certificates are automatically used for internal evaluation.
 
@@ -458,8 +481,77 @@ docker compose down --remove-orphans
 For safety's sake, *do not* add the `-v` (volumes) flag to the command, as this will delete all volumes, including their data. If deleting volumes is necessary, selective deletion is the preferred method, see the above section for an example. See the `docker compose down` https://docs.docker.com/reference/cli/docker/compose/down/#options[options] for more details.
 
 == Change Settings
- 
+
 To change settings via the `.env` file, the deployment _must be_ in the `down` state. See the section above for how to do this.
+
+== Optional: Keycloak as Identity Provider
+
+By default, Infinite Scale uses its built-in Identity Provider (IDP). Keycloak can optionally be enabled instead. When enabled, Keycloak manages user authentication and the built-in IDP is automatically stopped. Keycloak adds two containers to the stack: Keycloak itself and a PostgreSQL database. The oCIS realm is pre-configured and imported into Keycloak automatically on first start, including the demo users.
+
+NOTE: This section covers enabling Keycloak on a fresh installation only. Migrating an existing installation from the built-in IDP to Keycloak is not covered here and requires separate planning — see xref:common-pitfalls[Common Pitfalls] for the risks involved.
+
+=== Enabling Keycloak
+
+Before enabling Keycloak, ensure a DNS entry and a valid TLS certificate are set up for `KEYCLOAK_DOMAIN` (see xref:domain-names[Domain Names]).
+
+To enable Keycloak, stop the deployment, then in the `.env` file:
+
+. Uncomment `KEYCLOAK=:keycloak.yml` by removing the leading `#`.
+. Set `KEYCLOAK_DOMAIN` to the Keycloak domain.
+. Set `KEYCLOAK_ADMIN_USER` and `KEYCLOAK_ADMIN_PASSWORD` to secure values.
+
+Restart the deployment. Keycloak and PostgreSQL need extra time to initialize on first start (1–2 minutes). Wait until the Keycloak container is healthy before attempting to log in.
+
+=== What Changes for the Administrator
+
+Enabling Keycloak shifts several responsibilities from Infinite Scale to Keycloak:
+
+* *User management moves to Keycloak.* +
+Users can no longer be created or modified through the Infinite Scale administration panel. Manage users in the Keycloak management console at `https://<KEYCLOAK_DOMAIN>`.
+
+* *Accounts are created automatically on first login.* +
+When a user authenticates through Keycloak for the first time, an Infinite Scale account is provisioned automatically.
+
+* *Roles are assigned via Keycloak claims.* +
+Default role assignment from Infinite Scale is disabled. Assign user roles in the Keycloak realm.
+
+* *Admin password management moves to Keycloak.* +
+The `ocis idm resetpassword` command resets passwords in IDM, which is no longer used for authentication when Keycloak is active. Reset user passwords through the Keycloak management console instead.
+
+* *PostgreSQL data must be included in backups.* +
+Keycloak stores its configuration and user data in `./data/keycloak-postgres`. This directory must be part of your regular backup routine.
+
+=== Common Pitfalls
+
+[IMPORTANT]
+====
+*Enabling Keycloak on an existing installation without planning.* +
+Users that exist only in IDM will not be able to log in until their accounts are recreated in Keycloak. Files and spaces they own will be inaccessible until the user accounts are linked with matching user IDs. Plan user migration before switching.
+====
+
+[IMPORTANT]
+====
+*Switching back to the built-in IDP is not straightforward.* +
+Once Keycloak has been enabled and users have authenticated through it, disabling Keycloak and reverting to the built-in IDP requires manually re-creating all users in IDM with matching user IDs. Treat enabling Keycloak as a one-way change unless you have a tested rollback plan.
+====
+
+[CAUTION]
+====
+*Default Keycloak admin credentials.* +
+`KEYCLOAK_ADMIN_USER` and `KEYCLOAK_ADMIN_PASSWORD` both default to `admin`. Always change these to strong, unique values before exposing the instance to the internet — the Keycloak management console is publicly reachable on `KEYCLOAK_DOMAIN`.
+====
+
+[CAUTION]
+====
+*Keycloak takes longer to start than Infinite Scale.* +
+Keycloak and PostgreSQL need 1–2 minutes to initialize on the first start and after every clean restart. Attempting to log in too early will result in authentication errors. The Keycloak container log shows `Keycloak 26.x.x on JVM ... started in` when it is ready.
+====
+
+[NOTE]
+====
+*Tracing (`KEYCLOAK_TRACING`) requires the monitoring stack.* +
+Setting `KEYCLOAK_TRACING=true` sends traces to `http://jaeger:4317`. This requires the optional monitoring stack (`MONITORING=:monitoring.yml`) to be enabled. Enabling tracing without monitoring will cause Keycloak startup errors.
+====
 
 == First Time Login
 

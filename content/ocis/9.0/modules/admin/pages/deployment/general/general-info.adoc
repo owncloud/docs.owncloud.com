@@ -681,6 +681,8 @@ The volume names needed to reset the password are:
 * `ocis_wopi_ocis-config`.
 --
 
+NOTE: In addition to the admin and regular users, the passwords of internal service accounts (`libregraph`, `idp`, `reva`) can also be reset from the command line. See the xref:{s-path}/idm.adoc#internal-service-accounts[Internal Service Accounts] section in the IDM service documentation for details.
+
 === Demo Users and Groups
 
 ==== Create Demo Users and Groups

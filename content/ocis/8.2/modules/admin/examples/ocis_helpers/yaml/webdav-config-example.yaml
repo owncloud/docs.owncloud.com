@@ -17,6 +17,7 @@ debug:
   pprof: false
   zpages: false
 grpc_client_tls: null
+grpc_client_options: null
 http:
   addr: 127.0.0.1:9115
   root: /

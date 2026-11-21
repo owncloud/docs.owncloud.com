@@ -69,6 +69,3 @@ NOTE: We highly recommend reading the xref:admin:deployment/general/general-info
 
 Configuration of Infinite Scale might be quite different to what you are used to but it's very simple. It works with environment variables and optional configuration files for you to create depending on your specific needs. The settings in configuration files can always be overruled by setting the respective environment variables manually on the command line.
 
-== End-User License Agreement (EULA)
-
-ownCloud provides an EULA to clarify, among various topics, who can use this software and which conditions apply to the groups of users defined. See the actual {compose_raw_url}{ocis_git_version}/assets/End-User-License-Agreement-for-ownCloud-Infinite-Scale.pdf[EULA] for details.

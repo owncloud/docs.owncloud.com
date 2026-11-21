@@ -11,12 +11,23 @@ import (
 	"text/template"
 )
 
-// Render the envvars that origin in services 
+// Render the envvars that origin in services
 func RenderServices() {
 
 	ReadEnv()
 	fmt.Printf(Green + "Generate envvar .adoc tables and yaml examples from services and the %s file\n\n" + Reset, yamlServiceSource)
+
+	// save the current env_vars.yaml before it gets overwritten so we can compare afterwards
+	envVarsFilePath := filepath.Join(Env.services_dir, persistent_files, yamlServiceSource)
+	oldContent, oldErr := os.ReadFile(envVarsFilePath)
+
 	doTemplates()
+
+	// report any introductionVersion changes between the old and newly written file
+	if oldErr == nil {
+		reportIntroVersionChanges(envVarsFilePath, oldContent)
+	}
+
 	RemoveOutputDir()
 
 }
@@ -114,4 +125,59 @@ func runIntermediateCode(intermediateCodePath string) {
 		fatal(string(out), err)
 	}
 	fmt.Println(string(out))
+}
+
+// reportIntroVersionChanges compares the introductionVersion of each envvar in the
+// newly written env_vars.yaml against the content saved before the services run.
+// If any values changed they are shown and the user is asked to keep or revert them.
+func reportIntroVersionChanges(envVarsPath string, oldContent []byte) {
+
+	oldList, err := parseEnvVars(oldContent)
+	if err != nil {
+		fmt.Printf(Yellow + "Could not parse previous env_vars.yaml for comparison: %v\n\n" + Reset, err)
+		return
+	}
+	newList, err := loadEnvVars(envVarsPath)
+	if err != nil {
+		fmt.Printf(Yellow + "Could not read new env_vars.yaml for comparison: %v\n\n" + Reset, err)
+		return
+	}
+
+	type change struct {
+		key    string
+		oldVer string
+		newVer string
+	}
+	var changes []change
+	for _, key := range newList.keys {
+		newVal := newList.values[key]
+		if oldVal, ok := oldList.values[key]; ok {
+			if oldVal.IntroductionVersion != newVal.IntroductionVersion {
+				changes = append(changes, change{key, oldVal.IntroductionVersion, newVal.IntroductionVersion})
+			}
+		}
+	}
+
+	if len(changes) == 0 {
+		return
+	}
+
+	fmt.Printf(Yellow + "\nThe introductionVersion of the following envvars changed in %s:\n\n" + Reset, envVarsPath)
+	for _, c := range changes {
+		fmt.Printf("  %-60s  %q  ->  %q\n", c.key, c.oldVer, c.newVer)
+	}
+
+	fmt.Printf("\nUpdate these introductionVersion changes in %s? [Y/n]: ", envVarsPath)
+	var answer string
+	fmt.Scanln(&answer)
+
+	if strings.ToLower(strings.TrimSpace(answer)) == "n" {
+		if err := os.WriteFile(envVarsPath, oldContent, Env.file_mode); err != nil {
+			fmt.Printf(Red + "Failed to revert %s: %v\n\n" + Reset, envVarsPath, err)
+		} else {
+			fmt.Printf(Green + "Reverted %s to its previous state.\n\n" + Reset, envVarsPath)
+		}
+	} else {
+		fmt.Printf(Green + "Updated the introductionVersion values in %s.\n\n" + Reset, envVarsPath)
+	}
 }

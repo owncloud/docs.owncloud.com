@@ -27,6 +27,7 @@ reva:
     mode: ""
     cacert: ""
 grpc_client_tls: null
+grpc_client_options: null
 events:
   endpoint: 127.0.0.1:9233
   cluster: ocis-cluster
@@ -38,6 +39,8 @@ events:
   enable_tls: false
   username: ""
   password: ""
+  creds_file: ""
+  creds: ""
 engine:
   type: bleve
   bleve:
@@ -49,6 +52,7 @@ extractor:
   tika:
     tika_url: http://127.0.0.1:9998
     clean_stop_words: true
+  max_consecutive_failures: 5
 content_extraction_size_limit: 20971520
 service_account:
   service_account_id: ""
