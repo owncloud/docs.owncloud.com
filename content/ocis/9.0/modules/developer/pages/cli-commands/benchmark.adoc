@@ -1,0 +1,86 @@
+= Benchmark CLI
+:toc: right
+:toclevels: 3
+:description: The ocis benchmark command provides two subcommands for measuring HTTP request throughput and low-level filesystem syscall performance.
+
+{description}
+
+[IMPORTANT]
+====
+These commands are intended for internal performance testing and development use only. They are *not* suitable for production load testing or capacity planning.
+====
+
+== benchmark client
+
+Starts one or more parallel HTTP clients that continuously send requests to a running Infinite Scale instance and print aggregated statistics. The flags closely mimic `curl`.
+
+Infinite Scale must be running and reachable before using this command.
+
+[source,plaintext]
+----
+NAME:
+   ocis benchmark client - Start a client that continuously makes web requests
+                           and prints stats. The options mimic curl, but URL
+                           must be at the end.
+
+USAGE:
+   ocis benchmark client [command options] <URL>
+
+OPTIONS:
+   --request value, -X value   Specifies a custom request method (default: "PROPFIND")
+   --user value, -u value      User name and password for server authentication
+                               (default: "admin:admin")
+   --insecure, -k              Skip TLS verification (default: false)
+   --data value, -d value      Data to send in the request body
+   --header value, -H value    Extra request header (repeatable)
+   --rate value                Maximum request rate as "N/U" where U is s, m, h, or d
+                               (default: unlimited)
+   --bearer-token-command value  Command to run to obtain a bearer token,
+                               e.g. 'oidc-token OCIS'. Disables basic auth when set.
+   --every value               Print aggregated stats every N seconds (default: 0)
+   --jobs value, -j value      Number of parallel clients (default: 1)
+   --help, -h                  show help
+----
+
+=== Example
+
+Send 4 parallel `PROPFIND` requests to a local instance and print stats every 10 seconds:
+
+[source,bash]
+----
+ocis benchmark client \
+  --jobs 4 \
+  --every 10 \
+  --user admin:admin \
+  --insecure \
+  https://localhost:9200/dav/files/admin
+----
+
+== benchmark syscalls
+
+Runs a series of low-level filesystem operations (xattr reads/writes, stat, mkdir, etc.) at a given path and reports timing statistics. No running Infinite Scale instance is required.
+
+[source,plaintext]
+----
+NAME:
+   ocis benchmark syscalls - test the performance of syscalls
+
+USAGE:
+   ocis benchmark syscalls [command options]
+
+OPTIONS:
+   --path value        Path to test
+   --iterations value  Number of iterations to execute (default: "100")
+   --help, -h          show help
+----
+
+=== Example
+
+Run 500 iterations against the Infinite Scale storage directory:
+
+[source,bash]
+----
+ocis benchmark syscalls \
+  --path /var/lib/ocis/storage/users \
+  --iterations 500
+----

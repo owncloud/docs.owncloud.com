@@ -38,11 +38,12 @@ http:
     cert: ""
     key: ""
 grpc_client_tls: null
+grpc_client_options: null
 token_manager:
   jwt_secret: ""
 reva_gateway: com.owncloud.api.gateway
 translation_path: ""
-default_language: ""
+default_language: en
 events:
   endpoint: 127.0.0.1:9233
   cluster: ocis-cluster
@@ -51,15 +52,20 @@ events:
   enable_tls: false
   username: ""
   password: ""
+  creds_file: ""
+  creds: ""
 max_concurrency: 1
 persistence:
   store: memory
-  nodes: []
+  nodes:
+  - 127.0.0.1:9233
   database: userlog
   table: events
   ttl: 336h0m0s
   username: ""
   password: ""
+  creds_file: ""
+  creds: ""
   enable_tls: false
   tls_insecure: false
   tls_root_ca_certificate: ""

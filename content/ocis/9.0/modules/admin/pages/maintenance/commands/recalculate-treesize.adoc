@@ -1,0 +1,43 @@
+= Recalculate Space Treesize
+:description: The recalculate-treesize command corrects drifting quota usage by recalculating the treesize of every directory in a space from the actual sizes of its children.
+
+{description}
+
+The reported quota usage of a space is maintained as a running counter that is updated on every change. A failed or incomplete update leaves the counter wrong, causing the Web UI to display an incorrect space size or quota usage. This command walks a space bottom-up, recalculates the treesize of every directory from the actual sizes of its children, and corrects the stored values.
+
+NOTE: This command MUST only be issued when Infinite Scale is offline and no services are running.
+
+[source,bash]
+----
+ocis storage-users spaces recalculate-treesize [command options]
+
+OPTIONS:
+   --space-id value, -s value  Space ID to recalculate (<storage-id>$<space-id>!<opaque-id>,
+                               <storage-id>$<space-id> or bare <space-id>; omit to process all spaces)
+   --dry-run                   Only show which treesizes would be corrected without writing them (default: true)
+   --verbose, -v               Enable verbose logging (default: false)
+   --help, -h                  show help
+----
+
+Dry-run mode is the default. Run without `--dry-run=false` first to review which treesizes would be corrected:
+
+[source,bash]
+----
+ocis storage-users spaces recalculate-treesize
+----
+
+After reviewing the output, shut down Infinite Scale and apply the corrections:
+
+[source,bash]
+----
+ocis storage-users spaces recalculate-treesize --dry-run=false
+----
+
+To target a single space only, provide its ID:
+
+[source,bash]
+----
+ocis storage-users spaces recalculate-treesize --dry-run=false --space-id <space-id>
+----
+
+See the xref:maintenance/space-ids/space-ids.adoc[Listing Space IDs] documentation for how to retrieve a space ID.

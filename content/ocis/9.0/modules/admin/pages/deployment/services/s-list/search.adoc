@@ -104,7 +104,7 @@ Every time a resource changes its state, a corresponding event is triggered. Bas
 
 === Searching
 
-A query via the {service_name} service will return results based on the index created.
+A query via the {service_name} service will return results based on the index created. The search box accepts plain text as well as structured queries using the Keyword Query Language (KQL) subset implemented by Infinite Scale. For the full field reference, operators, and date shortcuts, see xref:conf-examples/search/kql-search-syntax.adoc[KQL Search Syntax].
 
 === State Changes which Trigger Indexing
 
@@ -184,12 +184,24 @@ The service includes a command-line interface to trigger re-indexing spaces:
 
 [source,bash]
 ----
-ocis search index --space $SPACE_ID || --all-spaces
+ocis search index --space $SPACE_ID || --all-spaces [--timeout <duration>]
 ----
 
 * IDs but not names are necessary as parameter.
 ** See the xref:maintenance/space-ids/space-ids.adoc[Listing Space IDs] for how to retrieve a space ID.
-* The arguments `-space` and `--all-spaces` are mutual exclusive , but one must be provided.
+* The arguments `--space` and `--all-spaces` are mutually exclusive, but one must be provided.
+* `--timeout` sets how long to wait for the indexing to complete before cancelling the walk. Accepts a Go duration string such as `30m`, `2h`. Defaults to `10m`. Set to `0` to wait indefinitely — useful for large spaces or when a slow content extractor (such as Tika) is in use.
+
+==== Compact the Search Index
+
+The search performance can degrade over time after bulk reindexing operations that create many small index segments. Use this command to compact the search index by merging Bleve segments without reindexing the content.
+
+[source,bash]
+----
+ocis search optimize
+----
+
+NOTE: Although this command accesses the search index directly and does not block search queries, it is still recommended that it is issued during a maintenance window.
 
 == Notes
 

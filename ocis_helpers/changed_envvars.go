@@ -119,15 +119,15 @@ var descriptionCut = []string{}
 
 // RenderEnvVarDeltas creates the added, deprecated and removed envvar tables
 // isDryrun is provided by the flag defined in 'main.go'
-func RenderEnvVarDeltas(isDryrun bool) {
+func RenderEnvVarDeltas(isDryrun bool, subTask string) {
 
 	ReadEnv()
 	fmt.Printf(Green+"Generate the added, deprecated and removed envvar .adoc tables from the %s files\n\n"+Reset, yamlServiceSource)
-	doEnvVarDeltas(isDryrun)
+	doEnvVarDeltas(isDryrun, subTask)
 	RemoveOutputDir()
 }
 
-func doEnvVarDeltas(isDryrun bool) {
+func doEnvVarDeltas(isDryrun bool, subTask string) {
 
 	cfg := getDeltaConfig()
 
@@ -193,7 +193,8 @@ func doEnvVarDeltas(isDryrun bool) {
 	// so the source can be checked and the shortened text reviewed in the generated file
 	if len(descriptionCut) > 0 {
 		fmt.Printf(Yellow+"\nThe description of the following envvars contained an unescaped pipe, " +
-			"it has been cut before its first appearance:\n\n" + Reset)
+			"it has been cut before its first appearance — " +
+			"global envvars can have one description per service, joined by ' | '; only the first is kept here:\n\n" + Reset)
 
 		for _, key := range descriptionCut {
 			fmt.Printf("%s\n", key)
@@ -206,10 +207,15 @@ func doEnvVarDeltas(isDryrun bool) {
 		return
 	}
 
-	// write the variables to a file
-	writeOutput(cfg, a, "added")
-	writeOutput(cfg, r, "removed")
-	writeOutput(cfg, d, "deprecated")
+	// write the requested table(s); when no sub-task is given all three are written
+	writeRequested := func(content string, name string) {
+		if subTask == "" || subTask == name {
+			writeOutput(cfg, content, name)
+		}
+	}
+	writeRequested(a, "added")
+	writeRequested(r, "removed")
+	writeRequested(d, "deprecated")
 
 	// print that we succeeded
 	fmt.Printf("\nSuccess, see files created in: %s\n", deltaWriteDir(cfg))
@@ -396,24 +402,27 @@ func deltaWriteDir(cfg DeltaConfig) string {
 }
 
 // loadEnvVars reads an 'env_vars.yaml' file and keeps the order of its keys.
-// the file is parsed twice, once for the key order and once for the values
 func loadEnvVars(path string) (*EnvVarList, error) {
 
 	yfile, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
+	return parseEnvVars(yfile)
+}
+
+// parseEnvVars parses raw YAML bytes into an EnvVarList, preserving key order.
+// the bytes are parsed twice: once for key order (yaml.MapSlice) and once for typed values.
+func parseEnvVars(data []byte) (*EnvVarList, error) {
 
 	// yaml.MapSlice keeps the order of the keys as they appear in the file
 	var ordered yaml.MapSlice
-	err = yaml.Unmarshal(yfile, &ordered)
-	if err != nil {
+	if err := yaml.Unmarshal(data, &ordered); err != nil {
 		return nil, err
 	}
 
 	list := newEnvVarList(len(ordered))
-	err = yaml.Unmarshal(yfile, &list.values)
-	if err != nil {
+	if err := yaml.Unmarshal(data, &list.values); err != nil {
 		return nil, err
 	}
 
@@ -562,7 +571,10 @@ func createTable(typeText string, source *EnvVarList, fromVersion string, toVers
 			}
 
 			if isDeprecated {
-				b.WriteString(addAdocLine2(service, key, description, value.RemovalVersion, value.DeprecationInfo))
+				// a pipe in deprecationInfo (from multiple services with different texts) would
+				// break the table just like it does in the description — guard it the same way
+				deprecationInfo := cutAtUnescapedPipe(key, value.DeprecationInfo)
+				b.WriteString(addAdocLine2(service, key, description, value.RemovalVersion, deprecationInfo))
 			} else {
 				b.WriteString(addAdocLine1(service, key, description, value.DefaultValue))
 			}

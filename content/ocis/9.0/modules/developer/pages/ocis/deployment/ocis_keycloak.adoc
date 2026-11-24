@@ -3,6 +3,8 @@
 :toclevels: 3
 :description: Example docker-compose deployment of oCIS with Keycloak as identity provider behind Traefik.
 
+NOTE: Since oCIS 8.1, Keycloak is also available as an optional service directly within the `ocis_full` deployment example, which is the basis of the production admin deployment guides. If you are setting up a production or home-server instance, see the xref:ocis:admin:depl-examples/ubuntu-compose/ubuntu-compose-prod.adoc#optional-keycloak-as-identity-provider[Optional: Keycloak as Identity Provider] section in the admin documentation instead. The standalone `ocis_keycloak` example documented here uses self-signed certificates and is intended for developer testing only.
+
 == Overview
 
 * oCIS and Keycloak running behind Traefik as reverse proxy

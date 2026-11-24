@@ -31,16 +31,6 @@ variables:
   default_value: ""
   description: ignored intentionally
   do_ignore: true
-- rawname: _serverMaxConnectionAgeEnv
-  path: ../../ocis/ocis-pkg/service/grpc/keepalive.go:19
-  foundincode: true
-  name: GRPC_MAX_CONNECTION_AGE
-  type: Duration
-  default_value: "9223372036854775807"
-  description: Timeout for GRPC connections. After timeout, a new connection will
-    be established automatically. The default value is in ns and is about 2.5 mio
-    h.
-  do_ignore: false
 - rawname: MICRO_LOG_LEVEL
   path: ../../ocis/ocis-pkg/log/log.go:34
   foundincode: true
@@ -109,7 +99,7 @@ variables:
   description: '''true'' or ''false'', defaults to false'
   do_ignore: false
 - rawname: _registryTLSInsecureEnv
-  path: ../../ocis/ocis-pkg/natsjsregistry/registry.go:256
+  path: ../../ocis/ocis-pkg/natsjsregistry/registry.go:258
   foundincode: true
   name: MICRO_REGISTRY_TLS_INSECURE
   type: string
@@ -119,7 +109,7 @@ variables:
     of the NATS server. Use it only for testing with self-signed certificates.'
   do_ignore: false
 - rawname: _registryTLSRootCAEnv
-  path: ../../ocis/ocis-pkg/natsjsregistry/registry.go:257
+  path: ../../ocis/ocis-pkg/natsjsregistry/registry.go:259
   foundincode: true
   name: MICRO_REGISTRY_TLS_ROOT_CA_CERTIFICATE
   type: string
@@ -155,7 +145,7 @@ variables:
     section in the documentation for more details on defaults.
   do_ignore: false
 - rawname: OCIS_INSECURE
-  path: ../../ocis/ocis-pkg/service/grpc/client.go:79
+  path: ../../ocis/ocis-pkg/service/grpc/client.go:101
   foundincode: true
   name: OCIS_INSECURE
   type: bool
@@ -163,14 +153,6 @@ variables:
   description: Insecure TLS mode is only allowed in development environments with
     OCIS_INSECURE=true
   do_ignore: false
-- rawname: OCIS_INSECURE
-  path: ../../ocis/services/idp/pkg/service/v0/service.go:366
-  foundincode: false
-  name: OCIS_INSECURE
-  type: ""
-  default_value: ""
-  description: OCIS_INSECURE
-  do_ignore: true
 - rawname: OCIS_INSECURE
   path: ../../ocis/services/idp/pkg/service/v0/service.go:367
   foundincode: true
@@ -180,7 +162,7 @@ variables:
   description: ""
   do_ignore: true
 - rawname: OCIS_LOG_LEVEL
-  path: ../../ocis/services/graph/pkg/identity/ldap_integration_test.go:132
+  path: ../../ocis/services/graph/pkg/identity/ldap_integration_test.go:151
   foundincode: true
   name: OCIS_LOG_LEVEL
   type: ""

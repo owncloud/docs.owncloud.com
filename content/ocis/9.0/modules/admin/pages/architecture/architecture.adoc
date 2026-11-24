@@ -107,6 +107,7 @@ Spaces are a logical concept. They organize a set of resources in a hierarchical
 * A storage spaces registry then allows listing the capabilities of storage spaces, e.g. free space, quota, managers, syncable, root {etag-url}[ETag] etc.
 * Spaces may serve different purposes like every user’s personal storage space, project, group or school class storage spaces including shares and reshares.
 * A space makes it much easier to separate data that can be shared and data that should not be shared. As an example, although you can share content in your personal space, it is much more secure to have a dedicated space for sharing and keep your personal space for your eyes only.
+* *Personal spaces* are owned by a single user. Only that user and users with the administrator role can be assigned as managers of a personal space. Regular users cannot promote others to the manager role in someone else’s personal space.
 * Spaces have a small memory footprint and are therefore very effective. For details see the xref:prerequisites/prerequisites.adoc#ram-considerations[RAM Considerations].
 
 For detailed information on the implementation of spaces, check out the https://owncloud.dev/ocis/storage/spaces/[Developer Guide].

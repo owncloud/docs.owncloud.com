@@ -18,6 +18,7 @@ events:
   username: ""
   password: ""
 grpc_client_tls: null
+grpc_client_options: null
 log:
   level: ""
   pretty: false

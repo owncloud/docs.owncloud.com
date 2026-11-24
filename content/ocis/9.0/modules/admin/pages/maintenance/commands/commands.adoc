@@ -50,7 +50,13 @@ WARNING: Use this command with absolute care. It is not intended to play around 
 
 === Reset Password for IDM Users
 
-If you need to reset the password for the admin or a user in the xref:{s-path}/idm.adoc[idm] service from the command line, follow the xref:deployment/general/general-info.adoc#password-reset-for-idm-users[Password Reset for IDM Users].
+If you need to reset the password for the admin, a service account or an ordinary user that is handled via the IDM service from the command line, see the xref:{s-path}/idm.adoc#resetting-lost-passwords[Resetting Lost Passwords] section in the IDM service for more details.
+
+=== Recalculate Space Treesize
+
+The reported quota of a space can drift from the data actually stored on disk. Infinite Scale provides a xref:maintenance/commands/recalculate-treesize.adoc[CLI command] to walk a space bottom-up and correct the stored treesize of every directory.
+
+NOTE: This command MUST only be issued when Infinite Scale is offline and no services are running.
 
 === Revisions Cleanup
 
@@ -83,6 +89,10 @@ Detect and, if desired, delete storage grants that have no corresponding share-m
 === Cleanup Orphaned Shares
 
 When a shared space or directory got deleted, use the following xref:maintenance/commands/cleanup-orphaned-shares.adoc[CLI command] to cleanup those share orphans. This can't be done automatically at the moment.
+
+=== Compact the Search Index
+
+The search performance can degrade over time after bulk reindexing operations that create many small index segments. Use the following xref:{s-path}/search.adoc#compact-the-search-index[CLI command] to compact the search index for improved search performance.
 
 === Inspect and Manipulate Node Metadata
 
@@ -129,6 +139,6 @@ WARNING: Use this command with absolute care. It is not intended to play around 
 
 This command is about sending emails based on events stored in a named group bucket. See the xref:{s-path}/notifications.adoc#sending-grouped-emails[Sending Grouped Emails] section in the _notification_ service for details.
 
-=== Verify and Inspect a Blobstore
+=== Verify and Inspect a Configured Blobstore
 
-This command has been added to verify and inspect the configured Blobstore without requiring direct access to the underlying storage system. Use the following xref:maintenance/commands/verify-and-inspect-blobstore.adoc[CLI command] for this task.
+This command has been added to verify and inspect the configured blobstore without requiring direct access to the underlying storage system. Use the following xref:{s-path}/storage-users.adoc#verify-and-inspect-the-configured-blobstore[CLI command] for this task.

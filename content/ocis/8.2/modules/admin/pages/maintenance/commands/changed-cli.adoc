@@ -15,3 +15,12 @@ See the link for a detailed description of the respective CLI command if availab
 
 * xref:maintenance/commands/commands.adoc#clean-corrupt-public-shares[Clean Corrupt Public Shares] +
 This CLI command has been added to detect and remove corrupt public share entries.
+
+* xref:maintenance/commands/commands.adoc#compact-the-search-index[Compact the Search Index] +
+This CLI command has been added to compact the search index.
+
+* xref:maintenance/commands/commands.adoc#reset-password-for-idm-users[Reset Password for IDM Users] +
+This CLI command has been updated with new options.
+
+* xref:maintenance/commands/commands.adoc#verify-and-inspect-a-configured-blobstore[Verify and Inspect a Configured Blobstore] +
+This CLI command has been added to Inspect and Verify a configured Blobstore (S3).

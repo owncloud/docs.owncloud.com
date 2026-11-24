@@ -27,10 +27,6 @@ You can find more details on changes made in each release published in the https
 
 IMPORTANT: Rolling releases are published in a cycle of 3 weeks. Due to this relative short cycle, you will find the actual development and the current published rolling release documentation *not* separated. They are both part of the `next` segment in the URL. Compared to production releases where the respective release number is used, the actual rolling release number published can be found e.g. in each service description in section "Environment Variables".
 
-== End-User License Agreement (EULA)
-
-ownCloud provides an EULA to clarify, among various topics, who can use this software and which conditions apply to the groups of users defined. See the actual {compose_raw_url}{compose_version}/assets/End-User-License-Agreement-for-ownCloud-Infinite-Scale.pdf[EULA] for details.
-
 == FAQ
 
 === What Is the Difference Between the Admin and Developer Documentation?

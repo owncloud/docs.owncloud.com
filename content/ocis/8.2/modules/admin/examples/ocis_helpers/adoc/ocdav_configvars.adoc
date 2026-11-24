@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-30-54]
+[#deprecation-note-2026-11-13-09-58-28]
 [caption=]
 .Deprecation notes for the ocdav service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -421,5 +421,16 @@ a| [subs=-attributes]
 ++false ++
 a| [subs=-attributes]
 Allow the use of depth infinity in PROPFINDS. When enabled, a propfind will traverse through all subfolders. If many subfolders are expected, depth infinity can cause heavy server load and/or delayed response times.
+
+a|`OCDAV_DISABLE_PROPFIND_PUBLIC_LINK_RESOLUTION` +
+
+a| [subs=-attributes]
+++9.0.0 ++
+a| [subs=-attributes]
+++bool ++
+a| [subs=-attributes]
+++false ++
+a| [subs=-attributes]
+Disable the resolution of public link shares when answering PROPFIND requests. When disabled, the oc:share-type property will not be populated with public link share information, which can reduce load on services for large collections.
 |===
 

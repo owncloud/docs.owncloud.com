@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-27-22]
+[#deprecation-note-2026-11-13-11-05-23]
 [caption=]
 .Deprecation notes for the app-provider service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -391,7 +391,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
-++https://localhost:9200/ ++
+++https://localhost:9200 ++
 a| [subs=-attributes]
 Base url to navigate back from the app to the containing folder in the file list.
 

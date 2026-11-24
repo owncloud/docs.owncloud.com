@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-27-22]
+[#deprecation-note-2026-11-13-11-05-23]
 [caption=]
 .Deprecation notes for the invitations service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -349,7 +349,7 @@ Disable TLS certificate validation for Keycloak connections. Do not set this in 
 a|`INVITATIONS_KEYCLOAK_EXECUTE_ACTIONS` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++[]string ++
 a| [subs=-attributes]

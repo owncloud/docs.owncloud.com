@@ -7,6 +7,10 @@
 
 {description} When using Keycloak, some environment variables must be configured to gather user-relevant data stored in Keycloak, completing the report.
 
+== Limits
+
+To stop things being misused, the number of GDPR report requests that can be made in one minute by each user is limited to five.
+
 == Configuration
 
 If Keycloak is used for authentication, GDPR regulations require to add all personal identifiable information that Keycloak has about the user to the personal data export. To configure these settings, see the xref:{s-path}/graph.adoc#keycloak-configuration-for-the-personal-data-export[Keycloak Configuration for the Personal Data Export] for more details. Beside that, no additional configuration is necessary as everything works out of the box.

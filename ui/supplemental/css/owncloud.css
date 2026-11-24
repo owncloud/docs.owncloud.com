@@ -177,7 +177,7 @@ pre {
 
 .navbar .navbar-item:hover,
 .navbar .navbar-link:hover {
-  background-color: var(--oc-navy-deep);
+  background-color: var(--oc-navy);
   color: #fff;
 }
 
@@ -374,4 +374,44 @@ footer.footer .footer-logo img {
 
 .footer-nav ul li a {
   color: #aaa;
+}
+
+/* ── Search-filter announcement banner ──────────────────────────────────────
+   Injected by js/search-announcement.js. Remove that file and these rules
+   once the announcement has run its course.                                  */
+#oc-search-announcement {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background-color: var(--oc-navy);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.oc-announcement-text kbd {
+  display: inline-block;
+  padding: 0.1em 0.35em;
+  font-size: 0.8em;
+  font-family: var(--monospace-font-family);
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 3px;
+}
+
+.oc-announcement-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0.25rem;
+  flex-shrink: 0;
+}
+
+.oc-announcement-close:hover {
+  color: #fff;
 }

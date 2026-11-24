@@ -6,7 +6,7 @@
 
 ifeval::[{show-deprecation} == true]
 
-[#deprecation-note-2026-09-09-11-30-54]
+[#deprecation-note-2026-11-13-09-58-28]
 [caption=]
 .Deprecation notes for the graph service
 [width="100%",cols="~,~,~,~",options="header"]
@@ -225,7 +225,7 @@ a|`OCIS_CACHE_ENABLE_TLS` +
 `GRAPH_CACHE_ENABLE_TLS` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -237,7 +237,7 @@ a|`OCIS_CACHE_TLS_INSECURE` +
 `GRAPH_CACHE_TLS_INSECURE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++bool ++
 a| [subs=-attributes]
@@ -249,7 +249,7 @@ a|`OCIS_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 `GRAPH_CACHE_TLS_ROOT_CA_CERTIFICATE` +
 
 a| [subs=-attributes]
-++8.3.0 ++
+++9.0.0 ++
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
@@ -399,7 +399,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++[]string ++
 a| [subs=-attributes]
-++[Authorization Origin Content-Type Accept X-Requested-With X-Request-Id Purge Restore] ++
+++[Authorization Origin Content-Type Accept X-Requested-With X-Request-Id Purge X-Purge Restore] ++
 a| [subs=-attributes]
 A list of allowed CORS headers. See following chapter for more details: *Access-Control-Request-Headers* at \https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Request-Headers. See the Environment Variable Types description for more details.
 
@@ -633,7 +633,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++string ++
 a| [subs=-attributes]
-++ ++
+++en ++
 a| [subs=-attributes]
 The default language used by services and the WebUI. If not defined, English will be used as default. See the documentation for more details.
 
@@ -1356,6 +1356,17 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 Template for the instance URL. Requires OCIS_MULTI_INSTANCE_ENABLED.
 
+a|`OCIS_LDAP_INSTANCE_MAPPER_CACHE_TTL` +
+
+a| [subs=-attributes]
+++8.2.1 ++
+a| [subs=-attributes]
+++int ++
+a| [subs=-attributes]
+++60000000000 ++
+a| [subs=-attributes]
+Max TTL in seconds for the LDAP instance mapper cache. Requires OCIS_MULTI_INSTANCE_ENABLED.
+
 a|`OCIS_ENABLE_OCM` +
 `GRAPH_INCLUDE_OCM_SHAREES` +
 
@@ -1613,7 +1624,7 @@ a| [subs=-attributes]
 a| [subs=-attributes]
 ++ ++
 a| [subs=-attributes]
-The master ID that grants access to all instances. Users with this ID in their memberOf or guestOf claims can access any instance. Leave empty to disable.
+The master ID that grants access to all instances. Users with this ID in their memberOf or guestOf claims can access any instance. Leave empty to disable. Also set 'OCIS_LDAP_USER_FILTER'. Without an explicit user filter, this instance resolves every user in the shared LDAP directory.
 
 a|`OCIS_MULTI_INSTANCE_QUERY_TEMPLATE` +
 

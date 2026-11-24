@@ -112,6 +112,11 @@ ocs:
   stat_cache_disable_persistence: false
   stat_cache_auth_username: ""
   stat_cache_auth_password: ""
+  stat_cache_creds_file: ""
+  stat_cache_creds: ""
+  stat_cache_enable_tls: false
+  stat_cache_tls_insecure: false
+  stat_cache_tls_root_ca_certificate: ""
   enable_denials: false
   list_ocm_shares: true
   include_ocm_sharees: false
@@ -137,7 +142,10 @@ events:
   enable_tls: false
   username: ""
   password: ""
+  creds_file: ""
+  creds: ""
 grpc_client_tls: null
+grpc_client_options: null
 auto_accept_shares: true
 service_account:
   service_account_id: ""
@@ -157,5 +165,5 @@ mfa:
   enabled: false
   auth_level_names:
   - advanced
-  session_duration: 3600
 enable_vault_mode: false
+default_vault_share_expiration_days: 30

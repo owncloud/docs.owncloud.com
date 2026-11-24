@@ -1,6 +1,6 @@
 = Changed or Added CLI Commands
 :toc: right
-:description: This page contains a list with added, changed or removed CLI commands between Infinite Scale version 8.2.0 and 8.3.0.
+:description: This page contains a list with added, changed or removed CLI commands between Infinite Scale version 8.2.0 and 9.0.0.
 :page-aliases: ROOT:maintenance/b-r/changed-cli.adoc
 
 == Introduction
@@ -9,10 +9,16 @@
 
 == Affected CLI Commands
 
-// None of the admin-related commands have changed.
-
 See the link for a detailed description of the respective CLI command if available.
 
-// the commented link is only as an easy to add template
-// * xref:maintenance/commands/commands.adoc#verify-and-inspect-blobstore[Verify and Inspect a Blobstore] +
-This CLI command has been added to verify and inspect the configured Blobstore without requiring direct access to the underlying storage system.
+* xref:maintenance/commands/recalculate-treesize.adoc[Recalculate Space Treesize] +
+This CLI command has been added to correct drifting quota usage by recalculating the treesize of every directory in a space from the actual sizes of its children. Infinite Scale must be shut down before running in write mode.
+
+* xref:maintenance/commands/commands.adoc#reset-password-for-idm-users[Reset Password for IDM Users] +
+The `ocis idm resetpassword` command now also supports resetting service account passwords (`libregraph`, `idp`, `reva`) via `--user-type service`. After a service account password is changed, affected environment variables must be updated and Infinite Scale restarted.
+
+* xref:maintenance/commands/commands.adoc#reindex-spaces-for-search[Reindex Spaces for Search] +
+The `ocis search index` command has been extended with a `--timeout` flag (default `10m`, `0` = no limit) to allow indexing of large spaces or spaces with slow content extractors that previously failed with a context-cancelled error.
+
+* xref:maintenance/commands/commands.adoc#manage-expired-or-stale-uploads[Manage Expired or Stale Uploads] +
+The `ocis storage-users uploads sessions` command has been extended with an `--orphaned` flag to filter sessions whose node metadata is unreadable. Such sessions can never complete processing and can be cleaned up with `--clean`.
